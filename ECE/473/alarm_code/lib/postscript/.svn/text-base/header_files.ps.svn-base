@@ -1,0 +1,2076 @@
+%!PS-Adobe-3.0
+%%Title: adc_driver.h, button_driver.h, clock.h, encoder_driver.h, graph_driver.h, lcd_driver.h, led_driver.h, lm73_driver.h, lm73_functions.h, macros.h
+%%For: Robert
+%%Creator: a2ps version 4.14
+%%CreationDate: Sun Dec 15 23:56:20 2013
+%%BoundingBox: 24 24 588 768
+%%DocumentData: Clean7Bit
+%%Orientation: Landscape
+%%Pages: 15
+%%PageOrder: Ascend
+%%DocumentMedia: Letter 612 792 0 () ()
+%%DocumentNeededResources: font Courier
+%%+ font Courier-Bold
+%%+ font Courier-BoldOblique
+%%+ font Courier-Oblique
+%%+ font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Symbol
+%%+ font Times-Bold
+%%+ font Times-Roman
+%%DocumentProcessColors: Black 
+%%DocumentSuppliedResources: procset a2ps-a2ps-hdr
+%%+ procset a2ps-black+white-Prolog
+%%+ encoding ISO-8859-1Encoding
+%%EndComments
+/a2psdict 200 dict def
+a2psdict begin
+%%BeginProlog
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+
+% EPSF import as in the Red Book
+/BeginInclude {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack 
+  userdict begin
+    0 setgray 0 setlinecap
+    1 setlinewidth 0 setlinejoin
+    10 setmiterlimit [ ] 0 setdash newpath
+    gs_languagelevel 1 ne {
+      false setstrokeadjust false setoverprint 
+    } if
+} bind def
+
+/EndInclude {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+/BeginEPSF {
+  BeginInclude
+  /showpage { } def
+} bind def
+
+/EndEPSF {
+  EndInclude
+} bind def
+
+% Page prefeed
+/page_prefeed {         % bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} bind def
+
+/deffont {
+  findfont exch scalefont def
+} bind def
+
+/reencode_font {
+  findfont reencode 2 copy definefont pop def
+} bind def
+
+% Function c-show (str => -)
+% centers text only according to x axis.
+/c-show { 
+  dup stringwidth pop
+  2 div neg 0 rmoveto
+  show
+} bind def
+
+% Function l-show (str => -)
+% prints texts so that it ends at currentpoint
+/l-show {
+  dup stringwidth pop neg 
+  0 
+  rmoveto show
+} bind def
+
+% center-fit show (str w => -)
+% show centered, and scale currentfont so that the width is less than w
+/cfshow {
+  exch dup stringwidth pop
+  % If the title is too big, try to make it smaller
+  3 2 roll 2 copy
+  gt
+  { % if, i.e. too big
+    exch div
+    currentfont exch scalefont setfont
+  } { % ifelse
+    pop pop 
+  }
+  ifelse
+  c-show			% center title
+} bind def
+
+% Return the y size of the current font
+% - => fontsize
+/currentfontsize {
+  currentfont /FontType get 0 eq {
+    currentfont /FontMatrix get 3 get
+  }{
+    currentfont /FontMatrix get 3 get 1000 mul
+  } ifelse
+} bind def
+
+% reencode the font
+% <encoding-vector> <fontdict> -> <newfontdict>
+/reencode { %def
+  dup length 5 add dict begin
+    { %forall
+      % <vector> <key> <val>
+      1 index /FID ne 
+      { def }{ pop pop } ifelse
+    } forall
+    /Encoding exch def % -
+
+    % Use the font's bounding box to determine the ascent, descent,
+    % and overall height; don't forget that these values have to be
+    % transformed using the font's matrix.
+    % We use `load' because sometimes BBox is executable, sometimes not.
+    % Since we need 4 numbers an not an array avoid BBox from being executed
+    /FontBBox load aload pop
+    FontMatrix transform /Ascent exch def pop
+    FontMatrix transform /Descent exch def pop
+    /FontHeight Ascent Descent sub def
+
+    % Get the underline position and thickness if they're defined.
+    % Use 1 if they are not defined.
+    currentdict /FontInfo 2 copy known
+    { get
+      /UnderlinePosition 2 copy % <FontInfo> /UP <FontInfo> /UP
+      2 copy known
+      { get }{ pop pop 1 } ifelse
+      0 exch FontMatrix transform exch pop
+      def % <FontInfo>
+
+      /UnderlineThickness 2 copy % <FontInfo> /UT <FontInfo> /UT
+      2 copy known
+      { get }{ pop pop 1 } ifelse
+      0 exch FontMatrix transform exch pop
+      def % <FontInfo>
+      pop % -
+    }{ pop pop
+    } ifelse
+
+    currentdict
+  end 
+} bind def
+
+% composite fonts for ASCII-EUC mixed strings
+% Version 1.2 1/31/1990
+% Original Ken'ichi HANDA (handa@etl.go.jp)
+% Modified Norio Katayama (katayama@rd.nacsis.ac.jp),1998
+% Extend & Fix Koji Nakamaru (maru@on.cs.keio.ac.jp), 1999
+% Anyone can freely copy, modify, distribute this program.
+
+/copyfont {	% font-dic extra-entry-count  copyfont  font-dic
+	1 index maxlength add dict begin
+	{	1 index /FID ne 2 index /UniqueID ne and
+		{def} {pop pop} ifelse
+	} forall
+	currentdict
+	end
+} bind def
+
+/compositefont { % ASCIIFontName EUCFontName RomanScale RomanOffset Rot(T/F) compositefont font
+    /RomanRotation exch def
+    /RomanOffset exch def
+    /RomanScale exch def
+    userdict /fixeucfont_dict known not {
+	userdict begin
+	    /fixeucfont_dict 2 dict begin
+		/UpperByteEncoding [
+		    16#00 1 16#20 { pop 0 } for
+		    16#21 1 16#28 { 16#20 sub } for
+		    16#29 1 16#2F { pop 0 } for
+		    16#30 1 16#74 { 16#27 sub } for
+		    16#75 1 16#FF { pop 0 } for
+		] def
+	        /LowerByteEncoding [
+		    16#00 1 16#A0 { pop /.notdef } for
+		    16#A1 1 16#FE { 16#80 sub 16 2 string cvrs
+				    (cXX) dup 1 4 -1 roll
+				    putinterval cvn } for
+		    /.notdef
+		] def
+		currentdict
+	    end def
+	end
+    } if
+    findfont dup /FontType get 0 eq {
+	14 dict begin
+	    %
+	    % 7+8 bit EUC font
+	    %
+	    12 dict begin
+		/EUCFont exch def
+		/FontInfo (7+8 bit EUC font) readonly def
+		/PaintType 0 def
+		/FontType 0 def
+		/FontMatrix matrix def
+		% /FontName
+		/Encoding fixeucfont_dict /UpperByteEncoding get def
+		/FMapType 2 def
+		EUCFont /WMode known
+		{ EUCFont /WMode get /WMode exch def }
+		{ /WMode 0 def } ifelse
+		/FDepVector [
+		    EUCFont /FDepVector get 0 get
+		    [ 16#21 1 16#28 {} for 16#30 1 16#74 {} for ]
+		    {
+			13 dict begin
+			    /EUCFont EUCFont def
+			    /UpperByte exch 16#80 add def	
+			    % /FontName
+			    /FontInfo (EUC lower byte font) readonly def
+			    /PaintType 0 def
+			    /FontType 3 def
+			    /FontMatrix matrix def
+			    /FontBBox {0 0 0 0} def
+			    /Encoding
+				fixeucfont_dict /LowerByteEncoding get def
+			    % /UniqueID
+			    % /WMode
+			    /BuildChar {
+				gsave
+				exch dup /EUCFont get setfont
+				/UpperByte get
+				2 string
+				dup 0 4 -1 roll put
+				dup 1 4 -1 roll put
+				dup stringwidth setcharwidth
+				0 0 moveto show
+				grestore
+			    } bind def
+			    currentdict
+			end
+			/lowerbytefont exch definefont
+		    } forall
+		] def
+		currentdict
+	    end
+	    /eucfont exch definefont
+	    exch
+	    findfont 1 copyfont dup begin
+		RomanRotation {
+			/FontMatrix FontMatrix
+			[ 0 RomanScale neg RomanScale 0 RomanOffset neg 0 ]
+			matrix concatmatrix def
+		}{
+			/FontMatrix FontMatrix
+			[ RomanScale 0 0 RomanScale 0 RomanOffset ] matrix concatmatrix
+			def
+			/CDevProc
+			    {pop pop pop pop 0 exch -1000 exch 2 div 880} def
+		} ifelse
+	    end
+	    /asciifont exch definefont
+	    exch
+	    /FDepVector [ 4 2 roll ] def
+	    /FontType 0 def
+	    /WMode 0 def
+	    /FMapType 4 def
+	    /FontMatrix matrix def
+	    /Encoding [0 1] def
+	    /FontBBox {0 0 0 0} def
+%	    /FontHeight 1.0 def % XXXX
+	    /FontHeight RomanScale 1.0 ge { RomanScale }{ 1.0 } ifelse def
+	    /Descent -0.3 def   % XXXX
+	    currentdict
+	end
+	/tmpfont exch definefont
+	pop
+	/tmpfont findfont
+    }{
+	pop findfont 0 copyfont
+    } ifelse
+} def	
+
+/slantfont {	% FontName slant-degree  slantfont  font'
+    exch findfont 1 copyfont begin
+    [ 1 0 4 -1 roll 1 0 0 ] FontMatrix exch matrix concatmatrix
+    /FontMatrix exch def
+    currentdict
+    end
+} def
+
+% Function print line number (<string> # -)
+/# {
+  gsave
+    sx cw mul neg 2 div 0 rmoveto
+    f# setfont
+    c-show
+  grestore
+} bind def
+
+% -------- Some routines to enlight plain b/w printings ---------
+
+% Underline
+% width --
+/dounderline {
+  currentpoint
+  gsave
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    0 rlineto
+    stroke
+  grestore
+} bind def
+
+% Underline a string
+% string --
+/dounderlinestring {
+  stringwidth pop
+  dounderline
+} bind def
+
+/UL {
+  /ul exch store
+} bind def
+
+% Draw a box of WIDTH wrt current font
+% width --
+/dobox {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    stroke
+  grestore
+} bind def
+
+/BX {
+  /bx exch store
+} bind def
+
+% Box a string
+% string --
+/doboxstring {
+  stringwidth pop
+  dobox
+} bind def
+
+%
+% ------------- Color routines ---------------
+%
+/FG /setrgbcolor load def
+
+% Draw the background
+% width --
+/dobackground {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    bgcolor aload pop setrgbcolor
+    fill
+  grestore
+} bind def
+
+% Draw bg for a string
+% string --
+/dobackgroundstring {
+  stringwidth pop
+  dobackground
+} bind def
+
+
+/BG {
+  dup /bg exch store
+  { mark 4 1 roll ] /bgcolor exch store } if
+} bind def
+
+
+/Show {
+  bg { dup dobackgroundstring } if
+  ul { dup dounderlinestring } if
+  bx { dup doboxstring } if
+  show
+} bind def
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T {
+  cw mul x0 add
+  bg { dup currentpoint pop sub dobackground } if
+  ul { dup currentpoint pop sub dounderline } if
+  bx { dup currentpoint pop sub dobox } if
+  y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n {
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+/S {
+  Show
+} bind def
+
+%%BeginResource: procset a2ps-a2ps-hdr 2.0 2
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Function title: prints page header.
+% <ct> <rt> <lt> are passed as argument
+/title { 
+  % 1. Draw the background
+  x v get y v get moveto
+  gsave
+    0 th 2 div neg rmoveto 
+    th setlinewidth
+    0.95 setgray
+    pw 0 rlineto stroke
+  grestore
+  % 2. Border it
+  gsave
+    0.7 setlinewidth
+    pw 0 rlineto
+    0 th neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+  % stk: ct rt lt
+  x v get y v get th sub 1 add moveto
+%%IncludeResource: font Helvetica
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  % 3. The left title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    fnfs 0.8 mul hm rmoveto
+    show			% left title
+  grestore
+  exch
+  % stk: ct ltw rt
+  % 4. the right title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    dup
+    pw exch stringwidth pop fnfs 0.8 mul add sub
+    hm
+    rmoveto
+    show			% right title
+  grestore
+  % stk: ct ltw rtw
+  % 5. the center title
+  gsave
+    pw 3 1 roll
+    % stk: ct pw ltw rtw
+    3 copy 
+    % Move to the center of the left room
+    sub add 2 div hm rmoveto
+    % What is the available space in here?
+    add sub fnfs 0.8 mul sub fnfs 0.8 mul sub
+    % stk: ct space_left
+%%IncludeResource: font Helvetica-Bold
+  fHelvetica-Bold fnfs scalefont setfont
+    cfshow
+  grestore
+} bind def
+
+% Function border: prints virtual page border
+/border { %def
+  gsave				% print four sides
+    0 setgray
+    x v get y v get moveto
+    0.7 setlinewidth		% of the square
+    pw 0 rlineto
+    0 ph neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+} bind def
+
+% Function water: prints a water mark in background
+/water { %def
+  gsave
+    scx scy moveto rotate
+%%IncludeResource: font Times-Bold
+  fTimes-Bold 100 scalefont setfont
+    .97 setgray
+    dup stringwidth pop 2 div neg -50 rmoveto
+    show
+  grestore
+} bind def
+
+% Function rhead: prints the right header
+/rhead {  %def
+  lx ly moveto
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  l-show
+} bind def
+
+% Function footer (cf rf lf -> -)
+/footer {
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  dx dy moveto
+  show
+
+  snx sny moveto
+  l-show
+  
+  fnx fny moveto
+  c-show
+} bind def
+%%EndResource
+%%BeginResource: procset a2ps-black+white-Prolog 2.0 1
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T { 
+  cw mul x0 add y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n { %def
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+}  bind def
+
+/S {
+  Show
+} bind def
+
+/p {
+  false UL
+  false BX
+  fCourier bfs scalefont setfont
+  Show
+} bind def
+
+/sy {
+  false UL
+  false BX
+  fSymbol bfs scalefont setfont
+  Show
+} bind def
+
+/k {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/K {
+  false UL
+  false BX
+  fCourier-Bold bfs scalefont setfont
+  Show
+} bind def
+
+/c {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/C {
+  false UL
+  false BX
+  fCourier-BoldOblique bfs scalefont setfont
+  Show 
+} bind def
+
+/l {
+  false UL
+  false BX
+  fHelvetica bfs scalefont setfont
+  Show
+} bind def
+
+/L {
+  false UL
+  false BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show 
+} bind def
+
+/str{
+  false UL
+  false BX
+  fTimes-Roman bfs scalefont setfont
+  Show
+} bind def
+
+/e{
+  false UL
+  true BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show
+} bind def
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier
+%%IncludeResource: font Courier-Oblique
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Times-Roman
+%%IncludeResource: font Symbol
+%%IncludeResource: font Courier-BoldOblique
+%%BeginResource: encoding ISO-8859-1Encoding
+/ISO-8859-1Encoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quoteright 
+/parenleft /parenright /asterisk /plus /comma /minus /period /slash 
+/zero /one /two /three /four /five /six /seven 
+/eight /nine /colon /semicolon /less /equal /greater /question 
+/at /A /B /C /D /E /F /G 
+/H /I /J /K /L /M /N /O 
+/P /Q /R /S /T /U /V /W 
+/X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore 
+/quoteleft /a /b /c /d /e /f /g 
+/h /i /j /k /l /m /n /o 
+/p /q /r /s /t /u /v /w 
+/x /y /z /braceleft /bar /braceright /asciitilde /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclamdown /cent /sterling /currency /yen /brokenbar /section 
+/dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron 
+/degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /bullet 
+/cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown 
+/Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla 
+/Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis 
+/Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply 
+/Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls 
+/agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla 
+/egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis 
+/eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide 
+/oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis 
+] def
+%%EndResource
+% Initialize page description variables.
+/sh 612 def
+/sw 792 def
+/llx 24 def
+/urx 768 def
+/ury 588 def
+/lly 24 def
+/#copies 1 def
+/th 15.000000 def
+/fnfs 11 def
+/bfs 7.493857 def
+/cw 4.496314 def
+
+% Dictionary for ISO-8859-1 support
+/iso1dict 8 dict begin
+  /fCourier ISO-8859-1Encoding /Courier reencode_font
+  /fCourier-Bold ISO-8859-1Encoding /Courier-Bold reencode_font
+  /fCourier-BoldOblique ISO-8859-1Encoding /Courier-BoldOblique reencode_font
+  /fCourier-Oblique ISO-8859-1Encoding /Courier-Oblique reencode_font
+  /fHelvetica ISO-8859-1Encoding /Helvetica reencode_font
+  /fHelvetica-Bold ISO-8859-1Encoding /Helvetica-Bold reencode_font
+  /fTimes-Bold ISO-8859-1Encoding /Times-Bold reencode_font
+  /fTimes-Roman ISO-8859-1Encoding /Times-Roman reencode_font
+currentdict end def
+/bgcolor [ 0 0 0 ] def
+/bg false def
+/ul false def
+/bx false def
+% The font for line numbering
+/f# /Helvetica findfont bfs .6 mul scalefont def
+/fSymbol /Symbol findfont def
+/hm fnfs 0.25 mul def
+/pw
+   cw 81.400000 mul
+def
+/ph
+   522.321860 th add
+def
+/pmw urx llx sub pw 2 mul sub 1 div def
+/pmh 0 def
+/v 0 def
+/x [
+  0
+  dup pmw add pw add
+] def
+/y [
+  pmh ph add 0 mul ph add
+  dup
+] def
+/scx sw 2 div def
+/scy sh 2 div def
+/snx urx def
+/sny lly 2 add def
+/dx llx def
+/dy sny def
+/fnx scx def
+/fny dy def
+/lx snx def
+/ly ury fnfs 0.8 mul sub def
+/sx 0 def
+/tab 8 def
+/x0 0 def
+/y0 0 def
+%%EndSetup
+
+%%Page: (1) 1
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#ifndef) K
+( ADC_DRIVER) p n
+(#define) K
+( ADC_DRIVER) p n
+() N
+(/******************************************************) c n
+( * Enables the adc to be read from.  The voltage for) N
+( * the adc should be applied to PF7, and is compared) N
+( * to the external 5V source.) N
+( ******************************************************/) N
+(void) k
+( enable_adc\(\);) p n
+() N
+(/******************************************************) c n
+( * Starts an adc conversion.  This function does NOT) N
+( * wait for the adc to be finished.) N
+( ******************************************************/) N
+(void) k
+( start_adc\(\);) p n
+() N
+(/******************************************************) c n
+( * Starts an adc conversion, waits for it to finish) N
+( * and then returns a 10 bit value correspsonding to) N
+( * the adc measure value.) N
+( ******************************************************/) N
+(uint16_t poll_adc\(\);) p n
+() N
+(/******************************************************) c n
+( * Checks to see if the adc is running.) N
+( ******************************************************/) N
+(uint8_t is_adc_running\(\);) p n
+() N
+(/******************************************************) c n
+( * Returns the 10 bit value measured by the adc.) N
+( ******************************************************/) N
+(uint16_t get_adc\(\);) p n
+() N
+(/******************************************************) c n
+( * Maps the 10 bit adc value to an 8 bit value.) N
+( ******************************************************/) N
+(uint8_t get_adc_adjusted\(uint16_t raw\);) p n
+() N
+(#endif) K n
+(adc_driver.h) (Page 1/1) (Nov 25, 13 10:11) title
+border
+grestore
+(Printed by Robert) rhead
+(adc_driver.h) (1/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 2
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#ifndef) K
+( BUTTON_DRIVER) p n
+(#define) K
+( BUTTON_DRIVER) p n
+() N
+(/******************************************************) c n
+( * Enables the buttons to be read on PORTA.  This ) N
+( * will also disable the LED display.) N
+( ******************************************************/) N
+(void) k
+( enable_buttons\(\);) p n
+() N
+(/******************************************************) c n
+( * Checks whether or not a button has been pressed) N
+( * using a software debouncing algorithm.) N
+( ******************************************************/) N
+(uint8_t debounce_switch\(uint16_t *state, uint8_t bit\);) p n
+() N
+(/******************************************************) c n
+( * Abstracts away the software debouncing by returning) N
+( * a byte with each bit representing the state of) N
+( * PA7-PA0 respectively.  The byte is encoded as if) N
+( * the buttons were active high.) N
+( ******************************************************/) N
+(char) k
+( poll_buttons\() p
+(char) k
+( reg\);) p n
+() N
+(#endif) K n
+(button_driver.h) (Page 1/1) (Oct 17, 13 1:24) title
+border
+grestore
+(Printed by Robert) rhead
+(button_driver.h) (2/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1-2) 3
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#ifndef) K
+( CLOCK) p n
+(#define) K
+( CLOCK) p n
+() N
+(#define) K
+( ALARM_ENABLED_RADIO  1) p n
+(#define) K
+( ALARM_ENABLED_TONE   2) p n
+(#define) K
+( ALARM_DISABLED       0) p n
+() N
+(void) k
+( get_alarm_string\() p
+(char) k
+( alarm[11]\);) p n
+() N
+(/******************************************************) c n
+( * Initializes the clock timer TCNT0 using the) N
+( * external 32kHz oscillator.  The timer is configured) N
+( * to execute an interrupt once every 1/128th of a) N
+( * second.) N
+( *****************************************************/) N
+(void) k
+( init_clock_timer\(\);) p n
+() N
+(/******************************************************) c n
+( * Initializes the time that the alarm shows on) N
+( * startup.) N
+( *****************************************************/) N
+(void) k
+( set_time\(uint8_t hr, uint8_t min\);) p n
+() N
+(/******************************************************) c n
+( * Sets or clears a flag that indicates whether or not) N
+( * the alarm is armed.) N
+( *****************************************************/) N
+(void) k
+( set_alarm_state\(uint8_t state\);) p n
+() N
+(/******************************************************) c n
+( * Increments the seconds on the clock by one, which) N
+( * in turn increments the seconds and hours) N
+( * accordingly.) N
+( *****************************************************/) N
+(void) k
+( tick_seconds\(\);) p n
+() N
+(/******************************************************) c n
+( * Sets the alarm to go off next at the alarm time) N
+( * plus the number of minutes and seconds given.) N
+( *****************************************************/) N
+(void) k
+( snooze_alarm\(uint8_t min, uint8_t sec\);) p n
+() N
+(/******************************************************) c n
+( * Increments or decrements the clock hour by the) N
+( * number of hours given.) N
+( *****************************************************/) N
+(void) k
+( change_hour\() p
+(int) k
+(8_t delta\);) p n
+() N
+(/******************************************************) c n
+( * Increments or decrements the clock minutes by the) N
+( * number of minutes given.) N
+( *****************************************************/) N
+(void) k
+( change_minute\() p
+(int) k
+(8_t delta\);) p n
+() N
+(/******************************************************) c n
+( * Increments or decrements the alarm clock hour by) N
+( * the number of hours given.) N
+( *****************************************************/) N
+(void) k
+( change_alarm_hour\() p
+(int) k
+(8_t delta\);) p n
+() N
+(/******************************************************) c n
+( * Increments or decrements the alarm clock minute by) N
+( * the number of hours given.) N
+( *****************************************************/) N
+(void) k
+( change_alarm_minute\() p
+(int) k
+(8_t delta\);) p n
+() N
+(/******************************************************) c n
+( * Resets the alarm back to its original value before) N
+( * the alarm clock was snoozed.) N
+(clock.h) (Page 1/2) (Dec 15, 13 15:09) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+( *****************************************************/) c n
+(void) k
+( reset_snooze\(\);) p n
+() N
+(/******************************************************) c n
+( * Checks to see whether or not the alarm time matches) N
+( * the clock time.) N
+( *****************************************************/) N
+(uint8_t is_alarm_time\(\);) p n
+() N
+(/******************************************************) c n
+( * Checks to see whether or not the alarm is armed.) N
+( *****************************************************/) N
+(uint8_t is_alarm_enabled\(\);) p n
+() N
+(/******************************************************) c n
+( * Returns whether or not the number of seconds is odd) N
+( * or even so the colon can be blinked accordingly) N
+( *****************************************************/) N
+(uint8_t get_seconds_state\(uint8_t mode\);) p n
+() N
+(/******************************************************) c n
+( * Gets a four digit number corresponding to the time) N
+( * that should be displayed on the clock.) N
+( *****************************************************/) N
+(uint16_t get_time\(\);) p n
+() N
+(/******************************************************) c n
+( * Gets a four digit number corresponding to the time) N
+( * that the alarm should go off if it is armed.) N
+( *****************************************************/) N
+(uint16_t get_alarm\(\);) p n
+() N
+(#endif) K n
+(clock.h) (Page 2/2) (Dec 15, 13 15:09) title
+border
+grestore
+(Printed by Robert) rhead
+(clock.h) (3/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 4
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#ifndef) K
+( ENCODER_DRIVER) p n
+(#define) K
+( ENCODER_DRIVER) p n
+() N
+(/******************************************************) c n
+( * Extracts bits 0 and 1 from the shift register, which) N
+( * correspond to the left encoder's state.) N
+( ******************************************************/) N
+(#define) K
+( LEFT_ENCODER\(byte\) \(byte & 0x03\)) p n
+() N
+(/******************************************************) c n
+( * Extracts bits 2 and 3 from the shift register, which) N
+( * correspond to the right encoder's state.) N
+( ******************************************************/) N
+(#define) K
+( RIGHT_ENCODER\(byte\) \(\(byte & 0x0C\) >> 2\)) p n
+() N
+(#define) K
+( STOPPED 2) p n
+(#define) K
+( FORWARD 1) p n
+(#define) K
+( REVERSE 0) p n
+() N
+(/******************************************************) c n
+( * Holds the last known state of the encoders, which) N
+( * corresponds to the direction it was moving in and) N
+( * the bits that were returned from the shift register.) N
+( ******************************************************/) N
+(struct) k
+( encoder_state {) p n
+() S 8 T (uint8_t left_dir;) N
+() S 8 T (uint8_t right_dir;) N
+() N
+() S 8 T (uint8_t left_last;) N
+() S 8 T (uint8_t right_last;) N
+(};) N
+() N
+(void) k
+( latch_encoders\(\);) p n
+() N
+(/******************************************************) c n
+( * Enables the encoders by setting up PE6 as the latch) N
+( * for the encoder shift register and enabling the SPI) N
+( * interface.) N
+( ******************************************************/) N
+(void) k
+( enable_encoders\(\);) p n
+() N
+(/******************************************************) c n
+( * Gets the state of the encoders by initializing an) N
+( * SPI transmission and returning the results after) N
+( * latching the data in the encoder shift register.) N
+( ******************************************************/) N
+(char) k
+( poll_encoders\(\);) p n
+() N
+(/******************************************************) c n
+( * Initializes the encoder struct with "STOPPED" as) N
+( * the direction for both of the encoders and starts an) N
+( * SPI transmission to get the current state of the) N
+( * encoders.) N
+( ******************************************************/) N
+(void) k
+( init_encoder_struct\() p
+(volatile) K
+( ) p
+(struct) k
+( encoder_state *state\);) p n
+() N
+(/******************************************************) c n
+( * Takes an encoder_state struct that represents the) N
+( * last known state of the encoders and determines the) N
+( * current state of the encoders from it.) N
+( ******************************************************/) N
+(void) k
+( get_direction\() p
+(volatile) K
+( ) p
+(struct) k
+( encoder_state *state, uint8_t encoders\);) p n
+() N
+(#endif) K n
+(encoder_driver.h) (Page 1/1) (Nov 20, 13 20:18) title
+border
+grestore
+(Printed by Robert) rhead
+(encoder_driver.h) (4/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 5
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#ifndef) K
+( GRAPH_DRIVER) p n
+(#define) K
+( GRAPH_DRIVER) p n
+() N
+(#define) K
+( OFF   0x00) p n
+(#define) K
+( ONE   0x80) p n
+(#define) K
+( TWO   0xC0) p n
+(#define) K
+( THREE 0xE0) p n
+(#define) K
+( FOUR  0xF0) p n
+(#define) K
+( FIVE  0xF8) p n
+(#define) K
+( SIX   0xFC) p n
+(#define) K
+( SEVEN 0xFE) p n
+(#define) K
+( EIGHT 0xFF) p n
+() N
+(#define) K
+( NUM_COUNT 9) p n
+() N
+(uint8_t GRAPH_NUMS[] = {OFF, ONE, TWO, THREE, FOUR, ) N
+() S 8 T () S 16 T () S 24 T () S 32 T () S 40 T (  FIVE, SIX, SEVEN, EIGHT};) N
+() N
+(/******************************************************) c n
+( * Enables the graph by setting up PD0 as the latch) N
+( * for the bar graph display and enabling the SPI) N
+( * interface.) N
+( ******************************************************/) N
+(void) k
+( enable_graph\(\);) p n
+() N
+(/******************************************************) c n
+( * Updates the bar graph with the appropriate value by) N
+( * initiating an SPI transmission with given value and) N
+( * telling the bar graph to latch the new data when the) N
+( * transmission completes.) N
+( ******************************************************/) N
+(char) k
+( update_graph\() p
+(char) k
+( value\);) p n
+() N
+(#endif) K n
+(graph_driver.h) (Page 1/1) (Nov 06, 13 23:55) title
+border
+grestore
+(Printed by Robert) rhead
+(graph_driver.h) (5/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 6
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#ifndef) K
+( LCD_DRIVER) p n
+(#define) K
+( LCD_DRIVER) p n
+() N
+(/******************************************************) c n
+( * Sets all 32 characters on the screen to spaces.) N
+( *****************************************************/) N
+(void) k
+( clear_display\(\);) p n
+() N
+(/******************************************************) c n
+( * Sets the next character location to be the top left) N
+( * character.) N
+( *****************************************************/) N
+(void) k
+( cursor_home\(\);) p n
+() N
+(/******************************************************) c n
+( * Sets the next character location to be the bottom) N
+( * left character.) N
+( *****************************************************/) N
+(void) k
+( home_line2\(\);) p n
+() N
+(/******************************************************) c n
+( * Fills a single row on the LCD screen with spaces.) N
+( *****************************************************/) N
+(void) k
+( fill_spaces\(\);) p n
+() N
+(/******************************************************) c n
+( * Sends a single character to the LCD screen.) N
+( *****************************************************/) N
+(void) k
+( ) p
+(char) k
+(2lcd\() p
+(char) k
+( a_char\);) p n
+() N
+(/******************************************************) c n
+( * Sends a whole string to the LCD screen.) N
+( *****************************************************/) N
+(void) k
+( string2lcd\() p
+(char) k
+( *lcd_str\);) p n
+() N
+(/******************************************************) c n
+( * Enables the LCD screen for use.) N
+( *****************************************************/) N
+(void) k
+( enable_lcd\(\);) p n
+() N
+(#endif) K n
+(lcd_driver.h) (Page 1/1) (Nov 25, 13 10:30) title
+border
+grestore
+(Printed by Robert) rhead
+(lcd_driver.h) (6/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1-2) 7
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#ifndef) K
+( LED_DRIVER) p n
+(#define) K
+( LED_DRIVER) p n
+() N
+(#define) K
+( COLON_OFF 1) p n
+(#define) K
+( COLON_ON  0) p n
+() N
+(/******************************************************) c n
+( * Struct holding the digits and the segment for the) N
+( * LCD display.) N
+( ******************************************************/) N
+(struct) k
+( display {) p n
+() S 8 T (uint8_t ones;) N
+() S 8 T (uint8_t tens;) N
+() S 8 T (uint8_t hundreds;) N
+() S 8 T (uint8_t thousands;) N
+() N
+() S 8 T (uint8_t colon;) N
+() S 8 T (uint8_t mode;) N
+() S 8 T (uint8_t cycle;) N
+() S 8 T (uint8_t decimal;) N
+(};) N
+() N
+(void) k
+( set_zero_blanked\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output\);) p n
+(void) k
+( set_decimal\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output, uint8_t boolean\);) p n
+() N
+(/******************************************************) c n
+( * Turns the LED screen off completely.) N
+( ******************************************************/) N
+(void) k
+( disable_leds\(\);) p n
+() N
+(/******************************************************) c n
+( * Toggles the alarm armed indicator.) N
+( ******************************************************/) N
+(void) k
+( toggle_dot\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output\);) p n
+() N
+(/******************************************************) c n
+( * Sets a flag that indicates whether or not the colon) N
+( * should be lit and whether or not the alarm armed) N
+( * indicator should be lit.) N
+( ******************************************************/) N
+(void) k
+( update_colon\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output, uint8_t off, uint8_t all\);) p n
+() N
+(/******************************************************) c n
+( * Sets a flag that indicates whether or not the) N
+( * display should be zero filled or not.) N
+( ******************************************************/) N
+(void) k
+( set_zero_filled\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output\);) p n
+() N
+(/******************************************************) c n
+( * Enables the dimmer by enabling the ADC on PF7 and) N
+( * fast PWM on PB7 using TCNT2) N
+( ******************************************************/) N
+(void) k
+( enable_dimmer\(\);) p n
+() N
+(/******************************************************) c n
+( * Updates the duty cycle of the PWM on PB7 \(TNCT2\) to) N
+( * reflect the brightness measured by the adc on PF7.) N
+( ******************************************************/) N
+(void) k
+( update_brightness\(\);) p n
+() N
+(/******************************************************) c n
+( * Initializes a display struct by setting all of the) N
+( * digits and the segment to be turned on to 0.) N
+( ******************************************************/) N
+(void) k
+( init_display_struct\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output\);) p n
+() N
+(/******************************************************) c n
+( * Enables the LED output by setting PORTA to be all) N
+( * outputs.  The push buttons on PORTA will become) N
+(led_driver.h) (Page 1/2) (Dec 14, 13 20:41) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+( * disabled by this function.) c n
+( ******************************************************/) N
+(void) k
+( enable_leds\(\);) p n
+() N
+(/******************************************************) c n
+( * Extracts the ones, tens, hundreds and thousands) N
+( * places from the given number.  The extracted values) N
+( * are placed in the supplied struct.) N
+( ******************************************************/) N
+(void) k
+( decode_number\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output, uint16_t number\);) p n
+() N
+(/******************************************************) c n
+( * Sets PORTA to the binary that corresponds to the) N
+( * supplied digit. ) N
+( ******************************************************/) N
+(void) k
+( set_digit\(uint8_t digit, uint8_t decimal\);) p n
+() N
+(/******************************************************) c n
+( * Updates the LED display based on the information) N
+( * in the display struct and the given number.  This) N
+( * function abstracts away all interaction with the) N
+( * display.) N
+( ******************************************************/) N
+(void) k
+( update_segment\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output, uint16_t number\);) p n
+() N
+(#endif) K n
+(led_driver.h) (Page 2/2) (Dec 14, 13 20:41) title
+border
+grestore
+(Printed by Robert) rhead
+(led_driver.h) (7/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 8
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(// lm73_functions.h ) c n
+(// Roger Traylor 11.27.10) N
+(//special defines and functions for the lm73 temperature sensor) N
+() p n
+(#define) K
+( F_CPU 16000000UL) p n
+(#define) K
+( TRUE  1) p n
+(#define) K
+( FALSE 0) p n
+() N
+(#include) K
+( ") p
+(twi_master.h) str
+("  ) p
+(//my TWCR_START, STOP, NACK, RNACK, SEND) c n
+(//use the status codes in: usr/local/AVRMacPack/avr-3/include/util/twi.h) N
+() p n
+(#define) K
+( LM73_ADDRESS 0x90                    ) p
+(//LM73-0, address pin floating) c n
+(#define) K
+( LM73_WRITE \(LM73_ADDRESS | TW_WRITE\) ) p
+(//LSB is a zero to write) c n
+(#define) K
+( LM73_READ  \(LM73_ADDRESS | TW_READ\)  ) p
+(//LSB is a one to read) c n
+(#define) K
+( LM73_PTR_TEMP          0x00          ) p
+(//LM73 temperature address) c n
+(#define) K
+( LM73_PTR_CONFIG        0x01          ) p
+(//LM73 configuration address) c n
+(#define) K
+( LM73_PTR_CTRL_STATUS   0x04          ) p
+(//LM73 control and status register) c n
+(#define) K
+( LM73_CONFIG_VALUE0     0x60          ) p
+(//no pwr dwn, disbl alert, no one s) c n
+(hot: config reg) N
+(#define) K
+( LM73_CONFIG_VALUE1     0xE0          ) p
+(//no timeout, max resolution: for c) c n
+(tl/status reg) N
+() p n
+(//special functions for lm73 temperature sensor) c n
+(uint8_t  lm73_temp_convert\() p
+(char) k
+( temp_digits[], uint16_t lm73_temp, uint8_t f_not) p n
+(_c\);) N
+(  ) N
+(lm73_driver.h) (Page 1/1) (Dec 03, 13 8:36) title
+border
+grestore
+(Printed by Robert) rhead
+(lm73_driver.h) (8/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 9
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(// lm73_functions.h ) c n
+(// Roger Traylor 11.27.10) N
+(//special defines and functions for the lm73 temperature sensor) N
+(#define) K
+( TRUE  1) p n
+(#define) K
+( FALSE 0) p n
+() N
+(#include) K
+( ") p
+(twi_master.h) str
+("  ) p
+(//my TWCR_START, STOP, NACK, RNACK, SEND) c n
+(//use the status codes in: usr/local/AVRMacPack/avr-3/include/util/twi.h) N
+() p n
+(#define) K
+( LM73_ADDRESS 0x90                    ) p
+(//LM73-0, address pin floating) c n
+(#define) K
+( LM73_WRITE \(LM73_ADDRESS | TW_WRITE\) ) p
+(//LSB is a zero to write) c n
+(#define) K
+( LM73_READ  \(LM73_ADDRESS | TW_READ\)  ) p
+(//LSB is a one to read) c n
+(#define) K
+( LM73_PTR_TEMP          0x00          ) p
+(//LM73 temperature address) c n
+(#define) K
+( LM73_PTR_CONFIG        0x01          ) p
+(//LM73 configuration address) c n
+(#define) K
+( LM73_PTR_CTRL_STATUS   0x04          ) p
+(//LM73 control and status register) c n
+(#define) K
+( LM73_CONFIG_VALUE0     0x60          ) p
+(//no pwr dwn, disbl alert, no one s) c n
+(hot: config reg) N
+(#define) K
+( LM73_CONFIG_VALUE1     0xE0          ) p
+(//no timeout, max resolution: for c) c n
+(tl/status reg) N
+() p n
+(//special functions for lm73 temperature sensor) c n
+(uint8_t  lm73_temp_convert\() p
+(char) k
+( temp_digits[], uint16_t lm73_temp, uint8_t f_not) p n
+(_c\);) N
+(  ) N
+(lm73_functions.h) (Page 1/1) (Dec 05, 13 12:18) title
+border
+grestore
+(Printed by Robert) rhead
+(lm73_functions.h) (9/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 10
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#ifndef) K
+( MACROS) p n
+(#define) K
+( MACROS) p n
+() N
+(#define) K
+( TRUE  1) p n
+(#define) K
+( FALSE 0) p n
+() N
+(#define) K
+( BUTTON1 0) p n
+(#define) K
+( BUTTON2 1) p n
+(#define) K
+( BUTTON3 2) p n
+(#define) K
+( BUTTON4 3) p n
+(#define) K
+( BUTTON5 4) p n
+(#define) K
+( BUTTON6 5) p n
+(#define) K
+( BUTTON7 6) p n
+(#define) K
+( BUTTON8 7) p n
+() N
+(#define) K
+( MODE_DEFAULT      0) p n
+(#define) K
+( MODE_SET_TIME     1) p n
+(#define) K
+( MODE_SET_ALARM    2) p n
+(#define) K
+( MODE_ENABLE_ALARM 3) p n
+(#define) K
+( MODE4 4) p n
+(#define) K
+( MODE5 5) p n
+(#define) K
+( MODE_TUNE_RADIO   6) p n
+(#define) K
+( MODE7 7) p n
+(#define) K
+( MODE8 8) p n
+() N
+(/******************************************************) c n
+( * Checks to see if the given bit is set.) N
+( ******************************************************/) N
+(#define) K
+( ISSET\(byte, bit\) \(byte & \(1 << bit\)\)) p n
+() N
+(/******************************************************) c n
+( * Sets the given bit.) N
+( ******************************************************/) N
+(#define) K
+( SETBIT\(byte, bit\) \(byte |= \(1 << bit\)\)) p n
+() N
+(/******************************************************) c n
+( * Clears the given bit.) N
+( ******************************************************/) N
+(#define) K
+( CLRBIT\(byte, bit\) \(byte &= ~\(1 << bit\)\)) p n
+() N
+(/******************************************************) c n
+( * Toggles the given bit.) N
+( ******************************************************/) N
+(#define) K
+( TOGGLEBIT\(byte, bit\) \(byte ^= \(1 << bit\)\)) p n
+() N
+(#endif) K n
+(macros.h) (Page 1/1) (Dec 15, 13 16:43) title
+border
+grestore
+(Printed by Robert) rhead
+(macros.h) (10/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 11
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(//Si4734 Addresses on the I2C bus) c n
+(#define) K
+( SI4734_ADDRESS 0x22                       ) p
+(//fixed by Silicon Labs ) c n
+() p n
+(//property definitions) c n
+(#define) K
+( GPO_IEN                       0x0001) p n
+(#define) K
+( GPO_IEN_STCIEN_SHFT           0 ) p n
+(#define) K
+( AM_SOFT_MUTE_MAX_ATTENUATION  0x3302) p n
+(#define) K
+( AM_PWR_LINE_NOISE_REJT_FILTER 0x0100) p n
+(#define) K
+( AM_CHANNEL_FILTER             0x3102) p n
+(#define) K
+( AM_CHFILT_6KHZ                0x0000) p n
+(#define) K
+( AM_CHFILT_4KHZ                0x0001) p n
+(#define) K
+( AM_CHFILT_3KHZ                0x0002) p n
+(#define) K
+( AM_CHFILT_2KHZ                0x0003) p n
+(#define) K
+( AM_CHFILT_1KHZ                0x0004) p n
+(#define) K
+( RX_HARD_MUTE                  0x4001) p n
+() N
+(#define) K
+( MUTE_LR 0x0003) p n
+(#define) K
+( MUTE_L  0x0001) p n
+(#define) K
+( MUTE_R  0x0002) p n
+(#define) K
+( UNMUTE  0x0000) p n
+() N
+(//command definitions) c n
+(#define) K
+( FM_TUNE_FREQ    0x20) p n
+(#define) K
+( AM_TUNE_FREQ    0x40) p n
+(#define) K
+( PWR_DOWN        0x11) p n
+(#define) K
+( SET_PROPERTY    0x12) p n
+(#define) K
+( GET_INT_STATUS  0x14) p n
+(#define) K
+( FM_TUNE_STATUS_IN_INTACK 0x01) p n
+(#define) K
+( FM_TUNE_STATUS  0x22) p n
+(#define) K
+( FM_RSQ_STATUS_IN_INTACK 0x01) p n
+(#define) K
+( FM_RSQ_STATUS   0x23) p n
+(#define) K
+( AM_TUNE_STATUS_IN_INTACK 0x01) p n
+(#define) K
+( AM_TUNE_STATUS  0x42) p n
+(#define) K
+( AM_RSQ_STATUS   0x43) p n
+(#define) K
+( AM_RSQ_STATUS_IN_INTACK 0x01) p n
+() N
+(//si4734.c function prototypes) c n
+(uint8_t get_int_status\(\);) p n
+(uint16_t get_freq\(\);) N
+() N
+(void) k
+(    fm_tune_freq\(uint8_t wait\);) p n
+(void) k
+(    am_tune_freq\(\);) p n
+(void) k
+(    sw_tune_freq\(\);) p n
+(void) k
+(    fm_tune_status\(\);) p n
+(void) k
+(    fm_rsq_status\(uint8_t wait\);) p n
+(void) k
+(    am_tune_status\(\);) p n
+(void) k
+(    am_rsq_status\(\);) p n
+(void) k
+(    fm_pwr_up\(\);) p n
+(void) k
+(    am_pwr_up\(\);) p n
+(void) k
+(    sw_pwr_up\(\);) p n
+(void) k
+(    radio_pwr_dwn\(\);) p n
+(void) k
+(    set_property\(uint16_t property, uint16_t value, uint8_t wait\);) p n
+() N
+(void) k
+( enable_radio\(\);) p n
+(void) k
+( reset_radio\(\);) p n
+(void) k
+( get_signal_strength\() p
+(char) k
+( signal[10]\);) p n
+(void) k
+( mute_radio\(uint8_t wait\);) p n
+(void) k
+( unmute_radio\(\);) p n
+(uint8_t is_muted\(\);) N
+(void) k
+( fm_alter_freq\(uint8_t inc\);) p n
+(si4734_driver.h) (Page 1/1) (Dec 15, 13 16:36) title
+border
+grestore
+(Printed by Robert) rhead
+(si4734_driver.h) (11/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 12
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#ifndef) K
+( SPI_DRIVER) p n
+(#define) K
+( SPI_DRIVER) p n
+() N
+(/******************************************************) c n
+( * Sets the given bit on the given port and the) N
+( * immediately clears it to give a pulse.) N
+( ******************************************************/) N
+(#define) K
+( strobel\(port, bit\) \(port |= \(1 << bit\)\); \(port &= ~\(1 << bit\)\);) p n
+() N
+(/******************************************************) c n
+( * Clears the given bit on the given port and then) N
+( * immediately sets it to give a pulse.) N
+( ******************************************************/) N
+(#define) K
+( strobeh\(port, bit\) \(port &= ~\(1 << bit\)\); \(port |= \(1 << bit\)\);) p n
+() N
+(/******************************************************) c n
+( * Enables the SPI interface.) N
+( ******************************************************/) N
+(void) k
+( spi_init\(\);) p n
+() N
+(void) k
+( spi_wait\(\);) p n
+() N
+(/******************************************************) c n
+( * Initiates an SPI transmission by writing the given) N
+( * byte to SPDR and then waiting for the transmission) N
+( * to finish.  The contents of SPDR are then returned.) N
+( ******************************************************/) N
+(char) k
+( spi_send\() p
+(char) k
+( msg\);) p n
+() N
+(#endif) K n
+(spi_driver.h) (Page 1/1) (Nov 10, 13 23:33) title
+border
+grestore
+(Printed by Robert) rhead
+(spi_driver.h) (12/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 13
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#ifndef) K
+( THERMO_DRIVER) p n
+(#define) K
+( THERMO_DRIVER) p n
+() N
+(struct) k
+( temperature {) p n
+() S 8 T (uint16_t raw;) N
+() S 8 T (uint8_t fahrenheit;) N
+() S 8 T (uint8_t celsius;) N
+() S 8 T () N
+() S 8 T (uint8_t positive;) N
+(};) N
+() N
+(void) k
+( init_thermo_sensors\(\);) p n
+(void) k
+( prepare_local_read\(uint8_t wait\);) p n
+(void) k
+( local_thermo_read\(uint8_t wait\);) p n
+(void) k
+( get_local_temp\() p
+(struct) k
+( temperature * temp\);) p n
+() N
+(#ifdef) K
+( MEGA128) p n
+(void) k
+( decode_temp\() p
+(struct) k
+( temperature *temp\);) p n
+(#endif) K n
+() p n
+(#endif) K n
+(thermo_driver.h) (Page 1/1) (Dec 05, 13 12:44) title
+border
+grestore
+(Printed by Robert) rhead
+(thermo_driver.h) (13/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 14
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(//twi master functions header file: twi_master.h ) c n
+(//Roger Traylor 11.7.2011) N
+(//special defines and functions for twi bus in interrupt mode ) N
+() p n
+(//using status codes in: usr/local/AVRMacPack/avr-3/include/util/twi.h) c n
+(//use my own defines for actions that are to be taken) N
+() p n
+(#ifndef) K
+( TWI_MASTER) p n
+(#define) K
+( TWI_MASTER) p n
+() N
+(#define) K
+( TWI_TWBR 0x0C  ) p
+(//400khz TWI clock) c n
+() p n
+(//TODO: try these some day...) c n
+(//set bit rate for TWI) N
+(//TWBR must be > 10 for correct operation) N
+(//TWPS must be 0, for prescaler = 1) N
+(//#define SCL_CLOCK  100000L) N
+(//#define TWI_TWBR \( \(\(F_CPU/SCL_CLOCK\) -16\) / 2  \) ) N
+() p n
+(#define) K
+( NO_INTERRUPTS  0) p n
+() N
+(#if) K
+( \(NO_INTERRUPTS\)) p n
+() N
+(#define) K
+( TWCR_START  0xA4   ) p
+(//send start condition  ) c n
+(#define) K
+( TWCR_STOP   0x94   ) p
+(//send stop condition   ) c n
+(#define) K
+( TWCR_RACK   0xC4   ) p
+(//receive byte and return ack to slave  ) c n
+(#define) K
+( TWCR_RNACK  0x84   ) p
+(//receive byte and return nack to slave) c n
+(#define) K
+( TWCR_SEND   0x84   ) p
+(//pokes the TWINT flag in TWCR and TWEN) c n
+() p n
+(#else) K n
+(#define) S
+( TWCR_START  0xA5 ) p
+(//send START ) c n
+(#define) K
+( TWCR_SEND   0x85 ) p
+(//poke TWINT flag to send another byte ) c n
+(#define) K
+( TWCR_RACK   0xC5 ) p
+(//receive byte and return ACK to slave  ) c n
+(#define) K
+( TWCR_RNACK  0x85 ) p
+(//receive byte and return NACK to slave) c n
+(#define) K
+( TWCR_RST    0x04 ) p
+(//reset TWI) c n
+(#define) K
+( TWCR_STOP   0x94 ) p
+(//send STOP,interrupt off, signals completion) c n
+() p n
+(#endif) K n
+() p n
+(#define) K
+( TWI_BUFFER_SIZE 17  ) p
+(//SLA+RW \(1 byte\) +  16 data bytes \(message size\)) c n
+() p n
+(uint8_t twi_busy\() S
+(void) k
+(\);) p n
+(void) k
+(    twi_start_wr\(uint8_t twi_addr, ) p
+(volatile) K
+( uint8_t *twi_data, uint8_t byte_) p n
+(cnt\);) N
+(void) k
+(    twi_start_rd\(uint8_t twi_addr, ) p
+(volatile) K
+( uint8_t *twi_data, uint8_t byte_) p n
+(cnt\);) N
+(void) k
+(    init_twi\(\);) p n
+() N
+(#endif) K n
+(twi_master.h) (Page 1/1) (Dec 05, 13 12:19) title
+border
+grestore
+(Printed by Robert) rhead
+(twi_master.h) (14/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 15
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p n
+(//UART Functions header file ) c n
+(//Roger Traylor 11.l6.11) N
+(//For controlling the UART and sending debug data to a terminal) N
+(//as an aid in debugging.) N
+(#ifndef) K
+( UART_DRIVER) p n
+(#define) K
+( UART_DRIVER) p n
+() N
+(void) k
+( uart_putc\() p
+(char) k
+( data\);) p n
+(void) k
+( uart_puts\() p
+(char) k
+( *str\);) p n
+(void) k
+( uart_puts_p\() p
+(const) K
+( ) p
+(char) k
+( *str\);) p n
+(void) k
+( uart_init\(\);) p n
+(char) k
+( uart_getc\() p
+(void) k
+(\);) p n
+() N
+(void) k
+( enable_rx_interrupts\(\);) p n
+() N
+(#endif) K n
+(uart_driver.h) (Page 1/1) (Dec 05, 13 13:06) title
+border
+grestore
+(Printed by Robert) rhead
+(uart_driver.h) (15/15) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+
+%%Trailer
+end
+%%EOF

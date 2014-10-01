@@ -1,0 +1,598 @@
+// main.c
+// Robert Phillips III
+// 10.3.05
+
+// Port mapping: pin wire function
+
+// Port A:  bit0 black  segment A
+//          bit1 white  segment B
+//          bit2 grey   segment C
+//          bit3 purple segment D
+//          bit4 blue   segment E
+//          bit5 green  segment F
+//          bit6 yellow segment G
+//          bit7 orange decimal point
+//          vcc  brown  Vdd
+//          gnd  red    GND
+
+// Port B:  bit4 white  seg0
+//          bit5 purple seg1
+//          bit6 green  seg2
+//          bit7 black  pwm 
+//          vcc  brown  Vdd
+//          gnd  orange GND
+
+// PORT C:  bit0 orange graph strobe
+//          vcc  purple Vdd
+//          gnd  blue   GND
+
+// PORT D:  bit0 white TWI clock
+//          bit1 grey  TWI data
+//          vcc  white Vdd
+//          gnd  black GND
+
+// PORT E:  bit3 red     volume
+//          bit4 orange* audio out
+//          bit6 blue    encoder strobe
+//          vcc  white   Vdd
+//          gnd  purple  GND
+
+// PORT F:  bit7 white* ADC
+//          vcc  green* Vdd
+
+// * indicates a jumper wire
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#include <led_driver.h>
+#include <button_driver.h>
+#include <graph_driver.h>
+#include <encoder_driver.h>
+#include <thermo_driver.h>
+#include <lcd_driver.h>
+#include <adc_driver.h>
+#include <uart_driver.h>
+#include <clock.h>
+#include <si4734_driver.h>
+#include <macros.h>
+
+#define LCD_LINE_LENGTH 40
+#define MODE_MSG_LENGTH 10
+#define VOLUME          OCR3A
+
+volatile uint16_t number;
+
+volatile char lcd_top[LCD_LINE_LENGTH];
+volatile char lcd_bottom[LCD_LINE_LENGTH];
+
+volatile char local_temp[7];
+volatile char remote_temp[7];
+
+volatile uint8_t lcd_index;
+volatile uint8_t mode;
+volatile uint8_t uart_bit;
+volatile uint8_t remote_num;
+
+volatile uint8_t mute;
+volatile uint8_t unmute;
+
+volatile uint8_t clock_count;
+volatile uint8_t lcd_count;
+volatile uint8_t play_alarm;
+volatile uint8_t volume;
+volatile uint8_t software_pwm;
+volatile uint8_t seconds_state;
+
+volatile struct encoder_state encoders;
+volatile struct display output;
+volatile struct temperature remote_data;
+
+char *MODE_STRING[] = {
+	"          ",
+	"SET TIME  ",
+	"SET ALARM ",
+	"          ",
+	"          ",
+	"          ",
+	"          "
+};
+
+/******************************************************
+ * Initializes an overflow interrupt on timer 0 that
+ * controls the frequency at which the buttons are
+ * checked for its pressed state.
+ ******************************************************/
+void init_ui_timer()
+{
+	TIMSK |= (1 << OCIE1B) | (1 << TOIE2);
+	
+	TCCR1A = 0x00;
+	TCCR1B = (1 << CS11);
+	TCCR1C = 0x00;
+
+	OCR1A = 10;
+	OCR1B = 250;
+}
+
+void init_volume_control()
+{
+	TCCR3A = (1 << WGM30) | (1 << COM3A1);
+	TCCR3B = (1 << WGM32) | (1 << CS31);
+	TCCR3C = 0x00;
+
+	VOLUME = 50;
+}
+
+void update_lcd_array(volatile char line[LCD_LINE_LENGTH], char *msg, uint8_t offset, uint8_t length)
+{
+	uint8_t i;
+	for (i = 0; i < length; i++)
+		line[i+offset] = msg[i];
+}
+
+void update_clock(volatile struct encoder_state *state)
+{
+	if (state->left_dir == STOPPED && state->right_dir == STOPPED)
+		return;
+
+	if (state->left_dir == FORWARD)
+		change_hour(1);
+
+	if (state->right_dir == FORWARD)
+		change_minute(1);
+
+	if (state->left_dir == REVERSE)
+		change_hour(-1);
+
+	if (state->right_dir == REVERSE)
+		change_minute(-1);
+}
+
+void update_alarm(volatile struct encoder_state *state)
+{
+	if (state->left_dir == STOPPED && state->right_dir == STOPPED)
+		return;
+
+	if (state->left_dir == FORWARD)
+		change_alarm_hour(1);
+
+	if (state->right_dir == FORWARD)
+		change_alarm_minute(1);
+
+	if (state->left_dir == REVERSE)
+		change_alarm_hour(-1);
+
+	if (state->right_dir == REVERSE)
+		change_alarm_minute(-1);
+}
+
+void inc_volume() {
+	if (VOLUME == 100)
+		return;
+
+	VOLUME += 5;
+}
+
+void dec_volume() {
+	if (VOLUME == 0)
+		return;
+
+	VOLUME -= 5;
+}
+
+void update_volume(volatile struct encoder_state *state)
+{
+	if (state->left_dir == STOPPED && state->right_dir == STOPPED)
+		return;
+
+	if (state->left_dir == FORWARD || state->right_dir == FORWARD)
+		inc_volume();
+	
+	if (state->left_dir == REVERSE || state->right_dir == REVERSE)
+		dec_volume();
+}
+
+void update_radio_frequency(volatile struct encoder_state *state)
+{
+	if (state->left_dir == STOPPED && state->right_dir == STOPPED)
+		return;
+
+	if (state->left_dir == FORWARD)
+		fm_alter_freq(1);
+	
+	if (state->left_dir == REVERSE)
+		fm_alter_freq(0);
+
+	if (state->right_dir == FORWARD)
+		inc_volume();
+
+	if (state->right_dir == REVERSE)
+		dec_volume();
+}
+
+void set_lcd_alarm_state(uint8_t state)
+{
+	switch(state) {
+	case ALARM_ENABLED_RADIO:
+		update_lcd_array(lcd_top, "ALM RADIO", 0, 9);
+		break;
+		
+	case ALARM_ENABLED_TONE:
+		update_lcd_array(lcd_top, "ALM TONE ", 0, 9);
+		break;
+		
+	case ALARM_DISABLED:
+		update_lcd_array(lcd_top, "ALARM OFF", 0, 9);
+		break;
+	}
+
+	if (mode != MODE_DEFAULT && mode != MODE_TUNE_RADIO)
+		update_lcd_array(lcd_bottom, MODE_STRING[mode], 0, MODE_MSG_LENGTH);
+}
+
+void toggle_mode(uint8_t new)
+{
+	if (mode == new) 
+		mode = MODE_DEFAULT;
+	else
+		mode = new;
+}
+
+void change_alarm_state()
+{
+	switch (is_alarm_enabled()) {
+	case ALARM_DISABLED:
+		set_alarm_state(ALARM_ENABLED_TONE);
+		break;
+
+	case ALARM_ENABLED_TONE:
+		set_alarm_state(ALARM_ENABLED_RADIO);
+		break;
+
+	case ALARM_ENABLED_RADIO:
+		set_alarm_state(ALARM_DISABLED);
+		break;
+	}
+}
+
+void change_mode(char buttons)
+{
+	/* BUTTON 1: set the time */
+	if (ISSET(buttons, BUTTON1))
+		toggle_mode(MODE_SET_TIME);
+
+	/* BUTTON 2: set the alarm time */
+	if (ISSET(buttons, BUTTON2))
+		toggle_mode(MODE_SET_ALARM);
+
+	/* BUTTON 3: enable/disable the alarm */
+	if (ISSET(buttons, BUTTON3))
+		change_alarm_state();
+
+	/* BUTTON 4: snooze for 1 minute */
+	if (ISSET(buttons, BUTTON4)) {
+		if (play_alarm) {
+			play_alarm = ALARM_DISABLED;
+
+			mute = TRUE;
+			snooze_alarm(1, 0);
+		}
+	}
+
+	/* BUTTON 5: snooze for 10 minutes */
+	if (ISSET(buttons, BUTTON5)) {
+		if (play_alarm) {
+			play_alarm = ALARM_DISABLED;
+
+			mute = TRUE;
+			snooze_alarm(10, 0);
+		}
+	}
+
+	/* BUTTON 6: silence alarm */
+	if (ISSET(buttons, BUTTON6)) {
+		play_alarm = ALARM_DISABLED;
+
+		mute = TRUE;
+		reset_snooze();
+	}
+
+	/* BUTTON 7: tune radio mode */
+	if (ISSET(buttons, BUTTON7)) 
+		toggle_mode(MODE_TUNE_RADIO);
+
+	/* BUTTON 8: mute/unmute the radio */
+	if (ISSET(buttons, BUTTON8)) {
+		if (is_muted())
+			unmute = TRUE;
+		else
+			mute = TRUE;
+	}
+}
+
+void refresh_encoders()
+{
+	latch_encoders();
+	if (VOLUME == 0)
+		get_direction(&encoders, update_graph(OFF)); // get the encoder direction
+	else
+		get_direction(&encoders, update_graph(GRAPH_NUMS[VOLUME/14+1])); // get the encoder direction
+
+	switch(mode) {
+	case MODE_SET_TIME:
+		update_clock(&encoders);			
+		break;
+
+	case MODE_SET_ALARM:
+		update_alarm(&encoders);
+		break;
+
+	case MODE_TUNE_RADIO:
+		update_radio_frequency(&encoders);
+		break;
+
+	case MODE_ENABLE_ALARM:
+	case MODE_DEFAULT:
+		update_volume(&encoders);
+		break;
+	}
+}
+
+void refresh_lcd_display()
+{
+	set_lcd_alarm_state(is_alarm_enabled());
+	if (lcd_index > LCD_LINE_LENGTH-1)
+		char2lcd(lcd_bottom[lcd_index-LCD_LINE_LENGTH]);
+	else
+		char2lcd(lcd_top[lcd_index]);
+
+	lcd_index++;
+	if (lcd_index == 2*LCD_LINE_LENGTH)
+		lcd_index = 0;
+}
+
+void refresh_led_display()
+{
+	seconds_state = get_seconds_state(mode);
+	if (mode == MODE_SET_TIME && seconds_state) {
+		disable_leds();
+		return;
+	} 
+
+	switch (mode) {
+	case MODE_SET_ALARM:
+		number = get_alarm();
+
+		set_decimal(&output, FALSE);
+		set_zero_filled(&output);
+		update_colon(&output, COLON_ON, is_alarm_enabled());
+		break;
+
+	case MODE_TUNE_RADIO:
+		number = get_freq();
+		
+		set_decimal(&output, TRUE);
+		set_zero_blanked(&output);
+		update_colon(&output, COLON_OFF, is_alarm_enabled());
+		break;
+		
+	default:
+		number = get_time();
+		
+		set_decimal(&output, FALSE);
+		set_zero_filled(&output);
+		update_colon(&output, seconds_state, is_alarm_enabled());
+	}
+
+	update_segment(&output, number);
+}
+
+void init_globals()
+{
+	memset((void *) lcd_top, 0x20, sizeof(lcd_top));
+	memset((void *) lcd_bottom, 0x20, sizeof(lcd_bottom));
+
+	lcd_top[15] = 'C';
+	lcd_bottom[15] = 'C';
+
+	lcd_index = 0;
+	uart_bit = 0;
+	
+	remote_num = 0;
+	clock_count = 0;
+	lcd_count = 0;
+	play_alarm = 0;
+	software_pwm = 0;
+
+	mode = MODE_DEFAULT;
+}
+
+void init_peripherals()
+{
+	/* init the clock */
+	init_clock_timer();
+	set_time(21, 37);
+
+	enable_leds();
+	enable_dimmer();
+	_delay_ms(20);
+
+	init_ui_timer(); // init the timer to check for the button states
+	init_volume_control();
+
+	uart_init();
+	enable_rx_interrupts();
+	
+	enable_graph(); // enable the bar graph
+	update_graph(OFF); // make sure the bar graph is off
+
+	enable_lcd();
+	cursor_home();
+	clear_display();
+
+	init_thermo_sensors();
+
+	set_lcd_alarm_state(ALARM_DISABLED);
+
+	init_display_struct(&output); // init the struct the holds the display state
+	set_zero_filled(&output); // set the military time display
+
+	enable_encoders(); // enable the encoders
+	init_encoder_struct(&encoders);// init the encoder data struct
+}
+
+void toggle_pwm()
+{
+	software_pwm++;
+	if (software_pwm == 3 && seconds_state) {
+		TOGGLEBIT(PORTE, PE4);
+		software_pwm = 0;
+	}
+}
+
+ISR(USART0_RX_vect)
+{
+	remote_num = UDR0;
+}
+
+ISR(TIMER2_OVF_vect)
+{
+	refresh_encoders();
+}
+
+void start_alarm()
+{
+	switch (play_alarm) {
+	case ALARM_ENABLED_RADIO:
+		unmute = TRUE;
+
+		break;
+
+	case ALARM_ENABLED_TONE:
+		mute = TRUE;
+		
+		toggle_pwm();
+		break;
+	}
+}
+
+ISR(TIMER1_COMPB_vect)
+{
+	TCNT1 = 0;
+		
+	start_alarm();
+	
+	lcd_count++;
+	if (lcd_count == 3) {
+		lcd_count = 0;
+
+		refresh_lcd_display();
+	}
+
+	refresh_led_display();
+}
+
+/******************************************************
+ * Handles the following operations:
+ *
+ * 1) Ticking of the seconds
+ * 2) Polls the buttons
+ *
+ * The timer is initialized by the init_clock_timer
+ * routine
+ ******************************************************/
+ISR(TIMER0_OVF_vect)
+{
+	clock_count++;
+	if (clock_count == 128) {
+		tick_seconds();
+
+		uint8_t alm_state = is_alarm_time();
+		if (alm_state)
+			play_alarm = alm_state;
+
+		clock_count = 0;
+	}
+
+	enable_buttons(); // enable the buttons and disable the display
+	change_mode(poll_buttons(PINA)); // get the button state
+	enable_leds(); // re-enable the leds
+}
+
+int main()
+{
+	DDRC = 0x02;
+	DDRB = 0xF0;   //set port bits 4-7 B as outputs
+	DDRD = 0x00;   //set port D all inputs 
+	DDRE = 0xFF;
+	
+	PORTD = 0xFF;   //set port D all pullups 
+
+	init_globals();
+
+	sei();
+	enable_radio();
+	cli();
+
+	init_peripherals();
+
+	update_brightness();
+	_delay_ms(20);
+
+	sei(); 
+	prepare_local_read(1);
+
+	char alarm_time[11];
+	char signal_strength[11];
+	
+	struct temperature temp_data;
+	while (1) {
+		local_thermo_read(0);
+		_delay_ms(1);
+		
+		get_local_temp(&temp_data);
+		
+		itoa(temp_data.celsius, local_temp, 10);
+		update_lcd_array(lcd_bottom, local_temp, 12, strlen(local_temp));
+		
+		itoa(remote_num, remote_temp, 10);
+		update_lcd_array(lcd_top, remote_temp, 12, strlen(remote_temp));
+
+		if (mode == MODE_DEFAULT) {
+			get_alarm_string(alarm_time);
+			update_lcd_array(lcd_bottom, alarm_time, 0, MODE_MSG_LENGTH);
+		}
+
+		if (mode == MODE_TUNE_RADIO) {
+			fm_rsq_status(0);
+			_delay_ms(2);
+
+			get_signal_strength(signal_strength);
+			update_lcd_array(lcd_bottom, signal_strength, 0, MODE_MSG_LENGTH);
+		}
+
+		if (mute) {
+			mute_radio(0);
+
+			_delay_ms(4);
+			mute = FALSE;
+		}
+
+		if (unmute) {
+			unmute_radio();
+
+			_delay_ms(4);
+			unmute = FALSE;
+		}
+		
+		fm_tune_freq(0);
+		update_brightness();
+	}
+}  //main
+

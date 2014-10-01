@@ -1,0 +1,16 @@
+#!/bin/sh
+
+headers=$( ls *.h )
+for header in $headers; do
+	name=$( echo $header | sed "s/\./_/g" )
+	
+	a2ps -o postscript/$name.ps $header
+done
+
+
+sources=$( ls *.c )
+for source in $sources; do
+	name=$( echo $source | sed "s/\./_/g" )
+	
+	a2ps -o postscript/$name.ps $source
+done

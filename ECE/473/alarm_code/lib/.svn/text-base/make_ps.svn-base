@@ -1,0 +1,17 @@
+#!/bin/sh
+
+headers=$( ls *.h )
+header_files=""
+for header in $headers; do
+	header_files="$header_files $header"
+done
+
+sources=$( ls *.c )
+source_files=""
+for source in $sources; do
+	source_files="$source_files $source"
+done
+
+a2ps -o postscript/header_files.ps $header_files
+a2ps -o postscript/source_files.ps $source_files
+a2ps -o postscript/main_files.ps ../main.c ../mega48.c

@@ -1,0 +1,3693 @@
+%!PS-Adobe-3.0
+%%Title: adc_driver.c, button_driver.c, clock.c, encoder_driver.c, graph_driver.c, lcd_driver.c, led_driver.c, lm73_driver.c, lm73_functions.c, si4734_driver.c
+%%For: Robert
+%%Creator: a2ps version 4.14
+%%CreationDate: Sun Dec 15 23:56:20 2013
+%%BoundingBox: 24 24 588 768
+%%DocumentData: Clean7Bit
+%%Orientation: Landscape
+%%Pages: 18
+%%PageOrder: Ascend
+%%DocumentMedia: Letter 612 792 0 () ()
+%%DocumentNeededResources: font Courier
+%%+ font Courier-Bold
+%%+ font Courier-BoldOblique
+%%+ font Courier-Oblique
+%%+ font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Symbol
+%%+ font Times-Bold
+%%+ font Times-Roman
+%%DocumentProcessColors: Black 
+%%DocumentSuppliedResources: procset a2ps-a2ps-hdr
+%%+ procset a2ps-black+white-Prolog
+%%+ encoding ISO-8859-1Encoding
+%%EndComments
+/a2psdict 200 dict def
+a2psdict begin
+%%BeginProlog
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+
+% EPSF import as in the Red Book
+/BeginInclude {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack 
+  userdict begin
+    0 setgray 0 setlinecap
+    1 setlinewidth 0 setlinejoin
+    10 setmiterlimit [ ] 0 setdash newpath
+    gs_languagelevel 1 ne {
+      false setstrokeadjust false setoverprint 
+    } if
+} bind def
+
+/EndInclude {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+/BeginEPSF {
+  BeginInclude
+  /showpage { } def
+} bind def
+
+/EndEPSF {
+  EndInclude
+} bind def
+
+% Page prefeed
+/page_prefeed {         % bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} bind def
+
+/deffont {
+  findfont exch scalefont def
+} bind def
+
+/reencode_font {
+  findfont reencode 2 copy definefont pop def
+} bind def
+
+% Function c-show (str => -)
+% centers text only according to x axis.
+/c-show { 
+  dup stringwidth pop
+  2 div neg 0 rmoveto
+  show
+} bind def
+
+% Function l-show (str => -)
+% prints texts so that it ends at currentpoint
+/l-show {
+  dup stringwidth pop neg 
+  0 
+  rmoveto show
+} bind def
+
+% center-fit show (str w => -)
+% show centered, and scale currentfont so that the width is less than w
+/cfshow {
+  exch dup stringwidth pop
+  % If the title is too big, try to make it smaller
+  3 2 roll 2 copy
+  gt
+  { % if, i.e. too big
+    exch div
+    currentfont exch scalefont setfont
+  } { % ifelse
+    pop pop 
+  }
+  ifelse
+  c-show			% center title
+} bind def
+
+% Return the y size of the current font
+% - => fontsize
+/currentfontsize {
+  currentfont /FontType get 0 eq {
+    currentfont /FontMatrix get 3 get
+  }{
+    currentfont /FontMatrix get 3 get 1000 mul
+  } ifelse
+} bind def
+
+% reencode the font
+% <encoding-vector> <fontdict> -> <newfontdict>
+/reencode { %def
+  dup length 5 add dict begin
+    { %forall
+      % <vector> <key> <val>
+      1 index /FID ne 
+      { def }{ pop pop } ifelse
+    } forall
+    /Encoding exch def % -
+
+    % Use the font's bounding box to determine the ascent, descent,
+    % and overall height; don't forget that these values have to be
+    % transformed using the font's matrix.
+    % We use `load' because sometimes BBox is executable, sometimes not.
+    % Since we need 4 numbers an not an array avoid BBox from being executed
+    /FontBBox load aload pop
+    FontMatrix transform /Ascent exch def pop
+    FontMatrix transform /Descent exch def pop
+    /FontHeight Ascent Descent sub def
+
+    % Get the underline position and thickness if they're defined.
+    % Use 1 if they are not defined.
+    currentdict /FontInfo 2 copy known
+    { get
+      /UnderlinePosition 2 copy % <FontInfo> /UP <FontInfo> /UP
+      2 copy known
+      { get }{ pop pop 1 } ifelse
+      0 exch FontMatrix transform exch pop
+      def % <FontInfo>
+
+      /UnderlineThickness 2 copy % <FontInfo> /UT <FontInfo> /UT
+      2 copy known
+      { get }{ pop pop 1 } ifelse
+      0 exch FontMatrix transform exch pop
+      def % <FontInfo>
+      pop % -
+    }{ pop pop
+    } ifelse
+
+    currentdict
+  end 
+} bind def
+
+% composite fonts for ASCII-EUC mixed strings
+% Version 1.2 1/31/1990
+% Original Ken'ichi HANDA (handa@etl.go.jp)
+% Modified Norio Katayama (katayama@rd.nacsis.ac.jp),1998
+% Extend & Fix Koji Nakamaru (maru@on.cs.keio.ac.jp), 1999
+% Anyone can freely copy, modify, distribute this program.
+
+/copyfont {	% font-dic extra-entry-count  copyfont  font-dic
+	1 index maxlength add dict begin
+	{	1 index /FID ne 2 index /UniqueID ne and
+		{def} {pop pop} ifelse
+	} forall
+	currentdict
+	end
+} bind def
+
+/compositefont { % ASCIIFontName EUCFontName RomanScale RomanOffset Rot(T/F) compositefont font
+    /RomanRotation exch def
+    /RomanOffset exch def
+    /RomanScale exch def
+    userdict /fixeucfont_dict known not {
+	userdict begin
+	    /fixeucfont_dict 2 dict begin
+		/UpperByteEncoding [
+		    16#00 1 16#20 { pop 0 } for
+		    16#21 1 16#28 { 16#20 sub } for
+		    16#29 1 16#2F { pop 0 } for
+		    16#30 1 16#74 { 16#27 sub } for
+		    16#75 1 16#FF { pop 0 } for
+		] def
+	        /LowerByteEncoding [
+		    16#00 1 16#A0 { pop /.notdef } for
+		    16#A1 1 16#FE { 16#80 sub 16 2 string cvrs
+				    (cXX) dup 1 4 -1 roll
+				    putinterval cvn } for
+		    /.notdef
+		] def
+		currentdict
+	    end def
+	end
+    } if
+    findfont dup /FontType get 0 eq {
+	14 dict begin
+	    %
+	    % 7+8 bit EUC font
+	    %
+	    12 dict begin
+		/EUCFont exch def
+		/FontInfo (7+8 bit EUC font) readonly def
+		/PaintType 0 def
+		/FontType 0 def
+		/FontMatrix matrix def
+		% /FontName
+		/Encoding fixeucfont_dict /UpperByteEncoding get def
+		/FMapType 2 def
+		EUCFont /WMode known
+		{ EUCFont /WMode get /WMode exch def }
+		{ /WMode 0 def } ifelse
+		/FDepVector [
+		    EUCFont /FDepVector get 0 get
+		    [ 16#21 1 16#28 {} for 16#30 1 16#74 {} for ]
+		    {
+			13 dict begin
+			    /EUCFont EUCFont def
+			    /UpperByte exch 16#80 add def	
+			    % /FontName
+			    /FontInfo (EUC lower byte font) readonly def
+			    /PaintType 0 def
+			    /FontType 3 def
+			    /FontMatrix matrix def
+			    /FontBBox {0 0 0 0} def
+			    /Encoding
+				fixeucfont_dict /LowerByteEncoding get def
+			    % /UniqueID
+			    % /WMode
+			    /BuildChar {
+				gsave
+				exch dup /EUCFont get setfont
+				/UpperByte get
+				2 string
+				dup 0 4 -1 roll put
+				dup 1 4 -1 roll put
+				dup stringwidth setcharwidth
+				0 0 moveto show
+				grestore
+			    } bind def
+			    currentdict
+			end
+			/lowerbytefont exch definefont
+		    } forall
+		] def
+		currentdict
+	    end
+	    /eucfont exch definefont
+	    exch
+	    findfont 1 copyfont dup begin
+		RomanRotation {
+			/FontMatrix FontMatrix
+			[ 0 RomanScale neg RomanScale 0 RomanOffset neg 0 ]
+			matrix concatmatrix def
+		}{
+			/FontMatrix FontMatrix
+			[ RomanScale 0 0 RomanScale 0 RomanOffset ] matrix concatmatrix
+			def
+			/CDevProc
+			    {pop pop pop pop 0 exch -1000 exch 2 div 880} def
+		} ifelse
+	    end
+	    /asciifont exch definefont
+	    exch
+	    /FDepVector [ 4 2 roll ] def
+	    /FontType 0 def
+	    /WMode 0 def
+	    /FMapType 4 def
+	    /FontMatrix matrix def
+	    /Encoding [0 1] def
+	    /FontBBox {0 0 0 0} def
+%	    /FontHeight 1.0 def % XXXX
+	    /FontHeight RomanScale 1.0 ge { RomanScale }{ 1.0 } ifelse def
+	    /Descent -0.3 def   % XXXX
+	    currentdict
+	end
+	/tmpfont exch definefont
+	pop
+	/tmpfont findfont
+    }{
+	pop findfont 0 copyfont
+    } ifelse
+} def	
+
+/slantfont {	% FontName slant-degree  slantfont  font'
+    exch findfont 1 copyfont begin
+    [ 1 0 4 -1 roll 1 0 0 ] FontMatrix exch matrix concatmatrix
+    /FontMatrix exch def
+    currentdict
+    end
+} def
+
+% Function print line number (<string> # -)
+/# {
+  gsave
+    sx cw mul neg 2 div 0 rmoveto
+    f# setfont
+    c-show
+  grestore
+} bind def
+
+% -------- Some routines to enlight plain b/w printings ---------
+
+% Underline
+% width --
+/dounderline {
+  currentpoint
+  gsave
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    0 rlineto
+    stroke
+  grestore
+} bind def
+
+% Underline a string
+% string --
+/dounderlinestring {
+  stringwidth pop
+  dounderline
+} bind def
+
+/UL {
+  /ul exch store
+} bind def
+
+% Draw a box of WIDTH wrt current font
+% width --
+/dobox {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    stroke
+  grestore
+} bind def
+
+/BX {
+  /bx exch store
+} bind def
+
+% Box a string
+% string --
+/doboxstring {
+  stringwidth pop
+  dobox
+} bind def
+
+%
+% ------------- Color routines ---------------
+%
+/FG /setrgbcolor load def
+
+% Draw the background
+% width --
+/dobackground {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    bgcolor aload pop setrgbcolor
+    fill
+  grestore
+} bind def
+
+% Draw bg for a string
+% string --
+/dobackgroundstring {
+  stringwidth pop
+  dobackground
+} bind def
+
+
+/BG {
+  dup /bg exch store
+  { mark 4 1 roll ] /bgcolor exch store } if
+} bind def
+
+
+/Show {
+  bg { dup dobackgroundstring } if
+  ul { dup dounderlinestring } if
+  bx { dup doboxstring } if
+  show
+} bind def
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T {
+  cw mul x0 add
+  bg { dup currentpoint pop sub dobackground } if
+  ul { dup currentpoint pop sub dounderline } if
+  bx { dup currentpoint pop sub dobox } if
+  y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n {
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+/S {
+  Show
+} bind def
+
+%%BeginResource: procset a2ps-a2ps-hdr 2.0 2
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Function title: prints page header.
+% <ct> <rt> <lt> are passed as argument
+/title { 
+  % 1. Draw the background
+  x v get y v get moveto
+  gsave
+    0 th 2 div neg rmoveto 
+    th setlinewidth
+    0.95 setgray
+    pw 0 rlineto stroke
+  grestore
+  % 2. Border it
+  gsave
+    0.7 setlinewidth
+    pw 0 rlineto
+    0 th neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+  % stk: ct rt lt
+  x v get y v get th sub 1 add moveto
+%%IncludeResource: font Helvetica
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  % 3. The left title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    fnfs 0.8 mul hm rmoveto
+    show			% left title
+  grestore
+  exch
+  % stk: ct ltw rt
+  % 4. the right title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    dup
+    pw exch stringwidth pop fnfs 0.8 mul add sub
+    hm
+    rmoveto
+    show			% right title
+  grestore
+  % stk: ct ltw rtw
+  % 5. the center title
+  gsave
+    pw 3 1 roll
+    % stk: ct pw ltw rtw
+    3 copy 
+    % Move to the center of the left room
+    sub add 2 div hm rmoveto
+    % What is the available space in here?
+    add sub fnfs 0.8 mul sub fnfs 0.8 mul sub
+    % stk: ct space_left
+%%IncludeResource: font Helvetica-Bold
+  fHelvetica-Bold fnfs scalefont setfont
+    cfshow
+  grestore
+} bind def
+
+% Function border: prints virtual page border
+/border { %def
+  gsave				% print four sides
+    0 setgray
+    x v get y v get moveto
+    0.7 setlinewidth		% of the square
+    pw 0 rlineto
+    0 ph neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+} bind def
+
+% Function water: prints a water mark in background
+/water { %def
+  gsave
+    scx scy moveto rotate
+%%IncludeResource: font Times-Bold
+  fTimes-Bold 100 scalefont setfont
+    .97 setgray
+    dup stringwidth pop 2 div neg -50 rmoveto
+    show
+  grestore
+} bind def
+
+% Function rhead: prints the right header
+/rhead {  %def
+  lx ly moveto
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  l-show
+} bind def
+
+% Function footer (cf rf lf -> -)
+/footer {
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  dx dy moveto
+  show
+
+  snx sny moveto
+  l-show
+  
+  fnx fny moveto
+  c-show
+} bind def
+%%EndResource
+%%BeginResource: procset a2ps-black+white-Prolog 2.0 1
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T { 
+  cw mul x0 add y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n { %def
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+}  bind def
+
+/S {
+  Show
+} bind def
+
+/p {
+  false UL
+  false BX
+  fCourier bfs scalefont setfont
+  Show
+} bind def
+
+/sy {
+  false UL
+  false BX
+  fSymbol bfs scalefont setfont
+  Show
+} bind def
+
+/k {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/K {
+  false UL
+  false BX
+  fCourier-Bold bfs scalefont setfont
+  Show
+} bind def
+
+/c {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/C {
+  false UL
+  false BX
+  fCourier-BoldOblique bfs scalefont setfont
+  Show 
+} bind def
+
+/l {
+  false UL
+  false BX
+  fHelvetica bfs scalefont setfont
+  Show
+} bind def
+
+/L {
+  false UL
+  false BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show 
+} bind def
+
+/str{
+  false UL
+  false BX
+  fTimes-Roman bfs scalefont setfont
+  Show
+} bind def
+
+/e{
+  false UL
+  true BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show
+} bind def
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier
+%%IncludeResource: font Courier-Oblique
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Times-Roman
+%%IncludeResource: font Symbol
+%%IncludeResource: font Courier-BoldOblique
+%%BeginResource: encoding ISO-8859-1Encoding
+/ISO-8859-1Encoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quoteright 
+/parenleft /parenright /asterisk /plus /comma /minus /period /slash 
+/zero /one /two /three /four /five /six /seven 
+/eight /nine /colon /semicolon /less /equal /greater /question 
+/at /A /B /C /D /E /F /G 
+/H /I /J /K /L /M /N /O 
+/P /Q /R /S /T /U /V /W 
+/X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore 
+/quoteleft /a /b /c /d /e /f /g 
+/h /i /j /k /l /m /n /o 
+/p /q /r /s /t /u /v /w 
+/x /y /z /braceleft /bar /braceright /asciitilde /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclamdown /cent /sterling /currency /yen /brokenbar /section 
+/dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron 
+/degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /bullet 
+/cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown 
+/Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla 
+/Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis 
+/Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply 
+/Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls 
+/agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla 
+/egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis 
+/eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide 
+/oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis 
+] def
+%%EndResource
+% Initialize page description variables.
+/sh 612 def
+/sw 792 def
+/llx 24 def
+/urx 768 def
+/ury 588 def
+/lly 24 def
+/#copies 1 def
+/th 15.000000 def
+/fnfs 11 def
+/bfs 7.493857 def
+/cw 4.496314 def
+
+% Dictionary for ISO-8859-1 support
+/iso1dict 8 dict begin
+  /fCourier ISO-8859-1Encoding /Courier reencode_font
+  /fCourier-Bold ISO-8859-1Encoding /Courier-Bold reencode_font
+  /fCourier-BoldOblique ISO-8859-1Encoding /Courier-BoldOblique reencode_font
+  /fCourier-Oblique ISO-8859-1Encoding /Courier-Oblique reencode_font
+  /fHelvetica ISO-8859-1Encoding /Helvetica reencode_font
+  /fHelvetica-Bold ISO-8859-1Encoding /Helvetica-Bold reencode_font
+  /fTimes-Bold ISO-8859-1Encoding /Times-Bold reencode_font
+  /fTimes-Roman ISO-8859-1Encoding /Times-Roman reencode_font
+currentdict end def
+/bgcolor [ 0 0 0 ] def
+/bg false def
+/ul false def
+/bx false def
+% The font for line numbering
+/f# /Helvetica findfont bfs .6 mul scalefont def
+/fSymbol /Symbol findfont def
+/hm fnfs 0.25 mul def
+/pw
+   cw 81.400000 mul
+def
+/ph
+   522.321860 th add
+def
+/pmw urx llx sub pw 2 mul sub 1 div def
+/pmh 0 def
+/v 0 def
+/x [
+  0
+  dup pmw add pw add
+] def
+/y [
+  pmh ph add 0 mul ph add
+  dup
+] def
+/scx sw 2 div def
+/scy sh 2 div def
+/snx urx def
+/sny lly 2 add def
+/dx llx def
+/dy sny def
+/fnx scx def
+/fny dy def
+/lx snx def
+/ly ury fnfs 0.8 mul sub def
+/sx 0 def
+/tab 8 def
+/x0 0 def
+/y0 0 def
+%%EndSetup
+
+%%Page: (1-2) 1
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#include) K
+( <math.h>) p n
+(#include) K
+( <avr/io.h>) p n
+(#include) K
+( ") p
+(macros.h) str
+(") p n
+() N
+(#define) K
+( ADC_MUX_MASK 0b00011111) p n
+(#define) K
+( SIZE 1050) p n
+() N
+(static) K
+( uint8_t lookup[SIZE];) p n
+() N
+(static) K
+( ) p
+(void) k
+( init_lookup_table\(\)) p n
+({) N
+() S 8 T (uint16_t i;) N
+() S 8 T () S
+(for) K
+( \(i = 0; i < SIZE; i++\)) p n
+() S 8 T () S 16 T (lookup[i] = \(uint8_t\) round\(\(-49.0f/195.0f\)*i+\(3560.0f/13.0f\)\);) N
+() S 8 T () S 16 T () S
+(//lookup[i] = \(uint8_t\) round\(.7f*i+290\);) c n
+(}) p n
+() N
+(void) k
+( enable_adc\(\)) p n
+({) N
+() S 8 T (CLRBIT\(DDRF, PF7\);) N
+() S 8 T (CLRBIT\(PORTF, PF7\);) N
+() N
+() S 8 T (ADMUX  = \(1 << REFS0\) | \(PF7 & ADC_MUX_MASK\);    ) S
+(//single-ended port F b) c n
+(it 7, right adjusted for 10 bits) N
+() p 8 T (ADCSRA = \(1 << ADEN\) | \(1 << ADPS0\) | \(1 << ADPS1\) | \(1 << ADPS2\);    ) S
+(//) c n
+(ADC enabled, don't start yet, single shot mode) S 48 T () N
+() p n
+() S 8 T (init_lookup_table\(\);) N
+(}) N
+() N
+(void) k
+( start_adc\(\)) p n
+({) N
+() S 8 T (SETBIT\(ADCSRA, ADSC\);) N
+(}) N
+() N
+(uint16_t poll_adc\(\)) N
+({) N
+() S 8 T (start_adc\(\);) N
+() N
+() S 8 T () S
+(while) K
+( \(!ISSET\(ADCSRA, ADIF\)\);) p n
+() S 8 T (SETBIT\(ADCSRA, ADIF\);) N
+() N
+() S 8 T () S
+(return) K
+( ADC;) p n
+(}) N
+() N
+(uint8_t is_adc_running\(\)) N
+({) N
+() S 8 T () S
+(if) K
+( \(!ISSET\(ADCSRA, ADIF\)\)) p n
+() S 8 T () S 16 T () S
+(return) K
+( 1;) p n
+() N
+() S 8 T () S
+(return) K
+( 0;) p n
+(}) N
+() N
+(uint16_t get_adc\(\)) N
+({) N
+() S 8 T () S
+(return) K
+( ADC;) p n
+(}) N
+() N
+(uint8_t get_adc_adjusted\(uint16_t raw\)) N
+({) N
+(   ) S
+(if) K
+( \(raw > 1000\)) p n
+() S 8 T () S 16 T () S
+(return) K
+( 20;) p n
+() S 8 T () N
+() S 8 T () S
+(if) K
+( \(raw < 76\)) p n
+() S 8 T () S 16 T () S
+(return) K
+( 255;) p n
+() N
+() S 8 T () S
+(if) K
+( \(lookup[raw] > 50\)) p n
+() S 8 T () S 16 T () S
+(return) K
+( lookup[raw]-50;) p n
+() S 8 T () N
+(adc_driver.c) (Page 1/2) (Nov 22, 13 12:15) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p 8 T () S
+(return) K
+( lookup[raw];) p n
+(}) N
+(adc_driver.c) (Page 2/2) (Nov 22, 13 12:15) title
+border
+grestore
+(Printed by Robert) rhead
+(adc_driver.c) (1/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 2
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#include) K
+( <avr/io.h>) p n
+(#include) K
+( <util/delay.h>) p n
+() N
+(#define) K
+( BYTE 8) p n
+() N
+(void) k
+( enable_buttons\(\)) p n
+({) N
+() S 8 T () S
+(// disable the segments without enabling the tristate buffer) c n
+() p 8 T (PORTB &= ~\(1 << PB4\);) N
+() S 8 T (PORTB |= \(1 << PB6\) | \(1 << PB5\);) N
+() N
+() S 8 T (DDRA = 0; ) S
+(// change DDRA to accept input) c n
+() p 8 T (PORTA = 0xFF; ) S
+(// enable internal pullups on PORTA) c n
+() p n
+() S 8 T (_delay_us\(5\);) N
+() S 8 T (PORTB |= \(1 << PB4\) | \(1 << PB5\) | \(1 << PB6\); ) S
+(// enable the tristate bu) c n
+(ffer) N
+(}) p n
+() N
+(uint8_t debounce_switch\(uint16_t *state, uint8_t bit\)) N
+({) N
+(    *state = \(*state << 1\) | \(!bit_is_clear\(PINA, bit\)\) | 0xE000;) N
+() S 8 T () N
+(    ) S
+(if) K
+( \(*state == 0xF000\)) p n
+(        ) S
+(return) K
+( 1;) p n
+() N
+(    ) S
+(return) K
+( 0;) p n
+(}) N
+() N
+(char) k
+( poll_buttons\() p
+(char) k
+( reg\)) p n
+({) N
+() S 8 T () S
+(char) k
+( buttons = 0;) p n
+() N
+() S 8 T () S
+(static) K
+( uint16_t state[] = {0, 0, 0, 0, 0, 0, 0, 0};) p n
+() S 8 T () N
+() S 8 T (uint8_t i;) N
+() S 8 T () S
+(for) K
+( \(i = 0; i < BYTE; i++\) {) p n
+() S 8 T () S 16 T () S
+(if) K
+( \(debounce_switch\(&state[i], i\)\)) p n
+() S 8 T () S 16 T () S 24 T (buttons |= \(1 << i\);) N
+() S 8 T (}) N
+() N
+() S 8 T () S
+(return) K
+( buttons;) p n
+(}) N
+(button_driver.c) (Page 1/1) (Dec 05, 13 11:45) title
+border
+grestore
+(Printed by Robert) rhead
+(button_driver.c) (2/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1-2) 3
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#include) K
+( <avr/io.h>) p n
+(#include) K
+( <avr/interrupt.h>) p n
+(#include) K
+( <stdio.h>) p n
+(#include) K
+( ") p
+(led_driver.h) str
+(") p n
+(#include) K
+( ") p
+(macros.h) str
+(") p n
+() N
+(/* holds the clock value */) c n
+(static) K
+( ) p
+(volatile) K
+( uint8_t hour;) p n
+(static) K
+( ) p
+(volatile) K
+( uint8_t minutes;) p n
+(static) K
+( ) p
+(volatile) K
+( uint8_t seconds;) p n
+() N
+(/* holds the value of the alarm that was set */) c n
+(static) K
+( ) p
+(volatile) K
+( uint8_t a_hour;) p n
+(static) K
+( ) p
+(volatile) K
+( uint8_t a_minutes;) p n
+(static) K
+( ) p
+(volatile) K
+( uint8_t a_seconds;) p n
+() N
+(/* holds the value of the actual next alarm including snooze */) c n
+(static) K
+( ) p
+(volatile) K
+( uint8_t s_hour;) p n
+(static) K
+( ) p
+(volatile) K
+( uint8_t s_minutes;) p n
+(static) K
+( ) p
+(volatile) K
+( uint8_t s_seconds;) p n
+() N
+(static) K
+( ) p
+(volatile) K
+( uint8_t alarm_armed;) p n
+() N
+(void) k
+( change_hour\() p
+(int) k
+(8_t delta\)) p n
+({) N
+() S 8 T (seconds = 0;) N
+() N
+() S 8 T () S
+(if) K
+( \(hour+delta == 24\)) p n
+() S 8 T () S 16 T (hour = 0;) N
+() S 8 T () S
+(else) K
+( ) p
+(if) K
+( \(hour+delta+1 == 0\)) p n
+() S 8 T () S 16 T (hour = 23;) N
+() S 8 T () S
+(else) K n
+() p 8 T () S 16 T (hour += delta;) N
+(}) N
+() N
+(void) k
+( change_minute\() p
+(int) k
+(8_t delta\)) p n
+({) N
+() S 8 T (seconds = 0;) N
+() N
+() S 8 T () S
+(if) K
+( \(minutes+delta == 60\)) p n
+() S 8 T () S 16 T (minutes = 0;) N
+() S 8 T () S
+(else) K
+( ) p
+(if) K
+( \(minutes+delta+1 == 0\)) p n
+() S 8 T () S 16 T (minutes = 59;) N
+() S 8 T () S
+(else) K n
+() p 8 T () S 16 T (minutes += delta;) N
+(}) N
+() N
+(void) k
+( change_alarm_hour\() p
+(int) k
+(8_t delta\)) p n
+({) N
+() S 8 T (a_seconds = 0;) N
+() S 8 T (s_seconds = 0;) N
+() N
+() S 8 T () S
+(if) K
+( \(a_hour+delta == 24\)) p n
+() S 8 T () S 16 T (a_hour = 0;) N
+() S 8 T () S
+(else) K
+( ) p
+(if) K
+( \(a_hour+delta+1 == 0\)) p n
+() S 8 T () S 16 T (a_hour = 23;) N
+() S 8 T () S
+(else) K n
+() p 8 T () S 16 T (a_hour += delta;) N
+() N
+() S 8 T (s_hour = a_hour;) N
+(}) N
+() N
+(void) k
+( change_alarm_minute\() p
+(int) k
+(8_t delta\)) p n
+({) N
+() S 8 T (a_seconds = 0;) N
+() S 8 T (s_seconds = 0;) N
+() S 8 T () N
+() S 8 T () S
+(if) K
+( \(a_minutes+delta == 60\)) p n
+() S 8 T () S 16 T (a_minutes = 0;) N
+(clock.c) (Page 1/3) (Dec 15, 13 17:35) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p 8 T () S
+(else) K
+( ) p
+(if) K
+( \(a_minutes+delta+1 == 0\)) p n
+() S 8 T () S 16 T (a_minutes = 59;) N
+() S 8 T () S
+(else) K n
+() p 8 T () S 16 T (a_minutes += delta;) N
+() N
+() S 8 T (s_minutes = a_minutes;) N
+(}) N
+() N
+(void) k
+( tick_seconds\(\)) p n
+({) N
+() S 8 T (seconds++;) N
+() S 8 T () S
+(if) K
+( \(seconds == 60\) {) p n
+() S 8 T () S 16 T (seconds = 0;) N
+() S 8 T () S 16 T () N
+() S 8 T () S 16 T (minutes++;) N
+() S 8 T () S 16 T () S
+(if) K
+( \(minutes == 60\) {) p n
+() S 8 T () S 16 T () S 24 T (minutes = 0;) N
+() S 8 T () S 16 T () S 24 T () N
+() S 8 T () S 16 T () S 24 T (hour++;) N
+() S 8 T () S 16 T () S 24 T () S
+(if) K
+( \(hour == 24\)) p n
+() S 8 T () S 16 T () S 24 T () S 32 T (hour = 0;) N
+() S 8 T () S 16 T (}) N
+() S 8 T (}) N
+(}) N
+() N
+(void) k
+( set_alarm\(uint8_t hr, uint8_t min\)) p n
+({) N
+() S 8 T (a_hour = hr;) N
+() S 8 T (s_hour = hr;) N
+() S 8 T () N
+() S 8 T (a_minutes = min;) N
+() S 8 T (s_minutes = min;) N
+() S 8 T () N
+() S 8 T (a_seconds = 0;) N
+() S 8 T (s_seconds = 0;) N
+(}) N
+() N
+(void) k
+( init_clock_timer\(\)) p n
+({) N
+() S 8 T (hour = 0;) N
+() S 8 T (minutes = 0;) N
+() S 8 T (seconds = 0;) N
+() N
+() S 8 T (a_hour = 0;) N
+() S 8 T (a_minutes = 0;) N
+() S 8 T (a_seconds = 0;) N
+() N
+() S 8 T (s_hour = 0;) N
+() S 8 T (s_minutes = 0;) N
+() S 8 T (s_seconds = 0;) N
+() N
+() S 8 T (alarm_armed = FALSE;) N
+() N
+() S 8 T (ASSR = \(1 << AS0\);) N
+() S 8 T (TIMSK |= \(1 << TOIE0\);) N
+() N
+() S 8 T (TCCR0 = \(1 << CS00\);) N
+(}) N
+() N
+(void) k
+( set_time\(uint8_t hr, uint8_t min\)) p n
+({) N
+() S 8 T (hour = hr;) N
+() S 8 T (minutes = min;) N
+() N
+() S 8 T (seconds = 0;) N
+(}) N
+() N
+(void) k
+( snooze_alarm\(uint8_t mins, uint8_t sec\)) p n
+({) N
+(clock.c) (Page 2/3) (Dec 15, 13 17:35) title
+border
+grestore
+(Printed by Robert) rhead
+(clock.c) (3/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (3) 4
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p 8 T (s_seconds += sec;) N
+() S 8 T () S
+(if) K
+( \(s_seconds > 59\) {) p n
+() S 8 T () S 16 T (s_seconds -= 60;) N
+() S 8 T () S 16 T (s_minutes++;) N
+() S 8 T (}) N
+() N
+() S 8 T (s_minutes += mins;) N
+() S 8 T () S
+(if) K
+( \(s_minutes > 59\) {) p n
+() S 8 T () S 16 T (s_minutes -= 60;) N
+() N
+() S 8 T () S 16 T (s_hour++;) N
+() S 8 T () S 16 T () S
+(if) K
+( \(s_hour == 24\)) p n
+() S 8 T () S 16 T () S 24 T (s_hour = 0;) N
+() S 8 T (}) N
+(}) N
+() N
+(void) k
+( reset_snooze\(\)) p n
+({) N
+() S 8 T (s_seconds = a_seconds;) N
+() S 8 T (s_minutes = a_minutes;) N
+() S 8 T (s_hour = a_hour;) N
+(}) N
+() N
+(uint16_t get_time\(\)) N
+({) N
+() S 8 T () S
+(return) K
+( hour*100+minutes;) p n
+(}) N
+() N
+(uint16_t get_alarm\(\)) N
+({) N
+() S 8 T () S
+(return) K
+( a_hour*100+a_minutes;) p n
+(}) N
+() N
+(uint8_t get_seconds_state\(uint8_t mode\)) N
+({) N
+() S 8 T () S
+(if) K
+( \(mode != MODE_DEFAULT && seconds < 2\)) p n
+() S 8 T () S 16 T () S
+(return) K
+( 0;) p n
+() N
+() S 8 T () S
+(return) K
+( seconds%2;) p n
+(}) N
+() N
+(void) k
+( set_alarm_state\(uint8_t state\)) p n
+({) N
+() S 8 T (alarm_armed = state;) N
+(}) N
+() N
+(uint8_t is_alarm_enabled\(\)) N
+({) N
+() S 8 T () S
+(return) K
+( alarm_armed;) p n
+(}) N
+() N
+(uint8_t is_alarm_time\(\)) N
+({) N
+() S 8 T () S
+(if) K
+( \(seconds == s_seconds &&) p n
+() S 8 T () S 16 T (minutes == s_minutes &&) N
+() S 8 T () S 16 T (hour == s_hour\)) N
+() S 8 T () S 16 T () S
+(return) K
+( alarm_armed;) p n
+() N
+() S 8 T () S
+(return) K
+( FALSE;) p n
+(}) N
+() N
+(void) k
+( get_alarm_string\() p
+(char) k
+( buf[11]\)) p n
+({) N
+() S 8 T (sprintf\(buf, ") S
+(%02d:%02d     ) str
+(", s_hour, s_minutes\);) p n
+(}) N
+(clock.c) (Page 3/3) (Dec 15, 13 17:35) title
+border
+grestore
+(Printed by Robert) rhead
+(clock.c) (4/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 5
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#include) K
+( <avr/io.h>) p n
+(#include) K
+( <avr/interrupt.h>) p n
+(#include) K
+( ") p
+(spi_driver.h) str
+(") p n
+(#include) K
+( ") p
+(encoder_driver.h) str
+(") p n
+(#include) K
+( ") p
+(macros.h) str
+(") p n
+() N
+(#define) K
+( STROBE_BIT  PE6) p n
+(#define) K
+( STROBE_PORT PORTE) p n
+() N
+(void) k
+( latch_encoders\(\)) p n
+({) N
+() S 8 T (strobeh\(STROBE_PORT, STROBE_BIT\); ) S
+(// latch the encoder state) c n
+(}) p n
+() N
+(char) k
+( poll_encoders\(\)) p n
+({) N
+() S 8 T (strobeh\(STROBE_PORT, STROBE_BIT\); ) S
+(// latch the encoder state) c n
+() p 8 T () N
+() S 8 T () S
+(return) K
+( spi_send\(0x00\); ) p
+(// send garbage in order to receive the state) c n
+(}) p n
+() N
+(void) k
+( init_encoder_struct\() p
+(volatile) K
+( ) p
+(struct) k
+( encoder_state *state\)) p n
+({) N
+() S 8 T () S
+(/* set the current encoder directions to stopped */) c n
+() p 8 T (state->left_dir = STOPPED;) N
+() S 8 T (state->right_dir = STOPPED;) N
+() N
+() S 8 T () S
+(/* get the initial value of the encoders in the shift register */) c n
+() p 8 T () S
+(char) k
+( encoders = poll_encoders\(\);) p n
+() S 8 T (state->left_last = LEFT_ENCODER\(encoders\);) N
+() S 8 T (state->right_last = RIGHT_ENCODER\(encoders\);) N
+(}) S 8 T () S 16 T () S 24 T () S 32 T () S 40 T () S 48 T ( ) N
+() S 8 T () S 16 T () S 24 T () S 32 T () N
+(uint8_t determine_direction\(uint8_t cur, uint8_t last\)) N
+({) N
+() S 8 T () S
+(if) K
+( \(cur == last\)) p n
+() S 8 T () S 16 T () S
+(return) K
+( STOPPED; ) p
+(// nothing has changed so it's stopped) c n
+() p 8 T () N
+() S 8 T () S
+(if) K
+( \(cur == 0x00 && last == 0x01\)) p n
+() S 8 T () S 16 T () S
+(return) K
+( REVERSE;) p n
+() N
+() S 8 T () S
+(if) K
+( \(cur == 0x01 && last == 0x00\)) p n
+() S 8 T () S 16 T () S
+(return) K
+( FORWARD;) p n
+() N
+() S 8 T () S
+(return) K
+( STOPPED;) p n
+(}) N
+() N
+(void) k
+( get_direction\() p
+(volatile) K
+( ) p
+(struct) k
+( encoder_state *state, uint8_t encoders\)) p n
+({) N
+() S 8 T () S
+(/* determine the new direction based on the last and latest encoder stat) c n
+(e */) N
+() p 8 T (state->left_dir = determine_direction\(LEFT_ENCODER\(encoders\), state->lef) N
+(t_last\);) N
+() S 8 T (state->right_dir = determine_direction\(RIGHT_ENCODER\(encoders\), state->r) N
+(ight_last\);) N
+() N
+() S 8 T () S
+(/* log the last encoder state */) c n
+() p 8 T (state->left_last = LEFT_ENCODER\(encoders\);) N
+() S 8 T (state->right_last = RIGHT_ENCODER\(encoders\);) N
+(}) N
+() N
+(void) k
+( enable_encoders\(\)) p n
+({) N
+() S 8 T (DDRE |= 0x40; ) S
+(// set PE6 to an output) c n
+() p 8 T () N
+() S 8 T (SETBIT\(STROBE_PORT, STROBE_BIT\); ) S
+(// set PE6) c n
+() p 8 T (spi_init\(\); ) S
+(// initialize the spi interface) c n
+(}) p n
+() N
+(encoder_driver.c) (Page 1/1) (Nov 20, 13 20:10) title
+border
+grestore
+(Printed by Robert) rhead
+(encoder_driver.c) (5/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 6
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#include) K
+( <avr/io.h>) p n
+(#include) K
+( ") p
+(spi_driver.h) str
+(") p n
+(#include) K
+( ") p
+(macros.h) str
+(") p n
+() N
+(#define) K
+( STROBE_BIT  PC0) p n
+(#define) K
+( STROBE_PORT PORTC) p n
+() N
+(void) k
+( enable_graph\(\)) p n
+({) N
+() S 8 T (DDRC |= 0x01; ) S
+(// set PD0 to an output) c n
+() p 8 T () N
+() S 8 T (CLRBIT\(STROBE_PORT, STROBE_BIT\); ) S
+(// clear PD0) c n
+() p 8 T (spi_init\(\); ) S
+(// initialize the spi interface) c n
+(}) p n
+() N
+(char) k
+( update_graph\() p
+(char) k
+( value\)) p n
+({) N
+() S 8 T () S
+(char) k
+( result = spi_send\(value\); ) p
+(// send the given value via spi) c n
+() p 8 T (strobel\(STROBE_PORT, STROBE_BIT\); ) S
+(// set PD0 and then clear it) c n
+() p n
+() S 8 T () S
+(return) K
+( result; ) p
+(// return the result read from spi) c n
+(}) p n
+(graph_driver.c) (Page 1/1) (Nov 20, 13 19:56) title
+border
+grestore
+(Printed by Robert) rhead
+(graph_driver.c) (6/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1-2) 7
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#include) K
+( <avr/io.h>) p n
+(#include) K
+( <util/delay.h>) p n
+(#include) K
+( <string.h>) p n
+(#include) K
+( ") p
+(spi_driver.h) str
+(") p n
+() N
+(#define) K
+( NUM_LCD_CHARS 16 ) p
+(//number of chars that the LCD has in a line) c n
+() p n
+(void) k
+( clear_display\(\)) p n
+({) N
+() S 8 T (spi_send\(0x00\);) N
+() S 8 T (spi_send\(0x01\);) N
+() N
+() S 8 T (strobel\(PORTF, PF3\);) N
+() S 8 T (_delay_ms\(2\);   ) S
+(//obligatory waiting for slow LCD \(1.64mS\)) c n
+(}         ) p n
+() N
+(void) k
+( cursor_home\(\)) p n
+({) N
+() S 8 T (spi_send\(0x00\);) N
+() S 8 T (spi_send\(0x02\);) N
+() N
+() S 8 T (strobel\(PORTF, PF3\);) N
+() S 8 T (_delay_ms\(2\);   ) S
+(//obligatory waiting for slow LCD \(1.64mS\)) c n
+(}         ) p n
+(  ) N
+(void) k
+( home_line2\(\)) p n
+({) N
+() S 8 T (spi_send\(0x00\);) N
+() S 8 T (spi_send\(0xC0\);) N
+() S 8 T () N
+() S 8 T (strobel\(PORTF, PF3\);) N
+() S 8 T (_delay_ms\(2\);   ) S
+(//obligatory waiting for slow LCD \(1.64mS\)) c n
+(}                           ) p n
+( ) N
+(void) k
+( fill_spaces\(\)) p n
+({) N
+() S 8 T (uint8_t i;) N
+() S 8 T () S
+(for) K
+( \(i = 0; i < NUM_LCD_CHARS; i++\){) p n
+() S 8 T () S 16 T (spi_send\(0x01\);) N
+() S 8 T () S 16 T (spi_send\(0x20\);) N
+() S 8 T (  ) N
+() S 8 T () S 16 T (strobel\(PORTF, PF3\);) N
+() S 8 T () S 16 T (_delay_us\(100\);   ) S
+(//obligatory waiting for slow LCD \(40uS\)) c n
+() p 8 T (}) N
+(}  ) N
+(   ) N
+(void) k
+( ) p
+(char) k
+(2lcd\() p
+(char) k
+( a_char\)) p n
+({) N
+() S 8 T (spi_send\(0x01\);) N
+() S 8 T (spi_send\(a_char\);) N
+() S 8 T () N
+() S 8 T (strobel\(PORTF, PF3\);) N
+() S 8 T () S
+(//_delay_us\(100\);   //obligatory waiting for slow LCD \(40uS\)) c n
+(}) p n
+(  ) N
+(  ) N
+(void) k
+( string2lcd\() p
+(char) k
+( *lcd_str\)) p n
+({) N
+() S 8 T (uint8_t i;) N
+() S 8 T () S
+(for) K
+( \(i = 0; i < strlen\(lcd_str\); i++\) {) p n
+() S 8 T () S 16 T (spi_send\(0x01\);) N
+() S 8 T () S 16 T (spi_send\(lcd_str[i]\);) N
+() N
+() S 8 T () S 16 T (strobel\(PORTF, PF3\);) N
+() S 8 T () S 16 T (_delay_us\(100\);   ) S
+(//obligatory waiting for slow LCD \(40uS\)) c n
+() p 8 T (}                  ) N
+(} ) N
+() N
+(void) k
+( enable_lcd\(\)) p n
+(lcd_driver.c) (Page 1/2) (Dec 05, 13 11:46) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+({) p n
+() S 8 T (uint8_t i;) N
+() N
+() S 8 T (DDRF |= \(1 << PF3\);) N
+() S 8 T (PORTF |= \(1 << PF3\);) N
+() S 8 T (spi_init\(\);) N
+() N
+() S 8 T (_delay_ms\(15\);   ) N
+() S 8 T () S
+(for) K
+( \(i = 0; i < 3; i++\) { ) p
+(//do funky initalize sequence 3 times) c n
+() p 8 T () S 16 T (spi_send\(0x00\);) N
+() S 8 T () S 16 T (spi_send\(0x30\);) N
+() N
+() S 8 T () S 16 T (strobel\(PORTF, PF3\);) N
+() S 8 T () S 16 T (_delay_ms\(7\);) N
+() S 8 T (}) N
+() N
+() S 8 T (spi_send\(0x00\);) N
+() S 8 T (spi_send\(0x38\);) N
+() N
+() S 8 T (strobel\(PORTF, PF3\);) N
+() S 8 T (_delay_ms\(5\);   ) N
+() N
+() S 8 T (spi_send\(0x00\);) N
+() S 8 T (spi_send\(0x08\);) N
+() N
+() S 8 T (strobel\(PORTF, PF3\);) N
+() S 8 T (_delay_ms\(5\);) N
+() N
+() S 8 T (spi_send\(0x00\);) N
+() S 8 T (spi_send\(0x01\);) N
+() N
+() S 8 T (strobel\(PORTF, PF3\);) N
+() S 8 T (_delay_ms\(5\);   ) N
+() N
+() S 8 T (spi_send\(0x00\);) N
+() S 8 T (spi_send\(0x06\);) N
+() N
+() S 8 T (strobel\(PORTF, PF3\);) N
+() S 8 T (_delay_ms\(5\);) N
+() N
+() S 8 T (spi_send\(0x00\);) N
+() S 8 T (spi_send\(0x0C\);) N
+() S 8 T () N
+() S 8 T (strobel\(PORTF, PF3\);) N
+() S 8 T (_delay_ms\(5\);) N
+(} ) N
+(lcd_driver.c) (Page 2/2) (Dec 05, 13 11:46) title
+border
+grestore
+(Printed by Robert) rhead
+(lcd_driver.c) (7/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1-2) 8
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#include) K
+( <avr/io.h>) p n
+(#include) K
+( <util/delay.h>) p n
+(#include) K
+( ") p
+(led_driver.h) str
+(") p n
+(#include) K
+( ") p
+(adc_driver.h) str
+(") p n
+(#include) K
+( ") p
+(macros.h) str
+(") p n
+() N
+(#define) K
+( ZERO  ~0x3F ) p
+(// 0b00111111) c n
+(#define) K
+( ONE   ~0x06 ) p
+(// 0b00000110) c n
+(#define) K
+( TWO   ~0x5B ) p
+(// 0b01011011) c n
+(#define) K
+( THREE ~0x4F ) p
+(// 0b01001111) c n
+(#define) K
+( FOUR  ~0x66 ) p
+(// 0b01100110) c n
+(#define) K
+( FIVE  ~0x6D ) p
+(// 0b01101101) c n
+(#define) K
+( SIX   ~0x7C ) p
+(// 0b01111100) c n
+(#define) K
+( SEVEN ~0x07 ) p
+(// 0b00000111) c n
+(#define) K
+( EIGHT ~0x7F ) p
+(// 0b01111111) c n
+(#define) K
+( NINE  ~0x67 ) p
+(// 0b01100111) c n
+(#define) K
+( OFF   ~0x00 ) p
+(// 0b00000000) c n
+() p n
+(#define) K
+( DECIMAL    ~0x80 ) p
+(// 0b10000000) c n
+(#define) K
+( COLON_ONLY ~0x03 ) p
+(// 0b00000011) c n
+(#define) K
+( COLON_ALL  ~0x07 ) p
+(// 0b00000111) c n
+(#define) K
+( DOT_ONLY   ~0x04 ) p
+(// 0b00000100) c n
+() p n
+(#define) K
+( BLANK 10) p n
+() N
+(#define) K
+( ZERO_FILLED 1) p n
+(#define) K
+( ZERO_BLANK  0) p n
+() N
+(static) K
+( uint8_t NUMBERS[] = { ZERO, ONE, TWO, THREE, FOUR, FIVE,) p n
+() S 8 T () S 16 T () S 24 T () S 32 T () S 40 T () S 48 T () S 56 T ( SIX, SEVEN, EIGHT, NINE) N
+(, OFF };) N
+() N
+(void) k
+( enable_leds\(\)) p n
+({) N
+() S 8 T () S
+(// disable the tristate buffer without enabling a segment) c n
+() p 8 T (PORTB &= ~\(1 << PB4\);) N
+() S 8 T (PORTB |= \(1 << PB6\) | \(1 << PB5\);) N
+() N
+() S 8 T (DDRA = 0xFF; ) S
+(// make PORTA all outputs) c n
+() p 8 T (PORTA = 0xFF;) N
+(}) N
+() N
+(void) k
+( enable_dimmer\(\)) p n
+({) N
+() S 8 T (enable_adc\(\);) N
+() N
+() S 8 T (TCCR2 = \(1 << WGM20\) | \(1 << WGM21\) |) N
+() S 8 T () S 16 T (\(1 << COM21\) | \(1 << COM20\) | ) N
+() S 8 T () S 16 T (\(1 << CS21\);) N
+() N
+() S 8 T (OCR2 = get_adc_adjusted\(poll_adc\(\)\);) N
+() S 8 T () N
+() S 8 T (start_adc\(\);) N
+(}) N
+() N
+(void) k
+( update_brightness\(\)) p n
+({) N
+() S 8 T () S
+(if) K
+( \(is_adc_running\(\)\)) p n
+() S 8 T () S 16 T () S
+(return) K
+(;) p n
+() N
+() S 8 T (SETBIT\(ADCSRA, ADIF\);) N
+() S 8 T (OCR2 = get_adc_adjusted\(get_adc\(\)\);) N
+() N
+() S 8 T (start_adc\(\);) N
+(}) N
+() N
+(void) k
+( disable_leds\(\)) p n
+({) N
+() S 8 T (PORTB &= ~\(1 << PB4\);) N
+(led_driver.c) (Page 1/4) (Dec 14, 13 21:02) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(    PORTB |= \(1 << PB6\) | \(1 << PB5\);) p n
+(}) N
+() N
+(void) k
+( init_display_struct\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output\)) p n
+({) N
+() S 8 T (output->ones = 0;) N
+() S 8 T (output->tens = 0;) N
+() S 8 T (output->hundreds = 0;) N
+() S 8 T (output->thousands = 0;) N
+() N
+() S 8 T (output->colon = COLON_ONLY;) N
+() S 8 T (output->mode = ZERO_BLANK;) N
+() S 8 T (output->decimal = FALSE;) N
+() S 8 T (output->cycle = 0;) N
+(}) N
+() N
+(void) k
+( update_colon\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output, uint8_t off, uint8_t all\)) p n
+({) N
+() S 8 T () S
+(if) K
+( \(!off\) {) p n
+() S 8 T () S 16 T () S
+(if) K
+( \(all\)) p n
+() S 8 T () S 16 T () S 24 T (output->colon = COLON_ALL;) N
+() S 8 T () S 16 T () S
+(else) K n
+() p 8 T () S 16 T () S 24 T (output->colon = COLON_ONLY;) N
+() S 8 T (} ) S
+(else) K
+( {) p n
+() S 8 T () S 16 T () S
+(if) K
+( \(all\)) p n
+() S 8 T () S 16 T () S 24 T (output->colon = DOT_ONLY;) N
+() S 8 T () S 16 T () S
+(else) K n
+() p 8 T () S 16 T () S 24 T (output->colon = OFF;) N
+() S 8 T (}) N
+(}) N
+() N
+(void) k
+( set_decimal\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output, uint8_t boolean\)) p n
+({) N
+() S 8 T (output->decimal = boolean;) N
+(}) N
+() N
+(void) k
+( toggle_dot\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output\)) p n
+({) N
+() S 8 T (output->colon ^= 0x04;) N
+(}) N
+() N
+(void) k
+( set_colon\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output\)) p n
+({) N
+() S 8 T (PORTA = output->colon;) N
+(}) N
+() N
+(void) k
+( set_zero_filled\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output\)) p n
+({) N
+() S 8 T (output->mode = ZERO_FILLED;) N
+(}) N
+() N
+(void) k
+( set_zero_blanked\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output\)) p n
+({) N
+() S 8 T (output->mode = ZERO_BLANK;) N
+(}) N
+() N
+(void) k
+( decode_number\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output, uint16_t number\)) p n
+({) N
+() S 8 T (output->ones = \(number%10\);) N
+() S 8 T (output->tens = \(number%100\)/10;) N
+() S 8 T (output->hundreds = \(number%1000\)/100;) N
+() S 8 T (output->thousands = number/1000;) N
+() N
+() S 8 T () S
+(if) K
+( \(output->mode == ZERO_FILLED\)) p n
+() S 8 T () S 16 T () S
+(return) K
+(;) p n
+() N
+() S 8 T () S
+(if) K
+( \(output->thousands != 0\)) p n
+() S 8 T () S 16 T () S
+(return) K
+(;) p n
+() N
+(led_driver.c) (Page 2/4) (Dec 14, 13 21:02) title
+border
+grestore
+(Printed by Robert) rhead
+(led_driver.c) (8/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (3-4) 9
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p 8 T (output->thousands = BLANK; ) S
+(// turn of digit 4 if thousands is 0) c n
+() p 8 T () S
+(if) K
+( \(output->hundreds != 0\)) p n
+() S 8 T () S 16 T () S
+(return) K
+(;) p n
+() N
+() S 8 T (output->hundreds = BLANK; ) S
+(// turn of digit 3 if hundreds is 0) c n
+() p 8 T () S
+(if) K
+( \(output->tens != 0\)) p n
+() S 8 T () S 16 T () S
+(return) K
+(;) p n
+() N
+() S 8 T (output->tens = BLANK; ) S
+(// turn of digit 2 if tens is 0) c n
+(}) p n
+() N
+(void) k
+( enable_segment\(uint8_t segment\)) p n
+({) N
+() S 8 T () S
+(switch) K
+( \(segment\) {) p n
+() S 8 T () S
+(case) K
+( 0: ) p
+(// digit 1 enabled: PORTB = 0b?000????) c n
+() p 8 T () S 16 T (PORTB &= ~\(1 << PB4\) & ~\(1 << PB5\) & ~\(1 << PB6\);) N
+() S 8 T () S 16 T () S
+(break) K
+(;) p n
+() N
+() S 8 T () S
+(case) K
+( 1: ) p
+(// digit 2 enabled: PORTB = 0b?001????) c n
+() p 8 T () S 16 T (PORTB &= ~\(1 << PB5\) & ~\(1 << PB6\);) N
+() S 8 T () S 16 T (PORTB |= \(1 << PB4\);) N
+() S 8 T () S 16 T () S
+(break) K
+(;) p n
+() N
+() S 8 T () S
+(case) K
+( 2: ) p
+(// colons enabled: PORTB = 0b?010????) c n
+() p 8 T () S 16 T (PORTB &= ~\(1 << PB4\) & ~\(1 << PB6\);) N
+() S 8 T () S 16 T (PORTB |= \(1 << PB5\);) N
+() S 8 T () S 16 T () S
+(break) K
+(;) p n
+() N
+() S 8 T () S
+(case) K
+( 3: ) p
+(// digit 3 enabled: PORTB = 0b?011????) c n
+() p 8 T () S 16 T (PORTB &= ~\(1 << PB6\);) N
+() S 8 T () S 16 T (PORTB |= \(1 << PB4\) | \(1 << PB5\);) N
+() S 8 T () S 16 T () S
+(break) K
+(;) p n
+() N
+() S 8 T () S
+(case) K
+( 4: ) p
+(// digit 4 enabled: PORTB = 0b?100????) c n
+() p 8 T () S 16 T (PORTB &= ~\(1 << PB4\) & ~\(1 << PB5\);) S 56 T () S 64 T () N
+() S 8 T () S 16 T (PORTB |= \(1 << PB6\);) N
+() S 8 T () S 16 T () S
+(break) K
+(;) p n
+() S 8 T (}) N
+(}) N
+() N
+(void) k
+( set_digit\(uint8_t digit, uint8_t decimal\)) p n
+({) N
+() S 8 T () S
+(char) k
+( number = NUMBERS[digit];) p n
+() N
+() S 8 T () S
+(if) K
+( \(decimal\)) p n
+() S 8 T () S 16 T (number &= DECIMAL;) N
+() S 8 T () N
+() S 8 T (PORTA = number;) N
+(}) N
+( ) N
+(void) k
+( update_segment\() p
+(volatile) K
+( ) p
+(struct) k
+( display *output, uint16_t number\)) p n
+({) N
+() S 8 T (decode_number\(output, number\); ) S
+(// get the 4 digits ) c n
+() p n
+() S 8 T (set_digit\(BLANK, 0\); ) S
+(// blank before switching to prevent ghosting) c n
+() p 8 T (enable_segment\(output->cycle\); ) S
+(// enable the correct digit) c n
+() p n
+() S 8 T () S
+(switch) K
+(\(output->cycle\) { ) p
+(// display the digit based on the segment enable) c n
+(d) N
+() p 8 T () S
+(case) K
+( 0: set_digit\(output->ones, 0\);               ) p
+(break) K
+(; ) p
+(// ones digit) c n
+() p 8 T () S
+(case) K
+( 1: set_digit\(output->tens, output->decimal\); ) p
+(break) K
+(; ) p
+(// tens digit) c n
+() p 8 T () S
+(case) K
+( 2: set_colon\(output\);                        ) p
+(break) K
+(; ) p
+(// colons) c n
+() p 8 T () S
+(case) K
+( 3: set_digit\(output->hundreds, 0\);           ) p
+(break) K
+(; ) p
+(// hundreds dig) c n
+(it) N
+() p 8 T () S
+(case) K
+( 4: set_digit\(output->thousands, 0\);          ) p
+(break) K
+(; ) p
+(// thousands di) c n
+(git) N
+() p 8 T (}) N
+() N
+() S 8 T (output->cycle++; ) S
+(// go to the next segment) c n
+(led_driver.c) (Page 3/4) (Dec 14, 13 21:02) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p 8 T () S
+(if) K
+( \(output->cycle > 4\)) p n
+() S 8 T () S 16 T (output->cycle = 0; ) S
+(// go back to the beginning if at the last se) c n
+(gment) S 8 T () N
+(}) p n
+(led_driver.c) (Page 4/4) (Dec 14, 13 21:02) title
+border
+grestore
+(Printed by Robert) rhead
+(led_driver.c) (9/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 10
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(// lm73_functions.c       ) c n
+(// Roger Traylor 11.28.10) N
+() p n
+(#include) K
+( <util/twi.h>) p n
+(#include) K
+( ") p
+(lm73_functions.h) str
+(") p n
+(#include) K
+( <util/delay.h>) p n
+() N
+(volatile) K
+( uint8_t lm73_wr_buf[2];) p n
+(volatile) K
+( uint8_t lm73_rd_buf[2];) p n
+() N
+(//******************************************************************************) c n
+(**) N
+() p n
+(lm73_driver.c) (Page 1/1) (Dec 03, 13 8:36) title
+border
+grestore
+(Printed by Robert) rhead
+(lm73_driver.c) (10/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1-2) 11
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(// lm73_functions.c       ) c n
+(// Roger Traylor 11.28.10) N
+() p n
+(#include) K
+( <util/twi.h>) p n
+(#include) K
+( ") p
+(lm73_functions.h) str
+(") p n
+(#include) K
+( <util/delay.h>) p n
+() N
+(//TODO: remove volatile type modifier?  I think so.) c n
+(//TODO: initalize with more resolution and disable the smb bus timeout) N
+(//TODO: write functions to change resolution, alarm etc.) N
+() p n
+(volatile) K
+( uint8_t lm73_wr_buf[2];) p n
+(volatile) K
+( uint8_t lm73_rd_buf[2];) p n
+() N
+(//******************************************************************************) c n
+(**) N
+() p n
+(//******************************************************************************) c n
+(uint8_t lm73_temp_convert\() p
+(char) k
+( temp_digits[], uint16_t lm73_temp, uint8_t f_not_) p n
+(c\){) N
+() S 8 T () S
+(//given a temperature reading from an LM73, the address of a buffer) c n
+() p 8 T () S
+(//array, and a format \(deg F or C\) it formats the temperature into ascii) c n
+( in ) N
+() p 8 T () S
+(//the buffer pointed to by the arguement.) c n
+() p 8 T () S
+(//TODO:Returns what???\(uint8_t\)??? Probably a BUG?) c n
+() p 8 T (uint8_t  round_up;    ) S
+(//boolean, round up temperature digits or not ) c n
+() p 8 T (uint16_t mask;        ) S
+(//sliding one bit for multiplcation) c n
+() p 8 T (uint8_t  minus_temp;  ) S
+(//boolean, indicates a negative celcius temperautr) c n
+(e) N
+() p 8 T (uint32_t lsb_value;   ) S
+(//holds value of the lsb bit of the temperature re) c n
+(ading) N
+() p 8 T (uint8_t  i;           ) S
+(//index  ) c n
+() p 8 T (uint32_t temp_fract;  ) S
+(//a fractional \(parital\) part of the temperature) c n
+() p n
+() S 8 T () S
+(//incoming data from LM73 formatted as follows:) c n
+() p 8 T () S
+(//bit     15   14  13  12  11  10   9   8   7    6    5    4     3      ) c n
+(2  1   0) N
+() p 8 T () S
+(//Deg C  +/-  128  64  32  16   8   4   2   1   .5  .25 .125 .0625 .0312) c n
+(5  X   X) N
+() p n
+(    ) S
+(if) K
+(\(lm73_temp & 0x8000\) {minus_temp = TRUE; }  ) p
+(//get info on sign bit) c n
+(    ) p
+(else) K
+(                   {minus_temp = FALSE;}) p n
+(    lm73_temp = \(lm73_temp << 1\);               ) S
+(//shift off the sign bit) c n
+() p n
+(    ) S
+(if) K
+(\(minus_temp == TRUE\){ ) p
+(//take 2's compliment, always deal with positive tem) c n
+(ps) N
+() p 8 T () S 16 T (lm73_temp ^= 0xFFFF;   ) S
+(//invert all bits ) c n
+() p 8 T () S 16 T (lm73_temp += 0x08;     ) S
+(//add in one lsb) c n
+(    }) p n
+() N
+() S 8 T () S
+(//now, lm73_temp looks like:) c n
+() p 8 T () S
+(//bit     15   14  13  12  11  10   9   8    7    6    5     4      3  2) c n
+(  1  0) N
+() p 8 T () S
+(//Deg C  128   64  32  16   8   4   2   1   .5  .25 .125 .0625 .03125  X) c n
+(  X  0) N
+() p 8 T () S
+(//mask                                       0    0    0     0      1) c n
+() p n
+(    ) S
+(if) K
+(\(f_not_c == TRUE\){lsb_value = 5625;} ) p
+(// \(9/5\) * 3125) c n
+(    ) p
+(else) K
+(                {lsb_value = 3125;} ) p
+(//.03125 deg Celcius) c n
+(    ) p n
+(    ) S
+(//sum up the total temperature by adding multiples of the multiplied lsb ) c n
+(    mask = 0x0008;           ) p
+(//start summing in bit position 3 \(lsb\)) c n
+(    temp_fract = 0;          ) p
+(//initalize the sum) c n
+(    ) p
+(for) K
+(\(i=0; i<=12; i++\){    ) p
+(//sum for each fractional bit set in temperature) c n
+() p 8 T () S 16 T () S
+(if) K
+(\(lm73_temp & mask\){temp_fract += \(lsb_value << i\);}) p n
+() S 8 T () S 16 T (mask = \(mask << 1\);    ) S
+(//shift mask to next bit) c n
+(    }) p
+(//for) c n
+() p n
+(    ) S
+(if) K
+(\(\(temp_fract % 1000\) > 500\) {round_up = TRUE;}  ) p
+(//round up .01deg?) c n
+(lm73_functions.c) (Page 1/2) (Dec 10, 13 11:42) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(    temp_fract = temp_fract/1000;    ) p
+(//gives two decimal places for temperature) c n
+(    ) p
+(if) K
+(\(round_up\){temp_fract += 1;}   ) p
+(//add a 1/100 if round up was true) c n
+(    ) p
+(if) K
+(\(f_not_c == TRUE\){) p n
+() S 8 T () S 16 T () S
+(if) K
+( \(minus_temp == FALSE\){temp_fract += 3200;}  ) p
+(//32 degree offse) c n
+(t for Deg F) N
+() p 8 T () S 16 T () S
+(else) K
+(                    {temp_fract = 3200 - temp_fract;} ) p n
+() S 8 T () S 16 T () S
+(//some other cases to take into account here  BUG) c n
+(    }) p n
+(    ) N
+(    ) S
+(//extract each digit and put in the temperature buffer array) c n
+(    ) p
+(for) K
+(\(i=0; i<=5; i++\) {    ) p
+(//upto 5 numeric digits possible plus a decimal poi) c n
+(nt) N
+() p 8 T () S 16 T () S
+(if) K
+(\(i==2\){) p
+(continue) K
+(;}    ) p
+(//skip when its the decimal points place ) c n
+([2]) N
+() p 8 T () S 16 T (temp_digits[i] = temp_fract % 10;         ) S
+(//gets lowest digit) c n
+() p 8 T () S 16 T (temp_fract = temp_fract - temp_digits[i]; ) S
+(//subsract away that d) c n
+(igit) N
+() p 8 T () S 16 T (temp_fract = temp_fract / 10;                ) S
+(//throw away lowest) c n
+( digit) N
+(    }) p n
+(   ) N
+(    ) S
+(//convert decimal digits to ascii values, [2] is a decimal point) c n
+(    temp_digits[0] += 0x30; ) p n
+(    temp_digits[1] += 0x30; ) N
+(    temp_digits[2] =  0x2E; ) N
+(    temp_digits[3] += 0x30; ) N
+(    temp_digits[4] += 0x30; ) N
+(    temp_digits[5] += 0x30; ) N
+() N
+(    ) S
+(if) K
+(\(temp_digits[5] == 0x30\){temp_digits[5] = 0x20;} ) p
+(//remove leading zero) c n
+(    ) p
+(//could have two leading zero digits!  BUG) c n
+(    ) p
+(if) K
+(\(minus_temp\){temp_digits[5] = 0x2D;}                  ) p
+(//minus sign, cold!) c n
+(    ) p
+(//could have two leading zero digits!) c n
+( ) p n
+() S 8 T () S
+(return) K
+(\(0\);) p n
+(}) S
+(//lm73_temp_convert) c n
+(//******************************************************************************) N
+(lm73_functions.c) (Page 2/2) (Dec 10, 13 11:42) title
+border
+grestore
+(Printed by Robert) rhead
+(lm73_functions.c) (11/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1-2) 12
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(//Si4734 i2C functions     ) c n
+(//Roger Traylor 11.13.2011) N
+(//device driver for the si4734 chip.) N
+() p n
+(// header files) c n
+(#include) K
+( <avr/interrupt.h>) p n
+(#include) K
+( <avr/io.h>) p n
+(#include) K
+( <stdlib.h>) p n
+(#include) K
+( <util/twi.h>) p n
+(#include) K
+( <avr/eeprom.h>) p n
+(#include) K
+( <util/delay.h>) p n
+() N
+(#include) K
+( ") p
+(macros.h) str
+(") p n
+(#include) K
+( ") p
+(twi_master.h) str
+("        ) p
+(//my defines for TWCR_START, STOP, RACK, RNACK, SEND) c n
+(#include) K
+( ") p
+(si4734_driver.h) str
+(") p n
+() N
+(#define) K
+( MAX_FM_FREQ 10790) p n
+(#define) K
+( MIN_FM_FREQ  8810) p n
+() N
+(uint8_t si4734_wr_buf[9];          ) S
+(//buffer for holding data to send to the si47) c n
+(34 ) N
+(uint8_t si4734_rd_buf[15];         ) p
+(//buffer for holding data recieved from the s) c n
+(i4734) N
+(uint8_t si4734_tune_status_buf[8]; ) p
+(//buffer for holding tune_status data  ) c n
+() p n
+(enum) k
+( radio_band{FM, AM, SW};) p n
+(volatile) K
+( ) p
+(enum) k
+( radio_band current_radio_band = FM;) p n
+() N
+(uint16_t current_fm_freq;) N
+(uint16_t last_fm_freq;) N
+() N
+(uint16_t current_am_freq;) N
+(uint16_t current_sw_freq;) N
+() N
+(uint8_t muted;) N
+() N
+(//******************************************************************************) c n
+(**) N
+(//                            get_int_status\(\)) N
+(//) N
+(uint8_t get_int_status\(\)) p n
+({) N
+() S 8 T () S
+(//send get_int_status command) c n
+(    si4734_wr_buf[0] = 0x14;) p n
+(    twi_start_wr\(SI4734_ADDRESS, si4734_wr_buf, 1\);) N
+() N
+() S 8 T (_delay_ms\(5\);) N
+() S 8 T () S
+(//get the interrupt status ) c n
+(    twi_start_rd\(SI4734_ADDRESS, si4734_rd_buf, 1\);) p n
+(    ) S
+(return) K
+(\(si4734_rd_buf[0]\);) p n
+(}) N
+() N
+(//******************************************************************************) c n
+(**) N
+() p n
+(//******************************************************************************) c n
+(**) N
+(//                            fm_tune_freq\(\)) N
+(//) N
+(//takes current_fm_freq and sends it to the radio chip) N
+(void) k
+( fm_tune_freq\(uint8_t wait\)) p n
+({) N
+() S 8 T () S
+(if) K
+( \(current_fm_freq == last_fm_freq\)) p n
+() S 8 T () S 16 T () S
+(return) K
+(;) p n
+() S 8 T () N
+() S 8 T (si4734_wr_buf[0] = 0x20;  ) S
+(//fm tune command) c n
+() p 8 T (si4734_wr_buf[1] = 0x00;  ) S
+(//no FREEZE and no FAST tune) c n
+() p 8 T (si4734_wr_buf[2] = \(uint8_t\)\(current_fm_freq >> 8\); ) S
+(//freq high byte) c n
+() p 8 T (si4734_wr_buf[3] = \(uint8_t\)\(current_fm_freq\);      ) S
+(//freq low byte) c n
+(si4734_driver.c) (Page 1/6) (Dec 15, 13 23:06) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p 8 T (si4734_wr_buf[4] = 0x00;  ) S
+(//antenna tuning capactior) c n
+() p n
+() S 8 T () S
+(//send fm tune command) c n
+() p 8 T (twi_start_wr\(SI4734_ADDRESS, si4734_wr_buf, 5\);) N
+() S 8 T (last_fm_freq = current_fm_freq;) N
+() N
+() S 8 T () S
+(if) K
+( \(wait\)) p n
+() S 8 T () S 16 T (_delay_ms\(80\);) N
+(}) N
+() N
+(uint16_t get_freq\(\)) N
+({) N
+() S 8 T () S
+(return) K
+( current_fm_freq/10;) p n
+(}) N
+() N
+(void) k
+( fm_alter_freq\(uint8_t inc\)) p n
+({) N
+() S 8 T () S
+(if) K
+( \(inc\) {) p n
+() S 8 T () S 16 T (current_fm_freq += 20;) N
+() S 8 T () S 16 T () S
+(if) K
+( \(current_fm_freq == 10810\)) p n
+() S 8 T () S 16 T () S 24 T (current_fm_freq = MIN_FM_FREQ;) N
+() S 8 T (} ) S
+(else) K
+( {) p n
+() S 8 T () S 16 T (current_fm_freq -= 20;) N
+() S 8 T () S 16 T () S
+(if) K
+( \(current_fm_freq == 8790\)) p n
+() S 8 T () S 16 T () S 24 T (current_fm_freq = MAX_FM_FREQ;) N
+() S 8 T (}) N
+(}) N
+() N
+(//******************************************************************************) c n
+(**) N
+() p n
+(//******************************************************************************) c n
+(**) N
+(//                            am_tune_freq\(\)) N
+(//) N
+(//takes current_am_freq and sends it to the radio chip) N
+(//) N
+(void) k
+( am_tune_freq\(\)) p n
+({) N
+() S 8 T (si4734_wr_buf[0] = 0x40;  ) S
+(//am tune command) c n
+() p 8 T (si4734_wr_buf[1] = 0x00;  ) S
+(//no FAST tune) c n
+() p 8 T (si4734_wr_buf[2] = \(uint8_t\)\(current_am_freq >> 8\); ) S
+(//freq high byte) c n
+() p 8 T (si4734_wr_buf[3] = \(uint8_t\)\(current_am_freq\);      ) S
+(//freq low byte) c n
+() p 8 T (si4734_wr_buf[4] = 0x00;  ) S
+(//antenna tuning capactior high byte) c n
+() p 8 T (si4734_wr_buf[5] = 0x00;  ) S
+(//antenna tuning capactior low byte) c n
+() p n
+() S 8 T () S
+(//send fm tune command) c n
+() p 8 T (twi_start_wr\(SI4734_ADDRESS, si4734_wr_buf, 6\);) N
+() N
+(    _delay_ms\(80\);) N
+(}) N
+() N
+(//******************************************************************************) c n
+(**) N
+() p n
+(//******************************************************************************) c n
+(**) N
+(//                            sw_tune_freq\(\)) N
+(//) N
+(//takes current_sw_freq and sends it to the radio chip) N
+(//antcap low byte is 0x01 as per datasheet) N
+(void) k
+( sw_tune_freq\(\)) p n
+({) N
+() S 8 T (si4734_wr_buf[0] = 0x40;  ) S
+(//am tune command) c n
+() p 8 T (si4734_wr_buf[1] = 0x00;  ) S
+(//no FAST tune) c n
+() p 8 T (si4734_wr_buf[2] = \(uint8_t\)\(current_sw_freq >> 8\); ) S
+(//freq high byte) c n
+() p 8 T (si4734_wr_buf[3] = \(uint8_t\)\(current_sw_freq\);      ) S
+(//freq low byte) c n
+() p 8 T (si4734_wr_buf[4] = 0x00;  ) S
+(//antenna tuning capactior high byte) c n
+() p 8 T (si4734_wr_buf[5] = 0x01;  ) S
+(//antenna tuning capactior low byte ) c n
+(si4734_driver.c) (Page 2/6) (Dec 15, 13 23:06) title
+border
+grestore
+(Printed by Robert) rhead
+(si4734_driver.c) (12/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (3-4) 13
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p n
+() S 8 T () S
+(//send am tune command) c n
+() p 8 T (twi_start_wr\(SI4734_ADDRESS, si4734_wr_buf, 6\);) N
+() N
+(    _delay_ms\(80\);) N
+(}) N
+() N
+(//******************************************************************************) c n
+(**) N
+(//                            fm_pwr_up\(\)) N
+(//) N
+(void) k
+( fm_pwr_up\(\)) p n
+({) N
+() S 8 T () S
+(//send fm power up command) c n
+() p 8 T (si4734_wr_buf[0] = 0x01;) N
+() S 8 T (si4734_wr_buf[1] = 0x50; ) S
+(//GPO2OEN and XOSCEN selected) c n
+() p 8 T (si4734_wr_buf[2] = 0x05; ) S
+(//analog audio outputs) c n
+() p 8 T (twi_start_wr\(SI4734_ADDRESS, si4734_wr_buf, 3\);) N
+() N
+() S 8 T (_delay_ms\(120\);   ) S
+(//startup delay as specified ) c n
+(  ) p n
+() S 8 T (set_property\(GPO_IEN, \(1<<GPO_IEN_STCIEN_SHFT\), 1\);    ) S
+(//enable Seek/Tun) c n
+(e Complete interrupt) N
+(}) p n
+() N
+(//******************************************************************************) c n
+(**) N
+(//                            am_pwr_up\(\)) N
+(//) N
+(void) k
+( am_pwr_up\(\)) p n
+({) N
+() S 8 T () S
+(//send am power up command) c n
+() p 8 T (si4734_wr_buf[0] = 0x01;) N
+() S 8 T (si4734_wr_buf[1] = 0x51;) S
+(//GPO2OEN and XOSCEN selected) c n
+() p 8 T (si4734_wr_buf[2] = 0x05;) N
+() S 8 T (twi_start_wr\(SI4734_ADDRESS, si4734_wr_buf, 3\);) N
+() N
+() S 8 T (_delay_ms\(120\);   ) N
+() N
+() S 8 T (set_property\(GPO_IEN, \(1<<GPO_IEN_STCIEN_SHFT\), 1\);    ) S
+(//enable Seek/Tun) c n
+(e Complete interrupt) N
+(}) p n
+(//******************************************************************************) c n
+(**) N
+() p n
+(//******************************************************************************) c n
+(**) N
+(//                            sw_pwr_up\(\)) N
+(//) N
+(void) k
+( sw_pwr_up\(\)) p n
+({) N
+() S 8 T () S
+(//send sw power up command \(same as am, only tuning rate is different\)) c n
+(    si4734_wr_buf[0] = 0x01;) p n
+(    si4734_wr_buf[1] = 0x51;) N
+(    si4734_wr_buf[2] = 0x05;) N
+(    twi_start_wr\(SI4734_ADDRESS, si4734_wr_buf, 3\);) N
+() N
+() S 8 T () S
+(//get the interrupt status ) c n
+() p 8 T (_delay_ms\(120\);   ) N
+() N
+() S 8 T () S
+(//set property to disable soft muting for shortwave broadcasts) c n
+() p 8 T (set_property\(AM_SOFT_MUTE_MAX_ATTENUATION, 0x0000, 1\); ) S
+(//cut off soft mu) c n
+(te  ) N
+() p 8 T () S
+(//select 4khz filter BW and engage power line filter) c n
+() p 8 T (set_property\(AM_CHANNEL_FILTER, \(AM_CHFILT_4KHZ | AM_PWR_LINE_NOISE_REJT) N
+(_FILTER\), 1\); ) N
+() S 8 T (set_property\(GPO_IEN, \(1<<GPO_IEN_STCIEN_SHFT\), 1\);    ) N
+(}) N
+() N
+(si4734_driver.c) (Page 3/6) (Dec 15, 13 23:06) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(//******************************************************************************) c n
+(**) N
+() p n
+(//******************************************************************************) c n
+(**) N
+(//                            radio_pwr_dwn\(\)) N
+(//) N
+(void) k
+( radio_pwr_dwn\(\)) p n
+({) N
+() S 8 T () S
+(//send fm power down command) c n
+(    si4734_wr_buf[0] = 0x11;) p n
+(    twi_start_wr\(SI4734_ADDRESS, si4734_wr_buf, 1\);) N
+() N
+() S 8 T (_delay_us\(310\);) N
+(}) N
+(//******************************************************************************) c n
+(**) N
+() p n
+(//******************************************************************************) c n
+(**) N
+(//                            fm_rsq_status\(\)) N
+(//) N
+(void) k
+( fm_rsq_status\(uint8_t wait\)) p n
+({) N
+(    si4734_wr_buf[0] = FM_RSQ_STATUS;            ) S
+(//fm_rsq_status command) c n
+(    si4734_wr_buf[1] = FM_RSQ_STATUS_IN_INTACK;  ) p
+(//clear STCINT bit if set) c n
+(    twi_start_wr\(SI4734_ADDRESS, si4734_wr_buf, 2\);) p n
+() N
+() S 8 T () S
+(if) K
+( \(wait\)) p n
+() S 8 T () S 16 T (_delay_ms\(5\);) N
+() N
+() S 8 T () S
+(//get the fm tune status ) c n
+(    twi_start_rd\(SI4734_ADDRESS, si4734_tune_status_buf, 8\);) p n
+(}) N
+() N
+(void) k
+( get_signal_strength\() p
+(char) k
+( signal[11]\)) p n
+({) N
+() S 8 T (uint8_t strength = si4734_tune_status_buf[3];) N
+() S 8 T () S
+(/*) c n
+() S 8 T (uint8_t i, j;) N
+() S 8 T (for \(i = 0, j = 0; i < 250; i += 25, j++\) {) N
+() S 8 T () S 16 T (if \(i > strength\)) N
+() S 8 T () S 16 T () S 24 T (break;) N
+() N
+() S 8 T () S 16 T (signal[j] = '*';) N
+() S 8 T (}) N
+() N
+() S 8 T (for \(; i < 250; i += 25, j++\)) N
+() S 8 T () S 16 T (signal[j] = ' ';) N
+() S 8 T (*/) N
+() p 8 T (sprintf\(signal, ") S
+(%03d/255   ) str
+(", strength\);) p n
+(}) N
+() N
+(//******************************************************************************) c n
+(**) N
+(//                            fm_tune_status\(\)) N
+(//) N
+(void) k
+( fm_tune_status\(\)) p n
+({) N
+(    si4734_wr_buf[0] = FM_TUNE_STATUS;            ) S
+(//fm_tune_status command) c n
+(    si4734_wr_buf[1] = FM_TUNE_STATUS_IN_INTACK;  ) p
+(//clear STCINT bit if set) c n
+(    twi_start_wr\(SI4734_ADDRESS, si4734_wr_buf, 2\);) p n
+(    _delay_ms\(5\);) N
+() N
+() S 8 T () S
+(//get the fm tune status ) c n
+(    twi_start_rd\(SI4734_ADDRESS, si4734_tune_status_buf, 8\);) p n
+(}) N
+() N
+(//******************************************************************************) c n
+(si4734_driver.c) (Page 4/6) (Dec 15, 13 23:06) title
+border
+grestore
+(Printed by Robert) rhead
+(si4734_driver.c) (13/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (5-6) 14
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(**) c n
+(//                            am_tune_status\(\)) N
+(//) N
+(//TODO: could probably just have one tune_status\(\) function) N
+(void) k
+( am_tune_status\(\)) p n
+({) N
+(    si4734_wr_buf[0] = AM_TUNE_STATUS;            ) S
+(//fm_tune_status command) c n
+(    si4734_wr_buf[1] = AM_TUNE_STATUS_IN_INTACK;  ) p
+(//clear STCINT bit if set) c n
+(    twi_start_wr\(SI4734_ADDRESS, si4734_wr_buf, 2\);) p n
+(    _delay_ms\(5\);) N
+() N
+() S 8 T () S
+(//get the am tune status ) c n
+(    twi_start_rd\(SI4734_ADDRESS, si4734_tune_status_buf, 8\);) p n
+() N
+(}) N
+() N
+(//******************************************************************************) c n
+(**) N
+(//                            am_rsq_status\(\)) N
+(//) N
+(void) k
+( am_rsq_status\(\)) p n
+({) N
+(    si4734_wr_buf[0] = AM_RSQ_STATUS;            ) S
+(//am_rsq_status command) c n
+(    si4734_wr_buf[1] = AM_RSQ_STATUS_IN_INTACK;  ) p
+(//clear STCINT bit if set) c n
+(    twi_start_wr\(SI4734_ADDRESS, si4734_wr_buf, 2\);) p n
+(    _delay_ms\(5\);) N
+() N
+() S 8 T () S
+(//get the fm tune status ) c n
+(    twi_start_rd\(SI4734_ADDRESS, si4734_tune_status_buf, 8\);) p n
+(}) N
+() N
+(//******************************************************************************) c n
+(**) N
+(//                            set_property\(\)) N
+(//) N
+(void) k
+( set_property\(uint16_t property, uint16_t property_value, uint8_t wait\)) p n
+({) N
+(    si4734_wr_buf[0] = SET_PROPERTY;                   ) S
+(//set property command) c n
+(    si4734_wr_buf[1] = 0x00;                           ) p
+(//all zeros) c n
+(    si4734_wr_buf[2] = \(uint8_t\)\(property >> 8\);       ) p
+(//property high byte) c n
+(    si4734_wr_buf[3] = \(uint8_t\)\(property\);            ) p
+(//property low byte) c n
+(    si4734_wr_buf[4] = \(uint8_t\)\(property_value >> 8\); ) p
+(//property value high byt) c n
+(e) N
+(    si4734_wr_buf[5] = \(uint8_t\)\(property_value\);      ) p
+(//property value low byte) c n
+(    twi_start_wr\(SI4734_ADDRESS, si4734_wr_buf, 6\);) p n
+() N
+() S 8 T () S
+(if) K
+( \(wait\)) p n
+() S 8 T () S 16 T (_delay_ms\(10\);  ) S
+(//set properties takes 10ms to complete) c n
+(}) p
+(//set_property\(\)) c n
+() p n
+(void) k
+( reset_radio\(\)) p n
+({) N
+() S 8 T (PORTE &= ~\(1 << PE7\); ) S
+(//int2 initially low to sense TWI mode) c n
+() p 8 T (DDRE  |= 0x80;) N
+() N
+() S 8 T (PORTE |=  \(1 << PE2\); ) S
+(//hardware reset Si4734 ) c n
+() p 8 T (_delay_us\(200\);     ) S
+(//hold for 200us, 100us by spec         ) c n
+() p 8 T (PORTE &= ~\(1 << PE2\); ) S
+(//release reset ) c n
+() p 8 T (_delay_us\(30\);      ) S
+(//5us required because of my slow I2C translators I ) c n
+(suspect) N
+() p n
+() S 8 T (DDRE  &= ~\(0x80\);   ) S
+(//now Port E bit 7 becomes input from the radio inte) c n
+(rrupt) N
+(}) p n
+() N
+(void) k
+( mute_radio\(uint8_t wait\)) p n
+({) N
+() S 8 T (muted = TRUE;) N
+() S 8 T (set_property\(RX_HARD_MUTE, MUTE_LR, wait\);) N
+(si4734_driver.c) (Page 5/6) (Dec 15, 13 23:06) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(}) p n
+() N
+(void) k
+( unmute_radio\(\)) p n
+({) N
+() S 8 T (muted = FALSE;) N
+() S 8 T (set_property\(RX_HARD_MUTE, UNMUTE, 0\);) N
+(}) N
+() N
+(uint8_t is_muted\(\)) N
+({) N
+() S 8 T () S
+(return) K
+( muted;) p n
+(}) N
+() N
+(void) k
+( enable_radio\(\)) p n
+({) N
+() S 8 T (current_fm_freq = 9910;) N
+() S 8 T (last_fm_freq = 0;) N
+() N
+() S 8 T (reset_radio\(\);) N
+() S 8 T (init_twi\(\);) N
+() N
+() S 8 T (fm_pwr_up\(\);) N
+() S 8 T () N
+() S 8 T (mute_radio\(1\);) N
+() S 8 T (fm_tune_freq\(1\);) N
+(}) N
+(si4734_driver.c) (Page 6/6) (Dec 15, 13 23:06) title
+border
+grestore
+(Printed by Robert) rhead
+(si4734_driver.c) (14/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 15
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#include) K
+( <avr/io.h>) p n
+(#include) K
+( ") p
+(macros.h) str
+(") p n
+() N
+(void) k
+( spi_init\(\)) p n
+({) N
+() S 8 T (DDRB |= 0x07;  ) S
+(//set output mode for SS, MOSI, SCLK) c n
+() p 8 T (SPCR = \(1 << SPE\) | \(1 << MSTR\); ) S
+(//set master mode, clk low on idle, lea) c n
+(ding edge sample) N
+() p 8 T (SPSR = \(1 << SPI2X\);  ) S
+(//set choos) c n
+(}) p n
+() N
+(void) k
+( spi_wait\(\)) p n
+({) N
+() S 8 T () S
+(while) K
+( \(!ISSET\(SPSR, SPIF\)\);) p n
+(}) N
+() N
+(char) k
+( spi_send\() p
+(char) k
+( msg\)) p n
+({) N
+() S 8 T (SPDR = msg; ) S
+(//set SPDR to start the transmission) c n
+() p n
+() S 8 T () S
+(while) K
+( \(!ISSET\(SPSR, SPIF\)\); ) p
+(// wait until transmission is complete) c n
+() p 8 T () N
+() S 8 T () S
+(return) K
+( SPDR; ) p
+(// return the byte that was received) c n
+(}) p n
+(spi_driver.c) (Page 1/1) (Dec 05, 13 11:46) title
+border
+grestore
+(Printed by Robert) rhead
+(spi_driver.c) (15/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 16
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(#include) K
+( <util/delay.h>) p n
+() N
+(#include) K
+( ") p
+(twi_master.h) str
+(") p n
+(#include) K
+( ") p
+(lm73_functions.h) str
+(") p n
+(#include) K
+( ") p
+(thermo_driver.h) str
+(") p n
+(#include) K
+( ") p
+(macros.h) str
+(") p n
+() N
+(volatile) K
+( uint8_t lm73_wr_buf[2];) p n
+(volatile) K
+( uint8_t lm73_rd_buf[2];) p n
+() N
+(void) k
+( init_thermo_sensors\(\)) p n
+({) N
+() S 8 T (init_twi\(\);) N
+(}) N
+() N
+(void) k
+( prepare_local_read\(uint8_t wait\)) p n
+({) N
+() S 8 T (lm73_wr_buf[0] = LM73_PTR_TEMP;) S
+(//load lm73_wr_buf[0] with temperature po) c n
+(inter address                                                      ) N
+(    twi_start_wr\(LM73_ADDRESS, lm73_wr_buf, 1\); ) p
+(//start the TWI write process) c n
+() p n
+() S 8 T () S
+(if) K
+( \(wait\)) p n
+() S 8 T () S 16 T (_delay_ms\(2\);) N
+(}) N
+() N
+(void) k
+( local_thermo_read\(uint8_t wait\)) p n
+({) N
+() S 8 T (twi_start_rd\(LM73_ADDRESS, lm73_rd_buf, 2\); ) S
+(//read temperature data from) c n
+( LM73 \(2 bytes\)) N
+() p 8 T () N
+() S 8 T () S
+(if) K
+( \(wait\)) p n
+() S 8 T () S 16 T (_delay_ms\(2\);) N
+(}) N
+() N
+(#ifdef) K
+( MEGA128) p n
+(void) k
+( decode_temp\() p
+(struct) k
+( temperature *temp\)) p n
+({) N
+() S 8 T (uint16_t raw = temp->raw;) N
+() S 8 T () N
+() S 8 T (temp->positive = TRUE;) N
+() S 8 T () S
+(if) K
+( \(raw & 0x8000\) {) p n
+() S 8 T () S 16 T (temp->positive = FALSE;) N
+() S 8 T () S 16 T () N
+() S 8 T () S 16 T (raw = \(~raw\)+1;) N
+() S 8 T (}) N
+() S 8 T () N
+() S 8 T (uint16_t whole = raw >> 7;) N
+() N
+() S 8 T (temp->celsius = \(uint8_t\) whole;) N
+() S 8 T (temp->fahrenheit = \(uint8_t\) temp->celsius*1.8+32;) N
+(}) N
+(#endif) K n
+() p n
+(void) k
+( get_local_temp\() p
+(struct) k
+( temperature *temp\)) p n
+({) N
+() S 8 T (temp->raw = \(lm73_rd_buf[0] << 8\) | lm73_rd_buf[1];) N
+() S 8 T () N
+(#ifdef) K
+( MEGA128) p n
+() S 8 T (decode_temp\(temp\);) N
+(#endif) K n
+(}) p n
+(thermo_driver.c) (Page 1/1) (Dec 10, 13 12:47) title
+border
+grestore
+(Printed by Robert) rhead
+(thermo_driver.c) (16/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1-2) 17
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(// twi_master.c  ) c n
+(// R. Traylor) N
+(// 11.07.2011) N
+(// twi_master code   ) N
+() p n
+(#include) K
+( <avr/io.h>) p n
+(#include) K
+( <avr/interrupt.h>) p n
+() N
+(#include) K
+( <util/twi.h>) p n
+(#include) K
+( <stdlib.h>) p n
+(#include) K
+( ") p
+(twi_master.h) str
+(") p n
+() N
+(#define) K
+( ZERO  0x00) p n
+(#define) K
+( ONE   0x01) p n
+() N
+(volatile) K
+( uint8_t  *twi_buf;      ) p
+(//pointer to the buffer we are xferred from/to) c n
+(volatile) K
+( uint8_t  twi_msg_size;  ) p
+(//number of bytes to be xferred) c n
+(volatile) K
+( uint8_t  twi_bus_addr;  ) p
+(//address of device on TWI bus ) c n
+(volatile) K
+( uint8_t  twi_state;     ) p
+(//status of transaction  ) c n
+() p n
+(//****************************************************************************) c n
+(//This is the TWI ISR. Different actions are taken depending upon the value) N
+(//of the TWI status register TWSR.) N
+(//****************************************************************************/) N
+(ISR\(TWI_vect\)) p n
+({) N
+() S 8 T () S
+(static) K
+( uint8_t twi_buf_ptr;  ) p
+(//index into the buffer being used ) c n
+() p n
+() S 8 T () S
+(switch) K
+( \(TWSR\) {) p n
+(    ) S
+(case) K
+( TW_START:          ) p
+(//START has been xmitted, fall thorough) c n
+(    ) p
+(case) K
+( TW_REP_START:      ) p
+(//Repeated START was xmitted) c n
+() p 8 T () S 16 T (TWDR = twi_bus_addr;  ) S
+(//load up the twi bus address) c n
+() p 8 T () S 16 T (twi_buf_ptr = 0;      ) S
+(//initalize buffer pointer ) c n
+() p 8 T () S 16 T (TWCR = TWCR_SEND;     ) S
+(//send SLA+RW) c n
+() p 8 T () S 16 T () S
+(break) K
+(;) p n
+(    ) S
+(case) K
+( TW_MT_SLA_ACK:     ) p
+(//SLA+W was xmitted and ACK rcvd, fall through ) c n
+(    ) p
+(case) K
+( TW_MT_DATA_ACK:                ) p
+(//Data byte was xmitted and ACK rcvd) c n
+() p 8 T () S 16 T () S
+(if) K
+( \(twi_buf_ptr < twi_msg_size\){  ) p
+(//send data till done) c n
+() p 8 T () S 16 T () S 24 T (TWDR = twi_buf[twi_buf_ptr++];  ) S
+(//load next and postincr) c n
+(ement index) N
+() p 8 T () S 16 T () S 24 T (TWCR = TWCR_SEND;               ) S
+(//send next byte ) c n
+() p 8 T () S 16 T (}) N
+() S 8 T () S 16 T () S
+(else) K
+({TWCR = TWCR_STOP;}           ) p
+(//last byte sent, send STOP) c n
+() p 8 T () S 16 T () S
+(break) K
+(;) p n
+(    ) S
+(case) K
+( TW_MR_DATA_ACK:                ) p
+(//Data byte has been rcvd, ACK xmitted, ) c n
+(fall through) N
+() p 8 T () S 16 T (twi_buf[twi_buf_ptr++] = TWDR;    ) S
+(//fill buffer with rcvd data) c n
+(    ) p
+(case) K
+( TW_MR_SLA_ACK:                 ) p
+(//SLA+R xmitted and ACK rcvd) c n
+() p 8 T () S 16 T () S
+(if) K
+( \(twi_buf_ptr < \(twi_msg_size-1\)\){TWCR = TWCR_RACK;}  ) p
+(//ACK ea) c n
+(ch byte) N
+() p 8 T () S 16 T () S
+(else) K
+(                               {TWCR = TWCR_RNACK;} ) p
+(//NACK l) c n
+(ast byte ) N
+() p 8 T () S 16 T () S
+(break) K
+(; ) p n
+(    ) S
+(case) K
+( TW_MR_DATA_NACK: ) p
+(//Data byte was rcvd and NACK xmitted) c n
+() p 8 T () S 16 T (twi_buf[twi_buf_ptr] = TWDR;      ) S
+(//save last byte to buffer) c n
+() p 8 T () S 16 T (TWCR = TWCR_STOP;                 ) S
+(//initiate a STOP) c n
+() p 8 T () S 16 T () S
+(break) K
+(;      ) p n
+(    ) S
+(case) K
+( TW_MT_ARB_LOST:                ) p
+(//Arbitration lost ) c n
+() p 8 T () S 16 T (TWCR = TWCR_START;                ) S
+(//initiate RESTART ) c n
+() p 8 T () S 16 T () S
+(break) K
+(;) p n
+(    ) S
+(default) K
+(:                            ) p
+(//Error occured, save TWSR) c n
+() p 8 T () S 16 T (twi_state = TWSR;) N
+() S 8 T () S 16 T (TWCR = TWCR_RST;                  ) S
+(//Reset TWI, disable interupts) c n
+( ) N
+() p 8 T (}) S
+(//switch) c n
+(}) p
+(//TWI_isr) c n
+(//****************************************************************************) N
+() p n
+(//*****************************************************************************) c n
+(twi_master.c) (Page 1/2) (Dec 14, 13 20:03) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(//Call this function to test if the TWI unit is busy transferring data. The TWI) c n
+(//code uses the the interrupt enable bit \(TWIE\) to indicate if the TWI unit) N
+(//is busy or not.  This protocol must be maintained for correct operation.) N
+(//*****************************************************************************) N
+(uint8_t twi_busy\() p
+(void) k
+(\)) p n
+({) N
+() S 8 T () S
+(return) K
+( \(bit_is_set\(TWCR,TWIE\)\); ) p
+(//if interrupt is enabled, twi is busy) c n
+(}) p n
+(//*****************************************************************************) c n
+() p n
+(//****************************************************************************) c n
+(//Initiates a write transfer. Loads global variables. Sends START. ISR handles) N
+(//the rest.) N
+(//****************************************************************************) N
+(void) k
+( twi_start_wr\(uint8_t twi_addr, ) p
+(volatile) K
+( uint8_t *twi_data, uint8_t byte_cnt) p n
+(\)) N
+({) N
+() S 8 T () S
+(while) K
+(\(twi_busy\(\)\);                    ) p
+(//wait till TWI rdy for next xfer) c n
+() p 8 T (twi_bus_addr = \(twi_addr & ~TW_READ\); ) S
+(//set twi bus address, mark as wri) c n
+(te ) N
+() p 8 T (twi_buf = twi_data;                   ) S
+(//load pointer to write buffer) c n
+() p 8 T (twi_msg_size = byte_cnt;              ) S
+(//load size of xfer ) c n
+() p 8 T (TWCR = TWCR_START;                    ) S
+(//initiate START) c n
+(}) p n
+() N
+(//****************************************************************************) c n
+(//Initiates a read transfer. Loads global variables. Sends START. ISR handles) N
+(//the rest.) N
+(//****************************************************************************) N
+(void) k
+( twi_start_rd\(uint8_t twi_addr, ) p
+(volatile) K
+( uint8_t *twi_data, uint8_t byte_cnt) p n
+(\)) N
+({) N
+() S 8 T () S
+(while) K
+(\(twi_busy\(\)\);                   ) p
+(//wait till TWI rdy for next xfer) c n
+() p 8 T (twi_bus_addr = \(twi_addr | TW_READ\); ) S
+(//set twi bus address, mark as read) c n
+(  ) N
+() p 8 T (twi_buf = twi_data;                  ) S
+(//load pointer to write buffer) c n
+() p 8 T (twi_msg_size = byte_cnt;             ) S
+(//load size of xfer ) c n
+() p 8 T (TWCR = TWCR_START;                   ) S
+(//initiate START) c n
+(}) p n
+() N
+(//******************************************************************************) c n
+(//                            init_twi                               ) N
+(//) N
+(//Uses PD1 as SDA and PD0 as SCL) N
+(//10K pullups are present on the board) N
+(//For the alarm clock an additional 4.7K resistor is also there for pullup) N
+(//******************************************************************************) N
+(void) k
+( init_twi\(\)) p n
+({) N
+() S 8 T (TWDR = 0xFF;     ) S
+(//release SDA, default contents) c n
+() p n
+() S 8 T (TWSR = 0;) N
+() S 8 T (TWBR = TWI_TWBR; ) S
+(//defined in twi_master.h ) c n
+(}) p n
+() N
+(twi_master.c) (Page 2/2) (Dec 14, 13 20:03) title
+border
+grestore
+(Printed by Robert) rhead
+(twi_master.c) (17/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1-2) 18
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(//UART Functions ) c n
+(//Roger Traylor 11.l6.11) N
+(//For controlling the UART and sending debug data to a terminal) N
+(//as an aid in debugging.) N
+() p n
+(#include) K
+( <avr/io.h>) p n
+(#include) K
+( <stdlib.h>) p n
+(#include) K
+( <avr/pgmspace.h>) p n
+() N
+(#define) K
+( USART_BAUDRATE 1200) p n
+(#define) K
+( BAUDVALUE  \(\(F_CPU/\(USART_BAUDRATE * 16UL\)\) - 1 \)) p n
+() N
+(#include) K
+( <string.h>) p n
+() N
+(char) k
+( uart_tx_buf[40];      ) p
+(//holds string to send to crt) c n
+(char) k
+( uart_rx_buf[40];      ) p
+(//holds string that recieves data from uart) c n
+() p n
+(//******************************************************************) c n
+(//                        uart_putc) N
+(//) N
+(// Takes a character and sends it to USART0) N
+(//) N
+(void) k
+( uart_putc\() p
+(char) k
+( data\) ) p n
+({) N
+(    ) S
+(while) K
+( \(!\(UCSR0A&\(1<<UDRE0\)\)\);    ) p
+(// Wait for previous transmissions) c n
+(    UDR0 = data;    ) p
+(// Send data byte) c n
+(    ) p
+(while) K
+( \(!\(UCSR0A&\(1<<UDRE0\)\)\);    ) p
+(// Wait for previous transmissions) c n
+(}) p n
+(//******************************************************************) c n
+() p n
+(//******************************************************************) c n
+(//                        uart_puts) N
+(// Takes a string and sends each charater to be sent to USART0) N
+(//void uart_puts\(unsigned char *str\) {) N
+(void) k
+( uart_puts\() p
+(char) k
+( *str\) ) p n
+({) N
+(    ) S
+(int) k
+( i = 0;) p n
+(    ) S
+(while) K
+(\(str[i] != ') p
+(\\0) str
+('\) { ) p
+(// Loop through string, sending each character) c n
+(        uart_putc\(str[i]\);) p n
+(        i++;) N
+(    }) N
+(}) N
+(//******************************************************************) c n
+() p n
+(//******************************************************************) c n
+(//                        uart_puts_p) N
+(// Takes a string in flash memory and sends each charater to be sent to USART0) N
+(//void uart_puts\(unsigned char *str\) {) N
+(void) k
+( uart_puts_p\() p
+(const) K
+( ) p
+(char) k
+( *str\) ) p n
+({) N
+(    ) S
+(while) K
+(\(pgm_read_byte\(str\) != 0x00\) ) p
+(// Loop through string, sending each chara) c n
+(cter) N
+(        uart_putc\(pgm_read_byte\(str++\)\);) p n
+(}) N
+(//******************************************************************) c n
+() p n
+(//******************************************************************) c n
+(//                            uart_init) N
+(//) N
+(//RXD0 is PORT E bit 0) N
+(//TXD0 is PORT E bit 1) N
+(//Jumpers J14 and J16 \(mega128.1\) or Jumpers J7 and J9 \(mega128.2\)) N
+(//must be in place for the MAX232 chip to get data.) N
+() p n
+(void) k
+( uart_init\(\)) p n
+({) N
+() S 8 T () S
+(//rx and tx enable, receive interrupt enabled, 8 bit characters) c n
+() p 8 T () S
+(//  UCSR0B |= \(1<<RXEN0\) | \(1<<TXEN0\) | \(1<<RXCIE0\);) c n
+() p 8 T (UCSR0B |= \(1<<RXEN0\) | \(1<<TXEN0\);  ) S
+(//INTERRUPS DISABLED!!!) c n
+(uart_driver.c) (Page 1/2) (Dec 05, 13 20:02) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p n
+() S 8 T () S
+(//  UCSR0B |= \(1<<RXEN0\) | \(1<<TXEN0\) ;) c n
+() p 8 T () S
+(//async operation, no parity,  one stop bit, 8-bit characters) c n
+() p 8 T (UCSR0C |= \(1<<UCSZ01\) | \(1<<UCSZ00\);) N
+() S 8 T (UBRR0H = \(BAUDVALUE >> 8\); ) S
+(//load upper byte of the baud rate into UBRR ) c n
+() p 8 T (UBRR0L =  BAUDVALUE;       ) S
+(//load lower byte of the baud rate into UBRR ) c n
+(}) p n
+() N
+(void) k
+( enable_rx_interrupts\(\)) p n
+({) N
+() S 8 T (UCSR0B |= \(1 << RXCIE0\);) N
+(}) N
+() N
+(//******************************************************************) c n
+() p n
+(//******************************************************************) c n
+(//                             uart_getc) N
+(//Modified to not block indefinately in the case of a lost byte) N
+(//) N
+(char) k
+( uart_getc\() p
+(void) k
+(\) {) p n
+() S 8 T (uint16_t timer = 0;) N
+() N
+() S 8 T () S
+(while) K
+( \(!\(UCSR0A & \(1<<RXC0\)\)\) {) p n
+() S 8 T () S 16 T (timer++;) N
+() S 8 T () S 16 T () S
+(if) K
+(\(timer >= 16000\)) p n
+() S 8 T () S 16 T () S 24 T () S
+(return) K
+(\(0\);) p n
+() S 8 T () S 16 T () S
+(//what should we return if nothing comes in?) c n
+() p 8 T () S 16 T () S
+(//return the data into a global variable) c n
+() p 8 T () S 16 T () S
+(//give uart_getc the address of the variable) c n
+() p 8 T () S 16 T () S
+(//return a -1 if no data comes back.) c n
+() p 8 T (} ) S
+(// Wait for byte to arrive) c n
+() p 8 T () N
+() S 8 T () S
+(return) K
+(\(UDR0\); ) p
+(//return the received data) c n
+(}) p n
+(//******************************************************************) c n
+() p n
+(//uart_puts\("."\);) c n
+(//uart_puts\("   "\);) N
+(//uart_puts\("strength = "\);) N
+(//itoa\(\(int\)strength, str, 10\);) N
+(//uart_puts\(str\);) N
+(//uart_puts\("   "\);) N
+(//uart_init\(\);) N
+(//uart_putc\('\\n'\);) N
+(//uart_puts\("*****************\\n"\);) N
+(//uart_puts\("wrote first byte: "\);) N
+(//uart_puts\(str\);) N
+(//uart_putc\('\\n'\);) N
+(  ) p n
+(uart_driver.c) (Page 2/2) (Dec 05, 13 20:02) title
+border
+grestore
+(Printed by Robert) rhead
+(uart_driver.c) (18/18) (Sunday December 15, 2013) footer
+end % of iso1dict
+pagesave restore
+showpage
+
+%%Trailer
+end
+%%EOF
