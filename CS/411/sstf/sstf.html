@@ -1,0 +1,270 @@
+<html>
+<head>
+<title>sstf-iosched.c</title>
+</head>
+
+<body>
+<h2>Assignment Description</h2>
+<p>In this project you will be developing your solution on the virtual machine. Using the
+  default Linux 3.0.4 kernel, you are asked to implement the following:</p>
+
+<ul>
+  <li>Implement the Shortest Seek Time First(SSTF) I/O scheduler</li>
+</ul>
+
+<p>Develop your solution based off the currect FIFO (noop) implementation currently in
+  the block directory. You will be required to write a new file titled
+  <tt>sstf-iosched.c</tt>. </p>
+
+<b>**NOTES**</b>
+<p>You need to edit the Kconfig file(s) in order to get this to compile and have the VM (or whatever hardware you are running this on) use this IO scheduler.  The queue is printed to the kernel logs so that you can verify that everything is in the correct order.</p>
+
+<body>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">/*</span>
+<span style="color: #888888"> * elevator sstf</span>
+<span style="color: #888888"> */</span>
+<span style="color: #557799">#include &lt;linux/blkdev.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/elevator.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/bio.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/module.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/slab.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/init.h&gt;</span>
+
+<span style="color: #557799">#define SSTF_UP   0</span>
+<span style="color: #557799">#define SSTF_DOWN 1</span>
+
+<span style="color: #008800; font-weight: bold">struct</span> sstf_data {
+	<span style="color: #008800; font-weight: bold">struct</span> list_head queue;
+  <span style="color: #333399; font-weight: bold">sector_t</span> current_pos;
+  <span style="color: #333399; font-weight: bold">int</span> direction;
+};
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>
+<span style="color: #0066BB; font-weight: bold">sstf_latter_request</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q, <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>rq);
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>
+<span style="color: #0066BB; font-weight: bold">sstf_former_request</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q, <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>rq);
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">sstf_merged_requests</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q, <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>rq,
+				 <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>next)
+{
+	list_del_init(<span style="color: #333333">&amp;</span>next<span style="color: #333333">-&gt;</span>queuelist);
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">log_queue</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q)
+{
+  <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>loop;
+  <span style="color: #008800; font-weight: bold">struct</span> sstf_data <span style="color: #333333">*</span>nd <span style="color: #333333">=</span> q<span style="color: #333333">-&gt;</span>elevator<span style="color: #333333">-&gt;</span>elevator_data;
+
+  printk(KERN_INFO <span style="background-color: #fff0f0">&quot;------ QUEUE ------</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+
+  list_for_each_entry(loop, <span style="color: #333333">&amp;</span>nd<span style="color: #333333">-&gt;</span>queue, queuelist) {
+    printk(KERN_INFO <span style="background-color: #fff0f0">&quot;%d &quot;</span>, (<span style="color: #333399; font-weight: bold">int</span>) loop<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector);
+  }
+
+  printk(KERN_INFO <span style="background-color: #fff0f0">&quot;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">-------------------</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n\n</span><span style="background-color: #fff0f0">&quot;</span>);
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">sstf_dispatch</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q, <span style="color: #333399; font-weight: bold">int</span> force)
+{
+  <span style="color: #008800; font-weight: bold">struct</span> sstf_data <span style="color: #333333">*</span>nd <span style="color: #333333">=</span> q<span style="color: #333333">-&gt;</span>elevator<span style="color: #333333">-&gt;</span>elevator_data;
+
+	<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>list_empty(<span style="color: #333333">&amp;</span>nd<span style="color: #333333">-&gt;</span>queue)) {
+		<span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>rq;
+		rq <span style="color: #333333">=</span> list_entry(nd<span style="color: #333333">-&gt;</span>queue.next, <span style="color: #008800; font-weight: bold">struct</span> request, queuelist);
+		list_del_init(<span style="color: #333333">&amp;</span>rq<span style="color: #333333">-&gt;</span>queuelist);
+		elv_dispatch_sort(q, rq);
+
+		<span style="color: #888888">/* check for a change of direction */</span>
+		<span style="color: #008800; font-weight: bold">if</span> (rq<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&gt;</span> nd<span style="color: #333333">-&gt;</span>current_pos)
+		  nd<span style="color: #333333">-&gt;</span>direction <span style="color: #333333">=</span> SSTF_UP;
+		<span style="color: #008800; font-weight: bold">else</span>
+		  nd<span style="color: #333333">-&gt;</span>direction <span style="color: #333333">=</span> SSTF_DOWN;
+
+		<span style="color: #888888">/* update the current position of the head */</span>
+		nd<span style="color: #333333">-&gt;</span>current_pos <span style="color: #333333">=</span> rq<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector;
+
+		log_queue(q);
+		<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">1</span>;
+	}
+	<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">sstf_add_request_forward</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q,
+				     <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>rq)
+{
+  <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>loop;
+  <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>next;
+
+  <span style="color: #008800; font-weight: bold">struct</span> sstf_data <span style="color: #333333">*</span>nd <span style="color: #333333">=</span> q<span style="color: #333333">-&gt;</span>elevator<span style="color: #333333">-&gt;</span>elevator_data;
+
+  <span style="color: #008800; font-weight: bold">if</span> (nd<span style="color: #333333">-&gt;</span>current_pos <span style="color: #333333">&lt;</span> rq<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector) {
+    list_for_each_entry(loop, <span style="color: #333333">&amp;</span>nd<span style="color: #333333">-&gt;</span>queue, queuelist) {
+      next <span style="color: #333333">=</span> sstf_latter_request(q, rq);
+
+      <span style="color: #888888">/* we&#39;re at the end of the list in the current direction */</span>
+      <span style="color: #008800; font-weight: bold">if</span> (next <span style="color: #333333">==</span> <span style="color: #007020">NULL</span> <span style="color: #333333">||</span> loop<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&gt;</span> next<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector) {
+	list_add(<span style="color: #333333">&amp;</span>rq<span style="color: #333333">-&gt;</span>queuelist, <span style="color: #333333">&amp;</span>loop<span style="color: #333333">-&gt;</span>queuelist);
+	<span style="color: #008800; font-weight: bold">return</span>;
+      }
+
+      <span style="color: #888888">/* we found the spot to place the new request */</span>
+      <span style="color: #008800; font-weight: bold">if</span> (loop<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&lt;</span> rq<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&amp;&amp;</span> 
+	  next<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&gt;</span> rq<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector) {
+	list_add(<span style="color: #333333">&amp;</span>rq<span style="color: #333333">-&gt;</span>queuelist, <span style="color: #333333">&amp;</span>loop<span style="color: #333333">-&gt;</span>queuelist);
+      }
+    }
+  } <span style="color: #008800; font-weight: bold">else</span> {
+    list_for_each_entry(loop, <span style="color: #333333">&amp;</span>nd<span style="color: #333333">-&gt;</span>queue, queuelist) {
+      next <span style="color: #333333">=</span> sstf_latter_request(q, rq);
+
+      <span style="color: #008800; font-weight: bold">if</span> (next <span style="color: #333333">==</span> <span style="color: #007020">NULL</span> <span style="color: #333333">||</span> loop<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&lt;</span> next<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector) {
+	list_add(<span style="color: #333333">&amp;</span>rq<span style="color: #333333">-&gt;</span>queuelist, <span style="color: #333333">&amp;</span>loop<span style="color: #333333">-&gt;</span>queuelist);
+	<span style="color: #008800; font-weight: bold">return</span>;
+      }
+
+      <span style="color: #008800; font-weight: bold">if</span> (loop<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&gt;</span> rq<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&amp;&amp;</span> 
+	  next<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&lt;</span> rq<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector) {
+	list_add(<span style="color: #333333">&amp;</span>rq<span style="color: #333333">-&gt;</span>queuelist, <span style="color: #333333">&amp;</span>loop<span style="color: #333333">-&gt;</span>queuelist);
+      }
+    }
+  }
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">sstf_add_request_backward</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q,
+				     <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>rq)
+{
+  <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>loop;
+  <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>next;
+
+  <span style="color: #008800; font-weight: bold">struct</span> sstf_data <span style="color: #333333">*</span>nd <span style="color: #333333">=</span> q<span style="color: #333333">-&gt;</span>elevator<span style="color: #333333">-&gt;</span>elevator_data;
+
+  <span style="color: #008800; font-weight: bold">if</span> (nd<span style="color: #333333">-&gt;</span>current_pos <span style="color: #333333">&gt;</span> rq<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector) {
+    list_for_each_entry(loop, <span style="color: #333333">&amp;</span>nd<span style="color: #333333">-&gt;</span>queue, queuelist) {
+      next <span style="color: #333333">=</span> sstf_latter_request(q, rq);
+
+      <span style="color: #888888">/* we&#39;re at the end of the list in the current direction */</span>
+      <span style="color: #008800; font-weight: bold">if</span> (next <span style="color: #333333">==</span> <span style="color: #007020">NULL</span> <span style="color: #333333">||</span> loop<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&lt;</span> next<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector) {
+	list_add(<span style="color: #333333">&amp;</span>rq<span style="color: #333333">-&gt;</span>queuelist, <span style="color: #333333">&amp;</span>loop<span style="color: #333333">-&gt;</span>queuelist);
+	<span style="color: #008800; font-weight: bold">return</span>;
+      }
+
+      <span style="color: #888888">/* we found the spot to place the new request */</span>
+      <span style="color: #008800; font-weight: bold">if</span> (loop<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&gt;</span> rq<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&amp;&amp;</span> 
+	  next<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&lt;</span> rq<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector) {
+	list_add(<span style="color: #333333">&amp;</span>rq<span style="color: #333333">-&gt;</span>queuelist, <span style="color: #333333">&amp;</span>loop<span style="color: #333333">-&gt;</span>queuelist);
+      }
+    }
+  } <span style="color: #008800; font-weight: bold">else</span> {
+    list_for_each_entry(loop, <span style="color: #333333">&amp;</span>nd<span style="color: #333333">-&gt;</span>queue, queuelist) {
+      next <span style="color: #333333">=</span> sstf_latter_request(q, rq);
+
+      <span style="color: #008800; font-weight: bold">if</span> (next <span style="color: #333333">==</span> <span style="color: #007020">NULL</span> <span style="color: #333333">||</span> loop<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&gt;</span> next<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector) {
+	list_add(<span style="color: #333333">&amp;</span>rq<span style="color: #333333">-&gt;</span>queuelist, <span style="color: #333333">&amp;</span>loop<span style="color: #333333">-&gt;</span>queuelist);
+	<span style="color: #008800; font-weight: bold">return</span>;
+      }
+
+      <span style="color: #008800; font-weight: bold">if</span> (loop<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&lt;</span> rq<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&amp;&amp;</span> 
+	  next<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector <span style="color: #333333">&gt;</span> rq<span style="color: #333333">-&gt;</span>bio<span style="color: #333333">-&gt;</span>bi_sector) {
+	list_add(<span style="color: #333333">&amp;</span>rq<span style="color: #333333">-&gt;</span>queuelist, <span style="color: #333333">&amp;</span>loop<span style="color: #333333">-&gt;</span>queuelist);
+      }
+    }
+  }
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">sstf_add_request</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q, <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>rq)
+{
+  <span style="color: #008800; font-weight: bold">struct</span> sstf_data <span style="color: #333333">*</span>nd <span style="color: #333333">=</span> q<span style="color: #333333">-&gt;</span>elevator<span style="color: #333333">-&gt;</span>elevator_data;
+
+	<span style="color: #008800; font-weight: bold">if</span> (list_empty(<span style="color: #333333">&amp;</span>nd<span style="color: #333333">-&gt;</span>queue)) {
+	  list_add_tail(<span style="color: #333333">&amp;</span>rq<span style="color: #333333">-&gt;</span>queuelist, <span style="color: #333333">&amp;</span>nd<span style="color: #333333">-&gt;</span>queue);
+	  <span style="color: #008800; font-weight: bold">return</span>;
+	}
+
+	<span style="color: #008800; font-weight: bold">if</span> (nd<span style="color: #333333">-&gt;</span>direction <span style="color: #333333">==</span> SSTF_UP)
+	  sstf_add_request_forward(q, rq);
+	<span style="color: #008800; font-weight: bold">else</span> <span style="color: #008800; font-weight: bold">if</span> (nd<span style="color: #333333">-&gt;</span>direction <span style="color: #333333">==</span> SSTF_DOWN)
+	  sstf_add_request_backward(q, rq);	
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>
+<span style="color: #0066BB; font-weight: bold">sstf_former_request</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q, <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>rq)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> sstf_data <span style="color: #333333">*</span>nd <span style="color: #333333">=</span> q<span style="color: #333333">-&gt;</span>elevator<span style="color: #333333">-&gt;</span>elevator_data;
+
+	<span style="color: #008800; font-weight: bold">if</span> (rq<span style="color: #333333">-&gt;</span>queuelist.prev <span style="color: #333333">==</span> <span style="color: #333333">&amp;</span>nd<span style="color: #333333">-&gt;</span>queue)
+		<span style="color: #008800; font-weight: bold">return</span> <span style="color: #007020">NULL</span>;
+	<span style="color: #008800; font-weight: bold">return</span> list_entry(rq<span style="color: #333333">-&gt;</span>queuelist.prev, <span style="color: #008800; font-weight: bold">struct</span> request, queuelist);
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>
+<span style="color: #0066BB; font-weight: bold">sstf_latter_request</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q, <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>rq)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> sstf_data <span style="color: #333333">*</span>nd <span style="color: #333333">=</span> q<span style="color: #333333">-&gt;</span>elevator<span style="color: #333333">-&gt;</span>elevator_data;
+
+	<span style="color: #008800; font-weight: bold">if</span> (rq<span style="color: #333333">-&gt;</span>queuelist.next <span style="color: #333333">==</span> <span style="color: #333333">&amp;</span>nd<span style="color: #333333">-&gt;</span>queue)
+		<span style="color: #008800; font-weight: bold">return</span> <span style="color: #007020">NULL</span>;
+	<span style="color: #008800; font-weight: bold">return</span> list_entry(rq<span style="color: #333333">-&gt;</span>queuelist.next, <span style="color: #008800; font-weight: bold">struct</span> request, queuelist);
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span><span style="color: #0066BB; font-weight: bold">sstf_init_queue</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> sstf_data <span style="color: #333333">*</span>nd;
+
+	nd <span style="color: #333333">=</span> kmalloc_node(<span style="color: #008800; font-weight: bold">sizeof</span>(<span style="color: #333333">*</span>nd), GFP_KERNEL, q<span style="color: #333333">-&gt;</span>node);
+	<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>nd)
+		<span style="color: #008800; font-weight: bold">return</span> <span style="color: #007020">NULL</span>;
+	INIT_LIST_HEAD(<span style="color: #333333">&amp;</span>nd<span style="color: #333333">-&gt;</span>queue);
+	
+	nd<span style="color: #333333">-&gt;</span>direction <span style="color: #333333">=</span> SSTF_UP;
+	nd<span style="color: #333333">-&gt;</span>current_pos <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+	<span style="color: #008800; font-weight: bold">return</span> nd;
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">sstf_exit_queue</span>(<span style="color: #008800; font-weight: bold">struct</span> elevator_queue <span style="color: #333333">*</span>e)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> sstf_data <span style="color: #333333">*</span>nd <span style="color: #333333">=</span> e<span style="color: #333333">-&gt;</span>elevator_data;
+
+	BUG_ON(<span style="color: #333333">!</span>list_empty(<span style="color: #333333">&amp;</span>nd<span style="color: #333333">-&gt;</span>queue));
+	kfree(nd);
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">struct</span> elevator_type elevator_sstf <span style="color: #333333">=</span> {
+	.ops <span style="color: #333333">=</span> {
+		.elevator_merge_req_fn		<span style="color: #333333">=</span> sstf_merged_requests,
+		.elevator_dispatch_fn		<span style="color: #333333">=</span> sstf_dispatch,
+		.elevator_add_req_fn		<span style="color: #333333">=</span> sstf_add_request,
+		.elevator_former_req_fn		<span style="color: #333333">=</span> sstf_former_request,
+		.elevator_latter_req_fn		<span style="color: #333333">=</span> sstf_latter_request,
+		.elevator_init_fn		<span style="color: #333333">=</span> sstf_init_queue,
+		.elevator_exit_fn		<span style="color: #333333">=</span> sstf_exit_queue,
+	},
+	.elevator_name <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&quot;sstf&quot;</span>,
+	.elevator_owner <span style="color: #333333">=</span> THIS_MODULE,
+};
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span> __init <span style="color: #0066BB; font-weight: bold">sstf_init</span>(<span style="color: #333399; font-weight: bold">void</span>)
+{
+	elv_register(<span style="color: #333333">&amp;</span>elevator_sstf);
+
+	<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> __exit <span style="color: #0066BB; font-weight: bold">sstf_exit</span>(<span style="color: #333399; font-weight: bold">void</span>)
+{
+	elv_unregister(<span style="color: #333333">&amp;</span>elevator_sstf);
+}
+
+module_init(sstf_init);
+module_exit(sstf_exit);
+
+
+MODULE_AUTHOR(<span style="background-color: #fff0f0">&quot;GROUP 6&quot;</span>);
+MODULE_LICENSE(<span style="background-color: #fff0f0">&quot;GPL&quot;</span>);
+MODULE_DESCRIPTION(<span style="background-color: #fff0f0">&quot;SSTF Elevator IO scheduler&quot;</span>);
+</pre></div>
+
+
+</body>
+</html>

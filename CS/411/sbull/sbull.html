@@ -1,0 +1,690 @@
+<html>
+<head>
+<title>sbull.c</title>
+</head>
+
+<body>
+<h2>Assignment Description</h2>
+<p>Using the default Linux 3.0.4 kernel, you are asked to implement the following:</p>
+
+<p>Write a RAM Disk device driver for the Linux Kernel which allocates a chunk of memory
+  and presents it as a block device.</p>
+
+<p>Using the Linux Kernel's Crypto API, add encryption to your block device such that
+  your device driver encrypts and decrypts data when it is written and read. You will need
+  to look at examples in the kernel for how to do this.</p>
+
+<p>This will be developed in the drivers/block directory.</p>
+
+<b>**NOTES**</b>
+<p>The sbull code is a kernel loadable kernel module.</p>
+
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">#!/bin/sh</span>
+
+insmod <span style="color: #996633">$HOME</span>/CS411/proj3/linux/drivers/block/sbull.ko
+mknod /dev/sbulla b 252 0
+mknod /dev/sbulla1 b 252 1
+
+cfdisk /dev/sbulla
+mkfs.ext3 /dev/sbulla1
+
+<span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">[</span> ! -d /mnt/sbulla <span style="color: #333333">]</span>; <span style="color: #008800; font-weight: bold">then</span>
+<span style="color: #008800; font-weight: bold">    </span>mkdir /mnt/sbulla
+<span style="color: #008800; font-weight: bold">fi</span>
+
+mount /dev/sbulla1 /mnt/sbulla
+</pre></div>
+
+<p>The above script loads the kernel module and mounts the encrypted file system.</p>
+<br />
+
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">/*</span>
+<span style="color: #888888"> * Modified version of sbull.c </span>
+<span style="color: #888888"> */</span>
+<span style="color: #557799">#include &lt;linux/module.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/moduleparam.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/init.h&gt;</span>
+
+<span style="color: #557799">#include &lt;linux/sched.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/kernel.h&gt;	</span><span style="color: #888888">/* printk() */</span><span style="color: #557799"></span>
+<span style="color: #557799">#include &lt;linux/slab.h&gt;		</span><span style="color: #888888">/* kmalloc() */</span><span style="color: #557799"></span>
+<span style="color: #557799">#include &lt;linux/fs.h&gt;		</span><span style="color: #888888">/* everything... */</span><span style="color: #557799"></span>
+<span style="color: #557799">#include &lt;linux/errno.h&gt;	</span><span style="color: #888888">/* error codes */</span><span style="color: #557799"></span>
+<span style="color: #557799">#include &lt;linux/timer.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/types.h&gt;	</span><span style="color: #888888">/* size_t */</span><span style="color: #557799"></span>
+<span style="color: #557799">#include &lt;linux/fcntl.h&gt;	</span><span style="color: #888888">/* O_ACCMODE */</span><span style="color: #557799"></span>
+<span style="color: #557799">#include &lt;linux/hdreg.h&gt;	</span><span style="color: #888888">/* HDIO_GETGEO */</span><span style="color: #557799"></span>
+<span style="color: #557799">#include &lt;linux/kdev_t.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/vmalloc.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/genhd.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/blkdev.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/buffer_head.h&gt;	</span><span style="color: #888888">/* invalidate_bdev */</span><span style="color: #557799"></span>
+<span style="color: #557799">#include &lt;linux/bio.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/crypto.h&gt;</span>
+
+MODULE_LICENSE(<span style="background-color: #fff0f0">&quot;Dual BSD/GPL&quot;</span>);
+
+<span style="color: #888888">/* </span>
+<span style="color: #888888"> * Global variables</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span> sbull_major <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+module_param(sbull_major, <span style="color: #333399; font-weight: bold">int</span>, <span style="color: #0000DD; font-weight: bold">0</span>);
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span> hardsect_size <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">512</span>;
+module_param(hardsect_size, <span style="color: #333399; font-weight: bold">int</span>, <span style="color: #0000DD; font-weight: bold">0</span>);
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span> nsectors <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">1024</span>;
+module_param(nsectors, <span style="color: #333399; font-weight: bold">int</span>, <span style="color: #0000DD; font-weight: bold">0</span>);
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span> ndevices <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">4</span>;
+module_param(ndevices, <span style="color: #333399; font-weight: bold">int</span>, <span style="color: #0000DD; font-weight: bold">0</span>);
+
+<span style="color: #888888">/* support for the key to be set as a module param */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>key <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&quot;cs411group6&quot;</span>;
+module_param(key, charp, <span style="color: #4400EE; font-weight: bold">0000</span>);
+
+<span style="color: #557799">#define ENCRYPT 1</span>
+<span style="color: #557799">#define DECRYPT 0</span>
+
+<span style="color: #888888">/* encryption method used for the driver and initialized in  sbull_init*/</span>
+<span style="color: #557799">#define ENCRYPTION_METHOD &quot;aes&quot; </span>
+
+<span style="color: #008800; font-weight: bold">struct</span> crypto_cipher <span style="color: #333333">*</span>cipher;
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888">* The different &quot;request modes&quot; we can use.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #008800; font-weight: bold">enum</span> {
+	RM_SIMPLE <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>,		<span style="color: #888888">/* The extra-simple request function */</span>
+	RM_FULL <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">1</span>,		<span style="color: #888888">/* The full-blown version */</span>
+	RM_NOQUEUE <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">2</span>,		<span style="color: #888888">/* Use make_request */</span>
+};
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span> request_mode <span style="color: #333333">=</span> RM_SIMPLE;
+module_param(request_mode, <span style="color: #333399; font-weight: bold">int</span>, <span style="color: #0000DD; font-weight: bold">0</span>);
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888">* Minor number and partition management.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #557799">#define SBULL_MINORS 16</span>
+<span style="color: #557799">#define MINOR_SHIFT 4</span>
+<span style="color: #557799">#define DEVNUM(kdevnum) (MINOR(kdev_t_to_nr(kdevnum)) &gt;&gt; MINOR_SHIFT</span>
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888">* We can tweak our hardware sector size, but the kernel talks to us</span>
+<span style="color: #888888">* in terms of small sectors, always.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #557799">#define KERNEL_SECTOR_SIZE 512</span>
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888">* After this much idle time, the driver will simulate a media change.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #557799">#define INVALIDATE_DELAY 30*HZ</span>
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888">* The internal representation of our device.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #008800; font-weight: bold">struct</span> sbull_dev {
+	<span style="color: #333399; font-weight: bold">int</span> size;		<span style="color: #888888">/* Device size in sectors */</span>
+	u8 <span style="color: #333333">*</span>data;		<span style="color: #888888">/* The data array */</span>
+	<span style="color: #333399; font-weight: bold">short</span> users;		<span style="color: #888888">/* How many users */</span>
+	<span style="color: #333399; font-weight: bold">short</span> media_change;	<span style="color: #888888">/* Flag a media change? */</span>
+	<span style="color: #333399; font-weight: bold">spinlock_t</span> lock;	<span style="color: #888888">/* For mutual exclusion */</span>
+	<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>queue;	<span style="color: #888888">/* The device request queue */</span>
+	<span style="color: #008800; font-weight: bold">struct</span> gendisk <span style="color: #333333">*</span>gd;	<span style="color: #888888">/* The gendisk structure */</span>
+	<span style="color: #008800; font-weight: bold">struct</span> timer_list timer;	<span style="color: #888888">/* For simulated media changes */</span>
+};
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>Devices <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Prints the memory to /var/log/messages along with</span>
+<span style="color: #888888"> * a header that indicates whether or not the data being</span>
+<span style="color: #888888"> * printed is encrypted or not.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">log_memory</span>(<span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>buf, <span style="color: #333399; font-weight: bold">int</span> len, <span style="color: #333399; font-weight: bold">int</span> enc)
+{
+  <span style="color: #333399; font-weight: bold">int</span> i;
+
+  <span style="color: #888888">/* Print the appropriate header */</span>
+  <span style="color: #008800; font-weight: bold">if</span> (enc) 
+    printk(KERN_INFO <span style="background-color: #fff0f0">&quot;-------- ENCRYPTED DATA --------&quot;</span>);
+  <span style="color: #008800; font-weight: bold">else</span>
+    printk(KERN_INFO <span style="background-color: #fff0f0">&quot;-------- UNENCRYPTED DATA --------&quot;</span>);
+  
+  printk(KERN_INFO <span style="background-color: #fff0f0">&quot;### HEX ###</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+
+  <span style="color: #888888">/* Print the data */</span>
+  <span style="color: #008800; font-weight: bold">for</span> (i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> len; i<span style="color: #333333">++</span>) {
+    <span style="color: #008800; font-weight: bold">if</span> (i<span style="color: #333333">%</span><span style="color: #0000DD; font-weight: bold">20</span> <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span>)
+      printk(<span style="background-color: #fff0f0">&quot;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+
+    printk(<span style="background-color: #fff0f0">&quot;%02x &quot;</span>, buf[i]);
+  }
+  
+  printk(<span style="background-color: #fff0f0">&quot;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n\n</span><span style="background-color: #fff0f0">&quot;</span>);
+
+  printk(KERN_INFO <span style="background-color: #fff0f0">&quot;### CHAR ###</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+  <span style="color: #008800; font-weight: bold">for</span> (i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> len; i<span style="color: #333333">++</span>) {
+    printk(<span style="background-color: #fff0f0">&quot;%c&quot;</span>, buf[i]);
+  }
+
+  printk(<span style="background-color: #fff0f0">&quot;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n\n</span><span style="background-color: #fff0f0">&quot;</span>);
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Encrypt and write input buffer to disk</span>
+<span style="color: #888888"> * </span>
+<span style="color: #888888"> * The for loop increments by the encryption block size encrypting small</span>
+<span style="color: #888888"> * sections of each block at a time and sending the output of the encryption</span>
+<span style="color: #888888"> * directly to the location on disk by giving it the pointer of that location.</span>
+<span style="color: #888888"> * memset is just to make sure there is no strange addative behavior with </span>
+<span style="color: #888888"> * previous memory.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">sbull_write_disk</span>(<span style="color: #333399; font-weight: bold">char</span><span style="color: #333333">*</span> buffer, <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> offset, 
+			<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> nbytes, <span style="color: #333399; font-weight: bold">int</span> step, u8 <span style="color: #333333">*</span>disk) 
+{
+	<span style="color: #333399; font-weight: bold">int</span> i;
+	printk(KERN_INFO <span style="background-color: #fff0f0">&quot;RAMDISK WRITE&quot;</span>);
+	log_memory(buffer, nbytes, DECRYPT);
+
+	<span style="color: #888888">/* encrypt data in chunks of the cipher&#39;s block size */</span>
+	<span style="color: #008800; font-weight: bold">for</span> (i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> nbytes; i <span style="color: #333333">+=</span> step) {
+	  	<span style="color: #888888">/* zero out the region for encryption */</span>
+		memset(disk<span style="color: #333333">+</span>offset<span style="color: #333333">+</span>i, <span style="color: #0000DD; font-weight: bold">0</span>, step);
+		<span style="color: #888888">/* encrypt the next region */</span>
+		crypto_cipher_encrypt_one(cipher, disk<span style="color: #333333">+</span>offset<span style="color: #333333">+</span>i, buffer<span style="color: #333333">+</span>i);
+	}
+	
+	log_memory(disk<span style="color: #333333">+</span>offset, nbytes, ENCRYPT);
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Read and decrypt disk</span>
+<span style="color: #888888"> * </span>
+<span style="color: #888888"> * The for loop increments by the encryption block size reading small</span>
+<span style="color: #888888"> * sections of disk block at a time and sending the output of the dencryption</span>
+<span style="color: #888888"> * into the output buffer.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">sbull_read_disk</span>(<span style="color: #333399; font-weight: bold">char</span><span style="color: #333333">*</span> buffer, <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> offset,
+			<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> nbytes, <span style="color: #333399; font-weight: bold">int</span> step, u8 <span style="color: #333333">*</span>disk) 
+{
+  	<span style="color: #333399; font-weight: bold">int</span> i;
+	printk(KERN_INFO <span style="background-color: #fff0f0">&quot;RAMDISK READ&quot;</span>);
+	log_memory(disk<span style="color: #333333">+</span>offset, nbytes, ENCRYPT);
+
+	<span style="color: #888888">/* decrypt data in chunks of the cipher&#39;s block size */</span>
+	<span style="color: #008800; font-weight: bold">for</span> (i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> nbytes; i <span style="color: #333333">+=</span> step)
+		crypto_cipher_decrypt_one(cipher, buffer<span style="color: #333333">+</span>i, disk<span style="color: #333333">+</span>offset<span style="color: #333333">+</span>i);
+
+	log_memory(buffer, nbytes, DECRYPT);
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Handle an I/O request</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * Added the encryption to the orginal sbull algorithm.  The</span>
+<span style="color: #888888"> * original function wrote/read the data all at once whereas this</span>
+<span style="color: #888888"> * modified version must write/read the data in increments of the</span>
+<span style="color: #888888"> * crypto block size.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span>
+<span style="color: #0066BB; font-weight: bold">sbull_transfer</span>(<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev, <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> sector,
+	       <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> nsect, <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>buffer, <span style="color: #333399; font-weight: bold">int</span> write)
+{
+	<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> offset <span style="color: #333333">=</span> sector<span style="color: #333333">*</span>KERNEL_SECTOR_SIZE;
+	<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> nbytes <span style="color: #333333">=</span> nsect<span style="color: #333333">*</span>KERNEL_SECTOR_SIZE;
+	u8 <span style="color: #333333">*</span>data <span style="color: #333333">=</span> dev<span style="color: #333333">-&gt;</span>data;
+
+	<span style="color: #333399; font-weight: bold">int</span> step;
+	<span style="color: #888888">/* something is wrong so stop here if this is true */</span>
+	<span style="color: #008800; font-weight: bold">if</span> ((offset<span style="color: #333333">+</span>nbytes) <span style="color: #333333">&gt;</span> dev<span style="color: #333333">-&gt;</span>size) {
+		printk(KERN_NOTICE <span style="background-color: #fff0f0">&quot;Beyond-end write (%ld %ld)</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>, offset,
+		       nbytes);
+		<span style="color: #008800; font-weight: bold">return</span>;
+	}
+
+	<span style="color: #888888">/* set our loop step size for using the cipher */</span>
+	step <span style="color: #333333">=</span> crypto_cipher_blocksize(cipher);
+	<span style="color: #008800; font-weight: bold">if</span> (write)
+		sbull_write_disk(buffer, offset, nbytes, step, data);
+	<span style="color: #008800; font-weight: bold">else</span> 
+		sbull_read_disk(buffer,offset, nbytes, step, data);
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Taken from SBULL</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888">* The simple form of the request function.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span>
+<span style="color: #0066BB; font-weight: bold">sbull_request</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>req;
+
+	req <span style="color: #333333">=</span> blk_fetch_request(q);
+	<span style="color: #008800; font-weight: bold">while</span> (req <span style="color: #333333">!=</span> <span style="color: #007020">NULL</span>) {
+		<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev <span style="color: #333333">=</span> req<span style="color: #333333">-&gt;</span>rq_disk<span style="color: #333333">-&gt;</span>private_data;
+		<span style="color: #008800; font-weight: bold">if</span> (req<span style="color: #333333">-&gt;</span>cmd_type <span style="color: #333333">!=</span> REQ_TYPE_FS) {
+			printk(KERN_NOTICE <span style="background-color: #fff0f0">&quot;Skip non-fs request</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+			__blk_end_request_all(req, <span style="color: #333333">-</span>EIO);
+			<span style="color: #008800; font-weight: bold">continue</span>;
+		}
+		sbull_transfer(dev, blk_rq_pos(req),
+			       blk_rq_cur_sectors(req), req<span style="color: #333333">-&gt;</span>buffer,
+			       rq_data_dir(req));
+		<span style="color: #888888">/* end_request(req, 1); */</span>
+		<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>__blk_end_request_cur(req, <span style="color: #0000DD; font-weight: bold">0</span>)) {
+			req <span style="color: #333333">=</span> blk_fetch_request(q);
+		}
+	}
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Taken from SBULL</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * Transfer a single BIO. </span>
+<span style="color: #888888"> * Iterate over every page/segment in the BIO struct and transfer its contents</span>
+<span style="color: #888888"> * The contents are stored in a temporary buffer that is mapped and then </span>
+<span style="color: #888888"> * later unmapped.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span>
+<span style="color: #0066BB; font-weight: bold">sbull_xfer_bio</span>(<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev, <span style="color: #008800; font-weight: bold">struct</span> bio <span style="color: #333333">*</span>bio)
+{
+	<span style="color: #333399; font-weight: bold">int</span> i;
+	<span style="color: #008800; font-weight: bold">struct</span> bio_vec <span style="color: #333333">*</span>bvec;
+	<span style="color: #333399; font-weight: bold">sector_t</span> sector <span style="color: #333333">=</span> bio<span style="color: #333333">-&gt;</span>bi_sector;
+
+	<span style="color: #888888">/* Do each segment independently. */</span>
+	bio_for_each_segment(bvec, bio, i) {
+		<span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>buffer <span style="color: #333333">=</span> __bio_kmap_atomic(bio, i, KM_USER0);
+		sbull_transfer(dev, sector, bio_cur_bytes(bio) <span style="color: #333333">&gt;&gt;</span> <span style="color: #0000DD; font-weight: bold">9</span>	<span style="color: #888888">/* in sectors */</span>
+			       , buffer, bio_data_dir(bio) <span style="color: #333333">==</span> WRITE);
+		sector <span style="color: #333333">+=</span> bio_cur_bytes(bio) <span style="color: #333333">&gt;&gt;</span> <span style="color: #0000DD; font-weight: bold">9</span>;	<span style="color: #888888">/* in sectors */</span>
+		__bio_kunmap_atomic(bio, KM_USER0);
+	}
+	<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;		<span style="color: #888888">/* Always &quot;succeed&quot; */</span>
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Taken from SBULL</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * Transfer a full request.</span>
+<span style="color: #888888"> * </span>
+<span style="color: #888888"> * Iterate over each bio in an IO request and transfer that bio</span>
+<span style="color: #888888"> * return the number of sectors in that request.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span>
+<span style="color: #0066BB; font-weight: bold">sbull_xfer_request</span>(<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev, <span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>req)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> bio <span style="color: #333333">*</span>bio;
+	<span style="color: #333399; font-weight: bold">int</span> nsect <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+	__rq_for_each_bio(bio, req) {
+		sbull_xfer_bio(dev, bio); <span style="color: #888888">/*transfer bio contents */</span>
+		nsect <span style="color: #333333">+=</span> bio<span style="color: #333333">-&gt;</span>bi_size <span style="color: #333333">/</span> KERNEL_SECTOR_SIZE;
+	}
+	<span style="color: #008800; font-weight: bold">return</span> nsect;
+}
+
+<span style="color: #888888">/* KATHERINE</span>
+<span style="color: #888888"> * Taken from SBULL</span>
+<span style="color: #888888"> * KATHERINE IS COMMENTING THIS</span>
+<span style="color: #888888"> * Smarter request function that &quot;handles clustering&quot;.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span>
+<span style="color: #0066BB; font-weight: bold">sbull_full_request</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> request <span style="color: #333333">*</span>req;
+	<span style="color: #333399; font-weight: bold">int</span> sectors_xferred;
+	<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev <span style="color: #333333">=</span> q<span style="color: #333333">-&gt;</span>queuedata;
+
+	req <span style="color: #333333">=</span> blk_fetch_request(q);
+	<span style="color: #008800; font-weight: bold">while</span> (req <span style="color: #333333">!=</span> <span style="color: #007020">NULL</span>) {
+		<span style="color: #008800; font-weight: bold">if</span> (req<span style="color: #333333">-&gt;</span>cmd_type <span style="color: #333333">!=</span> REQ_TYPE_FS) {
+			printk(KERN_NOTICE <span style="background-color: #fff0f0">&quot;Skip non-fs request</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+			__blk_end_request_all(req, <span style="color: #333333">-</span>EIO);
+			<span style="color: #008800; font-weight: bold">continue</span>;
+		}
+		sectors_xferred <span style="color: #333333">=</span> sbull_xfer_request(dev, req);
+		<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>__blk_end_request_cur(req, <span style="color: #0000DD; font-weight: bold">0</span>)) {
+			blk_fetch_request(q);
+		}
+	}
+}
+
+<span style="color: #888888">/* KATHERINE</span>
+<span style="color: #888888"> * Taken from SBULL</span>
+<span style="color: #888888"> * KATHERINE IS COMMENTING THIS</span>
+<span style="color: #888888"> * The direct make request version.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span>
+<span style="color: #0066BB; font-weight: bold">sbull_make_request</span>(<span style="color: #008800; font-weight: bold">struct</span> request_queue <span style="color: #333333">*</span>q, <span style="color: #008800; font-weight: bold">struct</span> bio <span style="color: #333333">*</span>bio)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev <span style="color: #333333">=</span> q<span style="color: #333333">-&gt;</span>queuedata;
+	<span style="color: #333399; font-weight: bold">int</span> status;
+
+	status <span style="color: #333333">=</span> sbull_xfer_bio(dev, bio);
+	bio_endio(bio, status);
+	<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+}
+
+<span style="color: #888888">/* </span>
+<span style="color: #888888"> * Taken from SBULL</span>
+<span style="color: #888888"> * </span>
+<span style="color: #888888"> * Add drive to system and increment user number.</span>
+<span style="color: #888888"> * This and sbull_release simulate a removable drive.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span>
+<span style="color: #0066BB; font-weight: bold">sbull_open</span>(<span style="color: #008800; font-weight: bold">struct</span> block_device <span style="color: #333333">*</span>device, <span style="color: #333399; font-weight: bold">fmode_t</span> mode)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev <span style="color: #333333">=</span> device<span style="color: #333333">-&gt;</span>bd_disk<span style="color: #333333">-&gt;</span>private_data;
+	<span style="color: #888888">/* kill timer associated with this device: it may be active */</span>
+	del_timer_sync(<span style="color: #333333">&amp;</span>dev<span style="color: #333333">-&gt;</span>timer);
+	<span style="color: #888888">/* filp-&gt;private_data = dev; */</span>
+	spin_lock(<span style="color: #333333">&amp;</span>dev<span style="color: #333333">-&gt;</span>lock);
+	<span style="color: #888888">/* revalidate on first open */</span>
+	<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>dev<span style="color: #333333">-&gt;</span>users)
+		check_disk_change(device);
+	<span style="color: #888888">/* increment user number */</span>
+	dev<span style="color: #333333">-&gt;</span>users<span style="color: #333333">++</span>;
+	<span style="color: #888888">/* unlock drive so other processes may access */</span>
+	spin_unlock(<span style="color: #333333">&amp;</span>dev<span style="color: #333333">-&gt;</span>lock);
+	<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+}
+
+<span style="color: #888888">/* </span>
+<span style="color: #888888"> * Taken from SBULL</span>
+<span style="color: #888888"> * </span>
+<span style="color: #888888"> * Release user from Drive. Disk is ejected when number of users is 0.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span>
+<span style="color: #0066BB; font-weight: bold">sbull_release</span>(<span style="color: #008800; font-weight: bold">struct</span> gendisk <span style="color: #333333">*</span>disk, <span style="color: #333399; font-weight: bold">fmode_t</span> mode)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev <span style="color: #333333">=</span> disk<span style="color: #333333">-&gt;</span>private_data;
+	<span style="color: #888888">/* lock drive so other processes may not access while in use */</span>
+	spin_lock(<span style="color: #333333">&amp;</span>dev<span style="color: #333333">-&gt;</span>lock);
+	<span style="color: #888888">/* decrement user number */</span>
+	dev<span style="color: #333333">-&gt;</span>users<span style="color: #333333">--</span>;
+	<span style="color: #888888">/*</span>
+<span style="color: #888888">     * If the device is closed for the last time, start a timer</span>
+<span style="color: #888888">     * to release RAM in half a minute. The function and argument</span>
+<span style="color: #888888">     * for the timer have been setup in sbull_init()</span>
+<span style="color: #888888">    */</span>
+	<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>dev<span style="color: #333333">-&gt;</span>users) {
+		dev<span style="color: #333333">-&gt;</span>timer.expires <span style="color: #333333">=</span> jiffies <span style="color: #333333">+</span> INVALIDATE_DELAY;
+		add_timer(<span style="color: #333333">&amp;</span>dev<span style="color: #333333">-&gt;</span>timer);
+	}
+	<span style="color: #888888">/* unlock drive so other processes may access */</span>
+	spin_unlock(<span style="color: #333333">&amp;</span>dev<span style="color: #333333">-&gt;</span>lock);
+
+	<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Taken from SBULL</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * Look for a (simulated) media change.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #333399; font-weight: bold">int</span>
+<span style="color: #0066BB; font-weight: bold">sbull_media_changed</span>(<span style="color: #008800; font-weight: bold">struct</span> gendisk <span style="color: #333333">*</span>gd)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev <span style="color: #333333">=</span> gd<span style="color: #333333">-&gt;</span>private_data;
+
+	<span style="color: #008800; font-weight: bold">return</span> dev<span style="color: #333333">-&gt;</span>media_change;
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Taken from SBULL</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888">* Revalidate.  WE DO NOT TAKE THE LOCK HERE, for fear of deadlocking</span>
+<span style="color: #888888">* with open.  That needs to be reevaluated.</span>
+<span style="color: #888888">* This function is called after a media change.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #333399; font-weight: bold">int</span>
+<span style="color: #0066BB; font-weight: bold">sbull_revalidate</span>(<span style="color: #008800; font-weight: bold">struct</span> gendisk <span style="color: #333333">*</span>gd)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev <span style="color: #333333">=</span> gd<span style="color: #333333">-&gt;</span>private_data;
+
+	<span style="color: #008800; font-weight: bold">if</span> (dev<span style="color: #333333">-&gt;</span>media_change) {
+		dev<span style="color: #333333">-&gt;</span>media_change <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+		memset(dev<span style="color: #333333">-&gt;</span>data, <span style="color: #0000DD; font-weight: bold">0</span>, dev<span style="color: #333333">-&gt;</span>size);
+	}
+	<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Taken from SBULL</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888">* The &quot;invalidate&quot; function runs out of the device timer; it sets</span>
+<span style="color: #888888">* a flag to simulate the removal of the media.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #333399; font-weight: bold">void</span>
+<span style="color: #0066BB; font-weight: bold">sbull_invalidate</span>(<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> ldev)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev <span style="color: #333333">=</span> (<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>) ldev;
+
+	spin_lock(<span style="color: #333333">&amp;</span>dev<span style="color: #333333">-&gt;</span>lock);
+	<span style="color: #008800; font-weight: bold">if</span> (dev<span style="color: #333333">-&gt;</span>users <span style="color: #333333">||</span> <span style="color: #333333">!</span>dev<span style="color: #333333">-&gt;</span>data)
+		printk(KERN_WARNING <span style="background-color: #fff0f0">&quot;sbull: timer sanity check failed</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+	<span style="color: #008800; font-weight: bold">else</span>
+		dev<span style="color: #333333">-&gt;</span>media_change <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">1</span>;
+	spin_unlock(<span style="color: #333333">&amp;</span>dev<span style="color: #333333">-&gt;</span>lock);
+}
+
+<span style="color: #888888">/* </span>
+<span style="color: #888888"> * getgeo() function that is derived from the original </span>
+<span style="color: #888888"> * ioctl function in the sbull source code.  In newer kernels</span>
+<span style="color: #888888"> * the block layer intercepts the ioctl command and calls</span>
+<span style="color: #888888"> * the getgeo() function in the corresponding block device</span>
+<span style="color: #888888"> * driver </span>
+<span style="color: #888888"> * </span>
+<span style="color: #888888"> * To be honest we have no idea why these needs to be set the way. We haven&#39;t</span>
+<span style="color: #888888"> * covered the hd_geometry struct and frankly seems beyond the scope</span>
+<span style="color: #888888"> * of this project.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span>
+<span style="color: #0066BB; font-weight: bold">sbull_getgeo</span>(<span style="color: #008800; font-weight: bold">struct</span> block_device <span style="color: #333333">*</span>device, <span style="color: #008800; font-weight: bold">struct</span> hd_geometry <span style="color: #333333">*</span>geo)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev <span style="color: #333333">=</span> device<span style="color: #333333">-&gt;</span>bd_disk<span style="color: #333333">-&gt;</span>private_data;
+	<span style="color: #333399; font-weight: bold">long</span> size <span style="color: #333333">=</span> dev<span style="color: #333333">-&gt;</span>size <span style="color: #333333">*</span> (hardsect_size <span style="color: #333333">/</span> KERNEL_SECTOR_SIZE);
+	geo<span style="color: #333333">-&gt;</span>cylinders <span style="color: #333333">=</span> (size <span style="color: #333333">&amp;</span> <span style="color: #333333">~</span><span style="color: #005588; font-weight: bold">0x3f</span>) <span style="color: #333333">&gt;&gt;</span> <span style="color: #0000DD; font-weight: bold">6</span>;
+	geo<span style="color: #333333">-&gt;</span>heads <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">4</span>;
+	geo<span style="color: #333333">-&gt;</span>sectors <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">16</span>;
+
+	<span style="color: #888888">// TODO: check this value</span>
+	geo<span style="color: #333333">-&gt;</span>start <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">4</span>;
+	<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * The device operations structure.</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * These are function pointers that define the interface with the kernel</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">struct</span> block_device_operations sbull_ops <span style="color: #333333">=</span> {
+	.owner <span style="color: #333333">=</span> THIS_MODULE,
+	.open <span style="color: #333333">=</span> sbull_open,
+	.release <span style="color: #333333">=</span> sbull_release,
+	.media_changed <span style="color: #333333">=</span> sbull_media_changed,
+	.revalidate_disk <span style="color: #333333">=</span> sbull_revalidate,
+
+	<span style="color: #888888">/* the getgeo() definition for ioctl */</span>
+	.getgeo <span style="color: #333333">=</span> sbull_getgeo
+};
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Taken from SBULL</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888">* Set up our internal device.</span>
+<span style="color: #888888">* Called by the init function.</span>
+<span style="color: #888888">*/</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span>
+<span style="color: #0066BB; font-weight: bold">setup_device</span>(<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev, <span style="color: #333399; font-weight: bold">int</span> which)
+{
+	<span style="color: #888888">/*</span>
+<span style="color: #888888">	* Get some memory.</span>
+<span style="color: #888888">	*/</span>
+	memset(dev, <span style="color: #0000DD; font-weight: bold">0</span>, <span style="color: #008800; font-weight: bold">sizeof</span> (<span style="color: #008800; font-weight: bold">struct</span> sbull_dev));
+	dev<span style="color: #333333">-&gt;</span>size <span style="color: #333333">=</span> nsectors <span style="color: #333333">*</span> hardsect_size; 
+	dev<span style="color: #333333">-&gt;</span>data <span style="color: #333333">=</span> vmalloc(dev<span style="color: #333333">-&gt;</span>size); <span style="color: #888888">/* allocate memory*/</span>
+	<span style="color: #008800; font-weight: bold">if</span> (dev<span style="color: #333333">-&gt;</span>data <span style="color: #333333">==</span> <span style="color: #007020">NULL</span>) {
+		printk(KERN_NOTICE <span style="background-color: #fff0f0">&quot;vmalloc failure.</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+		<span style="color: #008800; font-weight: bold">return</span>;
+	}
+	<span style="color: #888888">/* Allocate a spinlock for mutual exclusion */</span>
+	spin_lock_init(<span style="color: #333333">&amp;</span>dev<span style="color: #333333">-&gt;</span>lock);
+
+	<span style="color: #888888">/*</span>
+<span style="color: #888888">	 * The timer which &quot;invalidates&quot; the device.</span>
+<span style="color: #888888">	 * This is a 30-second timer used to simulate </span>
+<span style="color: #888888">	 * behavior of a removable device.</span>
+<span style="color: #888888">	 */</span>
+	init_timer(<span style="color: #333333">&amp;</span>dev<span style="color: #333333">-&gt;</span>timer);
+	dev<span style="color: #333333">-&gt;</span>timer.data <span style="color: #333333">=</span> (<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span>) dev;
+	dev<span style="color: #333333">-&gt;</span>timer.function <span style="color: #333333">=</span> sbull_invalidate;
+
+	<span style="color: #888888">/*</span>
+<span style="color: #888888">	 * The I/O queue, depending on whether we are using our own</span>
+<span style="color: #888888">	 * make_request function or not.</span>
+<span style="color: #888888">	 */</span>
+	<span style="color: #008800; font-weight: bold">switch</span> (request_mode) {
+	<span style="color: #008800; font-weight: bold">case</span> RM_NOQUEUE:
+		dev<span style="color: #333333">-&gt;</span>queue <span style="color: #333333">=</span> blk_alloc_queue(GFP_KERNEL);
+		<span style="color: #008800; font-weight: bold">if</span> (dev<span style="color: #333333">-&gt;</span>queue <span style="color: #333333">==</span> <span style="color: #007020">NULL</span>)
+			<span style="color: #008800; font-weight: bold">goto</span> out_vfree;
+		blk_queue_make_request(dev<span style="color: #333333">-&gt;</span>queue, sbull_make_request);
+		<span style="color: #008800; font-weight: bold">break</span>;
+	<span style="color: #008800; font-weight: bold">case</span> RM_FULL:
+		<span style="color: #888888">/* blk_init_queue() allocates the request queue. */</span>
+		dev<span style="color: #333333">-&gt;</span>queue <span style="color: #333333">=</span> blk_init_queue(sbull_full_request, <span style="color: #333333">&amp;</span>dev<span style="color: #333333">-&gt;</span>lock);
+		<span style="color: #008800; font-weight: bold">if</span> (dev<span style="color: #333333">-&gt;</span>queue <span style="color: #333333">==</span> <span style="color: #007020">NULL</span>)
+			<span style="color: #008800; font-weight: bold">goto</span> out_vfree;
+		<span style="color: #008800; font-weight: bold">break</span>;
+	<span style="color: #997700; font-weight: bold">default:</span>
+		printk(KERN_NOTICE
+		       <span style="background-color: #fff0f0">&quot;Bad request mode %d, using simple</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>, request_mode);
+		<span style="color: #888888">/* fall into.. */</span>
+	<span style="color: #008800; font-weight: bold">case</span> RM_SIMPLE:
+		dev<span style="color: #333333">-&gt;</span>queue <span style="color: #333333">=</span> blk_init_queue(sbull_request, <span style="color: #333333">&amp;</span>dev<span style="color: #333333">-&gt;</span>lock);
+		<span style="color: #008800; font-weight: bold">if</span> (dev<span style="color: #333333">-&gt;</span>queue <span style="color: #333333">==</span> <span style="color: #007020">NULL</span>)
+			<span style="color: #008800; font-weight: bold">goto</span> out_vfree;
+		<span style="color: #008800; font-weight: bold">break</span>;
+	}
+	blk_queue_logical_block_size(dev<span style="color: #333333">-&gt;</span>queue, hardsect_size);
+	dev<span style="color: #333333">-&gt;</span>queue<span style="color: #333333">-&gt;</span>queuedata <span style="color: #333333">=</span> dev;
+
+	<span style="color: #888888">/*</span>
+<span style="color: #888888">	 * And the gendisk structure.</span>
+<span style="color: #888888">	 * gendisk is the kernel&#39;s representation of an individual disk device.</span>
+<span style="color: #888888">	 */</span>
+	dev<span style="color: #333333">-&gt;</span>gd <span style="color: #333333">=</span> alloc_disk(SBULL_MINORS);
+	<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>dev<span style="color: #333333">-&gt;</span>gd) {
+		printk(KERN_NOTICE <span style="background-color: #fff0f0">&quot;alloc_disk failure</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+		<span style="color: #008800; font-weight: bold">goto</span> out_vfree;
+	}
+	dev<span style="color: #333333">-&gt;</span>gd<span style="color: #333333">-&gt;</span>major <span style="color: #333333">=</span> sbull_major;
+	dev<span style="color: #333333">-&gt;</span>gd<span style="color: #333333">-&gt;</span>first_minor <span style="color: #333333">=</span> which <span style="color: #333333">*</span> SBULL_MINORS;
+	dev<span style="color: #333333">-&gt;</span>gd<span style="color: #333333">-&gt;</span>fops <span style="color: #333333">=</span> <span style="color: #333333">&amp;</span>sbull_ops;
+	dev<span style="color: #333333">-&gt;</span>gd<span style="color: #333333">-&gt;</span>queue <span style="color: #333333">=</span> dev<span style="color: #333333">-&gt;</span>queue;
+	dev<span style="color: #333333">-&gt;</span>gd<span style="color: #333333">-&gt;</span>private_data <span style="color: #333333">=</span> dev;
+	<span style="color: #888888">/* </span>
+<span style="color: #888888">	 * Set the device names to sbulla, sbullb, etc.</span>
+<span style="color: #888888">	 */</span>
+	snprintf(dev<span style="color: #333333">-&gt;</span>gd<span style="color: #333333">-&gt;</span>disk_name, <span style="color: #0000DD; font-weight: bold">32</span>, <span style="background-color: #fff0f0">&quot;sbull%c&quot;</span>, which <span style="color: #333333">+</span> <span style="color: #0044DD">&#39;a&#39;</span>);
+	set_capacity(dev<span style="color: #333333">-&gt;</span>gd, nsectors <span style="color: #333333">*</span> (hardsect_size <span style="color: #333333">/</span> KERNEL_SECTOR_SIZE));
+	add_disk(dev<span style="color: #333333">-&gt;</span>gd);
+	<span style="color: #008800; font-weight: bold">return</span>;
+
+      <span style="color: #997700; font-weight: bold">out_vfree:</span>
+	<span style="color: #008800; font-weight: bold">if</span> (dev<span style="color: #333333">-&gt;</span>data)
+		vfree(dev<span style="color: #333333">-&gt;</span>data);
+}
+
+<span style="color: #888888">/* </span>
+<span style="color: #888888"> * Module initialization function.</span>
+<span style="color: #888888"> * </span>
+<span style="color: #888888"> * Added the cipher initialization code to the default</span>
+<span style="color: #888888"> * initialization routine for the sbull</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span> __init
+<span style="color: #0066BB; font-weight: bold">sbull_init</span>(<span style="color: #333399; font-weight: bold">void</span>)
+{
+	<span style="color: #333399; font-weight: bold">int</span> i;
+	<span style="color: #888888">/* init the cipher for later use */</span>
+	cipher <span style="color: #333333">=</span> crypto_alloc_cipher(ENCRYPTION_METHOD, <span style="color: #0000DD; font-weight: bold">4</span>, CRYPTO_ALG_ASYNC);
+
+	<span style="color: #888888">/* error out if the cipher init failed */</span>
+	<span style="color: #008800; font-weight: bold">if</span> (unlikely(IS_ERR(cipher))) {
+		printk(KERN_ERR <span style="background-color: #fff0f0">&quot;sbull: failed to alloc the cipher</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+
+		<span style="color: #888888">/* </span>
+<span style="color: #888888">		 * return the error number retrieved from the pointer</span>
+<span style="color: #888888">		 * generated by the IS_ERR macro</span>
+<span style="color: #888888">                 */</span>
+		<span style="color: #008800; font-weight: bold">return</span> PTR_ERR(cipher);
+	}
+
+	<span style="color: #888888">/* set the key appropriately */</span>
+	crypto_cipher_setkey(cipher, key, strlen(key));
+
+	<span style="color: #888888">/*</span>
+<span style="color: #888888">	* Get registered.</span>
+<span style="color: #888888">	* Register a block device called &quot;sbull.&quot;</span>
+<span style="color: #888888">	*/</span>
+	sbull_major <span style="color: #333333">=</span> register_blkdev(sbull_major, <span style="background-color: #fff0f0">&quot;sbull&quot;</span>);
+	<span style="color: #008800; font-weight: bold">if</span> (sbull_major <span style="color: #333333">&lt;=</span> <span style="color: #0000DD; font-weight: bold">0</span>) {
+		printk(KERN_WARNING <span style="background-color: #fff0f0">&quot;sbull: unable to get major number</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+		<span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">-</span>EBUSY;
+	}
+
+	<span style="color: #888888">/*</span>
+<span style="color: #888888">	* Allocate the device array, and initialize each one.</span>
+<span style="color: #888888">	*/</span>
+	Devices <span style="color: #333333">=</span> kmalloc(ndevices <span style="color: #333333">*</span> <span style="color: #008800; font-weight: bold">sizeof</span> (<span style="color: #008800; font-weight: bold">struct</span> sbull_dev), GFP_KERNEL);
+	<span style="color: #008800; font-weight: bold">if</span> (Devices <span style="color: #333333">==</span> <span style="color: #007020">NULL</span>)
+		<span style="color: #008800; font-weight: bold">goto</span> out_unregister;
+	<span style="color: #888888">/* Setup each device */</span>
+	<span style="color: #008800; font-weight: bold">for</span> (i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> ndevices; i<span style="color: #333333">++</span>)
+		setup_device(Devices <span style="color: #333333">+</span> i, i);
+
+	<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+      <span style="color: #997700; font-weight: bold">out_unregister:</span>
+		unregister_blkdev(sbull_major, <span style="background-color: #fff0f0">&quot;sbull&quot;</span>);
+		<span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">-</span>ENOMEM;
+}
+
+<span style="color: #888888">/* </span>
+<span style="color: #888888"> * Module exit function.</span>
+<span style="color: #888888"> * </span>
+<span style="color: #888888"> * Added the code to free the memory used by the</span>
+<span style="color: #888888"> * cipher back to the kernel.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span>
+<span style="color: #0066BB; font-weight: bold">sbull_exit</span>(<span style="color: #333399; font-weight: bold">void</span>)
+{
+	<span style="color: #333399; font-weight: bold">int</span> i;
+	<span style="color: #008800; font-weight: bold">for</span> (i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> ndevices; i<span style="color: #333333">++</span>) {
+		<span style="color: #008800; font-weight: bold">struct</span> sbull_dev <span style="color: #333333">*</span>dev <span style="color: #333333">=</span> Devices <span style="color: #333333">+</span> i;
+
+		del_timer_sync(<span style="color: #333333">&amp;</span>dev<span style="color: #333333">-&gt;</span>timer);
+		<span style="color: #008800; font-weight: bold">if</span> (dev<span style="color: #333333">-&gt;</span>gd) {
+			del_gendisk(dev<span style="color: #333333">-&gt;</span>gd);
+			put_disk(dev<span style="color: #333333">-&gt;</span>gd);
+		}
+		<span style="color: #008800; font-weight: bold">if</span> (dev<span style="color: #333333">-&gt;</span>queue)
+			<span style="color: #888888">/* Destroy the request queue by releasing the request_queue_t */</span>
+			blk_cleanup_queue(dev<span style="color: #333333">-&gt;</span>queue);
+		<span style="color: #008800; font-weight: bold">if</span> (dev<span style="color: #333333">-&gt;</span>data)
+			<span style="color: #888888">/* Free the virtual memory allocated earlier for the disk */</span>
+			vfree(dev<span style="color: #333333">-&gt;</span>data);
+	}
+	<span style="color: #888888">/* Unregister the sbull block device */</span>
+	unregister_blkdev(sbull_major, <span style="background-color: #fff0f0">&quot;sbull&quot;</span>);
+
+	<span style="color: #888888">/* free the resources used by the cipher */</span>
+	crypto_free_cipher(cipher);
+	kfree(Devices);
+}
+
+module_init(sbull_init);
+module_exit(sbull_exit);
+</pre></div>
+
+</body>
+</html>

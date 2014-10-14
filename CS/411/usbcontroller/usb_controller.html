@@ -1,0 +1,296 @@
+<html>
+<head>
+<title>controller.c</title>
+</head>
+
+<body>
+<h2>Assignment Description</h2>
+<p>Using the default Linux 3.0.4 kernel, you are asked to implement the following:</p>
+
+  <ul>
+	<li>Write any kernel code necessary for Linux to utilize the USB Missile Launcher</li>
+    <li>Write a programme that utilizes all of the missile launcher's capabilities, using
+    libusb.</li>
+	<li>You will need to figure out how the USB missile launcher communicates over the USB using a usb sniffer program. </li>
+  </ul>
+
+<p>This can be developed in the <tt>driver/usb</tt> subdirectory as necessary. It is
+recommended to load the the USB device as a module when creating your driver.</p>
+
+<b>**NOTES**</b>
+<p>No kernel drivers were needed in order to complete this assignment.  The only code that was necessary is the user space code that sends the necessary control signals to the USB missile launcher.  The USB control signals were sniffed with SnoopyPro, but the out of the box version of Snoopy would not work with Windows 7 x64.  In order to get it to work, I had to use an unsigned USB driver that I found somewhere on the internet, which ended up working.</p>
+
+<body>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #557799">#include &lt;usb.h&gt;</span>
+<span style="color: #557799">#include &lt;string.h&gt;</span>
+<span style="color: #557799">#include &lt;stdio.h&gt;</span>
+<span style="color: #557799">#include &lt;unistd.h&gt;</span>
+<span style="color: #557799">#include &lt;time.h&gt;</span>
+
+<span style="color: #888888">/* timeout in ms for the USB control transfer */</span>
+<span style="color: #557799">#define TIMEOUT_MS 3000</span>
+
+<span style="color: #888888">/* the amount of time to move before sending the stop command */</span>
+<span style="color: #557799">#define COMMAND_MS 50</span>
+
+<span style="color: #888888">/* the vendor id of the USB launcher */</span>
+<span style="color: #557799">#define VENDORID 0x2123</span>
+
+<span style="color: #888888">/* the bm request type as determined using snoopypro */</span>
+<span style="color: #557799">#define BM_REQUEST_TYPE 0x21</span>
+
+<span style="color: #888888">/* the b request value as determined using snoopypro */</span>
+<span style="color: #557799">#define B_REQUEST 0x09</span>
+
+<span style="color: #888888">/* the value for the control message as determined using snoopypro */</span>
+<span style="color: #557799">#define VALUE 0x200</span>
+
+<span style="color: #888888">/* the index for the control message as determined using snoopypro */</span>
+<span style="color: #557799">#define INDEX 0x00</span>
+
+<span style="color: #888888">/* readability defines for the launcher&#39;s movements */</span>
+<span style="color: #557799">#define LEFT  0</span>
+<span style="color: #557799">#define RIGHT 1</span>
+<span style="color: #557799">#define UP    2</span>
+<span style="color: #557799">#define DOWN  3</span>
+<span style="color: #557799">#define STOP  4</span>
+
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Sleeps for at least the given number of millis</span>
+<span style="color: #888888"> */</span>
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">sleep_ms</span>(<span style="color: #333399; font-weight: bold">int</span> millis)
+{
+  <span style="color: #888888">/* convert the number of ms to ns */</span>
+  <span style="color: #333399; font-weight: bold">long</span> nanos <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">1000000L</span><span style="color: #333333">*</span>millis;
+
+  <span style="color: #888888">/* init the timespec structs to the delay */</span>
+  <span style="color: #008800; font-weight: bold">struct</span> timespec req, rem;
+  req.tv_sec <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+  req.tv_nsec <span style="color: #333333">=</span> nanos;
+
+  rem.tv_sec <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+  rem.tv_nsec <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+  <span style="color: #888888">/* sleep for the given time */</span>
+  nanosleep(<span style="color: #333333">&amp;</span>req, <span style="color: #333333">&amp;</span>rem);
+}
+
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Returns a handle representing the device with the given</span>
+<span style="color: #888888"> * vendorID.  If the device is not found, the program exits </span>
+<span style="color: #888888"> * with a code indicating abnormal exit.</span>
+<span style="color: #888888"> */</span>
+usb_dev_handle <span style="color: #333333">*</span><span style="color: #0066BB; font-weight: bold">get_usb_handle</span>(<span style="color: #333399; font-weight: bold">int</span> vendorID)
+{
+  <span style="color: #008800; font-weight: bold">struct</span> usb_bus <span style="color: #333333">*</span>bus;
+
+  <span style="color: #888888">/* initialize the USB stuff */</span>
+  usb_init();
+
+  <span style="color: #888888">/* find all the USB busses and devices */</span>
+  usb_find_busses();
+  usb_find_devices();
+
+  <span style="color: #888888">/* loop through all the busses */</span>
+  <span style="color: #008800; font-weight: bold">for</span> (bus <span style="color: #333333">=</span> usb_get_busses(); bus; bus <span style="color: #333333">=</span> bus<span style="color: #333333">-&gt;</span>next) {
+    <span style="color: #008800; font-weight: bold">struct</span> usb_device <span style="color: #333333">*</span>dev;
+
+    <span style="color: #888888">/* loop through all the devices on the current bus */</span>
+    <span style="color: #008800; font-weight: bold">for</span> (dev <span style="color: #333333">=</span> bus<span style="color: #333333">-&gt;</span>devices; dev; dev <span style="color: #333333">=</span> dev<span style="color: #333333">-&gt;</span>next) {
+      <span style="color: #888888">/* return an open USB handle if the vendor ID&#39;s match */</span>
+      <span style="color: #008800; font-weight: bold">if</span> (dev<span style="color: #333333">-&gt;</span>descriptor.idVendor <span style="color: #333333">==</span> vendorID)
+	<span style="color: #008800; font-weight: bold">return</span> usb_open(dev);
+    }
+  }
+  
+  <span style="color: #888888">/* error out if the device wasn&#39;t found */</span>
+  printf(<span style="background-color: #fff0f0">&quot;Couldn&#39;t find launcher!  Is it plugged in?</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+  exit(EXIT_FAILURE);
+}
+
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Sends a control message to the device represented by the</span>
+<span style="color: #888888"> * usb_dev_handle.  If there is an error sending the USB </span>
+<span style="color: #888888"> * message, then the program will execute with an exit code</span>
+<span style="color: #888888"> * corresponding to an abnormal exit.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">usb_msg</span>(usb_dev_handle <span style="color: #333333">*</span>handle, <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>msg)
+{
+  <span style="color: #888888">/* send a USB control message to the launcher */</span>
+  <span style="color: #008800; font-weight: bold">if</span> (usb_control_msg(handle,
+		      BM_REQUEST_TYPE,
+		      B_REQUEST,
+		      VALUE, 
+		      INDEX, 
+		      msg,
+		      <span style="color: #008800; font-weight: bold">sizeof</span>(msg), 
+		      TIMEOUT_MS) <span style="color: #333333">&lt;</span> <span style="color: #0000DD; font-weight: bold">0</span>) {
+    <span style="color: #888888">/* error out if the control message failed to send */</span>
+    perror(<span style="background-color: #fff0f0">&quot;Couldn&#39;t send control message&quot;</span>);
+    exit(EXIT_FAILURE);
+  }
+}
+
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Init is a special case of the move function.  It operates</span>
+<span style="color: #888888"> * in the same exact way that the move function does.  It is</span>
+<span style="color: #888888"> * separated out for clarity.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">launcher_init</span>(usb_dev_handle <span style="color: #333333">*</span>handle)
+{
+  <span style="color: #888888">/* initialize the transfer buffer */</span>
+  <span style="color: #333399; font-weight: bold">char</span> msg[<span style="color: #0000DD; font-weight: bold">8</span>];
+  memset(msg, <span style="color: #0000DD; font-weight: bold">0</span>, <span style="color: #008800; font-weight: bold">sizeof</span>(msg));
+
+  <span style="color: #888888">/* load the initialization command */</span>
+  msg[<span style="color: #0000DD; font-weight: bold">0</span>] <span style="color: #333333">=</span> <span style="color: #005588; font-weight: bold">0x03</span>;
+  msg[<span style="color: #0000DD; font-weight: bold">1</span>] <span style="color: #333333">=</span> <span style="color: #005588; font-weight: bold">0x01</span>;
+
+  <span style="color: #888888">/* send the command to the launcher */</span>
+  usb_msg(handle, msg);
+}
+
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Fire is a special case of the move function.  It operates</span>
+<span style="color: #888888"> * in the same exact way except that the process sleeps for 3</span>
+<span style="color: #888888"> * seconds so the fire command is not prematurely interrupted</span>
+<span style="color: #888888"> * by a STOP command.  It is separate from the move function</span>
+<span style="color: #888888"> * for clarity.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">fire</span>(usb_dev_handle <span style="color: #333333">*</span>handle)
+{
+  <span style="color: #888888">/* initialize transfer buffer */</span>
+  <span style="color: #333399; font-weight: bold">char</span> msg[<span style="color: #0000DD; font-weight: bold">8</span>];
+  memset(msg, <span style="color: #0000DD; font-weight: bold">0</span>, <span style="color: #008800; font-weight: bold">sizeof</span>(msg));
+
+  <span style="color: #888888">/* load the buffer with the fire command */</span>
+  msg[<span style="color: #0000DD; font-weight: bold">0</span>] <span style="color: #333333">=</span> <span style="color: #005588; font-weight: bold">0x02</span>;
+  msg[<span style="color: #0000DD; font-weight: bold">1</span>] <span style="color: #333333">=</span> <span style="color: #005588; font-weight: bold">0x10</span>;
+
+  <span style="color: #888888">/* send the command to the launcher */</span>
+  usb_msg(handle, msg);
+
+  <span style="color: #888888">/* wait for the launcher to finish firing */</span>
+  sleep(<span style="color: #0000DD; font-weight: bold">3</span>);
+}
+
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Helper function that builds the motion command and sends</span>
+<span style="color: #888888"> * it via USB to the launcher.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">_move</span>(usb_dev_handle <span style="color: #333333">*</span>handle, <span style="color: #333399; font-weight: bold">int</span> dir)
+{
+  <span style="color: #888888">/* Commands are an 8 byte message */</span>
+  <span style="color: #333399; font-weight: bold">char</span> msg[<span style="color: #0000DD; font-weight: bold">8</span>];
+
+  <span style="color: #888888">/* zero out the buffer for sending */</span>
+  memset(msg, <span style="color: #0000DD; font-weight: bold">0</span>, <span style="color: #008800; font-weight: bold">sizeof</span>(msg));
+  
+  <span style="color: #888888">/* all commands start with 0x02 */</span>
+  msg[<span style="color: #0000DD; font-weight: bold">0</span>] <span style="color: #333333">=</span> <span style="color: #005588; font-weight: bold">0x02</span>;
+
+  <span style="color: #888888">/* alter the second byte to match the desired direction */</span>
+  <span style="color: #008800; font-weight: bold">switch</span> (dir) {
+  <span style="color: #008800; font-weight: bold">case</span> LEFT:
+    msg[<span style="color: #0000DD; font-weight: bold">1</span>] <span style="color: #333333">=</span> <span style="color: #005588; font-weight: bold">0x04</span>;
+    <span style="color: #008800; font-weight: bold">break</span>;
+    
+  <span style="color: #008800; font-weight: bold">case</span> RIGHT:
+    msg[<span style="color: #0000DD; font-weight: bold">1</span>] <span style="color: #333333">=</span> <span style="color: #005588; font-weight: bold">0x08</span>;
+    <span style="color: #008800; font-weight: bold">break</span>;
+    
+  <span style="color: #008800; font-weight: bold">case</span> UP:
+    msg[<span style="color: #0000DD; font-weight: bold">1</span>] <span style="color: #333333">=</span> <span style="color: #005588; font-weight: bold">0x02</span>;
+    <span style="color: #008800; font-weight: bold">break</span>;
+    
+  <span style="color: #008800; font-weight: bold">case</span> DOWN:
+    msg[<span style="color: #0000DD; font-weight: bold">1</span>] <span style="color: #333333">=</span> <span style="color: #005588; font-weight: bold">0x01</span>;
+    <span style="color: #008800; font-weight: bold">break</span>;
+  }
+
+  <span style="color: #888888">/* send the command to the launcher */</span>
+  usb_msg(handle, msg);      
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Moves the launcher in the given direction for an amount</span>
+<span style="color: #888888"> * of time given by the COMMAND_MS define.  A stop command</span>
+<span style="color: #888888"> * is then issued if specified that it should.  If a stop </span>
+<span style="color: #888888"> * command is not issued, the given command will execute </span>
+<span style="color: #888888"> * until the command is no longer valid (motion past a boundary).</span>
+<span style="color: #888888"> */</span>
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">move</span>(usb_dev_handle <span style="color: #333333">*</span>handle, <span style="color: #333399; font-weight: bold">int</span> dir, <span style="color: #333399; font-weight: bold">int</span> stop)
+{
+  <span style="color: #888888">/* move it in the specified direction */</span>
+  _move(handle, dir);
+
+  <span style="color: #008800; font-weight: bold">if</span> (stop) {
+    <span style="color: #888888">/* wait a certain number of millis */</span>
+    sleep_ms(COMMAND_MS);
+
+    <span style="color: #888888">/* stop moving */</span>
+    _move(handle, STOP);
+  }
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Entry point for the program.  Puts everything together.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">main</span>(<span style="color: #333399; font-weight: bold">int</span> argc, <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">**</span>argv)
+{
+  <span style="color: #888888">/* flag indicating whether or not an automatic stop command is sent */</span>
+  <span style="color: #333399; font-weight: bold">int</span> auto_stop <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">1</span>;
+  
+  <span style="color: #008800; font-weight: bold">if</span> (argc <span style="color: #333333">&lt;</span> <span style="color: #0000DD; font-weight: bold">3</span>)
+    exit(EXIT_FAILURE);
+
+  <span style="color: #888888">/* get a USB handle for the launcher */</span>
+  usb_dev_handle <span style="color: #333333">*</span>handle <span style="color: #333333">=</span> get_usb_handle(VENDORID);
+
+  <span style="color: #888888">/* detach the default kernel driver if not already */</span>
+  <span style="color: #008800; font-weight: bold">if</span> (usb_detach_kernel_driver_np(handle, <span style="color: #0000DD; font-weight: bold">0</span>)) {
+    printf(<span style="background-color: #fff0f0">&quot;Kernel driver already detached</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+  }
+
+  <span style="color: #888888">/* claim interface 0 of the launcher */</span>
+  <span style="color: #008800; font-weight: bold">if</span> (usb_claim_interface(handle, <span style="color: #0000DD; font-weight: bold">0</span>) <span style="color: #333333">&lt;</span> <span style="color: #0000DD; font-weight: bold">0</span>) {
+    printf(<span style="background-color: #fff0f0">&quot;Couldn&#39;t claim USB device</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>);
+    exit(EXIT_FAILURE);
+  }
+
+  <span style="color: #888888">/* check to see if an automatic stop should be issued */</span>
+  <span style="color: #008800; font-weight: bold">if</span> (argv[<span style="color: #0000DD; font-weight: bold">2</span>][<span style="color: #0000DD; font-weight: bold">0</span>] <span style="color: #333333">==</span> <span style="color: #0044DD">&#39;n&#39;</span>)
+    auto_stop <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+  
+  <span style="color: #888888">/* execute the command indicated by the command line param */</span>
+  <span style="color: #008800; font-weight: bold">switch</span> (argv[<span style="color: #0000DD; font-weight: bold">1</span>][<span style="color: #0000DD; font-weight: bold">0</span>]) {
+  <span style="color: #008800; font-weight: bold">case</span> <span style="color: #0044DD">&#39;f&#39;</span>:
+    fire(handle);
+    <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+  <span style="color: #008800; font-weight: bold">case</span> <span style="color: #0044DD">&#39;u&#39;</span>:
+    move(handle, UP, auto_stop);
+    <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+  <span style="color: #008800; font-weight: bold">case</span> <span style="color: #0044DD">&#39;d&#39;</span>:
+    move(handle, DOWN, auto_stop);
+    <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+  <span style="color: #008800; font-weight: bold">case</span> <span style="color: #0044DD">&#39;l&#39;</span>:
+    move(handle, LEFT, auto_stop);
+    <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+  <span style="color: #008800; font-weight: bold">case</span> <span style="color: #0044DD">&#39;r&#39;</span>:
+    move(handle, RIGHT, auto_stop);
+    <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+  }
+}
+</pre></div>
+</body>
+</html>

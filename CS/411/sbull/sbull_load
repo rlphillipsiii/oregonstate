@@ -1,0 +1,14 @@
+#!/bin/sh
+
+insmod $HOME/CS411/proj3/linux/drivers/block/sbull.ko
+mknod /dev/sbulla b 252 0
+mknod /dev/sbulla1 b 252 1
+
+cfdisk /dev/sbulla
+mkfs.ext3 /dev/sbulla1
+
+if [ ! -d /mnt/sbulla ]; then
+    mkdir /mnt/sbulla
+fi
+
+mount /dev/sbulla1 /mnt/sbulla

@@ -1,0 +1,909 @@
+<html>
+<head>
+<title>slob.c</title>
+</head>
+
+<body>
+<h2>Assignment Description</h2>
+<p>Using the default Linux 3.0.4 kernel, you are asked to implement the following:</p>
+
+<p>Understand how the SLOB first-fit alogorithm works and implement the best-fit
+allocation algorithm. You must also write a program that computes the effeciency of the
+first-fit algorithm and best-fit algorithm and compare the fragmentation sufferred by
+each algorithm.</p>
+
+<p>This will be developed in the slob.c file in the mm directory.</p>
+
+<b>**NOTES**</b>
+<p>You need to edit the Kconfig file(s) in order to get this to compile and have the VM (or whatever hardware you are running this on) use algorithm.  There are built in system calls that allow the user to get an idea of the fragmentation suffered by each version.  The slob best fit version can be compiled by using a #define for BEST_FIT.  Otherwise, the first fit version will be compiled.</p>
+
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">/*</span>
+<span style="color: #888888"> * SLOB Allocator: Simple List Of Blocks</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * Matt Mackall &lt;mpm@selenic.com&gt; 12/30/03</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * NUMA support by Paul Mundt, 2007.</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * How SLOB works:</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * The core of SLOB is a traditional K&amp;R style heap allocator, with</span>
+<span style="color: #888888"> * support for returning aligned objects. The granularity of this</span>
+<span style="color: #888888"> * allocator is as little as 2 bytes, however typically most architectures</span>
+<span style="color: #888888"> * will require 4 bytes on 32-bit and 8 bytes on 64-bit.</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * The slob heap is a set of linked list of pages from alloc_pages(),</span>
+<span style="color: #888888"> * and within each page, there is a singly-linked list of free blocks</span>
+<span style="color: #888888"> * (slob_t). The heap is grown on demand. To reduce fragmentation,</span>
+<span style="color: #888888"> * heap pages are segregated into three lists, with objects less than</span>
+<span style="color: #888888"> * 256 bytes, objects less than 1024 bytes, and all other objects.</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * Allocation from heap involves first searching for a page with</span>
+<span style="color: #888888"> * sufficient free blocks (using a next-fit-like approach) followed by</span>
+<span style="color: #888888"> * a first-fit scan of the page. Deallocation inserts objects back</span>
+<span style="color: #888888"> * into the free list in address order, so this is effectively an</span>
+<span style="color: #888888"> * address-ordered first fit.</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * Above this is an implementation of kmalloc/kfree. Blocks returned</span>
+<span style="color: #888888"> * from kmalloc are prepended with a 4-byte header with the kmalloc size.</span>
+<span style="color: #888888"> * If kmalloc is asked for objects of PAGE_SIZE or larger, it calls</span>
+<span style="color: #888888"> * alloc_pages() directly, allocating compound pages so the page order</span>
+<span style="color: #888888"> * does not have to be separately tracked, and also stores the exact</span>
+<span style="color: #888888"> * allocation size in page-&gt;private so that it can be used to accurately</span>
+<span style="color: #888888"> * provide ksize(). These objects are detected in kfree() because slob_page()</span>
+<span style="color: #888888"> * is false for them.</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * SLAB is emulated on top of SLOB by simply calling constructors and</span>
+<span style="color: #888888"> * destructors for every SLAB allocation. Objects are returned with the</span>
+<span style="color: #888888"> * 4-byte alignment unless the SLAB_HWCACHE_ALIGN flag is set, in which</span>
+<span style="color: #888888"> * case the low-level allocator will fragment blocks to create the proper</span>
+<span style="color: #888888"> * alignment. Again, objects of page-size or greater are allocated by</span>
+<span style="color: #888888"> * calling alloc_pages(). As SLAB objects know their size, no separate</span>
+<span style="color: #888888"> * size bookkeeping is necessary and there is essentially no allocation</span>
+<span style="color: #888888"> * space overhead, and compound pages aren&#39;t needed for multi-page</span>
+<span style="color: #888888"> * allocations.</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * NUMA support in SLOB is fairly simplistic, pushing most of the real</span>
+<span style="color: #888888"> * logic down to the page allocator, and simply doing the node accounting</span>
+<span style="color: #888888"> * on the upper levels. In the event that a node id is explicitly</span>
+<span style="color: #888888"> * provided, alloc_pages_exact_node() with the specified node id is used</span>
+<span style="color: #888888"> * instead. The common case (or when the node id isn&#39;t explicitly provided)</span>
+<span style="color: #888888"> * will default to the current node, as per numa_node_id().</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * Node aware pages are still inserted in to the global freelist, and</span>
+<span style="color: #888888"> * these are scanned for by matching against the node id encoded in the</span>
+<span style="color: #888888"> * page flags. As a result, block allocations that can be satisfied from</span>
+<span style="color: #888888"> * the freelist will only be done so on pages residing on the same node,</span>
+<span style="color: #888888"> * in order to prevent random node placement.</span>
+<span style="color: #888888"> */</span>
+
+<span style="color: #557799">#include &lt;linux/kernel.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/slab.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/mm.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/swap.h&gt; </span><span style="color: #888888">/* struct reclaim_state */</span><span style="color: #557799"></span>
+<span style="color: #557799">#include &lt;linux/cache.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/init.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/module.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/rcupdate.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/list.h&gt;</span>
+<span style="color: #557799">#include &lt;linux/kmemleak.h&gt;</span>
+
+<span style="color: #557799">#include &lt;trace/events/kmem.h&gt;</span>
+
+<span style="color: #557799">#include &lt;asm/atomic.h&gt;</span>
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * slob_block has a field &#39;units&#39;, which indicates size of block if +ve,</span>
+<span style="color: #888888"> * or offset of next block if -ve (in SLOB_UNITs).</span>
+<span style="color: #888888"> *</span>
+<span style="color: #888888"> * Free blocks of size 1 unit simply contain the offset of the next block.</span>
+<span style="color: #888888"> * Those with larger size contain their size in the first SLOB_UNIT of</span>
+<span style="color: #888888"> * memory, and the offset of the next free block in the second SLOB_UNIT.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #557799">#if PAGE_SIZE &lt;= (32767 * 2)</span>
+<span style="color: #008800; font-weight: bold">typedef</span> s16 <span style="color: #333399; font-weight: bold">slobidx_t</span>;
+<span style="color: #557799">#else</span>
+<span style="color: #008800; font-weight: bold">typedef</span> s32 <span style="color: #333399; font-weight: bold">slobidx_t</span>;
+<span style="color: #557799">#endif</span>
+
+<span style="color: #008800; font-weight: bold">struct</span> slob_block {
+	<span style="color: #333399; font-weight: bold">slobidx_t</span> units;
+};
+<span style="color: #008800; font-weight: bold">typedef</span> <span style="color: #008800; font-weight: bold">struct</span> slob_block <span style="color: #333399; font-weight: bold">slob_t</span>;
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * We use struct page fields to manage some slob allocation aspects,</span>
+<span style="color: #888888"> * however to avoid the horrible mess in include/linux/mm_types.h, we&#39;ll</span>
+<span style="color: #888888"> * just define our own struct page type variant here.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">struct</span> slob_page {
+	<span style="color: #008800; font-weight: bold">union</span> {
+		<span style="color: #008800; font-weight: bold">struct</span> {
+			<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> flags;	<span style="color: #888888">/* mandatory */</span>
+			<span style="color: #333399; font-weight: bold">atomic_t</span> _count;	<span style="color: #888888">/* mandatory */</span>
+			<span style="color: #333399; font-weight: bold">slobidx_t</span> units;	<span style="color: #888888">/* free units left in page */</span>
+			<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> pad[<span style="color: #0000DD; font-weight: bold">2</span>];
+			<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>free;		<span style="color: #888888">/* first free slob_t in page */</span>
+			<span style="color: #008800; font-weight: bold">struct</span> list_head list;	<span style="color: #888888">/* linked list of free pages */</span>
+		};
+		<span style="color: #008800; font-weight: bold">struct</span> page page;
+	};
+};
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">inline</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">struct_slob_page_wrong_size</span>(<span style="color: #333399; font-weight: bold">void</span>)
+{ BUILD_BUG_ON(<span style="color: #008800; font-weight: bold">sizeof</span>(<span style="color: #008800; font-weight: bold">struct</span> slob_page) <span style="color: #333333">!=</span> <span style="color: #008800; font-weight: bold">sizeof</span>(<span style="color: #008800; font-weight: bold">struct</span> page)); }
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * free_slob_page: call before a slob_page is returned to the page allocator.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">inline</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">free_slob_page</span>(<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp)
+{
+	reset_page_mapcount(<span style="color: #333333">&amp;</span>sp<span style="color: #333333">-&gt;</span>page);
+	sp<span style="color: #333333">-&gt;</span>page.mapping <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * All partially free slob pages go on these lists.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #557799">#define SLOB_BREAK1 256</span>
+<span style="color: #557799">#define SLOB_BREAK2 1024</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #0066BB; font-weight: bold">LIST_HEAD</span>(free_slob_small);
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #0066BB; font-weight: bold">LIST_HEAD</span>(free_slob_medium);
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #0066BB; font-weight: bold">LIST_HEAD</span>(free_slob_large);
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * is_slob_page: True for all slob pages (false for bigblock pages)</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">inline</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">is_slob_page</span>(<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp)
+{
+	<span style="color: #008800; font-weight: bold">return</span> PageSlab((<span style="color: #008800; font-weight: bold">struct</span> page <span style="color: #333333">*</span>)sp);
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">inline</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">set_slob_page</span>(<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp)
+{
+	__SetPageSlab((<span style="color: #008800; font-weight: bold">struct</span> page <span style="color: #333333">*</span>)sp);
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">inline</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">clear_slob_page</span>(<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp)
+{
+	__ClearPageSlab((<span style="color: #008800; font-weight: bold">struct</span> page <span style="color: #333333">*</span>)sp);
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">inline</span> <span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span><span style="color: #0066BB; font-weight: bold">slob_page</span>(<span style="color: #008800; font-weight: bold">const</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>addr)
+{
+	<span style="color: #008800; font-weight: bold">return</span> (<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>)virt_to_page(addr);
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * slob_page_free: true for pages on free_slob_pages list.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">inline</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">slob_page_free</span>(<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp)
+{
+	<span style="color: #008800; font-weight: bold">return</span> PageSlobFree((<span style="color: #008800; font-weight: bold">struct</span> page <span style="color: #333333">*</span>)sp);
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">set_slob_page_free</span>(<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp, <span style="color: #008800; font-weight: bold">struct</span> list_head <span style="color: #333333">*</span>list)
+{
+	list_add(<span style="color: #333333">&amp;</span>sp<span style="color: #333333">-&gt;</span>list, list);
+	__SetPageSlobFree((<span style="color: #008800; font-weight: bold">struct</span> page <span style="color: #333333">*</span>)sp);
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">inline</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">clear_slob_page_free</span>(<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp)
+{
+	list_del(<span style="color: #333333">&amp;</span>sp<span style="color: #333333">-&gt;</span>list);
+	__ClearPageSlobFree((<span style="color: #008800; font-weight: bold">struct</span> page <span style="color: #333333">*</span>)sp);
+}
+
+<span style="color: #557799">#define SLOB_UNIT sizeof(slob_t)</span>
+<span style="color: #557799">#define SLOB_UNITS(size) (((size) + SLOB_UNIT - 1)/SLOB_UNIT)</span>
+<span style="color: #557799">#define SLOB_ALIGN L1_CACHE_BYTES</span>
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * struct slob_rcu is inserted at the tail of allocated slob blocks, which</span>
+<span style="color: #888888"> * were created with a SLAB_DESTROY_BY_RCU slab. slob_rcu is used to free</span>
+<span style="color: #888888"> * the block using call_rcu.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">struct</span> slob_rcu {
+	<span style="color: #008800; font-weight: bold">struct</span> rcu_head head;
+	<span style="color: #333399; font-weight: bold">int</span> size;
+};
+
+<span style="color: #888888">/*********************** CS411 STUFF ****************************/</span>
+<span style="color: #888888">/* toggle this value to switch between original and best fit */</span>
+<span style="color: #888888">//#define BEST_FIT</span>
+
+<span style="color: #888888">/* global to keep track of the amount of memory actually in use */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> memory_used <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+<span style="color: #888888">/* global to keep track of the amount of memory that is claimed */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> memory_claimed <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+<span style="color: #888888">/* global to keep track of search loop iterations */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> alloc_loop_iters <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+<span style="color: #888888">/* global to keep track of allocations attempted */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> alloc_count <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+<span style="color: #008800; font-weight: bold">struct</span> page_fit {
+  <span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp;
+  
+  <span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>cur;
+  <span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>prev;
+  
+  <span style="color: #333399; font-weight: bold">int</span> delta;
+};
+<span style="color: #888888">/****************************************************************/</span>
+
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * slob_lock protects all slob allocator structures.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #0066BB; font-weight: bold">DEFINE_SPINLOCK</span>(slob_lock);
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Encode the given size and next info into a free slob block s.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">set_slob</span>(<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>s, <span style="color: #333399; font-weight: bold">slobidx_t</span> size, <span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>next)
+{
+	<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>base <span style="color: #333333">=</span> (<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>)((<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span>)s <span style="color: #333333">&amp;</span> PAGE_MASK);
+	<span style="color: #333399; font-weight: bold">slobidx_t</span> offset <span style="color: #333333">=</span> next <span style="color: #333333">-</span> base;
+
+	<span style="color: #008800; font-weight: bold">if</span> (size <span style="color: #333333">&gt;</span> <span style="color: #0000DD; font-weight: bold">1</span>) {
+		s[<span style="color: #0000DD; font-weight: bold">0</span>].units <span style="color: #333333">=</span> size;
+		s[<span style="color: #0000DD; font-weight: bold">1</span>].units <span style="color: #333333">=</span> offset;
+	} <span style="color: #008800; font-weight: bold">else</span>
+		s[<span style="color: #0000DD; font-weight: bold">0</span>].units <span style="color: #333333">=</span> <span style="color: #333333">-</span>offset;
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Return the size of a slob block.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">slobidx_t</span> <span style="color: #0066BB; font-weight: bold">slob_units</span>(<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>s)
+{
+	<span style="color: #008800; font-weight: bold">if</span> (s<span style="color: #333333">-&gt;</span>units <span style="color: #333333">&gt;</span> <span style="color: #0000DD; font-weight: bold">0</span>)
+		<span style="color: #008800; font-weight: bold">return</span> s<span style="color: #333333">-&gt;</span>units;
+	<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">1</span>;
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Return the next free slob block pointer after this one.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span><span style="color: #0066BB; font-weight: bold">slob_next</span>(<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>s)
+{
+	<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>base <span style="color: #333333">=</span> (<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>)((<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span>)s <span style="color: #333333">&amp;</span> PAGE_MASK);
+	<span style="color: #333399; font-weight: bold">slobidx_t</span> next;
+
+	<span style="color: #008800; font-weight: bold">if</span> (s[<span style="color: #0000DD; font-weight: bold">0</span>].units <span style="color: #333333">&lt;</span> <span style="color: #0000DD; font-weight: bold">0</span>)
+		next <span style="color: #333333">=</span> <span style="color: #333333">-</span>s[<span style="color: #0000DD; font-weight: bold">0</span>].units;
+	<span style="color: #008800; font-weight: bold">else</span>
+		next <span style="color: #333333">=</span> s[<span style="color: #0000DD; font-weight: bold">1</span>].units;
+	<span style="color: #008800; font-weight: bold">return</span> base<span style="color: #333333">+</span>next;
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Returns true if s is the last free block in its page.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">slob_last</span>(<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>s)
+{
+	<span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">!</span>((<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span>)slob_next(s) <span style="color: #333333">&amp;</span> <span style="color: #333333">~</span>PAGE_MASK);
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span><span style="color: #0066BB; font-weight: bold">slob_new_pages</span>(<span style="color: #333399; font-weight: bold">gfp_t</span> gfp, <span style="color: #333399; font-weight: bold">int</span> order, <span style="color: #333399; font-weight: bold">int</span> node)
+{
+	<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>page;
+
+<span style="color: #557799">#ifdef CONFIG_NUMA</span>
+	<span style="color: #008800; font-weight: bold">if</span> (node <span style="color: #333333">!=</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>)
+		page <span style="color: #333333">=</span> alloc_pages_exact_node(node, gfp, order);
+	<span style="color: #008800; font-weight: bold">else</span>
+<span style="color: #557799">#endif</span>
+		page <span style="color: #333333">=</span> alloc_pages(gfp, order);
+
+	<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>page)
+		<span style="color: #008800; font-weight: bold">return</span> <span style="color: #007020">NULL</span>;
+
+	<span style="color: #008800; font-weight: bold">return</span> page_address(page);
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">slob_free_pages</span>(<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>b, <span style="color: #333399; font-weight: bold">int</span> order)
+{
+	<span style="color: #008800; font-weight: bold">if</span> (current<span style="color: #333333">-&gt;</span>reclaim_state)
+		current<span style="color: #333333">-&gt;</span>reclaim_state<span style="color: #333333">-&gt;</span>reclaimed_slab <span style="color: #333333">+=</span> <span style="color: #0000DD; font-weight: bold">1</span> <span style="color: #333333">&lt;&lt;</span> order;
+	free_pages((<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span>)b, order);
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Allocate a slob block within a given slob_page sp.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span><span style="color: #0066BB; font-weight: bold">slob_page_alloc</span>(<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp, <span style="color: #333399; font-weight: bold">size_t</span> size, <span style="color: #333399; font-weight: bold">int</span> align)
+{
+	<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>prev, <span style="color: #333333">*</span>cur, <span style="color: #333333">*</span>aligned <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
+	<span style="color: #333399; font-weight: bold">int</span> delta <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>, units <span style="color: #333333">=</span> SLOB_UNITS(size);
+
+	<span style="color: #008800; font-weight: bold">for</span> (prev <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>, cur <span style="color: #333333">=</span> sp<span style="color: #333333">-&gt;</span>free; ; prev <span style="color: #333333">=</span> cur, cur <span style="color: #333333">=</span> slob_next(cur)) {
+		<span style="color: #333399; font-weight: bold">slobidx_t</span> avail <span style="color: #333333">=</span> slob_units(cur);
+
+		<span style="color: #008800; font-weight: bold">if</span> (align) {
+			aligned <span style="color: #333333">=</span> (<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>)ALIGN((<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span>)cur, align);
+			delta <span style="color: #333333">=</span> aligned <span style="color: #333333">-</span> cur;
+		}
+		<span style="color: #008800; font-weight: bold">if</span> (avail <span style="color: #333333">&gt;=</span> units <span style="color: #333333">+</span> delta) { <span style="color: #888888">/* room enough? */</span>
+			<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>next;
+
+			<span style="color: #008800; font-weight: bold">if</span> (delta) { <span style="color: #888888">/* need to fragment head to align? */</span>
+				next <span style="color: #333333">=</span> slob_next(cur);
+				set_slob(aligned, avail <span style="color: #333333">-</span> delta, next);
+				set_slob(cur, delta, aligned);
+				prev <span style="color: #333333">=</span> cur;
+				cur <span style="color: #333333">=</span> aligned;
+				avail <span style="color: #333333">=</span> slob_units(cur);
+			}
+
+			next <span style="color: #333333">=</span> slob_next(cur);
+			<span style="color: #008800; font-weight: bold">if</span> (avail <span style="color: #333333">==</span> units) { <span style="color: #888888">/* exact fit? unlink. */</span>
+				<span style="color: #008800; font-weight: bold">if</span> (prev)
+					set_slob(prev, slob_units(prev), next);
+				<span style="color: #008800; font-weight: bold">else</span>
+					sp<span style="color: #333333">-&gt;</span>free <span style="color: #333333">=</span> next;
+			} <span style="color: #008800; font-weight: bold">else</span> { <span style="color: #888888">/* fragment */</span>
+				<span style="color: #008800; font-weight: bold">if</span> (prev)
+					set_slob(prev, slob_units(prev), cur <span style="color: #333333">+</span> units);
+				<span style="color: #008800; font-weight: bold">else</span>
+					sp<span style="color: #333333">-&gt;</span>free <span style="color: #333333">=</span> cur <span style="color: #333333">+</span> units;
+				set_slob(cur <span style="color: #333333">+</span> units, avail <span style="color: #333333">-</span> units, next);
+			}
+
+			sp<span style="color: #333333">-&gt;</span>units <span style="color: #333333">-=</span> units;
+			<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>sp<span style="color: #333333">-&gt;</span>units)
+				clear_slob_page_free(sp);
+			<span style="color: #008800; font-weight: bold">return</span> cur;
+		}
+		<span style="color: #008800; font-weight: bold">if</span> (slob_last(cur))
+			<span style="color: #008800; font-weight: bold">return</span> <span style="color: #007020">NULL</span>;
+	}
+}
+
+<span style="color: #557799">#ifdef BEST_FIT</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span><span style="color: #0066BB; font-weight: bold">slob_page_alloc_best</span>(<span style="color: #008800; font-weight: bold">struct</span> page_fit <span style="color: #333333">*</span>fit, <span style="color: #333399; font-weight: bold">size_t</span> size, <span style="color: #333399; font-weight: bold">int</span> align)
+{
+  <span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp <span style="color: #333333">=</span> fit<span style="color: #333333">-&gt;</span>sp;
+  
+  <span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>next, <span style="color: #333333">*</span>aligned <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
+  <span style="color: #333399; font-weight: bold">int</span> delta <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>, units <span style="color: #333333">=</span> SLOB_UNITS(size);
+
+  <span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>cur <span style="color: #333333">=</span> fit<span style="color: #333333">-&gt;</span>cur;
+  <span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>prev <span style="color: #333333">=</span> fit<span style="color: #333333">-&gt;</span>prev;
+	
+  <span style="color: #333399; font-weight: bold">slobidx_t</span> avail <span style="color: #333333">=</span> slob_units(cur);
+
+  <span style="color: #008800; font-weight: bold">if</span> (align) {
+    aligned <span style="color: #333333">=</span> (<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>)ALIGN((<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span>)cur, align);
+    delta <span style="color: #333333">=</span> aligned <span style="color: #333333">-</span> cur;
+  }
+
+  <span style="color: #008800; font-weight: bold">if</span> (delta) { <span style="color: #888888">/* need to fragment head to align? */</span>
+    next <span style="color: #333333">=</span> slob_next(cur);
+    set_slob(aligned, avail <span style="color: #333333">-</span> delta, next);
+    set_slob(cur, delta, aligned);
+    prev <span style="color: #333333">=</span> cur;
+    cur <span style="color: #333333">=</span> aligned;
+    avail <span style="color: #333333">=</span> slob_units(cur);
+  }
+
+  next <span style="color: #333333">=</span> slob_next(cur);
+  <span style="color: #008800; font-weight: bold">if</span> (avail <span style="color: #333333">==</span> units) { <span style="color: #888888">/* exact fit? unlink. */</span>
+    <span style="color: #008800; font-weight: bold">if</span> (prev)
+      set_slob(prev, slob_units(prev), next);
+    <span style="color: #008800; font-weight: bold">else</span>
+      sp<span style="color: #333333">-&gt;</span>free <span style="color: #333333">=</span> next;
+  } <span style="color: #008800; font-weight: bold">else</span> { <span style="color: #888888">/* fragment */</span>
+    <span style="color: #008800; font-weight: bold">if</span> (prev)
+      set_slob(prev, slob_units(prev), cur <span style="color: #333333">+</span> units);
+    <span style="color: #008800; font-weight: bold">else</span>
+      sp<span style="color: #333333">-&gt;</span>free <span style="color: #333333">=</span> cur <span style="color: #333333">+</span> units;
+    set_slob(cur <span style="color: #333333">+</span> units, avail <span style="color: #333333">-</span> units, next);
+  }
+
+  sp<span style="color: #333333">-&gt;</span>units <span style="color: #333333">-=</span> units;
+  <span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>sp<span style="color: #333333">-&gt;</span>units)
+    clear_slob_page_free(sp);
+
+  <span style="color: #008800; font-weight: bold">return</span> cur;
+}
+<span style="color: #557799">#endif</span>
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * Find the best fit for the memory that is being allocated.  If a spot</span>
+<span style="color: #888888"> * is found on the page that can hold the memory size requested and the amount</span>
+<span style="color: #888888"> * of left over space is smaller than what was previously found, which is</span>
+<span style="color: #888888"> * contained in the best pointer, then the best pointer is updated, and 1</span>
+<span style="color: #888888"> * is returned to indicate that the page is the best fit found thus far.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #557799">#ifdef BEST_FIT</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">slob_best_fit</span>(<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp, <span style="color: #008800; font-weight: bold">struct</span> page_fit <span style="color: #333333">*</span>best,
+			 <span style="color: #333399; font-weight: bold">size_t</span> size, <span style="color: #333399; font-weight: bold">int</span> align)
+{
+  <span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>prev, <span style="color: #333333">*</span>cur, <span style="color: #333333">*</span>aligned <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
+	<span style="color: #333399; font-weight: bold">int</span> delta <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>, units <span style="color: #333333">=</span> SLOB_UNITS(size);
+
+	<span style="color: #888888">/* loop through each slob */</span>
+	<span style="color: #008800; font-weight: bold">for</span> (prev <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>, cur <span style="color: #333333">=</span> sp<span style="color: #333333">-&gt;</span>free; ; prev <span style="color: #333333">=</span> cur, cur <span style="color: #333333">=</span> slob_next(cur)) {
+	  <span style="color: #888888">/* get the space availabe */</span>
+		<span style="color: #333399; font-weight: bold">slobidx_t</span> avail <span style="color: #333333">=</span> slob_units(cur);
+
+		<span style="color: #888888">/* adjust delta based on alignment */</span>
+		<span style="color: #008800; font-weight: bold">if</span> (align) {
+			aligned <span style="color: #333333">=</span> (<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>)ALIGN((<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span>)cur, align);
+			delta <span style="color: #333333">=</span> aligned<span style="color: #333333">-</span>cur;
+		}
+		
+		<span style="color: #888888">/* update the best fit if the necessary */</span>
+		<span style="color: #008800; font-weight: bold">if</span> (avail <span style="color: #333333">&gt;=</span> units<span style="color: #333333">+</span>delta <span style="color: #333333">&amp;&amp;</span> avail<span style="color: #333333">-</span>units<span style="color: #333333">-</span>delta <span style="color: #333333">&lt;</span> best<span style="color: #333333">-&gt;</span>delta) {
+		  best<span style="color: #333333">-&gt;</span>sp <span style="color: #333333">=</span> sp;
+		  
+		  best<span style="color: #333333">-&gt;</span>cur <span style="color: #333333">=</span> cur;
+		  best<span style="color: #333333">-&gt;</span>prev <span style="color: #333333">=</span> prev;
+		  best<span style="color: #333333">-&gt;</span>delta <span style="color: #333333">=</span> avail<span style="color: #333333">-</span>units<span style="color: #333333">-</span>delta;
+		}
+		  
+		<span style="color: #888888">/* break out of the loop if we hit the last slob */</span>
+		<span style="color: #008800; font-weight: bold">if</span> (slob_last(cur))
+		  <span style="color: #008800; font-weight: bold">break</span>;
+	}
+}
+<span style="color: #557799">#endif</span>
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * slob_alloc: entry point into the slob allocator.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span><span style="color: #0066BB; font-weight: bold">slob_alloc</span>(<span style="color: #333399; font-weight: bold">size_t</span> size, <span style="color: #333399; font-weight: bold">gfp_t</span> gfp, <span style="color: #333399; font-weight: bold">int</span> align, <span style="color: #333399; font-weight: bold">int</span> node)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp;
+	
+	<span style="color: #008800; font-weight: bold">struct</span> list_head <span style="color: #333333">*</span>slob_list;
+	<span style="color: #008800; font-weight: bold">struct</span> list_head <span style="color: #333333">*</span>prev <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
+
+	<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>b <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
+	<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> flags;
+
+<span style="color: #557799">#ifdef BEST_FIT</span>
+	<span style="color: #333399; font-weight: bold">int</span> first_fit <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+	
+	<span style="color: #008800; font-weight: bold">struct</span> page_fit fit;
+	fit.sp <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
+	
+	fit.prev <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
+	fit.cur <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
+	fit.delta <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">9999999</span>;
+<span style="color: #557799">#endif</span>
+	
+	alloc_count<span style="color: #333333">++</span>;
+	
+	<span style="color: #008800; font-weight: bold">if</span> (size <span style="color: #333333">&lt;</span> SLOB_BREAK1)
+		slob_list <span style="color: #333333">=</span> <span style="color: #333333">&amp;</span>free_slob_small;
+	<span style="color: #008800; font-weight: bold">else</span> <span style="color: #008800; font-weight: bold">if</span> (size <span style="color: #333333">&lt;</span> SLOB_BREAK2)
+		slob_list <span style="color: #333333">=</span> <span style="color: #333333">&amp;</span>free_slob_medium;
+	<span style="color: #008800; font-weight: bold">else</span>
+		slob_list <span style="color: #333333">=</span> <span style="color: #333333">&amp;</span>free_slob_large;
+
+	spin_lock_irqsave(<span style="color: #333333">&amp;</span>slob_lock, flags);
+	<span style="color: #888888">/* Iterate through each partially free page, try to find room */</span>
+	list_for_each_entry(sp, slob_list, list) {
+	  alloc_loop_iters<span style="color: #333333">++</span>;
+<span style="color: #557799">#ifdef CONFIG_NUMA</span>
+		<span style="color: #888888">/*</span>
+<span style="color: #888888">		 * If there&#39;s a node specification, search for a partial</span>
+<span style="color: #888888">		 * page with a matching node id in the freelist.</span>
+<span style="color: #888888">		 */</span>
+		<span style="color: #008800; font-weight: bold">if</span> (node <span style="color: #333333">!=</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span> <span style="color: #333333">&amp;&amp;</span> page_to_nid(<span style="color: #333333">&amp;</span>sp<span style="color: #333333">-&gt;</span>page) <span style="color: #333333">!=</span> node)
+			<span style="color: #008800; font-weight: bold">continue</span>;
+<span style="color: #557799">#endif</span>
+	<span style="color: #888888">/* Enough room on this page? */</span>
+		<span style="color: #008800; font-weight: bold">if</span> (sp<span style="color: #333333">-&gt;</span>units <span style="color: #333333">&lt;</span> SLOB_UNITS(size))
+			<span style="color: #008800; font-weight: bold">continue</span>;
+
+<span style="color: #557799">#ifdef BEST_FIT		</span>
+		<span style="color: #888888">/* check for a new best fit */</span>
+		slob_best_fit(sp, <span style="color: #333333">&amp;</span>fit, size, align);
+	  <span style="color: #008800; font-weight: bold">if</span> (fit.sp <span style="color: #333333">!=</span> <span style="color: #007020">NULL</span> <span style="color: #333333">&amp;&amp;</span> first_fit <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span>)
+		    first_fit <span style="color: #333333">=</span> fit.delta;
+		  
+		  prev <span style="color: #333333">=</span> sp<span style="color: #333333">-&gt;</span>list.prev;
+
+		  <span style="color: #888888">/* if we found an exact match, no need to keep searching */</span>
+		  <span style="color: #008800; font-weight: bold">if</span> (fit.delta <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span>)
+		    <span style="color: #008800; font-weight: bold">break</span>;
+	}
+
+	<span style="color: #888888">/* if we found a fitted page, attempt the allocation */</span>
+	<span style="color: #008800; font-weight: bold">if</span> (fit.sp <span style="color: #333333">!=</span> <span style="color: #007020">NULL</span>) {
+	  printk(KERN_INFO <span style="background-color: #fff0f0">&quot;FIRST FIT DELTA: %d</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>, first_fit);
+	  printk(KERN_INFO <span style="background-color: #fff0f0">&quot;BEST FIT DELTA: %d</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n\n</span><span style="background-color: #fff0f0">&quot;</span>, fit.delta);
+	  
+	  <span style="color: #008800; font-weight: bold">if</span> ((b <span style="color: #333333">=</span> slob_page_alloc_best(<span style="color: #333333">&amp;</span>fit, size, align)) <span style="color: #333333">&amp;&amp;</span>
+	      prev <span style="color: #333333">!=</span> slob_list<span style="color: #333333">-&gt;</span>prev <span style="color: #333333">&amp;&amp;</span>
+	      slob_list<span style="color: #333333">-&gt;</span>next <span style="color: #333333">!=</span> prev<span style="color: #333333">-&gt;</span>next)
+	    list_move_tail(slob_list, prev<span style="color: #333333">-&gt;</span>next);
+	}
+<span style="color: #557799">#else</span>
+		prev <span style="color: #333333">=</span> sp<span style="color: #333333">-&gt;</span>list.prev;
+		b <span style="color: #333333">=</span> slob_page_alloc(sp, size, align);
+		<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>b)
+			<span style="color: #008800; font-weight: bold">continue</span>;
+
+		<span style="color: #008800; font-weight: bold">if</span> (prev <span style="color: #333333">!=</span> slob_list<span style="color: #333333">-&gt;</span>prev <span style="color: #333333">&amp;&amp;</span>
+				slob_list<span style="color: #333333">-&gt;</span>next <span style="color: #333333">!=</span> prev<span style="color: #333333">-&gt;</span>next)
+			list_move_tail(slob_list, prev<span style="color: #333333">-&gt;</span>next);
+		<span style="color: #008800; font-weight: bold">break</span>;
+	}
+<span style="color: #557799">#endif</span>
+
+	spin_unlock_irqrestore(<span style="color: #333333">&amp;</span>slob_lock, flags);
+
+	<span style="color: #888888">/* Not enough space: must allocate a new page */</span>
+	<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>b) {
+		b <span style="color: #333333">=</span> slob_new_pages(gfp <span style="color: #333333">&amp;</span> <span style="color: #333333">~</span>__GFP_ZERO, <span style="color: #0000DD; font-weight: bold">0</span>, node);
+		<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>b)
+			<span style="color: #008800; font-weight: bold">return</span> <span style="color: #007020">NULL</span>;
+
+		<span style="color: #888888">/* add the newly allocated page to the total claimed */</span>
+		memory_claimed <span style="color: #333333">+=</span> PAGE_SIZE;
+		
+		sp <span style="color: #333333">=</span> slob_page(b);
+		set_slob_page(sp);
+
+		spin_lock_irqsave(<span style="color: #333333">&amp;</span>slob_lock, flags);
+		sp<span style="color: #333333">-&gt;</span>units <span style="color: #333333">=</span> SLOB_UNITS(PAGE_SIZE);
+		sp<span style="color: #333333">-&gt;</span>free <span style="color: #333333">=</span> b;
+		INIT_LIST_HEAD(<span style="color: #333333">&amp;</span>sp<span style="color: #333333">-&gt;</span>list);
+		set_slob(b, SLOB_UNITS(PAGE_SIZE), b<span style="color: #333333">+</span>SLOB_UNITS(PAGE_SIZE));
+		set_slob_page_free(sp, slob_list);
+		b <span style="color: #333333">=</span> slob_page_alloc(sp, size, align);
+		BUG_ON(<span style="color: #333333">!</span>b);
+		spin_unlock_irqrestore(<span style="color: #333333">&amp;</span>slob_lock, flags);
+	}
+
+	<span style="color: #008800; font-weight: bold">if</span> (unlikely((gfp <span style="color: #333333">&amp;</span> __GFP_ZERO) <span style="color: #333333">&amp;&amp;</span> b))
+		memset(b, <span style="color: #0000DD; font-weight: bold">0</span>, size);
+
+	<span style="color: #888888">/* add the size we just allocated to the total in use */</span>
+	memory_used <span style="color: #333333">+=</span> size;
+	
+	<span style="color: #008800; font-weight: bold">return</span> b;
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * slob_free: entry point into the slob allocator.</span>
+<span style="color: #888888"> */</span>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> slob_free(<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>block, <span style="color: #333399; font-weight: bold">int</span> size)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp;
+	<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>prev, <span style="color: #333333">*</span>next, <span style="color: #333333">*</span>b <span style="color: #333333">=</span> (<span style="color: #333399; font-weight: bold">slob_t</span> <span style="color: #333333">*</span>)block;
+	<span style="color: #333399; font-weight: bold">slobidx_t</span> units;
+	<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> flags;
+	<span style="color: #008800; font-weight: bold">struct</span> list_head <span style="color: #333333">*</span>slob_list;
+
+	<span style="color: #008800; font-weight: bold">if</span> (unlikely(ZERO_OR_NULL_PTR(block)))
+		<span style="color: #008800; font-weight: bold">return</span>;
+	BUG_ON(<span style="color: #333333">!</span>size);
+
+	sp <span style="color: #333333">=</span> slob_page(block);
+	units <span style="color: #333333">=</span> SLOB_UNITS(size);
+
+	spin_lock_irqsave(<span style="color: #333333">&amp;</span>slob_lock, flags);
+
+	<span style="color: #888888">/* update the memory used to reflect us freeing some memory */</span>
+	memory_used <span style="color: #333333">-=</span> size;
+	
+	<span style="color: #008800; font-weight: bold">if</span> (sp<span style="color: #333333">-&gt;</span>units <span style="color: #333333">+</span> units <span style="color: #333333">==</span> SLOB_UNITS(PAGE_SIZE)) {
+	  <span style="color: #888888">/* we are freeing a whole page so update the memory claimed */</span>
+	  memory_claimed <span style="color: #333333">-=</span> PAGE_SIZE;
+	  
+		<span style="color: #888888">/* Go directly to page allocator. Do not pass slob allocator */</span>
+		<span style="color: #008800; font-weight: bold">if</span> (slob_page_free(sp))
+			clear_slob_page_free(sp);
+		spin_unlock_irqrestore(<span style="color: #333333">&amp;</span>slob_lock, flags);
+		clear_slob_page(sp);
+		free_slob_page(sp);
+		slob_free_pages(b, <span style="color: #0000DD; font-weight: bold">0</span>);
+		<span style="color: #008800; font-weight: bold">return</span>;
+	}
+
+	<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>slob_page_free(sp)) {
+		<span style="color: #888888">/* This slob page is about to become partially free. Easy! */</span>
+		sp<span style="color: #333333">-&gt;</span>units <span style="color: #333333">=</span> units;
+		sp<span style="color: #333333">-&gt;</span>free <span style="color: #333333">=</span> b;
+		set_slob(b, units,
+			(<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>)((<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span>)(b <span style="color: #333333">+</span>
+					SLOB_UNITS(PAGE_SIZE)) <span style="color: #333333">&amp;</span> PAGE_MASK));
+		<span style="color: #008800; font-weight: bold">if</span> (size <span style="color: #333333">&lt;</span> SLOB_BREAK1)
+			slob_list <span style="color: #333333">=</span> <span style="color: #333333">&amp;</span>free_slob_small;
+		<span style="color: #008800; font-weight: bold">else</span> <span style="color: #008800; font-weight: bold">if</span> (size <span style="color: #333333">&lt;</span> SLOB_BREAK2)
+			slob_list <span style="color: #333333">=</span> <span style="color: #333333">&amp;</span>free_slob_medium;
+		<span style="color: #008800; font-weight: bold">else</span>
+			slob_list <span style="color: #333333">=</span> <span style="color: #333333">&amp;</span>free_slob_large;
+		set_slob_page_free(sp, slob_list);
+		<span style="color: #008800; font-weight: bold">goto</span> out;
+	}
+
+	<span style="color: #888888">/*</span>
+<span style="color: #888888">	 * Otherwise the page is already partially free, so find reinsertion</span>
+<span style="color: #888888">	 * point.</span>
+<span style="color: #888888">	 */</span>
+	sp<span style="color: #333333">-&gt;</span>units <span style="color: #333333">+=</span> units;
+
+	<span style="color: #008800; font-weight: bold">if</span> (b <span style="color: #333333">&lt;</span> sp<span style="color: #333333">-&gt;</span>free) {
+		<span style="color: #008800; font-weight: bold">if</span> (b <span style="color: #333333">+</span> units <span style="color: #333333">==</span> sp<span style="color: #333333">-&gt;</span>free) {
+			units <span style="color: #333333">+=</span> slob_units(sp<span style="color: #333333">-&gt;</span>free);
+			sp<span style="color: #333333">-&gt;</span>free <span style="color: #333333">=</span> slob_next(sp<span style="color: #333333">-&gt;</span>free);
+		}
+		set_slob(b, units, sp<span style="color: #333333">-&gt;</span>free);
+		sp<span style="color: #333333">-&gt;</span>free <span style="color: #333333">=</span> b;
+	} <span style="color: #008800; font-weight: bold">else</span> {
+		prev <span style="color: #333333">=</span> sp<span style="color: #333333">-&gt;</span>free;
+		next <span style="color: #333333">=</span> slob_next(prev);
+		<span style="color: #008800; font-weight: bold">while</span> (b <span style="color: #333333">&gt;</span> next) {
+			prev <span style="color: #333333">=</span> next;
+			next <span style="color: #333333">=</span> slob_next(prev);
+		}
+
+		<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>slob_last(prev) <span style="color: #333333">&amp;&amp;</span> b <span style="color: #333333">+</span> units <span style="color: #333333">==</span> next) {
+			units <span style="color: #333333">+=</span> slob_units(next);
+			set_slob(b, units, slob_next(next));
+		} <span style="color: #008800; font-weight: bold">else</span>
+			set_slob(b, units, next);
+
+		<span style="color: #008800; font-weight: bold">if</span> (prev <span style="color: #333333">+</span> slob_units(prev) <span style="color: #333333">==</span> b) {
+			units <span style="color: #333333">=</span> slob_units(b) <span style="color: #333333">+</span> slob_units(prev);
+			set_slob(prev, units, slob_next(b));
+		} <span style="color: #008800; font-weight: bold">else</span>
+			set_slob(prev, slob_units(prev), b);
+	}
+<span style="color: #997700; font-weight: bold">out:</span>
+	spin_unlock_irqrestore(<span style="color: #333333">&amp;</span>slob_lock, flags);
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * End of slob allocator proper. Begin kmem_cache_alloc and kmalloc frontend.</span>
+<span style="color: #888888"> */</span>
+
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>__kmalloc_node(<span style="color: #333399; font-weight: bold">size_t</span> size, <span style="color: #333399; font-weight: bold">gfp_t</span> gfp, <span style="color: #333399; font-weight: bold">int</span> node)
+{
+	<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #333333">*</span>m;
+	<span style="color: #333399; font-weight: bold">int</span> align <span style="color: #333333">=</span> max(ARCH_KMALLOC_MINALIGN, ARCH_SLAB_MINALIGN);
+	<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>ret;
+
+	lockdep_trace_alloc(gfp);
+
+	<span style="color: #008800; font-weight: bold">if</span> (size <span style="color: #333333">&lt;</span> PAGE_SIZE <span style="color: #333333">-</span> align) {
+		<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>size)
+			<span style="color: #008800; font-weight: bold">return</span> ZERO_SIZE_PTR;
+
+		m <span style="color: #333333">=</span> slob_alloc(size <span style="color: #333333">+</span> align, gfp, align, node);
+
+		<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">!</span>m)
+			<span style="color: #008800; font-weight: bold">return</span> <span style="color: #007020">NULL</span>;
+		<span style="color: #333333">*</span>m <span style="color: #333333">=</span> size;
+		ret <span style="color: #333333">=</span> (<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>)m <span style="color: #333333">+</span> align;
+
+		trace_kmalloc_node(_RET_IP_, ret,
+				   size, size <span style="color: #333333">+</span> align, gfp, node);
+	} <span style="color: #008800; font-weight: bold">else</span> {
+		<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">int</span> order <span style="color: #333333">=</span> get_order(size);
+
+		<span style="color: #008800; font-weight: bold">if</span> (likely(order))
+			gfp <span style="color: #333333">|=</span> __GFP_COMP;
+		ret <span style="color: #333333">=</span> slob_new_pages(gfp, order, node);
+		<span style="color: #008800; font-weight: bold">if</span> (ret) {
+			<span style="color: #008800; font-weight: bold">struct</span> page <span style="color: #333333">*</span>page;
+			page <span style="color: #333333">=</span> virt_to_page(ret);
+			page<span style="color: #333333">-&gt;</span>private <span style="color: #333333">=</span> size;
+		}
+
+		trace_kmalloc_node(_RET_IP_, ret,
+				   size, PAGE_SIZE <span style="color: #333333">&lt;&lt;</span> order, gfp, node);
+	}
+
+	kmemleak_alloc(ret, size, <span style="color: #0000DD; font-weight: bold">1</span>, gfp);
+	<span style="color: #008800; font-weight: bold">return</span> ret;
+}
+EXPORT_SYMBOL(__kmalloc_node);
+
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">kfree</span>(<span style="color: #008800; font-weight: bold">const</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>block)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp;
+
+	trace_kfree(_RET_IP_, block);
+
+	<span style="color: #008800; font-weight: bold">if</span> (unlikely(ZERO_OR_NULL_PTR(block)))
+		<span style="color: #008800; font-weight: bold">return</span>;
+	kmemleak_free(block);
+
+	sp <span style="color: #333333">=</span> slob_page(block);
+	<span style="color: #008800; font-weight: bold">if</span> (is_slob_page(sp)) {
+		<span style="color: #333399; font-weight: bold">int</span> align <span style="color: #333333">=</span> max(ARCH_KMALLOC_MINALIGN, ARCH_SLAB_MINALIGN);
+		<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #333333">*</span>m <span style="color: #333333">=</span> (<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #333333">*</span>)(block <span style="color: #333333">-</span> align);
+		slob_free(m, <span style="color: #333333">*</span>m <span style="color: #333333">+</span> align);
+	} <span style="color: #008800; font-weight: bold">else</span>
+		put_page(<span style="color: #333333">&amp;</span>sp<span style="color: #333333">-&gt;</span>page);
+}
+EXPORT_SYMBOL(kfree);
+
+<span style="color: #888888">/* can&#39;t use ksize for kmem_cache_alloc memory, only kmalloc */</span>
+<span style="color: #333399; font-weight: bold">size_t</span> <span style="color: #0066BB; font-weight: bold">ksize</span>(<span style="color: #008800; font-weight: bold">const</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>block)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> slob_page <span style="color: #333333">*</span>sp;
+
+	BUG_ON(<span style="color: #333333">!</span>block);
+	<span style="color: #008800; font-weight: bold">if</span> (unlikely(block <span style="color: #333333">==</span> ZERO_SIZE_PTR))
+		<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+	sp <span style="color: #333333">=</span> slob_page(block);
+	<span style="color: #008800; font-weight: bold">if</span> (is_slob_page(sp)) {
+		<span style="color: #333399; font-weight: bold">int</span> align <span style="color: #333333">=</span> max(ARCH_KMALLOC_MINALIGN, ARCH_SLAB_MINALIGN);
+		<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #333333">*</span>m <span style="color: #333333">=</span> (<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #333333">*</span>)(block <span style="color: #333333">-</span> align);
+		<span style="color: #008800; font-weight: bold">return</span> SLOB_UNITS(<span style="color: #333333">*</span>m) <span style="color: #333333">*</span> SLOB_UNIT;
+	} <span style="color: #008800; font-weight: bold">else</span>
+		<span style="color: #008800; font-weight: bold">return</span> sp<span style="color: #333333">-&gt;</span>page.private;
+}
+EXPORT_SYMBOL(ksize);
+
+<span style="color: #008800; font-weight: bold">struct</span> kmem_cache {
+	<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">int</span> size, align;
+	<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> flags;
+	<span style="color: #008800; font-weight: bold">const</span> <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>name;
+	<span style="color: #333399; font-weight: bold">void</span> (<span style="color: #333333">*</span>ctor)(<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>);
+};
+
+<span style="color: #008800; font-weight: bold">struct</span> kmem_cache <span style="color: #333333">*</span><span style="color: #0066BB; font-weight: bold">kmem_cache_create</span>(<span style="color: #008800; font-weight: bold">const</span> <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>name, <span style="color: #333399; font-weight: bold">size_t</span> size,
+	<span style="color: #333399; font-weight: bold">size_t</span> align, <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> flags, <span style="color: #333399; font-weight: bold">void</span> (<span style="color: #333333">*</span>ctor)(<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>))
+{
+	<span style="color: #008800; font-weight: bold">struct</span> kmem_cache <span style="color: #333333">*</span>c;
+
+	c <span style="color: #333333">=</span> slob_alloc(<span style="color: #008800; font-weight: bold">sizeof</span>(<span style="color: #008800; font-weight: bold">struct</span> kmem_cache),
+		GFP_KERNEL, ARCH_KMALLOC_MINALIGN, <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>);
+
+	<span style="color: #008800; font-weight: bold">if</span> (c) {
+		c<span style="color: #333333">-&gt;</span>name <span style="color: #333333">=</span> name;
+		c<span style="color: #333333">-&gt;</span>size <span style="color: #333333">=</span> size;
+		<span style="color: #008800; font-weight: bold">if</span> (flags <span style="color: #333333">&amp;</span> SLAB_DESTROY_BY_RCU) {
+			<span style="color: #888888">/* leave room for rcu footer at the end of object */</span>
+			c<span style="color: #333333">-&gt;</span>size <span style="color: #333333">+=</span> <span style="color: #008800; font-weight: bold">sizeof</span>(<span style="color: #008800; font-weight: bold">struct</span> slob_rcu);
+		}
+		c<span style="color: #333333">-&gt;</span>flags <span style="color: #333333">=</span> flags;
+		c<span style="color: #333333">-&gt;</span>ctor <span style="color: #333333">=</span> ctor;
+		<span style="color: #888888">/* ignore alignment unless it&#39;s forced */</span>
+		c<span style="color: #333333">-&gt;</span>align <span style="color: #333333">=</span> (flags <span style="color: #333333">&amp;</span> SLAB_HWCACHE_ALIGN) <span style="color: #333333">?</span> SLOB_ALIGN <span style="color: #333333">:</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+		<span style="color: #008800; font-weight: bold">if</span> (c<span style="color: #333333">-&gt;</span>align <span style="color: #333333">&lt;</span> ARCH_SLAB_MINALIGN)
+			c<span style="color: #333333">-&gt;</span>align <span style="color: #333333">=</span> ARCH_SLAB_MINALIGN;
+		<span style="color: #008800; font-weight: bold">if</span> (c<span style="color: #333333">-&gt;</span>align <span style="color: #333333">&lt;</span> align)
+			c<span style="color: #333333">-&gt;</span>align <span style="color: #333333">=</span> align;
+	} <span style="color: #008800; font-weight: bold">else</span> <span style="color: #008800; font-weight: bold">if</span> (flags <span style="color: #333333">&amp;</span> SLAB_PANIC)
+		panic(<span style="background-color: #fff0f0">&quot;Cannot create slab cache %s</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>, name);
+
+	kmemleak_alloc(c, <span style="color: #008800; font-weight: bold">sizeof</span>(<span style="color: #008800; font-weight: bold">struct</span> kmem_cache), <span style="color: #0000DD; font-weight: bold">1</span>, GFP_KERNEL);
+	<span style="color: #008800; font-weight: bold">return</span> c;
+}
+EXPORT_SYMBOL(kmem_cache_create);
+
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">kmem_cache_destroy</span>(<span style="color: #008800; font-weight: bold">struct</span> kmem_cache <span style="color: #333333">*</span>c)
+{
+	kmemleak_free(c);
+	<span style="color: #008800; font-weight: bold">if</span> (c<span style="color: #333333">-&gt;</span>flags <span style="color: #333333">&amp;</span> SLAB_DESTROY_BY_RCU)
+		rcu_barrier();
+	slob_free(c, <span style="color: #008800; font-weight: bold">sizeof</span>(<span style="color: #008800; font-weight: bold">struct</span> kmem_cache));
+}
+EXPORT_SYMBOL(kmem_cache_destroy);
+
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span><span style="color: #0066BB; font-weight: bold">kmem_cache_alloc_node</span>(<span style="color: #008800; font-weight: bold">struct</span> kmem_cache <span style="color: #333333">*</span>c, <span style="color: #333399; font-weight: bold">gfp_t</span> flags, <span style="color: #333399; font-weight: bold">int</span> node)
+{
+	<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>b;
+
+	<span style="color: #008800; font-weight: bold">if</span> (c<span style="color: #333333">-&gt;</span>size <span style="color: #333333">&lt;</span> PAGE_SIZE) {
+		b <span style="color: #333333">=</span> slob_alloc(c<span style="color: #333333">-&gt;</span>size, flags, c<span style="color: #333333">-&gt;</span>align, node);
+		trace_kmem_cache_alloc_node(_RET_IP_, b, c<span style="color: #333333">-&gt;</span>size,
+					    SLOB_UNITS(c<span style="color: #333333">-&gt;</span>size) <span style="color: #333333">*</span> SLOB_UNIT,
+					    flags, node);
+	} <span style="color: #008800; font-weight: bold">else</span> {
+		b <span style="color: #333333">=</span> slob_new_pages(flags, get_order(c<span style="color: #333333">-&gt;</span>size), node);
+		trace_kmem_cache_alloc_node(_RET_IP_, b, c<span style="color: #333333">-&gt;</span>size,
+					    PAGE_SIZE <span style="color: #333333">&lt;&lt;</span> get_order(c<span style="color: #333333">-&gt;</span>size),
+					    flags, node);
+	}
+
+	<span style="color: #008800; font-weight: bold">if</span> (c<span style="color: #333333">-&gt;</span>ctor)
+		c<span style="color: #333333">-&gt;</span>ctor(b);
+
+	kmemleak_alloc_recursive(b, c<span style="color: #333333">-&gt;</span>size, <span style="color: #0000DD; font-weight: bold">1</span>, c<span style="color: #333333">-&gt;</span>flags, flags);
+	<span style="color: #008800; font-weight: bold">return</span> b;
+}
+EXPORT_SYMBOL(kmem_cache_alloc_node);
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">__kmem_cache_free</span>(<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>b, <span style="color: #333399; font-weight: bold">int</span> size)
+{
+	<span style="color: #008800; font-weight: bold">if</span> (size <span style="color: #333333">&lt;</span> PAGE_SIZE)
+		slob_free(b, size);
+	<span style="color: #008800; font-weight: bold">else</span>
+		slob_free_pages(b, get_order(size));
+}
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">kmem_rcu_free</span>(<span style="color: #008800; font-weight: bold">struct</span> rcu_head <span style="color: #333333">*</span>head)
+{
+	<span style="color: #008800; font-weight: bold">struct</span> slob_rcu <span style="color: #333333">*</span>slob_rcu <span style="color: #333333">=</span> (<span style="color: #008800; font-weight: bold">struct</span> slob_rcu <span style="color: #333333">*</span>)head;
+	<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>b <span style="color: #333333">=</span> (<span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>)slob_rcu <span style="color: #333333">-</span> (slob_rcu<span style="color: #333333">-&gt;</span>size <span style="color: #333333">-</span> <span style="color: #008800; font-weight: bold">sizeof</span>(<span style="color: #008800; font-weight: bold">struct</span> slob_rcu));
+
+	__kmem_cache_free(b, slob_rcu<span style="color: #333333">-&gt;</span>size);
+}
+
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">kmem_cache_free</span>(<span style="color: #008800; font-weight: bold">struct</span> kmem_cache <span style="color: #333333">*</span>c, <span style="color: #333399; font-weight: bold">void</span> <span style="color: #333333">*</span>b)
+{
+	kmemleak_free_recursive(b, c<span style="color: #333333">-&gt;</span>flags);
+	<span style="color: #008800; font-weight: bold">if</span> (unlikely(c<span style="color: #333333">-&gt;</span>flags <span style="color: #333333">&amp;</span> SLAB_DESTROY_BY_RCU)) {
+		<span style="color: #008800; font-weight: bold">struct</span> slob_rcu <span style="color: #333333">*</span>slob_rcu;
+		slob_rcu <span style="color: #333333">=</span> b <span style="color: #333333">+</span> (c<span style="color: #333333">-&gt;</span>size <span style="color: #333333">-</span> <span style="color: #008800; font-weight: bold">sizeof</span>(<span style="color: #008800; font-weight: bold">struct</span> slob_rcu));
+		slob_rcu<span style="color: #333333">-&gt;</span>size <span style="color: #333333">=</span> c<span style="color: #333333">-&gt;</span>size;
+		call_rcu(<span style="color: #333333">&amp;</span>slob_rcu<span style="color: #333333">-&gt;</span>head, kmem_rcu_free);
+	} <span style="color: #008800; font-weight: bold">else</span> {
+		__kmem_cache_free(b, c<span style="color: #333333">-&gt;</span>size);
+	}
+
+	trace_kmem_cache_free(_RET_IP_, b);
+}
+EXPORT_SYMBOL(kmem_cache_free);
+
+<span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">kmem_cache_size</span>(<span style="color: #008800; font-weight: bold">struct</span> kmem_cache <span style="color: #333333">*</span>c)
+{
+	<span style="color: #008800; font-weight: bold">return</span> c<span style="color: #333333">-&gt;</span>size;
+}
+EXPORT_SYMBOL(kmem_cache_size);
+
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">kmem_cache_shrink</span>(<span style="color: #008800; font-weight: bold">struct</span> kmem_cache <span style="color: #333333">*</span>d)
+{
+	<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+}
+EXPORT_SYMBOL(kmem_cache_shrink);
+
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">int</span> slob_ready __read_mostly;
+
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">slab_is_available</span>(<span style="color: #333399; font-weight: bold">void</span>)
+{
+	<span style="color: #008800; font-weight: bold">return</span> slob_ready;
+}
+
+<span style="color: #333399; font-weight: bold">void</span> __init <span style="color: #0066BB; font-weight: bold">kmem_cache_init</span>(<span style="color: #333399; font-weight: bold">void</span>)
+{
+	slob_ready <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">1</span>;
+}
+
+<span style="color: #333399; font-weight: bold">void</span> __init <span style="color: #0066BB; font-weight: bold">kmem_cache_init_late</span>(<span style="color: #333399; font-weight: bold">void</span>)
+{
+	<span style="color: #888888">/* Nothing to do */</span>
+}
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888"> * System calls that will allow us to get an idea of the amount</span>
+<span style="color: #888888"> * of fragmentation suffered by the algorithm.  The ratio of the memory</span>
+<span style="color: #888888"> * we are actually using to the memory that we are actually claiming</span>
+<span style="color: #888888"> * should give us an idea of how much fragmentation we have.</span>
+<span style="color: #888888"> */</span>
+asmlinkage <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> <span style="color: #0066BB; font-weight: bold">sys_get_slob_claimed</span>(<span style="color: #333399; font-weight: bold">void</span>)
+{
+  <span style="color: #008800; font-weight: bold">return</span> memory_claimed;
+}
+
+asmlinkage <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> <span style="color: #0066BB; font-weight: bold">sys_get_slob_used</span>(<span style="color: #333399; font-weight: bold">void</span>)
+{
+  <span style="color: #008800; font-weight: bold">return</span> memory_used;
+}
+
+asmlinkage <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> <span style="color: #0066BB; font-weight: bold">sys_get_slob_alloc_count</span>(<span style="color: #333399; font-weight: bold">void</span>)
+{
+  <span style="color: #008800; font-weight: bold">return</span> alloc_count;
+}
+
+asmlinkage <span style="color: #333399; font-weight: bold">unsigned</span> <span style="color: #333399; font-weight: bold">long</span> <span style="color: #0066BB; font-weight: bold">sys_get_slob_search_count</span>(<span style="color: #333399; font-weight: bold">void</span>)
+{
+  <span style="color: #008800; font-weight: bold">return</span> alloc_loop_iters;
+}
+</pre></div>
+
+</body>
+</html>
