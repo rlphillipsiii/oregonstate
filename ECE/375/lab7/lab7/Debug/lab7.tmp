@@ -1,0 +1,81 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.51</VERSION>
+ <DEVICE>"ATmega128"</DEVICE>
+ <WORKING_DIR>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRAssembler\2.1.51.46\AvrAssembler/Include</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRAssembler\2.1.51.46\AvrAssembler/Include\m128def.inc</FILE>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\Debug/lab7.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\Debug/lab7.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\Debug\lab7.map</FILE>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\Debug\lab7.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <INIT><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>61</LINE></INIT>
+  <HANDLE_INT><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>176</LINE></HANDLE_INT>
+  <HANDLE_OCI0><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>211</LINE></HANDLE_OCI0>
+  <LCDInit><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>76</LINE></LCDInit>
+  <S_8><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>84</LINE></S_8>
+  <INIT_TOP><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>275</LINE></INIT_TOP>
+  <INIT_BOTTOM><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>329</LINE></INIT_BOTTOM>
+  <LCDWrite><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>171</LINE></LCDWrite>
+  <MAIN><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>151</LINE></MAIN>
+  <USART_Transmit><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>164</LINE></USART_Transmit>
+  <WAITING><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>159</LINE></WAITING>
+  <POLL_Wr><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>166</LINE></POLL_Wr>
+  <Bin2Ascii><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>340</LINE></Bin2Ascii>
+  <SHOW2><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>190</LINE></SHOW2>
+  <Wait_Time><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>255</LINE></Wait_Time>
+  <STOP><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>216</LINE></STOP>
+  <SEND><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>223</LINE></SEND>
+  <LCDClrLn1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>241</LINE></LCDClrLn1>
+  <SHOW><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>236</LINE></SHOW>
+  <Loop><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>260</LINE></Loop>
+  <OLoop><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>261</LINE></OLoop>
+  <ILoop><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>262</LINE></ILoop>
+  <TIME_LEFT><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>361</LINE></TIME_LEFT>
+  <LINE1_LOOP><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>289</LINE></LINE1_LOOP>
+  <END_GAME><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>302</LINE></END_GAME>
+  <GAME_OVER><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>364</LINE></GAME_OVER>
+  <LINE10_LOOP><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>316</LINE></LINE10_LOOP>
+  <SCORE_TXT><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>358</LINE></SCORE_TXT>
+  <LCDClrLn2><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>266</LINE></LCDClrLn2>
+  <LINE2_LOOP><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\lab7.asm</FILE><LINE>343</LINE></LINE2_LOOP>
+  <LCDINIT_L1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>140</LINE></LCDINIT_L1>
+  <LCDWait><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>493</LINE></LCDWait>
+  <LCDWriteCmd><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>437</LINE></LCDWriteCmd>
+  <LCDClr><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>231</LINE></LCDClr>
+  <LCDWrLn1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>181</LINE></LCDWrLn1>
+  <LCDWrLn2><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>206</LINE></LCDWrLn2>
+  <LCDSetLine><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>389</LINE></LCDSetLine>
+  <LCDWriteLine><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>424</LINE></LCDWriteLine>
+  <LCDClrLine><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>405</LINE></LCDClrLine>
+  <LCDWriteByte><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>303</LINE></LCDWriteByte>
+  <LCDWriteByte_3><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>324</LINE></LCDWriteByte_3>
+  <LCDWriteByte_1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>314</LINE></LCDWriteByte_1>
+  <LCDWriteByte_2><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>319</LINE></LCDWriteByte_2>
+  <LCDWriteChar><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>458</LINE></LCDWriteChar>
+  <B2A_1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>353</LINE></B2A_1>
+  <B2A_3><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>361</LINE></B2A_3>
+  <B2A_2><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>358</LINE></B2A_2>
+  <div10><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>516</LINE></div10>
+  <LCDClrLine_1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>408</LINE></LCDClrLine_1>
+  <LCDWriteLine_1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>426</LINE></LCDWriteLine_1>
+  <LCDWriteData><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>473</LINE></LCDWriteData>
+  <LCDWC_L1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>444</LINE></LCDWC_L1>
+  <LCDW_L1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>494</LINE></LCDW_L1>
+  <LCDW_L2><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>495</LINE></LCDW_L2>
+  <div10_1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>555</LINE></div10_1>
+  <div10_2><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7\lab7\LCDDriver.asm</FILE><LINE>561</LINE></div10_2>
+ </LABELS>
+</ASSEMBLER_INFO>

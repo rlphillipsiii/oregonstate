@@ -1,0 +1,45 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.51</VERSION>
+ <DEVICE>"ATmega128"</DEVICE>
+ <WORKING_DIR>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRAssembler\2.1.51.46\AvrAssembler/Include</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRAssembler\2.1.51.46\AvrAssembler/Include\m128def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\Debug/lab6.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\Debug/lab6.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\Debug\lab6.map</FILE>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\Debug\lab6.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <INIT><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>78</LINE></INIT>
+  <HANDLE_Right><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>248</LINE></HANDLE_Right>
+  <HANDLE_Left><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>226</LINE></HANDLE_Left>
+  <USART_Receive><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>154</LINE></USART_Receive>
+  <MAIN><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>132</LINE></MAIN>
+  <WAITING><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>136</LINE></WAITING>
+  <USART_Transmit><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>142</LINE></USART_Transmit>
+  <POLL_Wr><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>144</LINE></POLL_Wr>
+  <FWD><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>186</LINE></FWD>
+  <FRZ><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>164</LINE></FRZ>
+  <END><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>183</LINE></END>
+  <Wait><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>270</LINE></Wait>
+  <REV><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>192</LINE></REV>
+  <DEFAULT><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>221</LINE></DEFAULT>
+  <LEFT><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>198</LINE></LEFT>
+  <RGHT><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>204</LINE></RGHT>
+  <STOP><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>210</LINE></STOP>
+  <SEND_f><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>216</LINE></SEND_f>
+  <Loop><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>275</LINE></Loop>
+  <OLoop><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>276</LINE></OLoop>
+  <ILoop><FILE>C:\Users\Robert\Documents\Atmel Studio\lab6\lab6\lab6.asm</FILE><LINE>277</LINE></ILoop>
+ </LABELS>
+</ASSEMBLER_INFO>

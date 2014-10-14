@@ -1,0 +1,74 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.51</VERSION>
+ <DEVICE>"ATmega128"</DEVICE>
+ <WORKING_DIR>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRAssembler\2.1.51.46\AvrAssembler/Include</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRAssembler\2.1.51.46\AvrAssembler/Include\m128def.inc</FILE>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\Debug/lab7_scoreboard.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\Debug/lab7_scoreboard.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\Debug\lab7_scoreboard.map</FILE>
+  <FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\Debug\lab7_scoreboard.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <SCORE_TXT><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>248</LINE></SCORE_TXT>
+  <TIME_LEFT><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>251</LINE></TIME_LEFT>
+  <INIT><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>65</LINE></INIT>
+  <USART_Receive><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>106</LINE></USART_Receive>
+  <LCDInit><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>75</LINE></LCDInit>
+  <INIT_TOP><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>165</LINE></INIT_TOP>
+  <INIT_BOTTOM><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>219</LINE></INIT_BOTTOM>
+  <LCDWrite><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>170</LINE></LCDWrite>
+  <MAIN><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>101</LINE></MAIN>
+  <RECV_Time><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>137</LINE></RECV_Time>
+  <RECV_Score><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>124</LINE></RECV_Score>
+  <CHK><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>119</LINE></CHK>
+  <RETURN><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>122</LINE></RETURN>
+  <Bin2Ascii><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>339</LINE></Bin2Ascii>
+  <SHOW><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>154</LINE></SHOW>
+  <CONT><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>144</LINE></CONT>
+  <END_GAME><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>192</LINE></END_GAME>
+  <LCDWrLn1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>180</LINE></LCDWrLn1>
+  <LCDClrLn1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>240</LINE></LCDClrLn1>
+  <LINE1_LOOP><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>179</LINE></LINE1_LOOP>
+  <GAME_OVER><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>254</LINE></GAME_OVER>
+  <LINE10_LOOP><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>206</LINE></LINE10_LOOP>
+  <LCDClrLn2><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>265</LINE></LCDClrLn2>
+  <LINE2_LOOP><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\lab7_scoreboard.asm</FILE><LINE>233</LINE></LINE2_LOOP>
+  <LCDINIT_L1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>139</LINE></LCDINIT_L1>
+  <LCDWait><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>492</LINE></LCDWait>
+  <LCDWriteCmd><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>436</LINE></LCDWriteCmd>
+  <LCDClr><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>230</LINE></LCDClr>
+  <LCDWrLn2><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>205</LINE></LCDWrLn2>
+  <LCDSetLine><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>388</LINE></LCDSetLine>
+  <LCDWriteLine><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>423</LINE></LCDWriteLine>
+  <LCDClrLine><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>404</LINE></LCDClrLine>
+  <LCDWriteByte><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>302</LINE></LCDWriteByte>
+  <LCDWriteByte_3><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>323</LINE></LCDWriteByte_3>
+  <LCDWriteByte_1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>313</LINE></LCDWriteByte_1>
+  <LCDWriteByte_2><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>318</LINE></LCDWriteByte_2>
+  <LCDWriteChar><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>457</LINE></LCDWriteChar>
+  <B2A_1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>352</LINE></B2A_1>
+  <B2A_3><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>360</LINE></B2A_3>
+  <B2A_2><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>357</LINE></B2A_2>
+  <div10><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>515</LINE></div10>
+  <LCDClrLine_1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>407</LINE></LCDClrLine_1>
+  <LCDWriteLine_1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>425</LINE></LCDWriteLine_1>
+  <LCDWriteData><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>472</LINE></LCDWriteData>
+  <LCDWC_L1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>443</LINE></LCDWC_L1>
+  <LCDW_L1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>493</LINE></LCDW_L1>
+  <LCDW_L2><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>494</LINE></LCDW_L2>
+  <div10_1><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>554</LINE></div10_1>
+  <div10_2><FILE>C:\Users\Robert\Documents\Atmel Studio\lab7_scoreboard\lab7_scoreboard\LCDDriver.asm</FILE><LINE>560</LINE></div10_2>
+ </LABELS>
+</ASSEMBLER_INFO>
