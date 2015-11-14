@@ -1,0 +1,118 @@
+!<arch>
+proj1.c/        1348845482  42503 16969 100660  1278      `
+#include <stdlib.h>
+#include <math.h>
+#include <stdio.h>
+
+struct prime_result {
+	int num_primes;
+	long *primes;
+};
+
+void get_primes(struct prime_result *results, long upper_bound)
+{
+	unsigned char nums[upper_bound];
+
+	long i;
+	for (i = 0; i < upper_bound; i++)
+		nums[i] = 'p';
+
+	long k = 1;
+	int brk_loop = 0;
+	while (k < sqrt(upper_bound)) {
+		while (nums[k] == 'c') {
+			k++;
+			
+			if (k >= sqrt(upper_bound)) {
+				brk_loop = 1;
+
+				break;
+			}
+		}
+
+		if (brk_loop)
+			break;
+
+		long m;
+		for (i = 2; i < upper_bound; i++) {
+			m = i*(k+1);
+			if (m-1 > upper_bound-1)
+				break;
+
+			nums[m-1] = 'c';
+		}
+
+		k++;
+	}
+
+	int count = 0;
+	for (i = 1; i < upper_bound; i++) {
+		if (nums[i] == 'p') 
+			count++;
+	}
+
+	long *primes = (long *) malloc(sizeof(int)*count);
+	results->num_primes = count;
+	
+	count = 0;
+	for (i = 1; i < upper_bound; i++) {
+		if (nums[i] == 'p') {
+			primes[count] = i+1;
+			count++;
+		}
+	}	
+
+	results->primes = primes;
+}
+
+int main(int argc, char **argv)
+{
+	struct prime_result results;
+
+	if (argc < 2) 
+		get_primes(&results, 50000000);
+	else
+		get_primes(&results, atoi(argv[1]));
+	
+
+	printf("NUMBER OF PRIMES:\t%d\n", results.num_primes);
+
+	int i;
+	for (i = 0; i < results.num_primes; i++)
+		printf("PRIME:\t%ld\n", results.primes[i]);
+
+	return 0;
+}
+
+proj1.txt/      1348845522  42503 16969 100660  2026      `
+1.      The scp command can be used from the command line (scp [file 1] [file 2] or use the ftp command from the command line to ftp to the remote server and then use the get command to copy the remote file to the local server (ftp [server]) (get [remote-file] [local-file]).
+
+
+2.      A revision control system is a system (usually software) that allows software developers to maintain multiple versions of the same software.  Version control systems typically allow developers to work on the same source code in different locations, which allows developers to work on updates simultaneously.  They are important because they allow for easy bug detection because each version remains intact when updates are made, so it is easily determined which versions have the bug present.  
+
+
+3.      Piping sends the output of a program to another process that you specify, whereas redirecting sends the output of a program to a specified file.  For example, "man man | less" sends the output of the "man man" command to the less program, which is piping.  "man man >> out.txt" redirects the output of the man man command to a file named out.txt.
+
+  
+4.      Make uses a makefile to determine automatically which pieces of a large program need to be updated and issues the necessary commands to recompile it.  Make is not limited to programs and can be used to update any files that need to be changed when the files they depend on change.
+
+ 
+5.      all: [main-output-file]
+        
+        [main-output-file]: [output-file1] [output-file2] ... [output-fileN]
+
+        [output-file1]: [output-file1-source]
+                        [compiler] [compiler-flags] [output-file1-source]
+                        
+        [output-file2]: [output-file2-source]
+                        [compiler] [compiler-flags] [output-file2-source]
+
+        .
+        .
+        .
+        
+        [output-fileN]: [output-fileN-source]
+                        [compiler] [compiler-flags] [output-fileN-source]
+
+        
+6.      find -type f -exec file {} \;

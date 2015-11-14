@@ -1,0 +1,55 @@
+\documentclass{article}
+\usepackage{graphicx}
+
+\begin{document}
+\title{Project 6:  socket client/server}
+\author{Robert L. Phillips III}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\section{Design}
+\subsection{Files}
+\begin{enumerate}
+\item compute.c
+\item report.c
+\item startserv.py
+\end{enumerate}
+
+\subsection{Communication Protocol}
+In order to simplify the communication between different languages, all information that is to be sent over a socket will be a String (char *). \\\\
+
+In order for the report program to signal the server that it wants the current statistics, as soon as the socket connecton is established, the report program will send the string 'report' over the socket.  The server will then respond with the pre-formatted stats, and all the report program will have to do is print the received strings to stdout. When the -k option is used, the report program will send 'kill' instead of 'report' so that the server will know to kill all the currently running report processes by sending the string 'kill' to them. \\\\
+
+In order for the compute program to signal the server that it needs a range, it will send its performance characteristics.  The server will then respond with the range that the compute process should be checking.  The server will then wait for the compute process to finish all of its work and when it finishes, it will respond with all of the numbers that it found separated by a carriage return and line feed, so that the server can then split them on the other side.
+
+\subsection{compute.c}
+When compute is invoked, it will start by performing a sequence of mods for a second and then then multiplying that number by 15 to find how many mods can be done by the machine in 15 seconds.  That number will then be sent to the server in string form to give the server information about the performance characteristics.  The process will then wait for the servers response.  Once the range is received from the server, the computation begins, and the compute process will then start a thread to monitor the socket for the kill signal.  When the compute finishes testing its range, it sends all the numbers it found as once long string if it found any then closes the pipe.
+
+\subsection{report.c}
+When report is invoked, it simply sends 'report' or 'kill' to the server depending on whether or not the -k option was given.  Once the initial string has been sent to the server, report prints out the response from the server until the server closes the connection.
+
+\subsection{startserv.py}
+The server binds to port 1148 and waits for a connection from a client.  When a new connection has been established, the server starts a new thread that handles that connection.  When a client connects, it waits for the first transmission from the socket to determine what the client wants.  If it's a report, it sends the contents of two lists formatted for display.  The first list contains the host names of all the currently connected compute processes and the second list contains the perfect numbers that have been found so far.  If it's a compute, the server responds with the range that the compute process to check and waits for the compute process to finish.  When the kill signal is received, the server iterates through the list of connected compute processes and sends the kill signal to them.  The server then closes the bound socket and sends the kill signal to itself to terminate the process.
+
+\section{Work Log}
+\begin{enumerate}
+\item \textbf{Revision 1} (Sun 24 Nov 2012 12:00 PM) 1 hour:  Wrote the code that opens up a socket connection on port 1148 and creates a new thread when a new client connection is established.
+\item \textbf{Revision 2} (Mon 25 Nov 2012 1:25 PM) 1.4 hours:  Wrote the algorithm to brute force the perfect numbers and figure out how many operations can be performed in about 15 seconds.
+\item \textbf{Revision 3} (Fri 30 Nov 2012 6:07 PM) 2.7 hours:  Implemented the communication protocol between compute and the server.
+\item \textbf{Revision 4} (Sat 1 Dec 2012 4:52 PM) 1.4 hours:  Wrote the report program and implemented its communication protocol.
+\item \textbf{Revision 5} (Sun 1 Dec 2012 3:08 PM) 1.2 hour: Finalized the communication protocols and implemented the signal handlers for compute.
+
+\end{enumerate}
+
+
+\section{Additional Questions}
+\begin{enumerate}
+\item I believe the main point of this assignment is to sum up the course and have us put all of the concepts that we have learned of the last ten weeks into a working example.
+\item In order to verify that my solution was correct, I had my roommates log into flip, flop, or access and interact with my python server to make sure that the behavior exhibited was correct.
+\item I learned how to use signal handlers to exit cleanly when my programs receive different signals.  This was the first assignment that required using signals, so it was the only aspect of the assignment that was completely new to me and took me some time to figure out how to deal with its asynchronous nature.
+\end{enumerate}
+
+
+\end{document}

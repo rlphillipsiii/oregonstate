@@ -1,0 +1,31 @@
+1.      The scp command can be used from the command line (scp [file 1] [file 2] or use the ftp command from the command line to ftp to the remote server and then use the get command to copy the remote file to the local server (ftp [server]) (get [remote-file] [local-file]).
+
+
+2.      A revision control system is a system (usually software) that allows software developers to maintain multiple versions of the same software.  Version control systems typically allow developers to work on the same source code in different locations, which allows developers to work on updates simultaneously.  They are important because they allow for easy bug detection because each version remains intact when updates are made, so it is easily determined which versions have the bug present.  
+
+
+3.      Piping sends the output of a program to another process that you specify, whereas redirecting sends the output of a program to a specified file.  For example, "man man | less" sends the output of the "man man" command to the less program, which is piping.  "man man >> out.txt" redirects the output of the man man command to a file named out.txt.
+
+  
+4.      Make uses a makefile to determine automatically which pieces of a large program need to be updated and issues the necessary commands to recompile it.  Make is not limited to programs and can be used to update any files that need to be changed when the files they depend on change.
+
+ 
+5.      all: [main-output-file]
+        
+        [main-output-file]: [output-file1] [output-file2] ... [output-fileN]
+
+        [output-file1]: [output-file1-source]
+                        [compiler] [compiler-flags] [output-file1-source]
+                        
+        [output-file2]: [output-file2-source]
+                        [compiler] [compiler-flags] [output-file2-source]
+
+        .
+        .
+        .
+        
+        [output-fileN]: [output-fileN-source]
+                        [compiler] [compiler-flags] [output-fileN-source]
+
+        
+6.      find -type f -exec file {} \;

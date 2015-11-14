@@ -1,0 +1,28 @@
+CC=icc
+CFLAGS=-std=c99 -Wall
+LC=pdflatex
+LFLAGS=-f
+
+INCLUDES=extract.c extract.h read.c read.h write.c write.h
+SOURCE=myar.c
+TARGET=-o myar
+
+TEX=myar.tex
+EXTRA=myar.log myar.aux myar.toc
+
+default: myar tex
+
+all: myar tex
+
+myar: myar.c
+	$(CC) $(CFLAGS) $(SOURCE) $(INCLUDES) $(TARGET)
+
+tex: myar.tex
+#	run pdflatex once to generate info for the contents
+	$(LC) $(TEX)
+#	run pdflatex again for the actual pdf
+	$(LC) $(TEX)
+	rm -rf $(EXTRA)
+
+clean:
+	rm -rf *.o myar myar.pdf

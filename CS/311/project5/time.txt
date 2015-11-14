@@ -1,0 +1,700 @@
+
+Threads:  max = 10, jobs = 10
+Threads Joined...Counting Primes
+Count:  4
+Time:  1.000000ms
+
+Threads:  max = 100, jobs = 10
+Threads Joined...Counting Primes
+Count:  25
+Time:  1.000000ms
+
+Threads:  max = 1000, jobs = 10
+Threads Joined...Counting Primes
+Count:  168
+Time:  1.000000ms
+
+Threads:  max = 10000, jobs = 10
+Threads Joined...Counting Primes
+Count:  1229
+Time:  1.000000ms
+
+Threads:  max = 100000, jobs = 10
+Threads Joined...Counting Primes
+Count:  9592
+Time:  1.000000ms
+
+Threads:  max = 1000000, jobs = 10
+Threads Joined...Counting Primes
+Count:  78498
+Time:  5.000000ms
+
+Threads:  max = 10000000, jobs = 10
+Threads Joined...Counting Primes
+Count:  664579
+Time:  49.000000ms
+
+Threads:  max = 100000000, jobs = 10
+Threads Joined...Counting Primes
+Count:  5761455
+Time:  1456.000000ms
+
+Threads:  max = 1000000000,, jobs = 10
+Threads Joined...Counting Primes
+Count:  50847534
+Time:  20355.000000ms
+
+Threads:  max = 4294967295, jobs = 10
+Threads Joined...Counting Primes
+Count:  203280221
+Time:  96921.000000ms
+
+Threads:  max = 10, jobs = 20
+Threads Joined...Counting Primes
+Count:  4
+Time:  2.000000ms
+
+Threads:  max = 100, jobs = 20
+Threads Joined...Counting Primes
+Count:  25
+Time:  1.000000ms
+
+Threads:  max = 1000, jobs = 20
+Threads Joined...Counting Primes
+Count:  168
+Time:  1.000000ms
+
+Threads:  max = 10000, jobs = 20
+Threads Joined...Counting Primes
+Count:  1229
+Time:  1.000000ms
+
+Threads:  max = 100000, jobs = 20
+Threads Joined...Counting Primes
+Count:  9592
+Time:  3.000000ms
+
+Threads:  max = 1000000, jobs = 20
+Threads Joined...Counting Primes
+Count:  78498
+Time:  6.000000ms
+
+Threads:  max = 10000000, jobs = 20
+Threads Joined...Counting Primes
+Count:  664579
+Time:  49.000000ms
+
+Threads:  max = 100000000, jobs = 20
+Threads Joined...Counting Primes
+Count:  5761455
+Time:  1457.000000ms
+
+Threads:  max = 1000000000,, jobs = 20
+Threads Joined...Counting Primes
+Count:  50847534
+Time:  21473.000000ms
+
+Threads:  max = 4294967295, jobs = 20
+Threads Joined...Counting Primes
+Count:  203280221
+Time:  101574.000000ms
+
+Threads:  max = 10, jobs = 30
+Threads Joined...Counting Primes
+Count:  4
+Time:  2.000000ms
+
+Threads:  max = 100, jobs = 30
+Threads Joined...Counting Primes
+Count:  25
+Time:  2.000000ms
+
+Threads:  max = 1000, jobs = 30
+Threads Joined...Counting Primes
+Count:  168
+Time:  2.000000ms
+
+Threads:  max = 10000, jobs = 30
+Threads Joined...Counting Primes
+Count:  1229
+Time:  2.000000ms
+
+Threads:  max = 100000, jobs = 30
+Threads Joined...Counting Primes
+Count:  9592
+Time:  2.000000ms
+
+Threads:  max = 1000000, jobs = 30
+Threads Joined...Counting Primes
+Count:  78498
+Time:  5.000000ms
+
+Threads:  max = 10000000, jobs = 30
+Threads Joined...Counting Primes
+Count:  664579
+Time:  49.000000ms
+
+Threads:  max = 100000000, jobs = 30
+Threads Joined...Counting Primes
+Count:  5761455
+Time:  1532.000000ms
+
+Threads:  max = 1000000000,, jobs = 30
+Threads Joined...Counting Primes
+Count:  50847534
+Time:  22128.000000ms
+
+Threads:  max = 4294967295, jobs = 30
+Threads Joined...Counting Primes
+Count:  203280221
+Time:  105621.000000ms
+
+Threads:  max = 10, jobs = 40
+Threads Joined...Counting Primes
+Count:  4
+Time:  3.000000ms
+
+Threads:  max = 100, jobs = 40
+Threads Joined...Counting Primes
+Count:  25
+Time:  4.000000ms
+
+Threads:  max = 1000, jobs = 40
+Threads Joined...Counting Primes
+Count:  168
+Time:  2.000000ms
+
+Threads:  max = 10000, jobs = 40
+Threads Joined...Counting Primes
+Count:  1229
+Time:  2.000000ms
+
+Threads:  max = 100000, jobs = 40
+Threads Joined...Counting Primes
+Count:  9592
+Time:  1.000000ms
+
+Threads:  max = 1000000, jobs = 40
+Threads Joined...Counting Primes
+Count:  78498
+Time:  5.000000ms
+
+Threads:  max = 10000000, jobs = 40
+Threads Joined...Counting Primes
+Count:  664579
+Time:  49.000000ms
+
+Threads:  max = 100000000, jobs = 40
+Threads Joined...Counting Primes
+Count:  5761455
+Time:  1580.000000ms
+
+Threads:  max = 1000000000,, jobs = 40
+Threads Joined...Counting Primes
+Count:  50847534
+Time:  22135.000000ms
+
+Threads:  max = 4294967295, jobs = 40
+Threads Joined...Counting Primes
+Count:  203280221
+Time:  105135.000000ms
+
+Threads:  max = 10, jobs = 50
+Threads Joined...Counting Primes
+Count:  4
+Time:  4.000000ms
+
+Threads:  max = 100, jobs = 50
+Threads Joined...Counting Primes
+Count:  25
+Time:  3.000000ms
+
+Threads:  max = 1000, jobs = 50
+Threads Joined...Counting Primes
+Count:  168
+Time:  3.000000ms
+
+Threads:  max = 10000, jobs = 50
+Threads Joined...Counting Primes
+Count:  1229
+Time:  5.000000ms
+
+Threads:  max = 100000, jobs = 50
+Threads Joined...Counting Primes
+Count:  9592
+Time:  3.000000ms
+
+Threads:  max = 1000000, jobs = 50
+Threads Joined...Counting Primes
+Count:  78498
+Time:  6.000000ms
+
+Threads:  max = 10000000, jobs = 50
+Threads Joined...Counting Primes
+Count:  664579
+Time:  49.000000ms
+
+Threads:  max = 100000000, jobs = 50
+Threads Joined...Counting Primes
+Count:  5761455
+Time:  1510.000000ms
+
+Threads:  max = 1000000000,, jobs = 50
+Threads Joined...Counting Primes
+Count:  50847534
+Time:  22188.000000ms
+
+Threads:  max = 4294967295, jobs = 50
+Threads Joined...Counting Primes
+Count:  203280221
+Time:  104694.000000ms
+
+Threads:  max = 10, jobs = 60
+Threads Joined...Counting Primes
+Count:  4
+Time:  3.000000ms
+
+Threads:  max = 100, jobs = 60
+Threads Joined...Counting Primes
+Count:  25
+Time:  3.000000ms
+
+Threads:  max = 1000, jobs = 60
+Threads Joined...Counting Primes
+Count:  168
+Time:  5.000000ms
+
+Threads:  max = 10000, jobs = 60
+Threads Joined...Counting Primes
+Count:  1229
+Time:  4.000000ms
+
+Threads:  max = 100000, jobs = 60
+Threads Joined...Counting Primes
+Count:  9592
+Time:  3.000000ms
+
+Threads:  max = 1000000, jobs = 60
+Threads Joined...Counting Primes
+Count:  78498
+Time:  6.000000ms
+
+Threads:  max = 10000000, jobs = 60
+Threads Joined...Counting Primes
+Count:  664579
+Time:  49.000000ms
+
+Threads:  max = 100000000, jobs = 60
+Threads Joined...Counting Primes
+Count:  5761455
+Time:  1551.000000ms
+
+Threads:  max = 1000000000,, jobs = 60
+Threads Joined...Counting Primes
+Count:  50847534
+Time:  22305.000000ms
+
+Threads:  max = 4294967295, jobs = 60
+Threads Joined...Counting Primes
+Count:  203280221
+Time:  104165.000000ms
+
+Threads:  max = 10, jobs = 70
+Threads Joined...Counting Primes
+Count:  4
+Time:  4.000000ms
+
+Threads:  max = 100, jobs = 70
+Threads Joined...Counting Primes
+Count:  25
+Time:  3.000000ms
+
+Threads:  max = 1000, jobs = 70
+Threads Joined...Counting Primes
+Count:  168
+Time:  3.000000ms
+
+Threads:  max = 10000, jobs = 70
+Threads Joined...Counting Primes
+Count:  1229
+Time:  3.000000ms
+
+Threads:  max = 100000, jobs = 70
+Threads Joined...Counting Primes
+Count:  9592
+Time:  3.000000ms
+
+Threads:  max = 1000000, jobs = 70
+Threads Joined...Counting Primes
+Count:  78498
+Time:  5.000000ms
+
+Threads:  max = 10000000, jobs = 70
+Threads Joined...Counting Primes
+Count:  664579
+Time:  51.000000ms
+
+Threads:  max = 100000000, jobs = 70
+Threads Joined...Counting Primes
+Count:  5761455
+Time:  1551.000000ms
+
+Threads:  max = 1000000000,, jobs = 70
+Threads Joined...Counting Primes
+Count:  50847534
+Time:  22295.000000ms
+
+Threads:  max = 4294967295, jobs = 70
+Threads Joined...Counting Primes
+Count:  203280221
+Time:  103287.000000ms
+
+Processes:  max = 10, jobs = 10
+Children Reaped...Counting Primes
+Count:  4
+Time:  23.000000ms
+
+Processes:  max = 100, jobs = 10
+Children Reaped...Counting Primes
+Count:  25
+Time:  1.000000ms
+
+Processes:  max = 1000, jobs = 10
+Children Reaped...Counting Primes
+Count:  168
+Time:  2.000000ms
+
+Processes:  max = 10000, jobs = 10
+Children Reaped...Counting Primes
+Count:  1229
+Time:  1.000000ms
+
+Processes:  max = 100000, jobs = 10
+Children Reaped...Counting Primes
+Count:  9592
+Time:  2.000000ms
+
+Processes:  max = 1000000, jobs = 10
+Children Reaped...Counting Primes
+Count:  78498
+Time:  5.000000ms
+
+Processes:  max = 10000000, jobs = 10
+Children Reaped...Counting Primes
+Count:  664579
+Time:  50.000000ms
+
+Processes:  max = 100000000, jobs = 10
+Children Reaped...Counting Primes
+Count:  5761455
+Time:  1601.000000ms
+
+Processes:  max = 1000000000,, jobs = 10
+Children Reaped...Counting Primes
+Count:  50847534
+Time:  22519.000000ms
+
+Processes:  max = 4294967295, jobs = 10
+Children Reaped...Counting Primes
+Count:  203280221
+Time:  109043.000000ms
+
+Processes:  max = 10, jobs = 20
+Children Reaped...Counting Primes
+Count:  4
+Time:  63.000000ms
+
+Processes:  max = 100, jobs = 20
+Children Reaped...Counting Primes
+Count:  25
+Time:  3.000000ms
+
+Processes:  max = 1000, jobs = 20
+Children Reaped...Counting Primes
+Count:  168
+Time:  2.000000ms
+
+Processes:  max = 10000, jobs = 20
+Children Reaped...Counting Primes
+Count:  1229
+Time:  3.000000ms
+
+Processes:  max = 100000, jobs = 20
+Children Reaped...Counting Primes
+Count:  9592
+Time:  2.000000ms
+
+Processes:  max = 1000000, jobs = 20
+Children Reaped...Counting Primes
+Count:  78498
+Time:  5.000000ms
+
+Processes:  max = 10000000, jobs = 20
+Children Reaped...Counting Primes
+Count:  664579
+Time:  49.000000ms
+
+Processes:  max = 100000000, jobs = 20
+Children Reaped...Counting Primes
+Count:  5761455
+Time:  1583.000000ms
+
+Processes:  max = 1000000000,, jobs = 20
+Children Reaped...Counting Primes
+Count:  50847534
+Time:  21063.000000ms
+
+Processes:  max = 4294967295, jobs = 20
+Children Reaped...Counting Primes
+Count:  203280221
+Time:  100197.000000ms
+
+Processes:  max = 10, jobs = 30
+Children Reaped...Counting Primes
+Count:  4
+Time:  72.000000ms
+
+Processes:  max = 100, jobs = 30
+Children Reaped...Counting Primes
+Count:  25
+Time:  4.000000ms
+
+Processes:  max = 1000, jobs = 30
+Children Reaped...Counting Primes
+Count:  168
+Time:  4.000000ms
+
+Processes:  max = 10000, jobs = 30
+Children Reaped...Counting Primes
+Count:  1229
+Time:  4.000000ms
+
+Processes:  max = 100000, jobs = 30
+Children Reaped...Counting Primes
+Count:  9592
+Time:  4.000000ms
+
+Processes:  max = 1000000, jobs = 30
+Children Reaped...Counting Primes
+Count:  78498
+Time:  5.000000ms
+
+Processes:  max = 10000000, jobs = 30
+Children Reaped...Counting Primes
+Count:  664579
+Time:  50.000000ms
+
+Processes:  max = 100000000, jobs = 30
+Children Reaped...Counting Primes
+Count:  5761455
+Time:  1528.000000ms
+
+Processes:  max = 1000000000,, jobs = 30
+Children Reaped...Counting Primes
+Count:  50847534
+Time:  21175.000000ms
+
+Processes:  max = 4294967295, jobs = 30
+Children Reaped...Counting Primes
+Count:  203280221
+Time:  100183.000000ms
+
+Processes:  max = 10, jobs = 40
+Children Reaped...Counting Primes
+Count:  4
+Time:  75.000000ms
+
+Processes:  max = 100, jobs = 40
+Children Reaped...Counting Primes
+Count:  25
+Time:  6.000000ms
+
+Processes:  max = 1000, jobs = 40
+Children Reaped...Counting Primes
+Count:  168
+Time:  5.000000ms
+
+Processes:  max = 10000, jobs = 40
+Children Reaped...Counting Primes
+Count:  1229
+Time:  5.000000ms
+
+Processes:  max = 100000, jobs = 40
+Children Reaped...Counting Primes
+Count:  9592
+Time:  5.000000ms
+
+Processes:  max = 1000000, jobs = 40
+Children Reaped...Counting Primes
+Count:  78498
+Time:  6.000000ms
+
+Processes:  max = 10000000, jobs = 40
+Children Reaped...Counting Primes
+Count:  664579
+Time:  50.000000ms
+
+Processes:  max = 100000000, jobs = 40
+Children Reaped...Counting Primes
+Count:  5761455
+Time:  1477.000000ms
+
+Processes:  max = 1000000000,, jobs = 40
+Children Reaped...Counting Primes
+Count:  50847534
+Time:  20795.000000ms
+
+Processes:  max = 4294967295, jobs = 40
+Children Reaped...Counting Primes
+Count:  203280221
+Time:  102553.000000ms
+
+Processes:  max = 10, jobs = 50
+Children Reaped...Counting Primes
+Count:  4
+Time:  78.000000ms
+
+Processes:  max = 100, jobs = 50
+Children Reaped...Counting Primes
+Count:  25
+Time:  6.000000ms
+
+Processes:  max = 1000, jobs = 50
+Children Reaped...Counting Primes
+Count:  168
+Time:  6.000000ms
+
+Processes:  max = 10000, jobs = 50
+Children Reaped...Counting Primes
+Count:  1229
+Time:  6.000000ms
+
+Processes:  max = 100000, jobs = 50
+Children Reaped...Counting Primes
+Count:  9592
+Time:  7.000000ms
+
+Processes:  max = 1000000, jobs = 50
+Children Reaped...Counting Primes
+Count:  78498
+Time:  7.000000ms
+
+Processes:  max = 10000000, jobs = 50
+Children Reaped...Counting Primes
+Count:  664579
+Time:  61.000000ms
+
+Processes:  max = 100000000, jobs = 50
+Children Reaped...Counting Primes
+Count:  5761455
+Time:  1478.000000ms
+
+Processes:  max = 1000000000,, jobs = 50
+Children Reaped...Counting Primes
+Count:  50847534
+Time:  20813.000000ms
+
+Processes:  max = 4294967295, jobs = 50
+Children Reaped...Counting Primes
+Count:  203280221
+Time:  100419.000000ms
+
+Processes:  max = 10, jobs = 60
+Children Reaped...Counting Primes
+Count:  4
+Time:  77.000000ms
+
+Processes:  max = 100, jobs = 60
+Children Reaped...Counting Primes
+Count:  25
+Time:  7.000000ms
+
+Processes:  max = 1000, jobs = 60
+Children Reaped...Counting Primes
+Count:  168
+Time:  7.000000ms
+
+Processes:  max = 10000, jobs = 60
+Children Reaped...Counting Primes
+Count:  1229
+Time:  7.000000ms
+
+Processes:  max = 100000, jobs = 60
+Children Reaped...Counting Primes
+Count:  9592
+Time:  8.000000ms
+
+Processes:  max = 1000000, jobs = 60
+Children Reaped...Counting Primes
+Count:  78498
+Time:  8.000000ms
+
+Processes:  max = 10000000, jobs = 60
+Children Reaped...Counting Primes
+Count:  664579
+Time:  50.000000ms
+
+Processes:  max = 100000000, jobs = 60
+Children Reaped...Counting Primes
+Count:  5761455
+Time:  1480.000000ms
+
+Processes:  max = 1000000000,, jobs = 60
+Children Reaped...Counting Primes
+Count:  50847534
+Time:  20814.000000ms
+
+Processes:  max = 4294967295, jobs = 60
+Children Reaped...Counting Primes
+Count:  203280221
+Time:  102054.000000ms
+
+Processes:  max = 10, jobs = 70
+Children Reaped...Counting Primes
+Count:  4
+Time:  80.000000ms
+
+Processes:  max = 100, jobs = 70
+Children Reaped...Counting Primes
+Count:  25
+Time:  8.000000ms
+
+Processes:  max = 1000, jobs = 70
+Children Reaped...Counting Primes
+Count:  168
+Time:  9.000000ms
+
+Processes:  max = 10000, jobs = 70
+Children Reaped...Counting Primes
+Count:  1229
+Time:  9.000000ms
+
+Processes:  max = 100000, jobs = 70
+Children Reaped...Counting Primes
+Count:  9592
+Time:  9.000000ms
+
+Processes:  max = 1000000, jobs = 70
+Children Reaped...Counting Primes
+Count:  78498
+Time:  10.000000ms
+
+Processes:  max = 10000000, jobs = 70
+Children Reaped...Counting Primes
+Count:  664579
+Time:  50.000000ms
+
+Processes:  max = 100000000, jobs = 70
+Children Reaped...Counting Primes
+Count:  5761455
+Time:  1476.000000ms
+
+Processes:  max = 1000000000,, jobs = 70
+Children Reaped...Counting Primes
+Count:  50847534
+Time:  20792.000000ms
+
+Processes:  max = 4294967295, jobs = 70
+Children Reaped...Counting Primes
+Count:  203280221
+Time:  100930.000000ms
