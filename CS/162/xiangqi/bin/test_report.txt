@@ -1,0 +1,71 @@
+===============================================================================
+Xiangqi Testing
+===============================================================================
+The Xiangqi Testing should be done utilizing both manual tests and automated
+tests.  The actionListener logic should be tested using manual tests.  In
+order to test that logic, it must be assumed that the XiangqiDisplay is working
+properly.
+
+The first test should be done by clicking an empty square.  If nothing happens,
+then the test passes.
+
+The second test should be done by clicking a square with a piece on it
+belonging to the player whose turn it isn't.  If nothing happens, then the test
+passes.
+
+The third test should be done by first clicking a square with a piece on it
+belonging to the player whose turn it is.  That piece should now be
+highlighted.  Now a square with an invalid move should be clicked.  The square
+that was clicked during the first step should no longer be highlighted.  If
+that is true, then the test passes.
+
+The last test should be done by first clicking a square with a piece on it
+belonging to the player whose turn it is.  That piece should now be
+highlighted.  Now a square with a valid move should be clicked.  The piece
+that was on the first square should now be moved to the square that was just
+clicked.  If that is true, then the test passes.
+
+The automated tests should test the ability to add, remove, and get pieces by
+calling those methods and testing the returned values against the expected
+output.
+
+
+===============================================================================
+XiangqiDisplay Testing
+===============================================================================
+The XiangqiDisplay testing should be done utilizing manual tests as the methods
+of this class set display properties of a JButton.  All of the display tests
+assume that all of the game engine methods are correct and functioning 
+correctly.  It also assumes that the ChessGame is functioning correctly.
+
+The first test is to verify that the when the game starts, the board comes up 
+with all squares labeled and colored correctly.
+
+The second test should be performed by clicking a button that is empty.  If
+that button does not change then the test passes.
+
+The third test should be performed by clicking a button that has a piece on it
+that is owned by the player whose turn it is.  If that JButton's background
+color turns to yellow then the test passes.
+
+The last test should be performed by highlighting a button with a piece on it
+by clicking it.  Next click a JButton that corresponds to a valid move for the
+highlighted piece.  If the piece is that is highlighted moves to the JButton
+that was just pressed and is no longer highlighted, then the test passes.
+
+
+===============================================================================
+ChessPiece Testing
+===============================================================================
+The chess piece testing can be done using automated tests.  No manual testing
+is required for these.  There are several methods that are common to all test
+pieces that can be tested one time for all pieces.  All of those methods that
+are common are defined in the ChessPiece class.  The only test that needs to
+be run on each individual type of piece is the isLegalMove method.
+
+The isLegalMove method should be tested assuming that the chess board is
+working correctly.  Each piece test should place the piece under test on an
+empty board.  After it has been placed, each valid move type/direction should
+be tested.  After all valid moves are tested, each invalid move type/direction
+should be tested.  After all invalid moves are tested, the take move should be
+tested.
