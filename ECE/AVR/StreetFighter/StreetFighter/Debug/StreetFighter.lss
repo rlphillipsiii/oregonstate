@@ -1,0 +1,836 @@
+
+StreetFighter.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000434  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000000a  00800060  00000434  000004c8  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000021  0080006a  0080006a  000004d2  2**0
+                  ALLOC
+  3 .stab         000006b4  00000000  00000000  000004d4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00000085  00000000  00000000  00000b88  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_aranges 000000c0  00000000  00000000  00000c10  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000a9a  00000000  00000000  00000cd0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000002df  00000000  00000000  0000176a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000510  00000000  00000000  00001a49  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000118  00000000  00000000  00001f5c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000001fa  00000000  00000000  00002074  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000002bd  00000000  00000000  0000226e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000018  00000000  00000000  0000252b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	2a c0       	rjmp	.+84     	; 0x58 <__bad_interrupt>
+   4:	29 c0       	rjmp	.+82     	; 0x58 <__bad_interrupt>
+   6:	28 c0       	rjmp	.+80     	; 0x58 <__bad_interrupt>
+   8:	27 c0       	rjmp	.+78     	; 0x58 <__bad_interrupt>
+   a:	26 c0       	rjmp	.+76     	; 0x58 <__bad_interrupt>
+   c:	25 c0       	rjmp	.+74     	; 0x58 <__bad_interrupt>
+   e:	24 c0       	rjmp	.+72     	; 0x58 <__bad_interrupt>
+  10:	23 c0       	rjmp	.+70     	; 0x58 <__bad_interrupt>
+  12:	22 c0       	rjmp	.+68     	; 0x58 <__bad_interrupt>
+  14:	21 c0       	rjmp	.+66     	; 0x58 <__bad_interrupt>
+  16:	20 c0       	rjmp	.+64     	; 0x58 <__bad_interrupt>
+  18:	1f c0       	rjmp	.+62     	; 0x58 <__bad_interrupt>
+  1a:	5c c1       	rjmp	.+696    	; 0x2d4 <__vector_13>
+  1c:	1d c0       	rjmp	.+58     	; 0x58 <__bad_interrupt>
+  1e:	1c c0       	rjmp	.+56     	; 0x58 <__bad_interrupt>
+  20:	1b c0       	rjmp	.+54     	; 0x58 <__bad_interrupt>
+  22:	1a c0       	rjmp	.+52     	; 0x58 <__bad_interrupt>
+  24:	19 c0       	rjmp	.+50     	; 0x58 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf ed       	ldi	r28, 0xDF	; 223
+  2c:	cd bf       	out	0x3d, r28	; 61
+
+0000002e <__do_copy_data>:
+  2e:	10 e0       	ldi	r17, 0x00	; 0
+  30:	a0 e6       	ldi	r26, 0x60	; 96
+  32:	b0 e0       	ldi	r27, 0x00	; 0
+  34:	e4 e3       	ldi	r30, 0x34	; 52
+  36:	f4 e0       	ldi	r31, 0x04	; 4
+  38:	02 c0       	rjmp	.+4      	; 0x3e <__SP_H__>
+  3a:	05 90       	lpm	r0, Z+
+  3c:	0d 92       	st	X+, r0
+  3e:	aa 36       	cpi	r26, 0x6A	; 106
+  40:	b1 07       	cpc	r27, r17
+  42:	d9 f7       	brne	.-10     	; 0x3a <__CCP__+0x6>
+
+00000044 <__do_clear_bss>:
+  44:	10 e0       	ldi	r17, 0x00	; 0
+  46:	aa e6       	ldi	r26, 0x6A	; 106
+  48:	b0 e0       	ldi	r27, 0x00	; 0
+  4a:	01 c0       	rjmp	.+2      	; 0x4e <.do_clear_bss_start>
+
+0000004c <.do_clear_bss_loop>:
+  4c:	1d 92       	st	X+, r1
+
+0000004e <.do_clear_bss_start>:
+  4e:	ab 38       	cpi	r26, 0x8B	; 139
+  50:	b1 07       	cpc	r27, r17
+  52:	e1 f7       	brne	.-8      	; 0x4c <.do_clear_bss_loop>
+  54:	80 d1       	rcall	.+768    	; 0x356 <main>
+  56:	ec c1       	rjmp	.+984    	; 0x430 <_exit>
+
+00000058 <__bad_interrupt>:
+  58:	d3 cf       	rjmp	.-90     	; 0x0 <__vectors>
+
+0000005a <enable_INT>:
+volatile int16_t cycle;
+
+void enable_INT()
+{
+    /* trigger external interrupts on the rising edge */
+    MCUCR |= (1 << ISC00) | (1 << ISC01);
+  5a:	85 b7       	in	r24, 0x35	; 53
+  5c:	83 60       	ori	r24, 0x03	; 3
+  5e:	85 bf       	out	0x35, r24	; 53
+    
+    /* enable INT1 as an external interrupt */
+    GIMSK |= (1 << INT1);
+  60:	8b b7       	in	r24, 0x3b	; 59
+  62:	80 68       	ori	r24, 0x80	; 128
+  64:	8b bf       	out	0x3b, r24	; 59
+}
+  66:	08 95       	ret
+
+00000068 <setup>:
+
+void setup()
+{
+    DDRA = 0x00;
+  68:	1a ba       	out	0x1a, r1	; 26
+    DDRB = 0x0F;
+  6a:	8f e0       	ldi	r24, 0x0F	; 15
+  6c:	87 bb       	out	0x17, r24	; 23
+    
+    /* enable internal pull-ups on PORTA */
+    PORTA = 0xFF;
+  6e:	8f ef       	ldi	r24, 0xFF	; 255
+  70:	8b bb       	out	0x1b, r24	; 27
+    
+    enable_INT();
+  72:	f3 df       	rcall	.-26     	; 0x5a <enable_INT>
+    
+	dir = RIGHT_DIR;
+  74:	10 92 89 00 	sts	0x0089, r1
+
+    SETBIT(PORTB, SHIFT_LATCH);
+  78:	c3 9a       	sbi	0x18, 3	; 24
+    sei();
+  7a:	78 94       	sei
+}
+  7c:	08 95       	ret
+
+0000007e <setup_move>:
+
+void setup_move(volatile struct move_sequence *moves, uint8_t move)
+{
+  7e:	fc 01       	movw	r30, r24
+	switch (move) {
+  80:	61 30       	cpi	r22, 0x01	; 1
+  82:	29 f1       	breq	.+74     	; 0xce <setup_move+0x50>
+  84:	61 30       	cpi	r22, 0x01	; 1
+  86:	30 f0       	brcs	.+12     	; 0x94 <setup_move+0x16>
+  88:	62 30       	cpi	r22, 0x02	; 2
+  8a:	f1 f1       	breq	.+124    	; 0x108 <__stack+0x29>
+  8c:	63 30       	cpi	r22, 0x03	; 3
+  8e:	09 f0       	breq	.+2      	; 0x92 <setup_move+0x14>
+  90:	7a c0       	rjmp	.+244    	; 0x186 <__stack+0xa7>
+  92:	57 c0       	rjmp	.+174    	; 0x142 <__stack+0x63>
+	case DFP:
+		moves->buttons[0] = down;
+  94:	80 91 68 00 	lds	r24, 0x0068
+  98:	80 83       	st	Z, r24
+		moves->sequence_count = 4;
+  9a:	84 e0       	ldi	r24, 0x04	; 4
+  9c:	82 87       	std	Z+10, r24	; 0x0a
+
+		if (dir == RIGHT_DIR) {
+  9e:	80 91 89 00 	lds	r24, 0x0089
+  a2:	88 23       	and	r24, r24
+  a4:	51 f4       	brne	.+20     	; 0xba <setup_move+0x3c>
+			moves->buttons[1] = down_right;
+  a6:	80 91 67 00 	lds	r24, 0x0067
+  aa:	81 83       	std	Z+1, r24	; 0x01
+			moves->buttons[2] = right;
+  ac:	80 91 65 00 	lds	r24, 0x0065
+  b0:	82 83       	std	Z+2, r24	; 0x02
+			moves->buttons[3] = y_right;
+  b2:	80 91 63 00 	lds	r24, 0x0063
+  b6:	83 83       	std	Z+3, r24	; 0x03
+  b8:	08 95       	ret
+		} else {
+			moves->buttons[1] = down_left;
+  ba:	80 91 66 00 	lds	r24, 0x0066
+  be:	81 83       	std	Z+1, r24	; 0x01
+			moves->buttons[2] = left;
+  c0:	80 91 64 00 	lds	r24, 0x0064
+  c4:	82 83       	std	Z+2, r24	; 0x02
+			moves->buttons[3] = y_left;
+  c6:	80 91 62 00 	lds	r24, 0x0062
+  ca:	83 83       	std	Z+3, r24	; 0x03
+  cc:	08 95       	ret
+		}
+
+		break;
+
+	case BDK:
+		moves->buttons[0] = down;
+  ce:	80 91 68 00 	lds	r24, 0x0068
+  d2:	80 83       	st	Z, r24
+		moves->sequence_count = 4;
+  d4:	84 e0       	ldi	r24, 0x04	; 4
+  d6:	82 87       	std	Z+10, r24	; 0x0a
+
+		if (dir == RIGHT_DIR) {
+  d8:	80 91 89 00 	lds	r24, 0x0089
+  dc:	88 23       	and	r24, r24
+  de:	51 f4       	brne	.+20     	; 0xf4 <__stack+0x15>
+			moves->buttons[1] = down_left;
+  e0:	80 91 66 00 	lds	r24, 0x0066
+  e4:	81 83       	std	Z+1, r24	; 0x01
+			moves->buttons[2] = left;
+  e6:	80 91 64 00 	lds	r24, 0x0064
+  ea:	82 83       	std	Z+2, r24	; 0x02
+			moves->buttons[3] = a_left;
+  ec:	80 91 60 00 	lds	r24, 0x0060
+  f0:	83 83       	std	Z+3, r24	; 0x03
+  f2:	08 95       	ret
+		} else {
+			moves->buttons[1] = down_right;
+  f4:	80 91 67 00 	lds	r24, 0x0067
+  f8:	81 83       	std	Z+1, r24	; 0x01
+			moves->buttons[2] = right;
+  fa:	80 91 65 00 	lds	r24, 0x0065
+  fe:	82 83       	std	Z+2, r24	; 0x02
+			moves->buttons[3] = a_right;
+ 100:	80 91 61 00 	lds	r24, 0x0061
+ 104:	83 83       	std	Z+3, r24	; 0x03
+ 106:	08 95       	ret
+		}
+
+		break;
+
+	case FDFP:
+		moves->buttons[1] = down;
+ 108:	80 91 68 00 	lds	r24, 0x0068
+ 10c:	81 83       	std	Z+1, r24	; 0x01
+		moves->sequence_count = 4;
+ 10e:	84 e0       	ldi	r24, 0x04	; 4
+ 110:	82 87       	std	Z+10, r24	; 0x0a
+
+		if (dir == RIGHT_DIR) {
+ 112:	80 91 89 00 	lds	r24, 0x0089
+ 116:	88 23       	and	r24, r24
+ 118:	51 f4       	brne	.+20     	; 0x12e <__stack+0x4f>
+			moves->buttons[0] = right;
+ 11a:	80 91 65 00 	lds	r24, 0x0065
+ 11e:	80 83       	st	Z, r24
+			moves->buttons[2] = down_right;
+ 120:	80 91 67 00 	lds	r24, 0x0067
+ 124:	82 83       	std	Z+2, r24	; 0x02
+			moves->buttons[3] = y_right;
+ 126:	80 91 63 00 	lds	r24, 0x0063
+ 12a:	83 83       	std	Z+3, r24	; 0x03
+ 12c:	08 95       	ret
+		} else {
+			moves->buttons[0] = left;
+ 12e:	80 91 64 00 	lds	r24, 0x0064
+ 132:	80 83       	st	Z, r24
+			moves->buttons[2] = down_left;
+ 134:	80 91 66 00 	lds	r24, 0x0066
+ 138:	82 83       	std	Z+2, r24	; 0x02
+			moves->buttons[3] = y_left;
+ 13a:	80 91 62 00 	lds	r24, 0x0062
+ 13e:	83 83       	std	Z+3, r24	; 0x03
+ 140:	08 95       	ret
+		}
+
+		break;
+
+	case BDFP:
+		moves->buttons[2] = down;
+ 142:	80 91 68 00 	lds	r24, 0x0068
+ 146:	82 83       	std	Z+2, r24	; 0x02
+		moves->sequence_count = 5;
+ 148:	85 e0       	ldi	r24, 0x05	; 5
+ 14a:	82 87       	std	Z+10, r24	; 0x0a
+
+		if (dir == RIGHT_DIR) {
+ 14c:	80 91 89 00 	lds	r24, 0x0089
+ 150:	88 23       	and	r24, r24
+ 152:	69 f4       	brne	.+26     	; 0x16e <__stack+0x8f>
+			moves->buttons[0] = left;
+ 154:	80 91 64 00 	lds	r24, 0x0064
+ 158:	80 83       	st	Z, r24
+			moves->buttons[1] = down_left;
+ 15a:	80 91 66 00 	lds	r24, 0x0066
+ 15e:	81 83       	std	Z+1, r24	; 0x01
+			moves->buttons[3] = down_right;
+ 160:	80 91 67 00 	lds	r24, 0x0067
+ 164:	83 83       	std	Z+3, r24	; 0x03
+			moves->buttons[4] = y_right;
+ 166:	80 91 63 00 	lds	r24, 0x0063
+ 16a:	84 83       	std	Z+4, r24	; 0x04
+ 16c:	08 95       	ret
+		} else {
+			moves->buttons[0] = right;
+ 16e:	80 91 65 00 	lds	r24, 0x0065
+ 172:	80 83       	st	Z, r24
+			moves->buttons[1] = down_right;
+ 174:	80 91 67 00 	lds	r24, 0x0067
+ 178:	81 83       	std	Z+1, r24	; 0x01
+			moves->buttons[3] = down_left;
+ 17a:	80 91 66 00 	lds	r24, 0x0066
+ 17e:	83 83       	std	Z+3, r24	; 0x03
+			moves->buttons[4] = y_left;
+ 180:	80 91 62 00 	lds	r24, 0x0062
+ 184:	84 83       	std	Z+4, r24	; 0x04
+ 186:	08 95       	ret
+
+00000188 <latch>:
+	}
+}
+
+void latch()
+{
+	CLRBIT(PORTB, SHIFT_LATCH);
+ 188:	c3 98       	cbi	0x18, 3	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 18a:	85 e3       	ldi	r24, 0x35	; 53
+ 18c:	8a 95       	dec	r24
+ 18e:	f1 f7       	brne	.-4      	; 0x18c <latch+0x4>
+ 190:	00 00       	nop
+	_delay_us(20);
+	
+	SETBIT(PORTB, SHIFT_LATCH);
+ 192:	c3 9a       	sbi	0x18, 3	; 24
+ 194:	82 e0       	ldi	r24, 0x02	; 2
+ 196:	8a 95       	dec	r24
+ 198:	f1 f7       	brne	.-4      	; 0x196 <latch+0xe>
+ 19a:	00 c0       	rjmp	.+0      	; 0x19c <latch+0x14>
+	_delay_us(1);
+}
+ 19c:	08 95       	ret
+
+0000019e <push_sequence>:
+
+void push_sequence(int clock_cycle, unsigned char buttons)
+{
+	if (clock_cycle%2 == 0) {
+ 19e:	80 fd       	sbrc	r24, 0
+ 1a0:	02 c0       	rjmp	.+4      	; 0x1a6 <push_sequence+0x8>
+		SETBIT(PORTB, CLK_OUT);
+ 1a2:	c1 9a       	sbi	0x18, 1	; 24
+ 1a4:	08 95       	ret
+	} else {
+		if (clock_cycle < 16) {
+ 1a6:	80 31       	cpi	r24, 0x10	; 16
+ 1a8:	91 05       	cpc	r25, r1
+ 1aa:	bc f4       	brge	.+46     	; 0x1da <push_sequence+0x3c>
+			if (ISSET(buttons, (7-clock_cycle/2)))
+ 1ac:	70 e0       	ldi	r23, 0x00	; 0
+ 1ae:	9c 01       	movw	r18, r24
+ 1b0:	99 23       	and	r25, r25
+ 1b2:	14 f4       	brge	.+4      	; 0x1b8 <push_sequence+0x1a>
+ 1b4:	2f 5f       	subi	r18, 0xFF	; 255
+ 1b6:	3f 4f       	sbci	r19, 0xFF	; 255
+ 1b8:	35 95       	asr	r19
+ 1ba:	27 95       	ror	r18
+ 1bc:	87 e0       	ldi	r24, 0x07	; 7
+ 1be:	90 e0       	ldi	r25, 0x00	; 0
+ 1c0:	82 1b       	sub	r24, r18
+ 1c2:	93 0b       	sbc	r25, r19
+ 1c4:	02 c0       	rjmp	.+4      	; 0x1ca <push_sequence+0x2c>
+ 1c6:	75 95       	asr	r23
+ 1c8:	67 95       	ror	r22
+ 1ca:	8a 95       	dec	r24
+ 1cc:	e2 f7       	brpl	.-8      	; 0x1c6 <push_sequence+0x28>
+ 1ce:	60 ff       	sbrs	r22, 0
+ 1d0:	02 c0       	rjmp	.+4      	; 0x1d6 <push_sequence+0x38>
+				SETBIT(PORTB, SERIAL_OUT);
+ 1d2:	c2 9a       	sbi	0x18, 2	; 24
+ 1d4:	03 c0       	rjmp	.+6      	; 0x1dc <push_sequence+0x3e>
+			else
+				CLRBIT(PORTB, SERIAL_OUT);
+ 1d6:	c2 98       	cbi	0x18, 2	; 24
+ 1d8:	01 c0       	rjmp	.+2      	; 0x1dc <push_sequence+0x3e>
+		} else {
+			SETBIT(PORTB, SERIAL_OUT);
+ 1da:	c2 9a       	sbi	0x18, 2	; 24
+		}
+		
+		CLRBIT(PORTB, CLK_OUT);
+ 1dc:	c1 98       	cbi	0x18, 1	; 24
+ 1de:	08 95       	ret
+
+000001e0 <shift_sequence>:
+	}
+}
+
+void shift_sequence()
+{
+ 1e0:	ef 92       	push	r14
+ 1e2:	ff 92       	push	r15
+ 1e4:	0f 93       	push	r16
+ 1e6:	1f 93       	push	r17
+ 1e8:	cf 93       	push	r28
+ 1ea:	df 93       	push	r29
+    _latch = FALSE;
+ 1ec:	10 92 7d 00 	sts	0x007D, r1
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1f0:	8f ec       	ldi	r24, 0xCF	; 207
+ 1f2:	97 e0       	ldi	r25, 0x07	; 7
+ 1f4:	01 97       	sbiw	r24, 0x01	; 1
+ 1f6:	f1 f7       	brne	.-4      	; 0x1f4 <shift_sequence+0x14>
+ 1f8:	00 c0       	rjmp	.+0      	; 0x1fa <shift_sequence+0x1a>
+ 1fa:	00 00       	nop
+    _delay_ms(1);
+    
+    SETBIT(PORTB, SERIAL_OUT);
+ 1fc:	c2 9a       	sbi	0x18, 2	; 24
+ 1fe:	c0 e0       	ldi	r28, 0x00	; 0
+ 200:	d0 e0       	ldi	r29, 0x00	; 0
+    for (uint8_t i = 0; i < 32; i++) {
+		push_sequence(i, seq.buttons[cycle/3]);
+ 202:	03 e0       	ldi	r16, 0x03	; 3
+ 204:	10 e0       	ldi	r17, 0x00	; 0
+ 206:	0f 2e       	mov	r0, r31
+ 208:	fe e7       	ldi	r31, 0x7E	; 126
+ 20a:	ef 2e       	mov	r14, r31
+ 20c:	f0 e0       	ldi	r31, 0x00	; 0
+ 20e:	ff 2e       	mov	r15, r31
+ 210:	f0 2d       	mov	r31, r0
+ 212:	80 91 7a 00 	lds	r24, 0x007A
+ 216:	90 91 7b 00 	lds	r25, 0x007B
+ 21a:	b8 01       	movw	r22, r16
+ 21c:	e2 d0       	rcall	.+452    	; 0x3e2 <__divmodhi4>
+ 21e:	f7 01       	movw	r30, r14
+ 220:	e6 0f       	add	r30, r22
+ 222:	f7 1f       	adc	r31, r23
+ 224:	60 81       	ld	r22, Z
+ 226:	ce 01       	movw	r24, r28
+ 228:	ba df       	rcall	.-140    	; 0x19e <push_sequence>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 22a:	92 e0       	ldi	r25, 0x02	; 2
+ 22c:	9a 95       	dec	r25
+ 22e:	f1 f7       	brne	.-4      	; 0x22c <shift_sequence+0x4c>
+ 230:	00 c0       	rjmp	.+0      	; 0x232 <shift_sequence+0x52>
+ 232:	21 96       	adiw	r28, 0x01	; 1
+{
+    _latch = FALSE;
+    _delay_ms(1);
+    
+    SETBIT(PORTB, SERIAL_OUT);
+    for (uint8_t i = 0; i < 32; i++) {
+ 234:	c0 32       	cpi	r28, 0x20	; 32
+ 236:	d1 05       	cpc	r29, r1
+ 238:	61 f7       	brne	.-40     	; 0x212 <shift_sequence+0x32>
+		push_sequence(i, seq.buttons[cycle/3]);
+		
+		_delay_us(1);
+    }
+    
+    CLRBIT(PORTB, SERIAL_OUT);
+ 23a:	c2 98       	cbi	0x18, 2	; 24
+    latch();
+ 23c:	a5 df       	rcall	.-182    	; 0x188 <latch>
+    SETBIT(PORTB, OVERRIDE);
+ 23e:	c0 9a       	sbi	0x18, 0	; 24
+}
+ 240:	df 91       	pop	r29
+ 242:	cf 91       	pop	r28
+ 244:	1f 91       	pop	r17
+ 246:	0f 91       	pop	r16
+ 248:	ff 90       	pop	r15
+ 24a:	ef 90       	pop	r14
+ 24c:	08 95       	ret
+
+0000024e <debounce_switch>:
+
+uint8_t debounce_switch(uint16_t *state, uint8_t bit)
+{
+ 24e:	fc 01       	movw	r30, r24
+    *state = (*state << 1) | (!bit_is_clear(PINA, bit)) | 0xE000;
+ 250:	29 b3       	in	r18, 0x19	; 25
+ 252:	80 81       	ld	r24, Z
+ 254:	91 81       	ldd	r25, Z+1	; 0x01
+ 256:	88 0f       	add	r24, r24
+ 258:	99 1f       	adc	r25, r25
+ 25a:	90 6e       	ori	r25, 0xE0	; 224
+ 25c:	30 e0       	ldi	r19, 0x00	; 0
+ 25e:	a9 01       	movw	r20, r18
+ 260:	02 c0       	rjmp	.+4      	; 0x266 <debounce_switch+0x18>
+ 262:	55 95       	asr	r21
+ 264:	47 95       	ror	r20
+ 266:	6a 95       	dec	r22
+ 268:	e2 f7       	brpl	.-8      	; 0x262 <debounce_switch+0x14>
+ 26a:	ba 01       	movw	r22, r20
+ 26c:	61 70       	andi	r22, 0x01	; 1
+ 26e:	70 70       	andi	r23, 0x00	; 0
+ 270:	68 2b       	or	r22, r24
+ 272:	79 2b       	or	r23, r25
+ 274:	71 83       	std	Z+1, r23	; 0x01
+ 276:	60 83       	st	Z, r22
+	
+    if (*state == 0xF000)
+		return 1;
+ 278:	81 e0       	ldi	r24, 0x01	; 1
+ 27a:	50 ef       	ldi	r21, 0xF0	; 240
+ 27c:	60 30       	cpi	r22, 0x00	; 0
+ 27e:	75 07       	cpc	r23, r21
+ 280:	09 f0       	breq	.+2      	; 0x284 <debounce_switch+0x36>
+ 282:	80 e0       	ldi	r24, 0x00	; 0
+
+    return 0;
+}
+ 284:	08 95       	ret
+
+00000286 <poll_buttons>:
+
+char poll_buttons(char reg)
+{
+ 286:	ef 92       	push	r14
+ 288:	ff 92       	push	r15
+ 28a:	1f 93       	push	r17
+ 28c:	cf 93       	push	r28
+ 28e:	df 93       	push	r29
+ 290:	c0 e0       	ldi	r28, 0x00	; 0
+ 292:	d0 e0       	ldi	r29, 0x00	; 0
+    char buttons = 0;
+ 294:	10 e0       	ldi	r17, 0x00	; 0
+    static uint16_t state[] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+    uint8_t i;
+    for (i = 0; i < 8; i++) {
+		if (debounce_switch(&state[i], i))
+		buttons |= (1 << i);
+ 296:	ee 24       	eor	r14, r14
+ 298:	ff 24       	eor	r15, r15
+ 29a:	e3 94       	inc	r14
+
+    static uint16_t state[] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+    uint8_t i;
+    for (i = 0; i < 8; i++) {
+		if (debounce_switch(&state[i], i))
+ 29c:	ce 01       	movw	r24, r28
+ 29e:	88 0f       	add	r24, r24
+ 2a0:	99 1f       	adc	r25, r25
+ 2a2:	86 59       	subi	r24, 0x96	; 150
+ 2a4:	9f 4f       	sbci	r25, 0xFF	; 255
+ 2a6:	6c 2f       	mov	r22, r28
+ 2a8:	d2 df       	rcall	.-92     	; 0x24e <debounce_switch>
+ 2aa:	88 23       	and	r24, r24
+ 2ac:	41 f0       	breq	.+16     	; 0x2be <poll_buttons+0x38>
+		buttons |= (1 << i);
+ 2ae:	c7 01       	movw	r24, r14
+ 2b0:	0c 2e       	mov	r0, r28
+ 2b2:	02 c0       	rjmp	.+4      	; 0x2b8 <poll_buttons+0x32>
+ 2b4:	88 0f       	add	r24, r24
+ 2b6:	99 1f       	adc	r25, r25
+ 2b8:	0a 94       	dec	r0
+ 2ba:	e2 f7       	brpl	.-8      	; 0x2b4 <poll_buttons+0x2e>
+ 2bc:	18 2b       	or	r17, r24
+ 2be:	21 96       	adiw	r28, 0x01	; 1
+    char buttons = 0;
+
+    static uint16_t state[] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+    uint8_t i;
+    for (i = 0; i < 8; i++) {
+ 2c0:	c8 30       	cpi	r28, 0x08	; 8
+ 2c2:	d1 05       	cpc	r29, r1
+ 2c4:	59 f7       	brne	.-42     	; 0x29c <poll_buttons+0x16>
+		if (debounce_switch(&state[i], i))
+		buttons |= (1 << i);
+    }
+
+    return buttons;
+}
+ 2c6:	81 2f       	mov	r24, r17
+ 2c8:	df 91       	pop	r29
+ 2ca:	cf 91       	pop	r28
+ 2cc:	1f 91       	pop	r17
+ 2ce:	ff 90       	pop	r15
+ 2d0:	ef 90       	pop	r14
+ 2d2:	08 95       	ret
+
+000002d4 <__vector_13>:
+
+ISR(INT1_vect)
+{
+ 2d4:	1f 92       	push	r1
+ 2d6:	0f 92       	push	r0
+ 2d8:	0f b6       	in	r0, 0x3f	; 63
+ 2da:	0f 92       	push	r0
+ 2dc:	11 24       	eor	r1, r1
+ 2de:	2f 93       	push	r18
+ 2e0:	3f 93       	push	r19
+ 2e2:	4f 93       	push	r20
+ 2e4:	5f 93       	push	r21
+ 2e6:	8f 93       	push	r24
+ 2e8:	9f 93       	push	r25
+	_latch = TRUE;
+ 2ea:	81 e0       	ldi	r24, 0x01	; 1
+ 2ec:	80 93 7d 00 	sts	0x007D, r24
+	
+	if (_override)
+ 2f0:	80 91 8a 00 	lds	r24, 0x008A
+ 2f4:	88 23       	and	r24, r24
+ 2f6:	49 f0       	breq	.+18     	; 0x30a <__vector_13+0x36>
+		cycle++;
+ 2f8:	80 91 7a 00 	lds	r24, 0x007A
+ 2fc:	90 91 7b 00 	lds	r25, 0x007B
+ 300:	01 96       	adiw	r24, 0x01	; 1
+ 302:	90 93 7b 00 	sts	0x007B, r25
+ 306:	80 93 7a 00 	sts	0x007A, r24
+	
+	/* secret move button sequence complete */
+	if (cycle >= 3*seq.sequence_count || cycle < 0) {
+ 30a:	80 91 88 00 	lds	r24, 0x0088
+ 30e:	20 91 7a 00 	lds	r18, 0x007A
+ 312:	30 91 7b 00 	lds	r19, 0x007B
+ 316:	90 e0       	ldi	r25, 0x00	; 0
+ 318:	ac 01       	movw	r20, r24
+ 31a:	44 0f       	add	r20, r20
+ 31c:	55 1f       	adc	r21, r21
+ 31e:	84 0f       	add	r24, r20
+ 320:	95 1f       	adc	r25, r21
+ 322:	28 17       	cp	r18, r24
+ 324:	39 07       	cpc	r19, r25
+ 326:	34 f4       	brge	.+12     	; 0x334 <__vector_13+0x60>
+ 328:	80 91 7a 00 	lds	r24, 0x007A
+ 32c:	90 91 7b 00 	lds	r25, 0x007B
+ 330:	99 23       	and	r25, r25
+ 332:	34 f4       	brge	.+12     	; 0x340 <__vector_13+0x6c>
+		cycle = 0;
+ 334:	10 92 7b 00 	sts	0x007B, r1
+ 338:	10 92 7a 00 	sts	0x007A, r1
+		
+		_override = FALSE;
+ 33c:	10 92 8a 00 	sts	0x008A, r1
+	}
+}
+ 340:	9f 91       	pop	r25
+ 342:	8f 91       	pop	r24
+ 344:	5f 91       	pop	r21
+ 346:	4f 91       	pop	r20
+ 348:	3f 91       	pop	r19
+ 34a:	2f 91       	pop	r18
+ 34c:	0f 90       	pop	r0
+ 34e:	0f be       	out	0x3f, r0	; 63
+ 350:	0f 90       	pop	r0
+ 352:	1f 90       	pop	r1
+ 354:	18 95       	reti
+
+00000356 <main>:
+
+int main(void)
+{
+    CPU_PRESCALE(0);
+ 356:	80 e8       	ldi	r24, 0x80	; 128
+ 358:	88 bd       	out	0x28, r24	; 40
+ 35a:	18 bc       	out	0x28, r1	; 40
+    
+    setup();
+ 35c:	85 de       	rcall	.-758    	; 0x68 <setup>
+				_override = TRUE;
+	
+				setup_move(&seq, BDFP);
+			}else if (ISSET(pina, DIR_CONTROL)) {
+				if (dir == RIGHT_DIR)
+					dir = LEFT_DIR;
+ 35e:	c1 e0       	ldi	r28, 0x01	; 1
+
+				setup_move(&seq, FDFP);
+			} else if (ISSET(pina, BTN4)) {
+				_override = TRUE;
+	
+				setup_move(&seq, BDFP);
+ 360:	0e e7       	ldi	r16, 0x7E	; 126
+ 362:	10 e0       	ldi	r17, 0x00	; 0
+    CPU_PRESCALE(0);
+    
+    setup();
+    
+    while (TRUE) {
+		if (_override) {
+ 364:	80 91 8a 00 	lds	r24, 0x008A
+ 368:	88 23       	and	r24, r24
+ 36a:	31 f0       	breq	.+12     	; 0x378 <main+0x22>
+			if (_latch)
+ 36c:	80 91 7d 00 	lds	r24, 0x007D
+ 370:	88 23       	and	r24, r24
+ 372:	c1 f3       	breq	.-16     	; 0x364 <main+0xe>
+				shift_sequence();
+ 374:	35 df       	rcall	.-406    	; 0x1e0 <shift_sequence>
+ 376:	f6 cf       	rjmp	.-20     	; 0x364 <main+0xe>
+		} else {
+			CLRBIT(PORTB, OVERRIDE);
+ 378:	c0 98       	cbi	0x18, 0	; 24
+			
+			char pina = poll_buttons(PINA);
+ 37a:	89 b3       	in	r24, 0x19	; 25
+ 37c:	84 df       	rcall	.-248    	; 0x286 <poll_buttons>
+			if (ISSET(pina, BTN1)) {
+ 37e:	80 ff       	sbrs	r24, 0
+ 380:	06 c0       	rjmp	.+12     	; 0x38e <main+0x38>
+				_override = TRUE;
+ 382:	c0 93 8a 00 	sts	0x008A, r28
+
+				setup_move(&seq, DFP);
+ 386:	c8 01       	movw	r24, r16
+ 388:	60 e0       	ldi	r22, 0x00	; 0
+ 38a:	79 de       	rcall	.-782    	; 0x7e <setup_move>
+ 38c:	23 c0       	rjmp	.+70     	; 0x3d4 <main+0x7e>
+			} else if (ISSET(pina, BTN2)) {
+ 38e:	81 ff       	sbrs	r24, 1
+ 390:	06 c0       	rjmp	.+12     	; 0x39e <main+0x48>
+				_override = TRUE;
+ 392:	c0 93 8a 00 	sts	0x008A, r28
+				
+				setup_move(&seq, BDK);
+ 396:	c8 01       	movw	r24, r16
+ 398:	6c 2f       	mov	r22, r28
+ 39a:	71 de       	rcall	.-798    	; 0x7e <setup_move>
+ 39c:	1b c0       	rjmp	.+54     	; 0x3d4 <main+0x7e>
+			} else if (ISSET(pina, BTN3)) {
+ 39e:	83 ff       	sbrs	r24, 3
+ 3a0:	06 c0       	rjmp	.+12     	; 0x3ae <main+0x58>
+				_override = TRUE;
+ 3a2:	c0 93 8a 00 	sts	0x008A, r28
+
+				setup_move(&seq, FDFP);
+ 3a6:	c8 01       	movw	r24, r16
+ 3a8:	62 e0       	ldi	r22, 0x02	; 2
+ 3aa:	69 de       	rcall	.-814    	; 0x7e <setup_move>
+ 3ac:	13 c0       	rjmp	.+38     	; 0x3d4 <main+0x7e>
+			} else if (ISSET(pina, BTN4)) {
+ 3ae:	84 ff       	sbrs	r24, 4
+ 3b0:	06 c0       	rjmp	.+12     	; 0x3be <main+0x68>
+				_override = TRUE;
+ 3b2:	c0 93 8a 00 	sts	0x008A, r28
+	
+				setup_move(&seq, BDFP);
+ 3b6:	c8 01       	movw	r24, r16
+ 3b8:	63 e0       	ldi	r22, 0x03	; 3
+ 3ba:	61 de       	rcall	.-830    	; 0x7e <setup_move>
+ 3bc:	0b c0       	rjmp	.+22     	; 0x3d4 <main+0x7e>
+			}else if (ISSET(pina, DIR_CONTROL)) {
+ 3be:	86 ff       	sbrs	r24, 6
+ 3c0:	09 c0       	rjmp	.+18     	; 0x3d4 <main+0x7e>
+				if (dir == RIGHT_DIR)
+ 3c2:	80 91 89 00 	lds	r24, 0x0089
+ 3c6:	88 23       	and	r24, r24
+ 3c8:	19 f4       	brne	.+6      	; 0x3d0 <main+0x7a>
+					dir = LEFT_DIR;
+ 3ca:	c0 93 89 00 	sts	0x0089, r28
+ 3ce:	02 c0       	rjmp	.+4      	; 0x3d4 <main+0x7e>
+				else
+					dir = RIGHT_DIR;
+ 3d0:	10 92 89 00 	sts	0x0089, r1
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 3d4:	8f ec       	ldi	r24, 0xCF	; 207
+ 3d6:	97 e0       	ldi	r25, 0x07	; 7
+ 3d8:	01 97       	sbiw	r24, 0x01	; 1
+ 3da:	f1 f7       	brne	.-4      	; 0x3d8 <main+0x82>
+ 3dc:	00 c0       	rjmp	.+0      	; 0x3de <main+0x88>
+ 3de:	00 00       	nop
+ 3e0:	c1 cf       	rjmp	.-126    	; 0x364 <main+0xe>
+
+000003e2 <__divmodhi4>:
+ 3e2:	97 fb       	bst	r25, 7
+ 3e4:	09 2e       	mov	r0, r25
+ 3e6:	07 26       	eor	r0, r23
+ 3e8:	0a d0       	rcall	.+20     	; 0x3fe <__divmodhi4_neg1>
+ 3ea:	77 fd       	sbrc	r23, 7
+ 3ec:	04 d0       	rcall	.+8      	; 0x3f6 <__divmodhi4_neg2>
+ 3ee:	0c d0       	rcall	.+24     	; 0x408 <__udivmodhi4>
+ 3f0:	06 d0       	rcall	.+12     	; 0x3fe <__divmodhi4_neg1>
+ 3f2:	00 20       	and	r0, r0
+ 3f4:	1a f4       	brpl	.+6      	; 0x3fc <__divmodhi4_exit>
+
+000003f6 <__divmodhi4_neg2>:
+ 3f6:	70 95       	com	r23
+ 3f8:	61 95       	neg	r22
+ 3fa:	7f 4f       	sbci	r23, 0xFF	; 255
+
+000003fc <__divmodhi4_exit>:
+ 3fc:	08 95       	ret
+
+000003fe <__divmodhi4_neg1>:
+ 3fe:	f6 f7       	brtc	.-4      	; 0x3fc <__divmodhi4_exit>
+ 400:	90 95       	com	r25
+ 402:	81 95       	neg	r24
+ 404:	9f 4f       	sbci	r25, 0xFF	; 255
+ 406:	08 95       	ret
+
+00000408 <__udivmodhi4>:
+ 408:	aa 1b       	sub	r26, r26
+ 40a:	bb 1b       	sub	r27, r27
+ 40c:	51 e1       	ldi	r21, 0x11	; 17
+ 40e:	07 c0       	rjmp	.+14     	; 0x41e <__udivmodhi4_ep>
+
+00000410 <__udivmodhi4_loop>:
+ 410:	aa 1f       	adc	r26, r26
+ 412:	bb 1f       	adc	r27, r27
+ 414:	a6 17       	cp	r26, r22
+ 416:	b7 07       	cpc	r27, r23
+ 418:	10 f0       	brcs	.+4      	; 0x41e <__udivmodhi4_ep>
+ 41a:	a6 1b       	sub	r26, r22
+ 41c:	b7 0b       	sbc	r27, r23
+
+0000041e <__udivmodhi4_ep>:
+ 41e:	88 1f       	adc	r24, r24
+ 420:	99 1f       	adc	r25, r25
+ 422:	5a 95       	dec	r21
+ 424:	a9 f7       	brne	.-22     	; 0x410 <__udivmodhi4_loop>
+ 426:	80 95       	com	r24
+ 428:	90 95       	com	r25
+ 42a:	bc 01       	movw	r22, r24
+ 42c:	cd 01       	movw	r24, r26
+ 42e:	08 95       	ret
+
+00000430 <_exit>:
+ 430:	f8 94       	cli
+
+00000432 <__stop_program>:
+ 432:	ff cf       	rjmp	.-2      	; 0x432 <__stop_program>

@@ -1,0 +1,95 @@
+\hypertarget{player_8c}{\section{C\-:/\-Users/\-Robert/\-Documents/\-Atmel Studio/\-Wunderboard\-\_\-\-Testing/\-Wunderboard\-\_\-\-Testing/player.c File Reference}
+\label{player_8c}\index{C\-:/\-Users/\-Robert/\-Documents/\-Atmel Studio/\-Wunderboard\-\_\-\-Testing/\-Wunderboard\-\_\-\-Testing/player.\-c@{C\-:/\-Users/\-Robert/\-Documents/\-Atmel Studio/\-Wunderboard\-\_\-\-Testing/\-Wunderboard\-\_\-\-Testing/player.\-c}}
+}
+{\ttfamily \#include \char`\"{}player.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint8\-\_\-t \hyperlink{player_8c_aa6c6e4106c586df8eacc0f84f20652b6}{initialize\-F\-A\-T} (\hyperlink{struct_f_a_t_f_s}{F\-A\-T\-F\-S} $\ast$fs)
+\item 
+void \hyperlink{player_8c_aa648cd3fc8dc0c02eeabfeb94d58f351}{seek\-\_\-to\-\_\-data} (const char $\ast$path)
+\item 
+void \hyperlink{player_8c_a5ca68d527c6558b104f9321d38fc6c3b}{play\-\_\-wav} (const char $\ast$filename, int alarm)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Robert L. Phillips I\-I\-I 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\-1
+\end{DoxyVersion}
+\hypertarget{wunderplayer_8c_LICENSE}{}\subsection{L\-I\-C\-E\-N\-S\-E}\label{wunderplayer_8c_LICENSE}
+This program is free software; you can redistribute it and/or modify it under the terms of the G\-N\-U General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but W\-I\-T\-H\-O\-U\-T A\-N\-Y W\-A\-R\-R\-A\-N\-T\-Y; without even the implied warranty of M\-E\-R\-C\-H\-A\-N\-T\-A\-B\-I\-L\-I\-T\-Y or F\-I\-T\-N\-E\-S\-S F\-O\-R A P\-A\-R\-T\-I\-C\-U\-L\-A\-R P\-U\-R\-P\-O\-S\-E. See the G\-N\-U General Public License for more details.
+
+You should have received a copy of the G\-N\-U General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, M\-A 02110-\/1301, U\-S\-A.\hypertarget{wunderplayer_8c_DESCRIPTION}{}\subsection{D\-E\-S\-C\-R\-I\-P\-T\-I\-O\-N}\label{wunderplayer_8c_DESCRIPTION}
+.wav file decoding and playback functions\hypertarget{wunderplayer_8c_HARDWARE}{}\subsection{H\-A\-R\-D\-W\-A\-R\-E}\label{wunderplayer_8c_HARDWARE}
+Target Device\-: Wunderboard 
+
+\subsection{Function Documentation}
+\hypertarget{player_8c_aa6c6e4106c586df8eacc0f84f20652b6}{\index{player.\-c@{player.\-c}!initialize\-F\-A\-T@{initialize\-F\-A\-T}}
+\index{initialize\-F\-A\-T@{initialize\-F\-A\-T}!player.c@{player.\-c}}
+\subsubsection[{initialize\-F\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t initialize\-F\-A\-T (
+\begin{DoxyParamCaption}
+\item[{{\bf F\-A\-T\-F\-S} $\ast$}]{fs}
+\end{DoxyParamCaption}
+)}}\label{player_8c_aa6c6e4106c586df8eacc0f84f20652b6}
+Initializes the F\-A\-T filesystem for I\-O.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fs} & The \hyperlink{struct_f_a_t_f_s}{F\-A\-T\-F\-S} pointer to store the F\-A\-T handle\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{debug_8h_ae81715e108e454a61e4e3f79dcca8929}{E\-R\-R\-\_\-\-F\-M\-O\-U\-N\-T} 
+
+\hyperlink{debug_8h_a7346b381e134dd65fcb53b772933e07e}{E\-R\-R\-\_\-\-N\-O\-D\-I\-S\-K} 
+
+\hyperlink{debug_8h_a71927e9402d98a87c5c9eb6111058987}{E\-R\-R\-\_\-\-N\-O\-I\-N\-I\-T} 
+
+\hyperlink{debug_8h_a1dbef47d09460b17753f0ddd12f56fd6}{E\-R\-R\-\_\-\-P\-R\-O\-T\-E\-C\-T\-E\-D} 
+
+\hyperlink{debug_8h_aff0d3fb76f11f6e8ea4002d826bbd23c}{E\-R\-R\-\_\-\-N\-O\-N\-E} 
+\end{DoxySeeAlso}
+\hypertarget{player_8c_a5ca68d527c6558b104f9321d38fc6c3b}{\index{player.\-c@{player.\-c}!play\-\_\-wav@{play\-\_\-wav}}
+\index{play\-\_\-wav@{play\-\_\-wav}!player.c@{player.\-c}}
+\subsubsection[{play\-\_\-wav}]{\setlength{\rightskip}{0pt plus 5cm}void play\-\_\-wav (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{filename, }
+\item[{int}]{alarm}
+\end{DoxyParamCaption}
+)}}\label{player_8c_a5ca68d527c6558b104f9321d38fc6c3b}
+Decodes the specified .wav file and reads the samples into a buffer in groups of 2048
+
+If the alarm flag has not been set, the alarm flag is polled and if it is set at any time during the playback, the current .wav file playback will end immediately and playback of the alarm will begin. The playback of the alarm can not be interrupted.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The file path of the .wav file to be played \\
+\hline
+{\em alarm} & The flag that indicates whether or not an alarm is being played \\
+\hline
+\end{DoxyParams}
+\hypertarget{player_8c_aa648cd3fc8dc0c02eeabfeb94d58f351}{\index{player.\-c@{player.\-c}!seek\-\_\-to\-\_\-data@{seek\-\_\-to\-\_\-data}}
+\index{seek\-\_\-to\-\_\-data@{seek\-\_\-to\-\_\-data}!player.c@{player.\-c}}
+\subsubsection[{seek\-\_\-to\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}void seek\-\_\-to\-\_\-data (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{path}
+\end{DoxyParamCaption}
+)}}\label{player_8c_aa648cd3fc8dc0c02eeabfeb94d58f351}
+Opens the .wav file and advances it past the header to the data section that contains the audio samples
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The file path of the .wav file to be played\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+F\-A\-\_\-\-R\-E\-A\-D 
+
+F\-A\-\_\-\-O\-P\-E\-N\-\_\-\-E\-X\-I\-S\-T\-I\-N\-G 
+\end{DoxySeeAlso}

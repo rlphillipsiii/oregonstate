@@ -1,0 +1,1316 @@
+
+ECE111_Lab6.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000005da  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000002  00800060  000005da  0000066e  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000017  00800062  00800062  00000670  2**0
+                  ALLOC
+  3 .stab         000006b4  00000000  00000000  00000670  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00000085  00000000  00000000  00000d24  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_aranges 00000120  00000000  00000000  00000db0  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000eeb  00000000  00000000  00000ed0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000519  00000000  00000000  00001dbb  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000082b  00000000  00000000  000022d4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000384  00000000  00000000  00002b00  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000477  00000000  00000000  00002e84  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000006e6  00000000  00000000  000032fb  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	2a c0       	rjmp	.+84     	; 0x58 <__bad_interrupt>
+   4:	29 c0       	rjmp	.+82     	; 0x58 <__bad_interrupt>
+   6:	28 c0       	rjmp	.+80     	; 0x58 <__bad_interrupt>
+   8:	27 c0       	rjmp	.+78     	; 0x58 <__bad_interrupt>
+   a:	26 c0       	rjmp	.+76     	; 0x58 <__bad_interrupt>
+   c:	25 c0       	rjmp	.+74     	; 0x58 <__bad_interrupt>
+   e:	24 c0       	rjmp	.+72     	; 0x58 <__bad_interrupt>
+  10:	bf c0       	rjmp	.+382    	; 0x190 <__vector_8>
+  12:	22 c0       	rjmp	.+68     	; 0x58 <__bad_interrupt>
+  14:	21 c0       	rjmp	.+66     	; 0x58 <__bad_interrupt>
+  16:	20 c0       	rjmp	.+64     	; 0x58 <__bad_interrupt>
+  18:	1f c0       	rjmp	.+62     	; 0x58 <__bad_interrupt>
+  1a:	1e c0       	rjmp	.+60     	; 0x58 <__bad_interrupt>
+  1c:	1d c0       	rjmp	.+58     	; 0x58 <__bad_interrupt>
+  1e:	1c c0       	rjmp	.+56     	; 0x58 <__bad_interrupt>
+  20:	1b c0       	rjmp	.+54     	; 0x58 <__bad_interrupt>
+  22:	1a c0       	rjmp	.+52     	; 0x58 <__bad_interrupt>
+  24:	19 c0       	rjmp	.+50     	; 0x58 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf ed       	ldi	r28, 0xDF	; 223
+  2c:	cd bf       	out	0x3d, r28	; 61
+
+0000002e <__do_copy_data>:
+  2e:	10 e0       	ldi	r17, 0x00	; 0
+  30:	a0 e6       	ldi	r26, 0x60	; 96
+  32:	b0 e0       	ldi	r27, 0x00	; 0
+  34:	ea ed       	ldi	r30, 0xDA	; 218
+  36:	f5 e0       	ldi	r31, 0x05	; 5
+  38:	02 c0       	rjmp	.+4      	; 0x3e <__SP_H__>
+  3a:	05 90       	lpm	r0, Z+
+  3c:	0d 92       	st	X+, r0
+  3e:	a2 36       	cpi	r26, 0x62	; 98
+  40:	b1 07       	cpc	r27, r17
+  42:	d9 f7       	brne	.-10     	; 0x3a <__CCP__+0x6>
+
+00000044 <__do_clear_bss>:
+  44:	10 e0       	ldi	r17, 0x00	; 0
+  46:	a2 e6       	ldi	r26, 0x62	; 98
+  48:	b0 e0       	ldi	r27, 0x00	; 0
+  4a:	01 c0       	rjmp	.+2      	; 0x4e <.do_clear_bss_start>
+
+0000004c <.do_clear_bss_loop>:
+  4c:	1d 92       	st	X+, r1
+
+0000004e <.do_clear_bss_start>:
+  4e:	a9 37       	cpi	r26, 0x79	; 121
+  50:	b1 07       	cpc	r27, r17
+  52:	e1 f7       	brne	.-8      	; 0x4c <.do_clear_bss_loop>
+  54:	1d d1       	rcall	.+570    	; 0x290 <main>
+  56:	bf c2       	rjmp	.+1406   	; 0x5d6 <_exit>
+
+00000058 <__bad_interrupt>:
+  58:	d3 cf       	rjmp	.-90     	; 0x0 <__vectors>
+
+0000005a <ADCSetChannel>:
+#include "adc.h"
+#include "pins.h"
+
+void ADCSetChannel(uint8_t channel)
+{
+	CLEARPINS(ADMUX, ADC_MUX_MASK);
+  5a:	97 b1       	in	r25, 0x07	; 7
+  5c:	90 7e       	andi	r25, 0xE0	; 224
+  5e:	97 b9       	out	0x07, r25	; 7
+	SETPINS(ADMUX, (channel & ADC_MUX_MASK));
+  60:	97 b1       	in	r25, 0x07	; 7
+  62:	8f 71       	andi	r24, 0x1F	; 31
+  64:	98 2b       	or	r25, r24
+  66:	97 b9       	out	0x07, r25	; 7
+}
+  68:	08 95       	ret
+
+0000006a <ADCSetAdjust>:
+
+void ADCSetAdjust(BOOL leftAdjust)
+{
+	if (leftAdjust == 1)
+  6a:	81 30       	cpi	r24, 0x01	; 1
+  6c:	11 f4       	brne	.+4      	; 0x72 <ADCSetAdjust+0x8>
+	{
+		SETPIN(ADMUX, ADLAR);
+  6e:	3d 9a       	sbi	0x07, 5	; 7
+  70:	08 95       	ret
+	}
+	else
+	{
+		CLEARPIN(ADMUX, ADLAR);	// See pins.h
+  72:	3d 98       	cbi	0x07, 5	; 7
+  74:	08 95       	ret
+
+00000076 <ADCSetPrescaler>:
+	}
+}
+
+void ADCSetPrescaler(uint8_t prescale)
+{
+	CLEARPINS(ADCSRA, ADC_PRESCALER_MASK);
+  76:	96 b1       	in	r25, 0x06	; 6
+  78:	98 7f       	andi	r25, 0xF8	; 248
+  7a:	96 b9       	out	0x06, r25	; 6
+	SETPINS(ADCSRA, (prescale & ADC_PRESCALER_MASK));
+  7c:	96 b1       	in	r25, 0x06	; 6
+  7e:	87 70       	andi	r24, 0x07	; 7
+  80:	98 2b       	or	r25, r24
+  82:	96 b9       	out	0x06, r25	; 6
+}
+  84:	08 95       	ret
+
+00000086 <ADCSetFreeRunning>:
+
+void ADCSetFreeRunning(BOOL freeRun)
+{
+	if (freeRun)
+  86:	88 23       	and	r24, r24
+  88:	29 f0       	breq	.+10     	; 0x94 <ADCSetFreeRunning+0xe>
+	{
+		SETPIN(ADCSRA, ADATE);
+  8a:	35 9a       	sbi	0x06, 5	; 6
+		ADCSRB &= ~(1 << ADTS2) & ~(1 << ADTS1) & ~(1 << ADTS0);
+  8c:	83 b1       	in	r24, 0x03	; 3
+  8e:	88 7f       	andi	r24, 0xF8	; 248
+  90:	83 b9       	out	0x03, r24	; 3
+  92:	08 95       	ret
+	}
+	else
+	{
+		CLEARPIN(ADCSRA, ADATE);
+  94:	35 98       	cbi	0x06, 5	; 6
+  96:	08 95       	ret
+
+00000098 <ADCEnableInterrupt>:
+	ADCFinish();
+}
+
+void ADCEnableInterrupt(void)
+{
+	SETPIN(ADCSRA, ADIE);
+  98:	33 9a       	sbi	0x06, 3	; 6
+}
+  9a:	08 95       	ret
+
+0000009c <ADCDisableInterrupt>:
+
+void ADCDisableInterrupt(void)
+{
+	CLEARPIN(ADCSRA, ADIE);
+  9c:	33 98       	cbi	0x06, 3	; 6
+}
+  9e:	08 95       	ret
+
+000000a0 <ADCEnable>:
+
+void ADCEnable(void)
+{
+	SETPIN(ADCSRA, ADEN);
+  a0:	37 9a       	sbi	0x06, 7	; 6
+}
+  a2:	08 95       	ret
+
+000000a4 <ADCDisable>:
+
+void ADCDisable(void)
+{
+	CLEARPIN(ADCSRA, ADEN);
+  a4:	37 98       	cbi	0x06, 7	; 6
+}
+  a6:	08 95       	ret
+
+000000a8 <ADCStart>:
+
+void ADCStart(void)
+{
+	SETPIN(ADCSRA, ADSC);
+  a8:	36 9a       	sbi	0x06, 6	; 6
+}
+  aa:	08 95       	ret
+
+000000ac <ADCFinish>:
+
+void ADCFinish(void)
+{
+	SETPIN(ADCSRA, ADIF);
+  ac:	34 9a       	sbi	0x06, 4	; 6
+}
+  ae:	08 95       	ret
+
+000000b0 <ADCDone>:
+
+BOOL ADCDone(void)
+{
+	return BOOL(GETPIN(ADCSRA, ADIF));
+  b0:	81 e0       	ldi	r24, 0x01	; 1
+  b2:	34 9b       	sbis	0x06, 4	; 6
+  b4:	80 e0       	ldi	r24, 0x00	; 0
+}
+  b6:	08 95       	ret
+
+000000b8 <ADCSetReference>:
+	}
+}
+
+void ADCSetReference(uint8_t reference)
+{
+	CLEARPINS(ADMUX, ADC_REF_MASK);
+  b8:	97 b1       	in	r25, 0x07	; 7
+  ba:	9f 73       	andi	r25, 0x3F	; 63
+  bc:	97 b9       	out	0x07, r25	; 7
+	SETPINS(ADMUX, (reference & ADC_REF_MASK));
+  be:	97 b1       	in	r25, 0x07	; 7
+  c0:	80 7c       	andi	r24, 0xC0	; 192
+  c2:	98 2b       	or	r25, r24
+  c4:	97 b9       	out	0x07, r25	; 7
+	
+	// First read after changing reference is probably garbage
+	ADCStart();
+  c6:	f0 df       	rcall	.-32     	; 0xa8 <ADCStart>
+	// Wait for the AD conversion to complete
+	while (!ADCDone());
+  c8:	f3 df       	rcall	.-26     	; 0xb0 <ADCDone>
+  ca:	88 23       	and	r24, r24
+  cc:	e9 f3       	breq	.-6      	; 0xc8 <ADCSetReference+0x10>
+	
+	ADCFinish();
+  ce:	ee df       	rcall	.-36     	; 0xac <ADCFinish>
+}
+  d0:	08 95       	ret
+
+000000d2 <SetupADC>:
+{
+	return BOOL(GETPIN(ADCSRA, ADIF));
+}
+
+void SetupADC(uint8_t prescale, BOOL freeRun)
+{
+  d2:	cf 93       	push	r28
+  d4:	c6 2f       	mov	r28, r22
+	ADCSetPrescaler(prescale);	// Set prescaler bits
+  d6:	cf df       	rcall	.-98     	; 0x76 <ADCSetPrescaler>
+	ADCSetFreeRunning(freeRun);		// Set free run bit
+  d8:	8c 2f       	mov	r24, r28
+  da:	d5 df       	rcall	.-86     	; 0x86 <ADCSetFreeRunning>
+}
+  dc:	cf 91       	pop	r28
+  de:	08 95       	ret
+
+000000e0 <ReadADC>:
+
+uint8_t ReadADC(uint8_t channel)
+{	
+	ADCSetChannel(channel);	// Set ADC channel select bits
+  e0:	bc df       	rcall	.-136    	; 0x5a <ADCSetChannel>
+	ADCSetAdjust(ADC_LEFTADJUST);	// Set left/right adjust bit
+  e2:	81 e0       	ldi	r24, 0x01	; 1
+  e4:	c2 df       	rcall	.-124    	; 0x6a <ADCSetAdjust>
+	
+	ADCStart();
+  e6:	e0 df       	rcall	.-64     	; 0xa8 <ADCStart>
+	// Wait for the AD conversion to complete
+	while (!ADCDone());
+  e8:	e3 df       	rcall	.-58     	; 0xb0 <ADCDone>
+  ea:	88 23       	and	r24, r24
+  ec:	e9 f3       	breq	.-6      	; 0xe8 <ReadADC+0x8>
+	
+	ADCFinish();
+  ee:	de df       	rcall	.-68     	; 0xac <ADCFinish>
+	
+	return ADCH;
+  f0:	85 b1       	in	r24, 0x05	; 5
+}
+  f2:	08 95       	ret
+
+000000f4 <ReadADCAveraged>:
+
+uint8_t ReadADCAveraged(uint8_t channel, uint8_t samples)
+{
+  f4:	ff 92       	push	r15
+  f6:	0f 93       	push	r16
+  f8:	1f 93       	push	r17
+  fa:	cf 93       	push	r28
+  fc:	df 93       	push	r29
+  fe:	f8 2e       	mov	r15, r24
+ 100:	06 2f       	mov	r16, r22
+	uint8_t i;
+	uint16_t accumulator = 0;
+	
+	for(i = 0; i < samples; i++)
+ 102:	66 23       	and	r22, r22
+ 104:	59 f0       	breq	.+22     	; 0x11c <ReadADCAveraged+0x28>
+}
+
+uint8_t ReadADCAveraged(uint8_t channel, uint8_t samples)
+{
+	uint8_t i;
+	uint16_t accumulator = 0;
+ 106:	c0 e0       	ldi	r28, 0x00	; 0
+ 108:	d0 e0       	ldi	r29, 0x00	; 0
+	
+	for(i = 0; i < samples; i++)
+ 10a:	10 e0       	ldi	r17, 0x00	; 0
+	{
+		accumulator += ReadADC(channel);
+ 10c:	8f 2d       	mov	r24, r15
+ 10e:	e8 df       	rcall	.-48     	; 0xe0 <ReadADC>
+ 110:	c8 0f       	add	r28, r24
+ 112:	d1 1d       	adc	r29, r1
+uint8_t ReadADCAveraged(uint8_t channel, uint8_t samples)
+{
+	uint8_t i;
+	uint16_t accumulator = 0;
+	
+	for(i = 0; i < samples; i++)
+ 114:	1f 5f       	subi	r17, 0xFF	; 255
+ 116:	10 17       	cp	r17, r16
+ 118:	c9 f7       	brne	.-14     	; 0x10c <ReadADCAveraged+0x18>
+ 11a:	02 c0       	rjmp	.+4      	; 0x120 <ReadADCAveraged+0x2c>
+}
+
+uint8_t ReadADCAveraged(uint8_t channel, uint8_t samples)
+{
+	uint8_t i;
+	uint16_t accumulator = 0;
+ 11c:	c0 e0       	ldi	r28, 0x00	; 0
+ 11e:	d0 e0       	ldi	r29, 0x00	; 0
+	for(i = 0; i < samples; i++)
+	{
+		accumulator += ReadADC(channel);
+	}
+	
+	return accumulator / samples;
+ 120:	60 2f       	mov	r22, r16
+ 122:	ce 01       	movw	r24, r28
+ 124:	70 e0       	ldi	r23, 0x00	; 0
+ 126:	43 d2       	rcall	.+1158   	; 0x5ae <__udivmodhi4>
+ 128:	86 2f       	mov	r24, r22
+}
+ 12a:	df 91       	pop	r29
+ 12c:	cf 91       	pop	r28
+ 12e:	1f 91       	pop	r17
+ 130:	0f 91       	pop	r16
+ 132:	ff 90       	pop	r15
+ 134:	08 95       	ret
+
+00000136 <ReadPreciseADC>:
+
+uint16_t ReadPreciseADC(uint8_t channel)
+{	
+	ADCSetChannel(channel);	// Set ADC channel select bits
+ 136:	91 df       	rcall	.-222    	; 0x5a <ADCSetChannel>
+	ADCSetAdjust(ADC_RIGHTADJUST);	// Set left/right adjust bit
+ 138:	80 e0       	ldi	r24, 0x00	; 0
+ 13a:	97 df       	rcall	.-210    	; 0x6a <ADCSetAdjust>
+	
+	ADCStart();
+ 13c:	b5 df       	rcall	.-150    	; 0xa8 <ADCStart>
+	// Wait for the AD conversion to complete
+	while (!ADCDone())
+ 13e:	b8 df       	rcall	.-144    	; 0xb0 <ADCDone>
+ 140:	88 23       	and	r24, r24
+ 142:	e9 f3       	breq	.-6      	; 0x13e <ReadPreciseADC+0x8>
+	{
+	}
+	ADCFinish();
+ 144:	b3 df       	rcall	.-154    	; 0xac <ADCFinish>
+	
+	return ADCW;
+ 146:	84 b1       	in	r24, 0x04	; 4
+ 148:	95 b1       	in	r25, 0x05	; 5
+}
+ 14a:	08 95       	ret
+
+0000014c <ReadPreciseADCAveraged>:
+
+uint16_t ReadPreciseADCAveraged(uint8_t channel, uint8_t samples)
+{
+ 14c:	ff 92       	push	r15
+ 14e:	0f 93       	push	r16
+ 150:	1f 93       	push	r17
+ 152:	cf 93       	push	r28
+ 154:	df 93       	push	r29
+ 156:	f8 2e       	mov	r15, r24
+ 158:	06 2f       	mov	r16, r22
+	uint8_t i;
+	uint16_t total = 0;
+	uint16_t value;
+	
+	for (i = 0; i < samples; i++)
+ 15a:	66 23       	and	r22, r22
+ 15c:	59 f0       	breq	.+22     	; 0x174 <ReadPreciseADCAveraged+0x28>
+}
+
+uint16_t ReadPreciseADCAveraged(uint8_t channel, uint8_t samples)
+{
+	uint8_t i;
+	uint16_t total = 0;
+ 15e:	c0 e0       	ldi	r28, 0x00	; 0
+ 160:	d0 e0       	ldi	r29, 0x00	; 0
+	uint16_t value;
+	
+	for (i = 0; i < samples; i++)
+ 162:	10 e0       	ldi	r17, 0x00	; 0
+	{
+		total += ReadPreciseADC(channel);
+ 164:	8f 2d       	mov	r24, r15
+ 166:	e7 df       	rcall	.-50     	; 0x136 <ReadPreciseADC>
+ 168:	c8 0f       	add	r28, r24
+ 16a:	d9 1f       	adc	r29, r25
+{
+	uint8_t i;
+	uint16_t total = 0;
+	uint16_t value;
+	
+	for (i = 0; i < samples; i++)
+ 16c:	1f 5f       	subi	r17, 0xFF	; 255
+ 16e:	10 17       	cp	r17, r16
+ 170:	c9 f7       	brne	.-14     	; 0x164 <ReadPreciseADCAveraged+0x18>
+ 172:	02 c0       	rjmp	.+4      	; 0x178 <ReadPreciseADCAveraged+0x2c>
+}
+
+uint16_t ReadPreciseADCAveraged(uint8_t channel, uint8_t samples)
+{
+	uint8_t i;
+	uint16_t total = 0;
+ 174:	c0 e0       	ldi	r28, 0x00	; 0
+ 176:	d0 e0       	ldi	r29, 0x00	; 0
+	for (i = 0; i < samples; i++)
+	{
+		total += ReadPreciseADC(channel);
+	}
+	
+	value = total / samples;
+ 178:	60 2f       	mov	r22, r16
+ 17a:	ce 01       	movw	r24, r28
+ 17c:	70 e0       	ldi	r23, 0x00	; 0
+ 17e:	17 d2       	rcall	.+1070   	; 0x5ae <__udivmodhi4>
+ 180:	86 2f       	mov	r24, r22
+ 182:	97 2f       	mov	r25, r23
+	
+	return value;
+}
+ 184:	df 91       	pop	r29
+ 186:	cf 91       	pop	r28
+ 188:	1f 91       	pop	r17
+ 18a:	0f 91       	pop	r16
+ 18c:	ff 90       	pop	r15
+ 18e:	08 95       	ret
+
+00000190 <__vector_8>:
+ * motors to move when the interrupt is finished.
+ *
+ * @see ADC_REF_25
+ * @see SOLAR_ADC
+ */
+ISR(USI_OVF_vect){
+ 190:	1f 92       	push	r1
+ 192:	0f 92       	push	r0
+ 194:	0f b6       	in	r0, 0x3f	; 63
+ 196:	0f 92       	push	r0
+ 198:	11 24       	eor	r1, r1
+ 19a:	2f 93       	push	r18
+ 19c:	3f 93       	push	r19
+ 19e:	4f 93       	push	r20
+ 1a0:	5f 93       	push	r21
+ 1a2:	6f 93       	push	r22
+ 1a4:	7f 93       	push	r23
+ 1a6:	8f 93       	push	r24
+ 1a8:	9f 93       	push	r25
+ 1aa:	af 93       	push	r26
+ 1ac:	bf 93       	push	r27
+ 1ae:	ef 93       	push	r30
+ 1b0:	ff 93       	push	r31
+	data[count] = USIDR; // Data Register - currently holds input data
+ 1b2:	9f b1       	in	r25, 0x0f	; 15
+ 1b4:	80 91 6c 00 	lds	r24, 0x006C
+ 1b8:	e6 e6       	ldi	r30, 0x66	; 102
+ 1ba:	f0 e0       	ldi	r31, 0x00	; 0
+ 1bc:	e8 0f       	add	r30, r24
+ 1be:	f1 1d       	adc	r31, r1
+ 1c0:	90 83       	st	Z, r25
+	USIDR = data_out; // Set the output data to the data register
+ 1c2:	90 91 62 00 	lds	r25, 0x0062
+ 1c6:	9f b9       	out	0x0f, r25	; 15
+	
+	USISR = 1 << USIOIF; // Clear the interrupt flag
+ 1c8:	90 e4       	ldi	r25, 0x40	; 64
+ 1ca:	9e b9       	out	0x0e, r25	; 14
+	
+	if (count == 1){
+ 1cc:	81 30       	cpi	r24, 0x01	; 1
+ 1ce:	31 f4       	brne	.+12     	; 0x1dc <__vector_8+0x4c>
+		ADCSetReference(ADC_REF_25);
+ 1d0:	80 e8       	ldi	r24, 0x80	; 128
+ 1d2:	72 df       	rcall	.-284    	; 0xb8 <ADCSetReference>
+		solar_reading = ReadADC(SOLAR_ADC);
+ 1d4:	86 e0       	ldi	r24, 0x06	; 6
+ 1d6:	84 df       	rcall	.-248    	; 0xe0 <ReadADC>
+ 1d8:	80 93 65 00 	sts	0x0065, r24
+	}
+	
+	data_out = solar_reading;
+ 1dc:	80 91 65 00 	lds	r24, 0x0065
+ 1e0:	80 93 62 00 	sts	0x0062, r24
+	
+	position = data[0];
+ 1e4:	80 91 66 00 	lds	r24, 0x0066
+ 1e8:	80 93 61 00 	sts	0x0061, r24
+	count++;
+ 1ec:	80 91 6c 00 	lds	r24, 0x006C
+ 1f0:	8f 5f       	subi	r24, 0xFF	; 255
+ 1f2:	80 93 6c 00 	sts	0x006C, r24
+		
+	if (count == 5)
+ 1f6:	85 30       	cpi	r24, 0x05	; 5
+ 1f8:	21 f4       	brne	.+8      	; 0x202 <__vector_8+0x72>
+		data_out = 0xA9; // First byte out of next packet	
+ 1fa:	89 ea       	ldi	r24, 0xA9	; 169
+ 1fc:	80 93 62 00 	sts	0x0062, r24
+ 200:	04 c0       	rjmp	.+8      	; 0x20a <__vector_8+0x7a>
+	
+	if (count == 6)
+ 202:	86 30       	cpi	r24, 0x06	; 6
+ 204:	11 f4       	brne	.+4      	; 0x20a <__vector_8+0x7a>
+		count = 0;
+ 206:	10 92 6c 00 	sts	0x006C, r1
+		
+	connection = 1;
+ 20a:	81 e0       	ldi	r24, 0x01	; 1
+ 20c:	90 e0       	ldi	r25, 0x00	; 0
+ 20e:	90 93 64 00 	sts	0x0064, r25
+ 212:	80 93 63 00 	sts	0x0063, r24
+	return;
+}
+ 216:	ff 91       	pop	r31
+ 218:	ef 91       	pop	r30
+ 21a:	bf 91       	pop	r27
+ 21c:	af 91       	pop	r26
+ 21e:	9f 91       	pop	r25
+ 220:	8f 91       	pop	r24
+ 222:	7f 91       	pop	r23
+ 224:	6f 91       	pop	r22
+ 226:	5f 91       	pop	r21
+ 228:	4f 91       	pop	r20
+ 22a:	3f 91       	pop	r19
+ 22c:	2f 91       	pop	r18
+ 22e:	0f 90       	pop	r0
+ 230:	0f be       	out	0x3f, r0	; 63
+ 232:	0f 90       	pop	r0
+ 234:	1f 90       	pop	r1
+ 236:	18 95       	reti
+
+00000238 <SPI_SlaveInit>:
+
+/** 
+ * Enables the Tiny to be an SPI slave
+ */
+void SPI_SlaveInit(){
+	USICR = (1 << USIWM0) | (1 << USICS1) | (1 << USIOIE);
+ 238:	88 e5       	ldi	r24, 0x58	; 88
+ 23a:	8d b9       	out	0x0d, r24	; 13
+	
+	USISR = 1 << USIOIF; // Clear the interrupt flag, reset the counter
+ 23c:	80 e4       	ldi	r24, 0x40	; 64
+ 23e:	8e b9       	out	0x0e, r24	; 14
+}
+ 240:	08 95       	ret
+
+00000242 <findBrightestPosition>:
+ * @see SOLAR_ADC
+ * @see LOWER_BOUND
+ * @see UPPER_BOUND
+ * @see SERVO_POSITION_TIMEOUT
+ */
+void findBrightestPosition(){
+ 242:	ef 92       	push	r14
+ 244:	ff 92       	push	r15
+ 246:	1f 93       	push	r17
+ 248:	cf 93       	push	r28
+ 24a:	df 93       	push	r29
+	cli();
+ 24c:	f8 94       	cli
+	
+	uint8_t max = 0, tmp = 0;
+	uint16_t pos = 0, i;
+	
+	for(i = LOWER_BOUND; i < UPPER_BOUND; i += 20){
+ 24e:	c0 e0       	ldi	r28, 0x00	; 0
+ 250:	d0 e0       	ldi	r29, 0x00	; 0
+ */
+void findBrightestPosition(){
+	cli();
+	
+	uint8_t max = 0, tmp = 0;
+	uint16_t pos = 0, i;
+ 252:	ee 24       	eor	r14, r14
+ 254:	ff 24       	eor	r15, r15
+ * @see SERVO_POSITION_TIMEOUT
+ */
+void findBrightestPosition(){
+	cli();
+	
+	uint8_t max = 0, tmp = 0;
+ 256:	10 e0       	ldi	r17, 0x00	; 0
+	uint16_t pos = 0, i;
+	
+	for(i = LOWER_BOUND; i < UPPER_BOUND; i += 20){
+		setServoPosition(i, SERVO_POSITION_TIMEOUT);
+ 258:	8c 2f       	mov	r24, r28
+ 25a:	68 ee       	ldi	r22, 0xE8	; 232
+ 25c:	73 e0       	ldi	r23, 0x03	; 3
+ 25e:	81 d1       	rcall	.+770    	; 0x562 <setServoPosition>
+		
+		ADCSetReference(ADC_REF_25);
+ 260:	80 e8       	ldi	r24, 0x80	; 128
+ 262:	2a df       	rcall	.-428    	; 0xb8 <ADCSetReference>
+		if((tmp = ReadADC(SOLAR_ADC)) > max){
+ 264:	86 e0       	ldi	r24, 0x06	; 6
+ 266:	3c df       	rcall	.-392    	; 0xe0 <ReadADC>
+ 268:	18 17       	cp	r17, r24
+ 26a:	10 f4       	brcc	.+4      	; 0x270 <findBrightestPosition+0x2e>
+ 26c:	7e 01       	movw	r14, r28
+			max = tmp;
+ 26e:	18 2f       	mov	r17, r24
+	cli();
+	
+	uint8_t max = 0, tmp = 0;
+	uint16_t pos = 0, i;
+	
+	for(i = LOWER_BOUND; i < UPPER_BOUND; i += 20){
+ 270:	64 96       	adiw	r28, 0x14	; 20
+ 272:	81 e0       	ldi	r24, 0x01	; 1
+ 274:	c4 30       	cpi	r28, 0x04	; 4
+ 276:	d8 07       	cpc	r29, r24
+ 278:	79 f7       	brne	.-34     	; 0x258 <findBrightestPosition+0x16>
+			max = tmp;
+			pos = i;
+		}			
+	}		
+	
+	setServoPosition(pos, SERVO_POSITION_TIMEOUT);
+ 27a:	8e 2d       	mov	r24, r14
+ 27c:	68 ee       	ldi	r22, 0xE8	; 232
+ 27e:	73 e0       	ldi	r23, 0x03	; 3
+ 280:	70 d1       	rcall	.+736    	; 0x562 <setServoPosition>
+	
+	sei();
+ 282:	78 94       	sei
+}
+ 284:	df 91       	pop	r29
+ 286:	cf 91       	pop	r28
+ 288:	1f 91       	pop	r17
+ 28a:	ff 90       	pop	r15
+ 28c:	ef 90       	pop	r14
+ 28e:	08 95       	ret
+
+00000290 <main>:
+ *
+ * @see ADC_PRESCALER_4
+ * @see SERVO_POSITION_TIMEOUT
+ */
+int main (void) {
+	DDRA = 0b00000111;
+ 290:	87 e0       	ldi	r24, 0x07	; 7
+ 292:	8a bb       	out	0x1a, r24	; 26
+	DDRB = (1 << PB1) | (1 << PB3) | (1 << PB5);
+ 294:	8a e2       	ldi	r24, 0x2A	; 42
+ 296:	87 bb       	out	0x17, r24	; 23
+	
+	SetupADC(ADC_PRESCALER_4, FALSE);
+ 298:	82 e0       	ldi	r24, 0x02	; 2
+ 29a:	60 e0       	ldi	r22, 0x00	; 0
+ 29c:	1a df       	rcall	.-460    	; 0xd2 <SetupADC>
+ 	ADCEnable();
+ 29e:	00 df       	rcall	.-512    	; 0xa0 <ADCEnable>
+		
+	setupPWM(0b00000110, PWM_CHANNEL_B);
+ 2a0:	86 e0       	ldi	r24, 0x06	; 6
+ 2a2:	62 e0       	ldi	r22, 0x02	; 2
+ 2a4:	2f d0       	rcall	.+94     	; 0x304 <setupPWM>
+	
+	motorB(&PORTA, PA1, &PORTA, PA2);
+ 2a6:	8b e3       	ldi	r24, 0x3B	; 59
+ 2a8:	90 e0       	ldi	r25, 0x00	; 0
+ 2aa:	61 e0       	ldi	r22, 0x01	; 1
+ 2ac:	4b e3       	ldi	r20, 0x3B	; 59
+ 2ae:	50 e0       	ldi	r21, 0x00	; 0
+ 2b0:	22 e0       	ldi	r18, 0x02	; 2
+ 2b2:	4a d0       	rcall	.+148    	; 0x348 <motorB>
+	motorB_Stop();
+ 2b4:	00 d1       	rcall	.+512    	; 0x4b6 <motorB_Stop>
+	
+	SPI_SlaveInit();
+ 2b6:	c0 df       	rcall	.-128    	; 0x238 <SPI_SlaveInit>
+	
+	sei();
+ 2b8:	78 94       	sei
+	
+ 	USIDR = 0xA9;
+ 2ba:	89 ea       	ldi	r24, 0xA9	; 169
+ 2bc:	8f b9       	out	0x0f, r24	; 15
+  	TCNT1 = 0x00;
+ 2be:	1e bc       	out	0x2e, r1	; 46
+	
+	while(1){
+		if(connection){
+ 2c0:	80 91 63 00 	lds	r24, 0x0063
+ 2c4:	90 91 64 00 	lds	r25, 0x0064
+ 2c8:	00 97       	sbiw	r24, 0x00	; 0
+ 2ca:	a9 f0       	breq	.+42     	; 0x2f6 <main+0x66>
+			if(position != last){
+ 2cc:	80 91 61 00 	lds	r24, 0x0061
+ 2d0:	90 91 60 00 	lds	r25, 0x0060
+ 2d4:	89 17       	cp	r24, r25
+ 2d6:	79 f0       	breq	.+30     	; 0x2f6 <main+0x66>
+				if(position == 255){
+ 2d8:	8f 3f       	cpi	r24, 0xFF	; 255
+ 2da:	11 f4       	brne	.+4      	; 0x2e0 <main+0x50>
+					findBrightestPosition();
+ 2dc:	b2 df       	rcall	.-156    	; 0x242 <findBrightestPosition>
+ 2de:	07 c0       	rjmp	.+14     	; 0x2ee <main+0x5e>
+				}else{
+					cli();
+ 2e0:	f8 94       	cli
+					
+					setServoPosition(position, SERVO_POSITION_TIMEOUT);	
+ 2e2:	80 91 61 00 	lds	r24, 0x0061
+ 2e6:	68 ee       	ldi	r22, 0xE8	; 232
+ 2e8:	73 e0       	ldi	r23, 0x03	; 3
+ 2ea:	3b d1       	rcall	.+630    	; 0x562 <setServoPosition>
+					sei();		
+ 2ec:	78 94       	sei
+				}
+								
+				last = position;
+ 2ee:	80 91 61 00 	lds	r24, 0x0061
+ 2f2:	80 93 60 00 	sts	0x0060, r24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 2f6:	89 ef       	ldi	r24, 0xF9	; 249
+ 2f8:	90 e0       	ldi	r25, 0x00	; 0
+ 2fa:	01 97       	sbiw	r24, 0x01	; 1
+ 2fc:	f1 f7       	brne	.-4      	; 0x2fa <main+0x6a>
+ 2fe:	00 c0       	rjmp	.+0      	; 0x300 <main+0x70>
+ 300:	00 00       	nop
+ 302:	de cf       	rjmp	.-68     	; 0x2c0 <main+0x30>
+
+00000304 <setupPWM>:
+unsigned char* motorB_reversePort;
+unsigned char motorB_forwardPin;
+unsigned char motorB_reversePin;
+
+void setupPWM(unsigned char frequencyDivider, unsigned char channel) 
+{
+ 304:	cf 93       	push	r28
+ 306:	c6 2f       	mov	r28, r22
+	OCR1C = 0xff;
+ 308:	9f ef       	ldi	r25, 0xFF	; 255
+ 30a:	9b bd       	out	0x2b, r25	; 43
+	
+	// We need to set the TIMER1 clock devider by setting bits 0-3 of TCCR1B to bits 0-3 of freqDevide
+	maskedCopy(frequencyDivider, &TCCR1B, 0b00001111);
+ 30c:	6f e4       	ldi	r22, 0x4F	; 79
+ 30e:	70 e0       	ldi	r23, 0x00	; 0
+ 310:	4f e0       	ldi	r20, 0x0F	; 15
+ 312:	45 d1       	rcall	.+650    	; 0x59e <maskedCopy>
+	
+	TCNT1 = 0x00; // Initialize TIMER1 to 0
+ 314:	1e bc       	out	0x2e, r1	; 46
+	
+	// Channel specific stuff
+	if (channel & PWM_CHANNEL_A)
+ 316:	c0 ff       	sbrs	r28, 0
+ 318:	03 c0       	rjmp	.+6      	; 0x320 <setupPWM+0x1c>
+	{
+		TCCR1A = 0b10000010;	// Set PWM1A, and COM1A1 for PWM on PB1
+ 31a:	82 e8       	ldi	r24, 0x82	; 130
+ 31c:	80 bf       	out	0x30, r24	; 48
+		PWMA = 0; // Initialize duty cycle to 0
+ 31e:	1d bc       	out	0x2d, r1	; 45
+	}
+	
+	if (channel & PWM_CHANNEL_B)
+ 320:	c1 ff       	sbrs	r28, 1
+ 322:	03 c0       	rjmp	.+6      	; 0x32a <setupPWM+0x26>
+	{
+		TCCR1C = 0b00001001;	// Set PWM1D, and COM1D1 for PWM on PB5
+ 324:	89 e0       	ldi	r24, 0x09	; 9
+ 326:	87 bd       	out	0x27, r24	; 39
+		PWMB = 0; // Initialize duty cycle to 0
+ 328:	1a bc       	out	0x2a, r1	; 42
+	}
+}
+ 32a:	cf 91       	pop	r28
+ 32c:	08 95       	ret
+
+0000032e <motorA>:
+
+void motorA(unsigned char* forwardPort, unsigned char forwardPin, unsigned char* reversePort, unsigned char reversePin)
+{
+	motorA_forwardPort = forwardPort;
+ 32e:	90 93 77 00 	sts	0x0077, r25
+ 332:	80 93 76 00 	sts	0x0076, r24
+	motorA_reversePort = reversePort;
+ 336:	50 93 75 00 	sts	0x0075, r21
+ 33a:	40 93 74 00 	sts	0x0074, r20
+	motorA_forwardPin = forwardPin;
+ 33e:	60 93 70 00 	sts	0x0070, r22
+	motorA_reversePin = reversePin;
+ 342:	20 93 78 00 	sts	0x0078, r18
+}
+ 346:	08 95       	ret
+
+00000348 <motorB>:
+
+void motorB(unsigned char* forwardPort, unsigned char forwardPin, unsigned char* reversePort, unsigned char reversePin)
+{
+	motorB_forwardPort = forwardPort;
+ 348:	90 93 6e 00 	sts	0x006E, r25
+ 34c:	80 93 6d 00 	sts	0x006D, r24
+	motorB_reversePort = reversePort;
+ 350:	50 93 72 00 	sts	0x0072, r21
+ 354:	40 93 71 00 	sts	0x0071, r20
+	motorB_forwardPin = forwardPin;
+ 358:	60 93 6f 00 	sts	0x006F, r22
+	motorB_reversePin = reversePin;
+ 35c:	20 93 73 00 	sts	0x0073, r18
+}
+ 360:	08 95       	ret
+
+00000362 <setDutyCycleA>:
+
+void setDutyCycleA(unsigned char value) 
+{
+	PWMA = value;
+ 362:	8d bd       	out	0x2d, r24	; 45
+}
+ 364:	08 95       	ret
+
+00000366 <setDutyCycleB>:
+
+void setDutyCycleB(unsigned char value) 
+{
+	PWMB = value;
+ 366:	8a bd       	out	0x2a, r24	; 42
+}
+ 368:	08 95       	ret
+
+0000036a <motorA_Forward>:
+
+void motorA_Forward(void)
+{
+	MOTOR_FORWARD(*motorA_forwardPort, motorA_forwardPin, *motorA_reversePort, motorA_reversePin);
+ 36a:	e0 91 76 00 	lds	r30, 0x0076
+ 36e:	f0 91 77 00 	lds	r31, 0x0077
+ 372:	81 e0       	ldi	r24, 0x01	; 1
+ 374:	90 e0       	ldi	r25, 0x00	; 0
+ 376:	9c 01       	movw	r18, r24
+ 378:	00 90 70 00 	lds	r0, 0x0070
+ 37c:	02 c0       	rjmp	.+4      	; 0x382 <motorA_Forward+0x18>
+ 37e:	22 0f       	add	r18, r18
+ 380:	33 1f       	adc	r19, r19
+ 382:	0a 94       	dec	r0
+ 384:	e2 f7       	brpl	.-8      	; 0x37e <motorA_Forward+0x14>
+ 386:	30 81       	ld	r19, Z
+ 388:	23 2b       	or	r18, r19
+ 38a:	20 83       	st	Z, r18
+ 38c:	e0 91 74 00 	lds	r30, 0x0074
+ 390:	f0 91 75 00 	lds	r31, 0x0075
+ 394:	00 90 78 00 	lds	r0, 0x0078
+ 398:	02 c0       	rjmp	.+4      	; 0x39e <motorA_Forward+0x34>
+ 39a:	88 0f       	add	r24, r24
+ 39c:	99 1f       	adc	r25, r25
+ 39e:	0a 94       	dec	r0
+ 3a0:	e2 f7       	brpl	.-8      	; 0x39a <motorA_Forward+0x30>
+ 3a2:	80 95       	com	r24
+ 3a4:	90 81       	ld	r25, Z
+ 3a6:	89 23       	and	r24, r25
+ 3a8:	80 83       	st	Z, r24
+}
+ 3aa:	08 95       	ret
+
+000003ac <motorA_Reverse>:
+
+void motorA_Reverse(void)
+{
+	MOTOR_REVERSE(*motorA_forwardPort, motorA_forwardPin, *motorA_reversePort, motorA_reversePin);
+ 3ac:	e0 91 76 00 	lds	r30, 0x0076
+ 3b0:	f0 91 77 00 	lds	r31, 0x0077
+ 3b4:	81 e0       	ldi	r24, 0x01	; 1
+ 3b6:	90 e0       	ldi	r25, 0x00	; 0
+ 3b8:	9c 01       	movw	r18, r24
+ 3ba:	00 90 70 00 	lds	r0, 0x0070
+ 3be:	02 c0       	rjmp	.+4      	; 0x3c4 <motorA_Reverse+0x18>
+ 3c0:	22 0f       	add	r18, r18
+ 3c2:	33 1f       	adc	r19, r19
+ 3c4:	0a 94       	dec	r0
+ 3c6:	e2 f7       	brpl	.-8      	; 0x3c0 <motorA_Reverse+0x14>
+ 3c8:	20 95       	com	r18
+ 3ca:	30 81       	ld	r19, Z
+ 3cc:	23 23       	and	r18, r19
+ 3ce:	20 83       	st	Z, r18
+ 3d0:	e0 91 74 00 	lds	r30, 0x0074
+ 3d4:	f0 91 75 00 	lds	r31, 0x0075
+ 3d8:	00 90 78 00 	lds	r0, 0x0078
+ 3dc:	02 c0       	rjmp	.+4      	; 0x3e2 <motorA_Reverse+0x36>
+ 3de:	88 0f       	add	r24, r24
+ 3e0:	99 1f       	adc	r25, r25
+ 3e2:	0a 94       	dec	r0
+ 3e4:	e2 f7       	brpl	.-8      	; 0x3de <motorA_Reverse+0x32>
+ 3e6:	90 81       	ld	r25, Z
+ 3e8:	89 2b       	or	r24, r25
+ 3ea:	80 83       	st	Z, r24
+}
+ 3ec:	08 95       	ret
+
+000003ee <motorA_Stop>:
+
+void motorA_Stop(void)
+{
+	MOTOR_STOP(*motorA_forwardPort, motorA_forwardPin, *motorA_reversePort, motorA_reversePin);
+ 3ee:	e0 91 76 00 	lds	r30, 0x0076
+ 3f2:	f0 91 77 00 	lds	r31, 0x0077
+ 3f6:	81 e0       	ldi	r24, 0x01	; 1
+ 3f8:	90 e0       	ldi	r25, 0x00	; 0
+ 3fa:	9c 01       	movw	r18, r24
+ 3fc:	00 90 70 00 	lds	r0, 0x0070
+ 400:	02 c0       	rjmp	.+4      	; 0x406 <motorA_Stop+0x18>
+ 402:	22 0f       	add	r18, r18
+ 404:	33 1f       	adc	r19, r19
+ 406:	0a 94       	dec	r0
+ 408:	e2 f7       	brpl	.-8      	; 0x402 <motorA_Stop+0x14>
+ 40a:	20 95       	com	r18
+ 40c:	30 81       	ld	r19, Z
+ 40e:	23 23       	and	r18, r19
+ 410:	20 83       	st	Z, r18
+ 412:	e0 91 74 00 	lds	r30, 0x0074
+ 416:	f0 91 75 00 	lds	r31, 0x0075
+ 41a:	00 90 78 00 	lds	r0, 0x0078
+ 41e:	02 c0       	rjmp	.+4      	; 0x424 <motorA_Stop+0x36>
+ 420:	88 0f       	add	r24, r24
+ 422:	99 1f       	adc	r25, r25
+ 424:	0a 94       	dec	r0
+ 426:	e2 f7       	brpl	.-8      	; 0x420 <motorA_Stop+0x32>
+ 428:	80 95       	com	r24
+ 42a:	90 81       	ld	r25, Z
+ 42c:	89 23       	and	r24, r25
+ 42e:	80 83       	st	Z, r24
+}
+ 430:	08 95       	ret
+
+00000432 <motorB_Forward>:
+
+void motorB_Forward(void)
+{
+	MOTOR_FORWARD(*motorB_forwardPort, motorB_forwardPin, *motorB_reversePort, motorB_reversePin);
+ 432:	e0 91 6d 00 	lds	r30, 0x006D
+ 436:	f0 91 6e 00 	lds	r31, 0x006E
+ 43a:	81 e0       	ldi	r24, 0x01	; 1
+ 43c:	90 e0       	ldi	r25, 0x00	; 0
+ 43e:	9c 01       	movw	r18, r24
+ 440:	00 90 6f 00 	lds	r0, 0x006F
+ 444:	02 c0       	rjmp	.+4      	; 0x44a <motorB_Forward+0x18>
+ 446:	22 0f       	add	r18, r18
+ 448:	33 1f       	adc	r19, r19
+ 44a:	0a 94       	dec	r0
+ 44c:	e2 f7       	brpl	.-8      	; 0x446 <motorB_Forward+0x14>
+ 44e:	30 81       	ld	r19, Z
+ 450:	23 2b       	or	r18, r19
+ 452:	20 83       	st	Z, r18
+ 454:	e0 91 71 00 	lds	r30, 0x0071
+ 458:	f0 91 72 00 	lds	r31, 0x0072
+ 45c:	00 90 73 00 	lds	r0, 0x0073
+ 460:	02 c0       	rjmp	.+4      	; 0x466 <motorB_Forward+0x34>
+ 462:	88 0f       	add	r24, r24
+ 464:	99 1f       	adc	r25, r25
+ 466:	0a 94       	dec	r0
+ 468:	e2 f7       	brpl	.-8      	; 0x462 <motorB_Forward+0x30>
+ 46a:	80 95       	com	r24
+ 46c:	90 81       	ld	r25, Z
+ 46e:	89 23       	and	r24, r25
+ 470:	80 83       	st	Z, r24
+}
+ 472:	08 95       	ret
+
+00000474 <motorB_Reverse>:
+
+void motorB_Reverse(void)
+{
+	MOTOR_REVERSE(*motorB_forwardPort, motorB_forwardPin, *motorB_reversePort, motorB_reversePin);
+ 474:	e0 91 6d 00 	lds	r30, 0x006D
+ 478:	f0 91 6e 00 	lds	r31, 0x006E
+ 47c:	81 e0       	ldi	r24, 0x01	; 1
+ 47e:	90 e0       	ldi	r25, 0x00	; 0
+ 480:	9c 01       	movw	r18, r24
+ 482:	00 90 6f 00 	lds	r0, 0x006F
+ 486:	02 c0       	rjmp	.+4      	; 0x48c <motorB_Reverse+0x18>
+ 488:	22 0f       	add	r18, r18
+ 48a:	33 1f       	adc	r19, r19
+ 48c:	0a 94       	dec	r0
+ 48e:	e2 f7       	brpl	.-8      	; 0x488 <motorB_Reverse+0x14>
+ 490:	20 95       	com	r18
+ 492:	30 81       	ld	r19, Z
+ 494:	23 23       	and	r18, r19
+ 496:	20 83       	st	Z, r18
+ 498:	e0 91 71 00 	lds	r30, 0x0071
+ 49c:	f0 91 72 00 	lds	r31, 0x0072
+ 4a0:	00 90 73 00 	lds	r0, 0x0073
+ 4a4:	02 c0       	rjmp	.+4      	; 0x4aa <motorB_Reverse+0x36>
+ 4a6:	88 0f       	add	r24, r24
+ 4a8:	99 1f       	adc	r25, r25
+ 4aa:	0a 94       	dec	r0
+ 4ac:	e2 f7       	brpl	.-8      	; 0x4a6 <motorB_Reverse+0x32>
+ 4ae:	90 81       	ld	r25, Z
+ 4b0:	89 2b       	or	r24, r25
+ 4b2:	80 83       	st	Z, r24
+}
+ 4b4:	08 95       	ret
+
+000004b6 <motorB_Stop>:
+
+void motorB_Stop(void)
+{
+	MOTOR_STOP(*motorB_forwardPort, motorB_forwardPin, *motorB_reversePort, motorB_reversePin);
+ 4b6:	e0 91 6d 00 	lds	r30, 0x006D
+ 4ba:	f0 91 6e 00 	lds	r31, 0x006E
+ 4be:	81 e0       	ldi	r24, 0x01	; 1
+ 4c0:	90 e0       	ldi	r25, 0x00	; 0
+ 4c2:	9c 01       	movw	r18, r24
+ 4c4:	00 90 6f 00 	lds	r0, 0x006F
+ 4c8:	02 c0       	rjmp	.+4      	; 0x4ce <motorB_Stop+0x18>
+ 4ca:	22 0f       	add	r18, r18
+ 4cc:	33 1f       	adc	r19, r19
+ 4ce:	0a 94       	dec	r0
+ 4d0:	e2 f7       	brpl	.-8      	; 0x4ca <motorB_Stop+0x14>
+ 4d2:	20 95       	com	r18
+ 4d4:	30 81       	ld	r19, Z
+ 4d6:	23 23       	and	r18, r19
+ 4d8:	20 83       	st	Z, r18
+ 4da:	e0 91 71 00 	lds	r30, 0x0071
+ 4de:	f0 91 72 00 	lds	r31, 0x0072
+ 4e2:	00 90 73 00 	lds	r0, 0x0073
+ 4e6:	02 c0       	rjmp	.+4      	; 0x4ec <motorB_Stop+0x36>
+ 4e8:	88 0f       	add	r24, r24
+ 4ea:	99 1f       	adc	r25, r25
+ 4ec:	0a 94       	dec	r0
+ 4ee:	e2 f7       	brpl	.-8      	; 0x4e8 <motorB_Stop+0x32>
+ 4f0:	80 95       	com	r24
+ 4f2:	90 81       	ld	r25, Z
+ 4f4:	89 23       	and	r24, r25
+ 4f6:	80 83       	st	Z, r24
+ 4f8:	08 95       	ret
+
+000004fa <SetMotorDirection>:
+#include "motor_ctl.h"
+#include "servo_ctl.h"
+
+void SetMotorDirection(int dir)
+{
+	if (dir == CCW)
+ 4fa:	81 30       	cpi	r24, 0x01	; 1
+ 4fc:	91 05       	cpc	r25, r1
+ 4fe:	21 f4       	brne	.+8      	; 0x508 <SetMotorDirection+0xe>
+	{
+		PWMB = SERVO_SPEED;
+ 500:	8f ea       	ldi	r24, 0xAF	; 175
+ 502:	8a bd       	out	0x2a, r24	; 42
+		motorB_Forward();
+ 504:	96 df       	rcall	.-212    	; 0x432 <motorB_Forward>
+ 506:	08 95       	ret
+	}
+	else if (dir == CW)
+ 508:	82 30       	cpi	r24, 0x02	; 2
+ 50a:	91 05       	cpc	r25, r1
+ 50c:	21 f4       	brne	.+8      	; 0x516 <SetMotorDirection+0x1c>
+	{
+		PWMB = SERVO_SPEED;
+ 50e:	8f ea       	ldi	r24, 0xAF	; 175
+ 510:	8a bd       	out	0x2a, r24	; 42
+		motorB_Reverse();
+ 512:	b0 df       	rcall	.-160    	; 0x474 <motorB_Reverse>
+ 514:	08 95       	ret
+	}
+	else 
+	{
+		PWMB = 0;
+ 516:	1a bc       	out	0x2a, r1	; 42
+		motorB_Stop();
+ 518:	ce df       	rcall	.-100    	; 0x4b6 <motorB_Stop>
+ 51a:	08 95       	ret
+
+0000051c <ServoError>:
+	}
+}
+
+
+int ServoError(uint8_t destination)
+{
+ 51c:	cf 93       	push	r28
+ 51e:	c8 2f       	mov	r28, r24
+	uint8_t position;
+	
+	ADCSetReference(ADC_REF_VCC);
+ 520:	80 e0       	ldi	r24, 0x00	; 0
+ 522:	ca dd       	rcall	.-1132   	; 0xb8 <ADCSetReference>
+	position = ReadADC(POT_ADC);
+ 524:	85 e0       	ldi	r24, 0x05	; 5
+ 526:	dc dd       	rcall	.-1096   	; 0xe0 <ReadADC>
+	else if (destination < LOWER_BOUND)
+	{
+		destination = LOWER_BOUND;	// Set it to the lower bound
+	}
+		
+	return position - destination;
+ 528:	28 2f       	mov	r18, r24
+ 52a:	30 e0       	ldi	r19, 0x00	; 0
+ 52c:	c9 01       	movw	r24, r18
+ 52e:	8c 1b       	sub	r24, r28
+ 530:	91 09       	sbc	r25, r1
+}
+ 532:	cf 91       	pop	r28
+ 534:	08 95       	ret
+
+00000536 <UpdateServo>:
+
+
+void UpdateServo(uint8_t destination)
+{
+	int error = ServoError(destination);
+ 536:	f2 df       	rcall	.-28     	; 0x51c <ServoError>
+	
+	if (ABS(error) < DEADBAND)	// If the error is less than the deadband, just turn off the motor.
+ 538:	9c 01       	movw	r18, r24
+ 53a:	22 5f       	subi	r18, 0xF2	; 242
+ 53c:	3f 4f       	sbci	r19, 0xFF	; 255
+ 53e:	2d 31       	cpi	r18, 0x1D	; 29
+ 540:	31 05       	cpc	r19, r1
+ 542:	20 f4       	brcc	.+8      	; 0x54c <UpdateServo+0x16>
+	{
+		SetMotorDirection(STOP);
+ 544:	80 e0       	ldi	r24, 0x00	; 0
+ 546:	90 e0       	ldi	r25, 0x00	; 0
+ 548:	d8 df       	rcall	.-80     	; 0x4fa <SetMotorDirection>
+ 54a:	08 95       	ret
+	}
+	else if (error > 0)	// If the error is negativ, turn the servo clockwise.
+ 54c:	18 16       	cp	r1, r24
+ 54e:	19 06       	cpc	r1, r25
+ 550:	24 f4       	brge	.+8      	; 0x55a <UpdateServo+0x24>
+	{
+		SetMotorDirection(CCW);
+ 552:	81 e0       	ldi	r24, 0x01	; 1
+ 554:	90 e0       	ldi	r25, 0x00	; 0
+ 556:	d1 df       	rcall	.-94     	; 0x4fa <SetMotorDirection>
+ 558:	08 95       	ret
+	}
+	else	// Otherwise turn the servo counter-clockwise.
+	{
+		SetMotorDirection(CW);
+ 55a:	82 e0       	ldi	r24, 0x02	; 2
+ 55c:	90 e0       	ldi	r25, 0x00	; 0
+ 55e:	cd df       	rcall	.-102    	; 0x4fa <SetMotorDirection>
+ 560:	08 95       	ret
+
+00000562 <setServoPosition>:
+	}
+}
+
+
+void setServoPosition(uint8_t destination, uint16_t seekTime)
+{
+ 562:	ff 92       	push	r15
+ 564:	0f 93       	push	r16
+ 566:	1f 93       	push	r17
+ 568:	cf 93       	push	r28
+ 56a:	df 93       	push	r29
+ 56c:	f8 2e       	mov	r15, r24
+ 56e:	eb 01       	movw	r28, r22
+	uint16_t i;
+	for (i = 0; i < seekTime; i++)
+ 570:	20 97       	sbiw	r28, 0x00	; 0
+ 572:	79 f0       	breq	.+30     	; 0x592 <setServoPosition+0x30>
+ 574:	00 e0       	ldi	r16, 0x00	; 0
+ 576:	10 e0       	ldi	r17, 0x00	; 0
+	{
+		UpdateServo(destination);
+ 578:	8f 2d       	mov	r24, r15
+ 57a:	dd df       	rcall	.-70     	; 0x536 <UpdateServo>
+ 57c:	89 ef       	ldi	r24, 0xF9	; 249
+ 57e:	90 e0       	ldi	r25, 0x00	; 0
+ 580:	01 97       	sbiw	r24, 0x01	; 1
+ 582:	f1 f7       	brne	.-4      	; 0x580 <setServoPosition+0x1e>
+ 584:	00 c0       	rjmp	.+0      	; 0x586 <setServoPosition+0x24>
+ 586:	00 00       	nop
+
+
+void setServoPosition(uint8_t destination, uint16_t seekTime)
+{
+	uint16_t i;
+	for (i = 0; i < seekTime; i++)
+ 588:	0f 5f       	subi	r16, 0xFF	; 255
+ 58a:	1f 4f       	sbci	r17, 0xFF	; 255
+ 58c:	0c 17       	cp	r16, r28
+ 58e:	1d 07       	cpc	r17, r29
+ 590:	99 f7       	brne	.-26     	; 0x578 <setServoPosition+0x16>
+	{
+		UpdateServo(destination);
+		_delay_ms(1);
+	}
+ 592:	df 91       	pop	r29
+ 594:	cf 91       	pop	r28
+ 596:	1f 91       	pop	r17
+ 598:	0f 91       	pop	r16
+ 59a:	ff 90       	pop	r15
+ 59c:	08 95       	ret
+
+0000059e <maskedCopy>:
+ * @param mask mask to use while copying. 0 = masked 1 = not masked
+ * bits of dest which have a 0 in the corresponding mask position are not affected
+ * 
+ */
+
+maskedCopy (char source, char * dest, char mask) {
+ 59e:	fb 01       	movw	r30, r22
+	
+	source &= mask; // Set masked bits in source = 0
+ 5a0:	84 23       	and	r24, r20
+	*dest |= source; // Whenever there is a 1 in source, set a 1 in dest
+	
+	source |= ~mask; // Set masked bits in source = 1
+ 5a2:	40 95       	com	r20
+ */
+
+maskedCopy (char source, char * dest, char mask) {
+	
+	source &= mask; // Set masked bits in source = 0
+	*dest |= source; // Whenever there is a 1 in source, set a 1 in dest
+ 5a4:	90 81       	ld	r25, Z
+ 5a6:	49 23       	and	r20, r25
+	
+	source |= ~mask; // Set masked bits in source = 1
+	*dest &= source; // Wherever there is a 0 in source, set 0 in TCCR1B 
+ 5a8:	48 2b       	or	r20, r24
+ 5aa:	40 83       	st	Z, r20
+}
+ 5ac:	08 95       	ret
+
+000005ae <__udivmodhi4>:
+ 5ae:	aa 1b       	sub	r26, r26
+ 5b0:	bb 1b       	sub	r27, r27
+ 5b2:	51 e1       	ldi	r21, 0x11	; 17
+ 5b4:	07 c0       	rjmp	.+14     	; 0x5c4 <__udivmodhi4_ep>
+
+000005b6 <__udivmodhi4_loop>:
+ 5b6:	aa 1f       	adc	r26, r26
+ 5b8:	bb 1f       	adc	r27, r27
+ 5ba:	a6 17       	cp	r26, r22
+ 5bc:	b7 07       	cpc	r27, r23
+ 5be:	10 f0       	brcs	.+4      	; 0x5c4 <__udivmodhi4_ep>
+ 5c0:	a6 1b       	sub	r26, r22
+ 5c2:	b7 0b       	sbc	r27, r23
+
+000005c4 <__udivmodhi4_ep>:
+ 5c4:	88 1f       	adc	r24, r24
+ 5c6:	99 1f       	adc	r25, r25
+ 5c8:	5a 95       	dec	r21
+ 5ca:	a9 f7       	brne	.-22     	; 0x5b6 <__udivmodhi4_loop>
+ 5cc:	80 95       	com	r24
+ 5ce:	90 95       	com	r25
+ 5d0:	bc 01       	movw	r22, r24
+ 5d2:	cd 01       	movw	r24, r26
+ 5d4:	08 95       	ret
+
+000005d6 <_exit>:
+ 5d6:	f8 94       	cli
+
+000005d8 <__stop_program>:
+ 5d8:	ff cf       	rjmp	.-2      	; 0x5d8 <__stop_program>
