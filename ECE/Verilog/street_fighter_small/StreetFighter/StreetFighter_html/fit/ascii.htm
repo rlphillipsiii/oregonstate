@@ -1,0 +1,710 @@
+<html><body>
+<pre>
+ 
+cpldfit:  version P.15xf                            Xilinx Inc.
+                                  Fitter Report
+Design Name: StreetFighter                       Date:  6- 3-2014,  8:03PM
+Device Used: XC9572XL-10-VQ44
+Fitting Status: Successful
+
+*************************  Mapped Resource Summary  **************************
+
+Macrocells     Product Terms    Function Block   Registers      Pins           
+Used/Tot       Used/Tot         Inps Used/Tot    Used/Tot       Used/Tot       
+46 /72  ( 64%) 185 /360  ( 51%) 63 /216 ( 29%)   40 /72  ( 56%) 11 /34  ( 32%)
+
+** Function Block Resources **
+
+Function    Mcells      FB Inps     Pterms      IO          
+Block       Used/Tot    Used/Tot    Used/Tot    Used/Tot    
+FB1          18/18*      24/54       61/90       1/ 9
+FB2          12/18       16/54       35/90       4/ 9
+FB3          16/18       23/54       89/90       4/ 9
+FB4           0/18        0/54        0/90       2/ 7
+             -----       -----       -----      -----    
+             46/72       63/216     185/360     11/34 
+
+* - Resource is exhausted
+
+** Global Control Resources **
+
+Signal 'clk_system' mapped onto global clock net GCK1.
+Global output enable net(s) unused.
+Global set/reset net(s) unused.
+
+** Pin Resources **
+
+Signal Type    Required     Mapped  |  Pin Type            Used    Total 
+------------------------------------|------------------------------------
+Input         :    9           9    |  I/O              :     8      28
+Output        :    1           1    |  GCK/IO           :     1       3
+Bidirectional :    0           0    |  GTS/IO           :     2       2
+GCK           :    1           1    |  GSR/IO           :     0       1
+GTS           :    0           0    |
+GSR           :    0           0    |
+                 ----        ----
+        Total     11          11
+
+** Power Data **
+
+There are 46 macrocells in high performance mode (MCHP).
+There are 0 macrocells in low power mode (MCLP).
+End of Mapped Resource Summary
+**************************  Errors and Warnings  ***************************
+
+WARNING:Cpld - Unable to retrieve the path to the iSE Project Repository. Will
+   use the default filename of 'StreetFighter.ise'.
+INFO:Cpld - Inferring BUFG constraint for signal 'clk_system' based upon the LOC
+   constraint 'P43'. It is recommended that you declare this BUFG explicitedly
+   in your design. Note that for certain device families the output of a BUFG
+   constraint can not drive a gated clock, and the BUFG constraint will be
+   ignored.
+*************************  Summary of Mapped Logic  ************************
+
+** 1 Outputs **
+
+Signal                                        Total Total Loc     Pin  Pin     Pin     Pwr  Slew Reg Init
+Name                                          Pts   Inps          No.  Type    Use     Mode Rate State
+ctrl_out                                      2     3     FB3_5   6    I/O     O       STD  FAST 
+
+** 45 Buried Nodes **
+
+Signal                                        Total Total Loc     Pwr  Reg Init
+Name                                          Pts   Inps          Mode State
+load_override                                 2     3     FB1_1   STD  RESET
+clk_listen<0>                                 2     2     FB1_2   STD  RESET
+override_reg<11>                              3     3     FB1_3   STD  RESET
+load_state_FSM_FFd2                           3     9     FB1_4   STD  RESET
+load_state_FSM_FFd1                           3     4     FB1_5   STD  RESET
+clk_sm                                        3     8     FB1_6   STD  RESET
+clk_listen<4>                                 3     6     FB1_7   STD  RESET
+clk_listen<3>                                 3     5     FB1_8   STD  RESET
+clk_listen<2>                                 3     4     FB1_9   STD  RESET
+clk_listen<1>                                 3     3     FB1_10  STD  RESET
+override_reg<8>                               4     4     FB1_11  STD  RESET
+override_reg<10>                              4     4     FB1_12  STD  RESET
+latch_count<5>                                4     9     FB1_13  STD  RESET
+latch_count<4>                                4     8     FB1_14  STD  RESET
+latch_count<3>                                4     7     FB1_15  STD  RESET
+latch_count<1>                                4     5     FB1_16  STD  RESET
+latch_count<0>                                4     9     FB1_17  STD  RESET
+latch_count<2>                                5     9     FB1_18  STD  RESET
+override_reg<7>/override_reg<7>_SETF__$INT    2     4     FB2_7   STD  
+override_reg<0>                               2     2     FB2_8   STD  RESET
+override_reg<6>                               3     3     FB2_9   STD  RESET
+override_reg<5>                               3     3     FB2_10  STD  RESET
+override_reg<4>                               3     3     FB2_11  STD  RESET
+override_reg<3>                               3     3     FB2_12  STD  RESET
+override_reg<2>                               3     3     FB2_13  STD  RESET
+override_reg<1>                               3     3     FB2_14  STD  RESET
+override_reg<15>                              3     3     FB2_15  STD  RESET
+override_reg<13>                              3     3     FB2_16  STD  RESET
+override_reg<12>                              3     3     FB2_17  STD  RESET
+override_reg<9>                               4     4     FB2_18  STD  RESET
+override_reg<10>/override_reg<10>_RSTF        2     5     FB3_1   STD  
+completion_sync                               2     4     FB3_2   STD  RESET
+override_reg<9>/override_reg<9>_RSTF          3     5     FB3_3   STD  
+button_state_FSM_FFd4                         14    10    FB3_4   STD  RESET
+override_reg<8>/override_reg<8>_RSTF          3     5     FB3_6   STD  
+override_reg<7>                               4     7     FB3_7   STD  RESET
+override_reg<14>                              4     7     FB3_8   STD  RESET
+button_state_FSM_FFd1                         6     10    FB3_9   STD  RESET
+override_en                                   4     9     FB3_10  STD  RESET
+button_state_FSM_FFd2                         7     10    FB3_11  STD  RESET
+
+Signal                                        Total Total Loc     Pwr  Reg Init
+Name                                          Pts   Inps          Mode State
+override_reg<14>/override_reg<14>_SETF__$INT  2     4     FB3_12  STD  
+move<0>                                       8     9     FB3_13  STD  RESET
+move<2>                                       10    9     FB3_15  STD  RESET
+button_state_FSM_FFd3                         10    10    FB3_17  STD  RESET
+move<1>                                       8     9     FB3_18  STD  RESET
+
+** 10 Inputs **
+
+Signal                                        Loc     Pin  Pin     Pin     
+Name                                                  No.  Type    Use     
+clk_system                                    FB1_9   43   GCK/I/O GCK
+move_select<1>                                FB2_11  34   GTS/I/O I
+move_select<0>                                FB2_14  36   GTS/I/O I
+move_select<3>                                FB2_15  37   I/O     I
+move_select<2>                                FB2_17  38   I/O     I
+clk_ctrl                                      FB3_2   5    I/O     I
+ctrl_in                                       FB3_8   7    I/O     I
+ctrl_latch                                    FB3_11  12   I/O     I
+reset_n                                       FB4_2   19   I/O     I
+dir                                           FB4_5   20   I/O     I
+
+Legend:
+Pin No. - ~ - User Assigned
+**************************  Function Block Details  ************************
+Legend:
+Total Pt     - Total product terms used by the macrocell signal
+Imp Pt       - Product terms imported from other macrocells
+Exp Pt       - Product terms exported to other macrocells
+               in direction shown
+Unused Pt    - Unused local product terms remaining in macrocell
+Loc          - Location where logic was mapped in device
+Pin Type/Use - I  - Input             GCK - Global Clock
+               O  - Output            GTS - Global Output Enable
+              (b) - Buried macrocell  GSR - Global Set/Reset
+X            - Signal used as input to the macrocell logic.
+Pin No.      - ~  - User Assigned
+*********************************** FB1  ***********************************
+Number of function block inputs used/remaining:               24/30
+Number of signals used by logic mapping into function block:  24
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+load_override         2       0     0   3     FB1_1         (b)     (b)
+clk_listen<0>         2       0     0   3     FB1_2   39    I/O     (b)
+override_reg<11>      3       0     0   2     FB1_3         (b)     (b)
+load_state_FSM_FFd2   3       0     0   2     FB1_4         (b)     (b)
+load_state_FSM_FFd1   3       0     0   2     FB1_5   40    I/O     (b)
+clk_sm                3       0     0   2     FB1_6   41    I/O     (b)
+clk_listen<4>         3       0     0   2     FB1_7         (b)     (b)
+clk_listen<3>         3       0     0   2     FB1_8   42    I/O     (b)
+clk_listen<2>         3       0     0   2     FB1_9   43    GCK/I/O GCK
+clk_listen<1>         3       0     0   2     FB1_10        (b)     (b)
+override_reg<8>       4       0     0   1     FB1_11  44    GCK/I/O (b)
+override_reg<10>      4       0     0   1     FB1_12        (b)     (b)
+latch_count<5>        4       0     0   1     FB1_13        (b)     (b)
+latch_count<4>        4       0     0   1     FB1_14  1     GCK/I/O (b)
+latch_count<3>        4       0     0   1     FB1_15  2     I/O     (b)
+latch_count<1>        4       0     0   1     FB1_16        (b)     (b)
+latch_count<0>        4       0     0   1     FB1_17  3     I/O     (b)
+latch_count<2>        5       0     0   0     FB1_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: clk_ctrl           9: latch_count<0>       17: load_state_FSM_FFd2 
+  2: clk_listen<0>     10: latch_count<1>       18: override_en 
+  3: clk_listen<1>     11: latch_count<2>       19: override_reg<10> 
+  4: clk_listen<2>     12: latch_count<3>       20: override_reg<10>/override_reg<10>_RSTF 
+  5: clk_listen<3>     13: latch_count<4>       21: override_reg<7> 
+  6: clk_listen<4>     14: latch_count<5>       22: override_reg<8>/override_reg<8>_RSTF 
+  7: completion_sync   15: load_override        23: override_reg<9> 
+  8: ctrl_latch        16: load_state_FSM_FFd1  24: reset_n 
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+load_override        ...............XX......X................ 3
+clk_listen<0>        X......X................................ 2
+override_reg<11>     X.............X...X..................... 3
+load_state_FSM_FFd2  .XXXXX.........XXX.....X................ 9
+load_state_FSM_FFd1  .......X.......XX......X................ 4
+clk_sm               ......X.XXXXXX.........X................ 8
+clk_listen<4>        XXXXX..X................................ 6
+clk_listen<3>        XXXX...X................................ 5
+clk_listen<2>        XXX....X................................ 4
+clk_listen<1>        XX.....X................................ 3
+override_reg<8>      X.............X.....XX.................. 4
+override_reg<10>     X.............X....X..X................. 4
+latch_count<5>       .......XXXXXXX...X.....X................ 9
+latch_count<4>       .......XXXXXX....X.....X................ 8
+latch_count<3>       .......XXXXX.....X.....X................ 7
+latch_count<1>       .......XXX.......X.....X................ 5
+latch_count<0>       .......XXXXXXX...X.....X................ 9
+latch_count<2>       .......XXXXXXX...X.....X................ 9
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB2  ***********************************
+Number of function block inputs used/remaining:               16/38
+Number of signals used by logic mapping into function block:  16
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+(unused)              0       0     0   5     FB2_1         (b)     
+(unused)              0       0     0   5     FB2_2   29    I/O     
+(unused)              0       0     0   5     FB2_3         (b)     
+(unused)              0       0     0   5     FB2_4         (b)     
+(unused)              0       0     0   5     FB2_5   30    I/O     
+(unused)              0       0     0   5     FB2_6   31    I/O     
+override_reg<7>/override_reg<7>_SETF__$INT
+                      2       0     0   3     FB2_7         (b)     (b)
+override_reg<0>       2       0     0   3     FB2_8   32    I/O     (b)
+override_reg<6>       3       0     0   2     FB2_9   33    GSR/I/O (b)
+override_reg<5>       3       0     0   2     FB2_10        (b)     (b)
+override_reg<4>       3       0     0   2     FB2_11  34    GTS/I/O I
+override_reg<3>       3       0     0   2     FB2_12        (b)     (b)
+override_reg<2>       3       0     0   2     FB2_13        (b)     (b)
+override_reg<1>       3       0     0   2     FB2_14  36    GTS/I/O I
+override_reg<15>      3       0     0   2     FB2_15  37    I/O     I
+override_reg<13>      3       0     0   2     FB2_16        (b)     (b)
+override_reg<12>      3       0     0   2     FB2_17  38    I/O     I
+override_reg<9>       4       0     0   1     FB2_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: button_state_FSM_FFd1   7: override_reg<11>  12: override_reg<3> 
+  2: button_state_FSM_FFd2   8: override_reg<12>  13: override_reg<4> 
+  3: button_state_FSM_FFd4   9: override_reg<14>  14: override_reg<5> 
+  4: clk_ctrl               10: override_reg<1>   15: override_reg<8> 
+  5: load_override          11: override_reg<2>   16: override_reg<9>/override_reg<9>_RSTF 
+  6: override_reg<0>       
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+override_reg<7>/override_reg<7>_SETF__$INT 
+                     XXX.X................................... 4
+override_reg<0>      ...XX................................... 2
+override_reg<6>      ...XX........X.......................... 3
+override_reg<5>      ...XX.......X........................... 3
+override_reg<4>      ...XX......X............................ 3
+override_reg<3>      ...XX.....X............................. 3
+override_reg<2>      ...XX....X.............................. 3
+override_reg<1>      ...XXX.................................. 3
+override_reg<15>     ...XX...X............................... 3
+override_reg<13>     ...XX..X................................ 3
+override_reg<12>     ...XX.X................................. 3
+override_reg<9>      ...XX.........XX........................ 4
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB3  ***********************************
+Number of function block inputs used/remaining:               23/31
+Number of signals used by logic mapping into function block:  23
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+override_reg<10>/override_reg<10>_RSTF
+                      2       0   /\3   0     FB3_1         (b)     (b)
+completion_sync       2       0   \/2   1     FB3_2   5     I/O     I
+override_reg<9>/override_reg<9>_RSTF
+                      3       2<- \/4   0     FB3_3         (b)     (b)
+button_state_FSM_FFd4
+                     14       9<-   0   0     FB3_4         (b)     (b)
+ctrl_out              2       2<- /\5   0     FB3_5   6     I/O     O
+override_reg<8>/override_reg<8>_RSTF
+                      3       0   /\2   0     FB3_6         (b)     (b)
+override_reg<7>       4       0   \/1   0     FB3_7         (b)     (b)
+override_reg<14>      4       1<- \/2   0     FB3_8   7     I/O     I
+button_state_FSM_FFd1
+                      6       2<- \/1   0     FB3_9   8     I/O     (b)
+override_en           4       1<- \/2   0     FB3_10        (b)     (b)
+button_state_FSM_FFd2
+                      7       2<-   0   0     FB3_11  12    I/O     I
+override_reg<14>/override_reg<14>_SETF__$INT
+                      2       0   \/3   0     FB3_12        (b)     (b)
+move<0>               8       3<-   0   0     FB3_13        (b)     (b)
+(unused)              0       0   \/5   0     FB3_14  13    I/O     (b)
+move<2>              10       5<-   0   0     FB3_15  14    I/O     (b)
+(unused)              0       0   \/5   0     FB3_16  18    I/O     (b)
+button_state_FSM_FFd3
+                     10       5<-   0   0     FB3_17  16    I/O     (b)
+move<1>               8       3<-   0   0     FB3_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: button_state_FSM_FFd1   9: load_override     17: override_en 
+  2: button_state_FSM_FFd2  10: move<0>           18: override_reg<13> 
+  3: button_state_FSM_FFd3  11: move<1>           19: override_reg<14>/override_reg<14>_SETF__$INT 
+  4: button_state_FSM_FFd4  12: move<2>           20: override_reg<15> 
+  5: clk_ctrl               13: move_select<0>    21: override_reg<6> 
+  6: clk_sm                 14: move_select<1>    22: override_reg<7>/override_reg<7>_SETF__$INT 
+  7: ctrl_in                15: move_select<2>    23: reset_n 
+  8: dir                    16: move_select<3>   
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+override_reg<10>/override_reg<10>_RSTF 
+                     XXXX....X............................... 5
+completion_sync      XX...X................X................. 4
+override_reg<9>/override_reg<9>_RSTF 
+                     XXXX....X............................... 5
+button_state_FSM_FFd4 
+                     XXXX.X.X.XXX..........X................. 10
+ctrl_out             ......X.........X..X.................... 3
+override_reg<8>/override_reg<8>_RSTF 
+                     XXXX....X............................... 5
+override_reg<7>      XX.XX...X...........XX.................. 7
+override_reg<14>     XX.XX...X........XX..................... 7
+button_state_FSM_FFd1 
+                     XXXX.X.X.XXX..........X................. 10
+override_en          XXXX.....XXX....X.....X................. 9
+button_state_FSM_FFd2 
+                     XXXX.X.X.XXX..........X................. 10
+override_reg<14>/override_reg<14>_SETF__$INT 
+                     XX.X....X............................... 4
+move<0>              XX.......X..XXXXX.....X................. 9
+move<2>              XX.........XXXXXX.....X................. 9
+button_state_FSM_FFd3 
+                     XXXX.X.X.XXX..........X................. 10
+move<1>              XX........X.XXXXX.....X................. 9
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB4  ***********************************
+Number of function block inputs used/remaining:               0/54
+Number of signals used by logic mapping into function block:  0
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+(unused)              0       0     0   5     FB4_1         (b)     
+(unused)              0       0     0   5     FB4_2   19    I/O     I
+(unused)              0       0     0   5     FB4_3         (b)     
+(unused)              0       0     0   5     FB4_4         (b)     
+(unused)              0       0     0   5     FB4_5   20    I/O     I
+(unused)              0       0     0   5     FB4_6         (b)     
+(unused)              0       0     0   5     FB4_7         (b)     
+(unused)              0       0     0   5     FB4_8   21    I/O     
+(unused)              0       0     0   5     FB4_9         (b)     
+(unused)              0       0     0   5     FB4_10        (b)     
+(unused)              0       0     0   5     FB4_11  22    I/O     
+(unused)              0       0     0   5     FB4_12        (b)     
+(unused)              0       0     0   5     FB4_13        (b)     
+(unused)              0       0     0   5     FB4_14  23    I/O     
+(unused)              0       0     0   5     FB4_15  27    I/O     
+(unused)              0       0     0   5     FB4_16        (b)     
+(unused)              0       0     0   5     FB4_17  28    I/O     
+(unused)              0       0     0   5     FB4_18        (b)     
+*******************************  Equations  ********************************
+
+********** Mapped Logic **********
+
+
+
+
+
+FDCPE_button_state_FSM_FFd1: FDCPE port map (button_state_FSM_FFd1,button_state_FSM_FFd1_D,clk_sm,NOT reset_n,'0');
+button_state_FSM_FFd1_D <= ((button_state_FSM_FFd2)
+	OR (NOT move(0) AND move(1) AND NOT move(2) AND dir AND 
+	button_state_FSM_FFd4 AND NOT button_state_FSM_FFd1)
+	OR (NOT move(0) AND move(1) AND NOT move(2) AND NOT dir AND 
+	NOT button_state_FSM_FFd4 AND NOT button_state_FSM_FFd1)
+	OR (NOT button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1));
+
+FDCPE_button_state_FSM_FFd2: FDCPE port map (button_state_FSM_FFd2,button_state_FSM_FFd2_D,clk_sm,NOT reset_n,'0');
+button_state_FSM_FFd2_D <= ((NOT move(0) AND move(1) AND NOT move(2) AND dir AND 
+	button_state_FSM_FFd4 AND NOT button_state_FSM_FFd2)
+	OR (NOT move(0) AND move(1) AND NOT move(2) AND NOT dir AND 
+	NOT button_state_FSM_FFd4 AND NOT button_state_FSM_FFd2 AND button_state_FSM_FFd3)
+	OR (NOT button_state_FSM_FFd2 AND button_state_FSM_FFd1)
+	OR (button_state_FSM_FFd4 AND NOT button_state_FSM_FFd2 AND 
+	NOT button_state_FSM_FFd3)
+	OR (move(0) AND move(1) AND NOT move(2) AND 
+	NOT button_state_FSM_FFd2 AND NOT button_state_FSM_FFd3));
+
+FDCPE_button_state_FSM_FFd3: FDCPE port map (button_state_FSM_FFd3,button_state_FSM_FFd3_D,clk_sm,NOT reset_n,'0');
+button_state_FSM_FFd3_D <= ((move(2) AND button_state_FSM_FFd2 AND 
+	button_state_FSM_FFd3)
+	OR (button_state_FSM_FFd4 AND NOT button_state_FSM_FFd2 AND 
+	NOT button_state_FSM_FFd1)
+	OR (dir AND button_state_FSM_FFd4 AND 
+	button_state_FSM_FFd2 AND button_state_FSM_FFd3)
+	OR (NOT dir AND NOT button_state_FSM_FFd4 AND 
+	button_state_FSM_FFd2 AND button_state_FSM_FFd3)
+	OR (NOT move(0) AND move(1) AND NOT move(2) AND 
+	NOT button_state_FSM_FFd2 AND NOT button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+	OR (move(0) AND button_state_FSM_FFd2 AND 
+	button_state_FSM_FFd3)
+	OR (NOT move(1) AND button_state_FSM_FFd2 AND 
+	button_state_FSM_FFd3)
+	OR (NOT move(0) AND move(1) AND NOT move(2) AND NOT dir AND 
+	NOT button_state_FSM_FFd2 AND NOT button_state_FSM_FFd1));
+
+FDCPE_button_state_FSM_FFd4: FDCPE port map (button_state_FSM_FFd4,button_state_FSM_FFd4_D,clk_sm,NOT reset_n,'0');
+button_state_FSM_FFd4_D <= ((NOT button_state_FSM_FFd4 AND button_state_FSM_FFd2 AND 
+	button_state_FSM_FFd3)
+	OR (button_state_FSM_FFd2 AND NOT button_state_FSM_FFd3 AND 
+	NOT button_state_FSM_FFd1)
+	OR (move(1) AND NOT move(2) AND dir AND NOT button_state_FSM_FFd3 AND 
+	NOT button_state_FSM_FFd1)
+	OR (move(2) AND dir AND button_state_FSM_FFd4 AND 
+	NOT button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+	OR (button_state_FSM_FFd4 AND button_state_FSM_FFd2 AND 
+	NOT button_state_FSM_FFd3)
+	OR (move(2) AND NOT button_state_FSM_FFd2 AND 
+	button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+	OR (move(0) AND NOT move(1) AND NOT button_state_FSM_FFd2 AND 
+	button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+	OR (NOT move(1) AND NOT move(2) AND NOT button_state_FSM_FFd4 AND 
+	NOT button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+	OR (NOT move(0) AND move(1) AND NOT dir AND NOT button_state_FSM_FFd4 AND 
+	button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+	OR (NOT move(0) AND NOT move(2) AND dir AND NOT button_state_FSM_FFd3 AND 
+	NOT button_state_FSM_FFd1)
+	OR (move(0) AND NOT move(1) AND NOT move(2) AND NOT dir AND 
+	NOT button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+	OR (NOT move(0) AND move(1) AND NOT move(2) AND NOT dir AND 
+	button_state_FSM_FFd2 AND button_state_FSM_FFd3));
+
+FTCPE_clk_listen0: FTCPE port map (clk_listen(0),'1',clk_ctrl,ctrl_latch,'0');
+
+FTCPE_clk_listen1: FTCPE port map (clk_listen(1),clk_listen(0),clk_ctrl,ctrl_latch,'0');
+
+FTCPE_clk_listen2: FTCPE port map (clk_listen(2),clk_listen_T(2),clk_ctrl,ctrl_latch,'0');
+clk_listen_T(2) <= (clk_listen(0) AND clk_listen(1));
+
+FTCPE_clk_listen3: FTCPE port map (clk_listen(3),clk_listen_T(3),clk_ctrl,ctrl_latch,'0');
+clk_listen_T(3) <= (clk_listen(0) AND clk_listen(1) AND clk_listen(2));
+
+FTCPE_clk_listen4: FTCPE port map (clk_listen(4),clk_listen_T(4),clk_ctrl,ctrl_latch,'0');
+clk_listen_T(4) <= (clk_listen(0) AND clk_listen(1) AND clk_listen(2) AND 
+	clk_listen(3));
+
+FDCPE_clk_sm: FDCPE port map (clk_sm,clk_sm_D,clk_system,NOT reset_n,'0');
+clk_sm_D <= ((completion_sync)
+	OR (NOT latch_count(0) AND NOT latch_count(1) AND latch_count(2) AND 
+	NOT latch_count(3) AND NOT latch_count(4) AND NOT latch_count(5)));
+
+FDCPE_completion_sync: FDCPE port map (completion_sync,completion_sync_D,clk_system,NOT reset_n,'0');
+completion_sync_D <= (button_state_FSM_FFd2 AND button_state_FSM_FFd1 AND 
+	NOT clk_sm);
+
+
+ctrl_out <= ((override_en AND override_reg(15))
+	OR (NOT override_en AND ctrl_in));
+
+FTCPE_latch_count0: FTCPE port map (latch_count(0),latch_count_T(0),ctrl_latch,NOT reset_n,'0');
+latch_count_T(0) <= ((NOT override_en AND NOT latch_count(0))
+	OR (NOT latch_count(0) AND NOT latch_count(1) AND latch_count(2) AND 
+	NOT latch_count(3) AND NOT latch_count(4) AND NOT latch_count(5)));
+
+FDCPE_latch_count1: FDCPE port map (latch_count(1),latch_count_D(1),ctrl_latch,NOT reset_n,'0');
+latch_count_D(1) <= ((override_en AND latch_count(0) AND NOT latch_count(1))
+	OR (override_en AND NOT latch_count(0) AND latch_count(1)));
+
+FTCPE_latch_count2: FTCPE port map (latch_count(2),latch_count_T(2),ctrl_latch,NOT reset_n,'0');
+latch_count_T(2) <= ((NOT override_en AND latch_count(2))
+	OR (override_en AND latch_count(0) AND latch_count(1))
+	OR (NOT latch_count(0) AND NOT latch_count(1) AND latch_count(2) AND 
+	NOT latch_count(3) AND NOT latch_count(4) AND NOT latch_count(5)));
+
+FTCPE_latch_count3: FTCPE port map (latch_count(3),latch_count_T(3),ctrl_latch,NOT reset_n,'0');
+latch_count_T(3) <= ((NOT override_en AND latch_count(3))
+	OR (override_en AND latch_count(0) AND latch_count(1) AND 
+	latch_count(2)));
+
+FTCPE_latch_count4: FTCPE port map (latch_count(4),latch_count_T(4),ctrl_latch,NOT reset_n,'0');
+latch_count_T(4) <= ((NOT override_en AND latch_count(4))
+	OR (override_en AND latch_count(0) AND latch_count(1) AND 
+	latch_count(2) AND latch_count(3)));
+
+FTCPE_latch_count5: FTCPE port map (latch_count(5),latch_count_T(5),ctrl_latch,NOT reset_n,'0');
+latch_count_T(5) <= ((NOT override_en AND latch_count(5))
+	OR (override_en AND latch_count(0) AND latch_count(1) AND 
+	latch_count(2) AND latch_count(3) AND latch_count(4)));
+
+FDCPE_load_override: FDCPE port map (load_override,load_override_D,clk_system,'0',NOT reset_n);
+load_override_D <= (NOT load_state_FSM_FFd2 AND load_state_FSM_FFd1);
+
+FDCPE_load_state_FSM_FFd1: FDCPE port map (load_state_FSM_FFd1,load_state_FSM_FFd1_D,clk_system,NOT reset_n,'0');
+load_state_FSM_FFd1_D <= ((ctrl_latch AND load_state_FSM_FFd2)
+	OR (load_state_FSM_FFd2 AND load_state_FSM_FFd1));
+
+FDCPE_load_state_FSM_FFd2: FDCPE port map (load_state_FSM_FFd2,load_state_FSM_FFd2_D,clk_system,NOT reset_n,'0');
+load_state_FSM_FFd2_D <= ((NOT override_en AND NOT load_state_FSM_FFd2)
+	OR (NOT clk_listen(0) AND load_state_FSM_FFd2 AND 
+	NOT clk_listen(1) AND NOT clk_listen(2) AND NOT clk_listen(3) AND 
+	load_state_FSM_FFd1 AND clk_listen(4)));
+
+FTCPE_move0: FTCPE port map (move(0),move_T(0),clk_system,NOT reset_n,'0');
+move_T(0) <= ((NOT move(0) AND NOT override_en AND NOT button_state_FSM_FFd2 AND 
+	move_select(1) AND move_select(0) AND NOT move_select(3) AND move_select(2))
+	OR (NOT move(0) AND NOT override_en AND NOT button_state_FSM_FFd1 AND 
+	move_select(1) AND move_select(0) AND NOT move_select(3) AND move_select(2))
+	OR (NOT move(0) AND NOT override_en AND NOT button_state_FSM_FFd1 AND 
+	NOT move_select(1) AND move_select(0) AND move_select(3) AND move_select(2))
+	OR (move(0) AND button_state_FSM_FFd2 AND 
+	button_state_FSM_FFd1)
+	OR (move(0) AND NOT override_en AND move_select(1) AND 
+	move_select(0) AND move_select(3) AND NOT move_select(2))
+	OR (move(0) AND NOT override_en AND move_select(1) AND 
+	NOT move_select(0) AND move_select(3) AND move_select(2))
+	OR (NOT move(0) AND NOT override_en AND NOT button_state_FSM_FFd2 AND 
+	NOT move_select(1) AND move_select(0) AND move_select(3) AND move_select(2)));
+
+FTCPE_move1: FTCPE port map (move(1),move_T(1),clk_system,NOT reset_n,'0');
+move_T(1) <= ((NOT move(1) AND NOT override_en AND NOT button_state_FSM_FFd2 AND 
+	move_select(1) AND move_select(0) AND NOT move_select(3) AND move_select(2))
+	OR (NOT move(1) AND NOT override_en AND NOT button_state_FSM_FFd1 AND 
+	move_select(1) AND move_select(0) AND move_select(3) AND NOT move_select(2))
+	OR (NOT move(1) AND NOT override_en AND NOT button_state_FSM_FFd1 AND 
+	move_select(1) AND move_select(0) AND NOT move_select(3) AND move_select(2))
+	OR (move(1) AND button_state_FSM_FFd2 AND 
+	button_state_FSM_FFd1)
+	OR (move(1) AND NOT override_en AND move_select(1) AND 
+	NOT move_select(0) AND move_select(3) AND move_select(2))
+	OR (move(1) AND NOT override_en AND NOT move_select(1) AND 
+	move_select(0) AND move_select(3) AND move_select(2))
+	OR (NOT move(1) AND NOT override_en AND NOT button_state_FSM_FFd2 AND 
+	move_select(1) AND move_select(0) AND move_select(3) AND NOT move_select(2)));
+
+FDCPE_move2: FDCPE port map (move(2),move_D(2),clk_system,'0',NOT reset_n);
+move_D(2) <= ((move(2) AND override_en)
+	OR (button_state_FSM_FFd2 AND button_state_FSM_FFd1)
+	OR (move(2) AND NOT move_select(1) AND NOT move_select(3))
+	OR (move(2) AND NOT move_select(1) AND NOT move_select(2))
+	OR (move(2) AND NOT move_select(3) AND NOT move_select(2))
+	OR (move(2) AND NOT move_select(1) AND NOT move_select(0))
+	OR (move(2) AND NOT move_select(0) AND NOT move_select(3))
+	OR (move(2) AND NOT move_select(0) AND NOT move_select(2))
+	OR (move(2) AND move_select(1) AND move_select(0) AND 
+	move_select(3) AND move_select(2)));
+
+FDCPE_override_en: FDCPE port map (override_en,override_en_D,clk_system,NOT reset_n,'0');
+override_en_D <= ((NOT move(0) AND NOT move(1) AND move(2) AND NOT override_en AND 
+	NOT button_state_FSM_FFd1)
+	OR (NOT button_state_FSM_FFd4 AND button_state_FSM_FFd2 AND 
+	NOT button_state_FSM_FFd3 AND button_state_FSM_FFd1)
+	OR (NOT move(0) AND NOT move(1) AND move(2) AND NOT override_en AND 
+	NOT button_state_FSM_FFd2));
+
+FDCPE_override_reg0: FDCPE port map (override_reg(0),'1',clk_ctrl,'0',NOT load_override);
+
+FDCPE_override_reg1: FDCPE port map (override_reg(1),override_reg(0),clk_ctrl,'0',NOT load_override);
+
+FDCPE_override_reg2: FDCPE port map (override_reg(2),override_reg(1),clk_ctrl,'0',NOT load_override);
+
+FDCPE_override_reg3: FDCPE port map (override_reg(3),override_reg(2),clk_ctrl,'0',NOT load_override);
+
+FDCPE_override_reg4: FDCPE port map (override_reg(4),override_reg(3),clk_ctrl,'0',NOT load_override);
+
+FDCPE_override_reg5: FDCPE port map (override_reg(5),override_reg(4),clk_ctrl,'0',NOT load_override);
+
+FDCPE_override_reg6: FDCPE port map (override_reg(6),override_reg(5),clk_ctrl,'0',NOT load_override);
+
+
+override_reg(7)/override_reg(7)_SETF__$INT <= ((load_override)
+	OR (button_state_FSM_FFd4 AND NOT button_state_FSM_FFd2 AND 
+	button_state_FSM_FFd1));
+
+FDCPE_override_reg7: FDCPE port map (override_reg(7),override_reg(6),clk_ctrl,override_reg_CLR(7),NOT override_reg(7)/override_reg(7)_SETF__$INT);
+override_reg_CLR(7) <= (button_state_FSM_FFd4 AND NOT load_override AND 
+	NOT button_state_FSM_FFd2 AND button_state_FSM_FFd1);
+
+
+override_reg(8)/override_reg(8)_RSTF <= ((button_state_FSM_FFd4 AND NOT load_override AND 
+	NOT button_state_FSM_FFd2 AND button_state_FSM_FFd3)
+	OR (NOT button_state_FSM_FFd4 AND NOT load_override AND 
+	button_state_FSM_FFd2 AND NOT button_state_FSM_FFd1)
+	OR (NOT load_override AND NOT button_state_FSM_FFd2 AND 
+	button_state_FSM_FFd3 AND button_state_FSM_FFd1));
+
+FDCPE_override_reg8: FDCPE port map (override_reg(8),override_reg(7),clk_ctrl,override_reg(8)/override_reg(8)_RSTF,override_reg_PRE(8));
+override_reg_PRE(8) <= (NOT load_override AND 
+	NOT override_reg(8)/override_reg(8)_RSTF);
+
+
+override_reg(9)/override_reg(9)_RSTF <= ((NOT load_override AND NOT button_state_FSM_FFd2 AND 
+	NOT button_state_FSM_FFd3 AND button_state_FSM_FFd1)
+	OR (NOT button_state_FSM_FFd4 AND NOT load_override AND 
+	NOT button_state_FSM_FFd2 AND button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+	OR (button_state_FSM_FFd4 AND NOT load_override AND 
+	button_state_FSM_FFd2 AND NOT button_state_FSM_FFd1));
+
+FDCPE_override_reg9: FDCPE port map (override_reg(9),override_reg(8),clk_ctrl,override_reg(9)/override_reg(9)_RSTF,override_reg_PRE(9));
+override_reg_PRE(9) <= (NOT load_override AND 
+	NOT override_reg(9)/override_reg(9)_RSTF);
+
+FDCPE_override_reg10: FDCPE port map (override_reg(10),override_reg(9),clk_ctrl,override_reg(10)/override_reg(10)_RSTF,override_reg_PRE(10));
+override_reg_PRE(10) <= (NOT load_override AND 
+	NOT override_reg(10)/override_reg(10)_RSTF);
+
+
+override_reg(10)/override_reg(10)_RSTF <= ((NOT load_override AND button_state_FSM_FFd2 AND 
+	button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+	OR (button_state_FSM_FFd4 AND NOT load_override AND 
+	NOT button_state_FSM_FFd2 AND NOT button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1));
+
+FDCPE_override_reg11: FDCPE port map (override_reg(11),override_reg(10),clk_ctrl,'0',NOT load_override);
+
+FDCPE_override_reg12: FDCPE port map (override_reg(12),override_reg(11),clk_ctrl,'0',NOT load_override);
+
+FDCPE_override_reg13: FDCPE port map (override_reg(13),override_reg(12),clk_ctrl,'0',NOT load_override);
+
+
+override_reg(14)/override_reg(14)_SETF__$INT <= ((load_override)
+	OR (NOT button_state_FSM_FFd4 AND NOT button_state_FSM_FFd2 AND 
+	button_state_FSM_FFd1));
+
+FDCPE_override_reg14: FDCPE port map (override_reg(14),override_reg(13),clk_ctrl,override_reg_CLR(14),NOT override_reg(14)/override_reg(14)_SETF__$INT);
+override_reg_CLR(14) <= (NOT button_state_FSM_FFd4 AND NOT load_override AND 
+	NOT button_state_FSM_FFd2 AND button_state_FSM_FFd1);
+
+FDCPE_override_reg15: FDCPE port map (override_reg(15),override_reg(14),clk_ctrl,'0',NOT load_override);
+
+Register Legend:
+ FDCPE (Q,D,C,CLR,PRE,CE); 
+ FTCPE (Q,D,C,CLR,PRE,CE); 
+ LDCP  (Q,D,G,CLR,PRE); 
+
+******************************  Device Pin Out *****************************
+
+Device : XC9572XL-10-VQ44
+
+
+   --------------------------------  
+  /44 43 42 41 40 39 38 37 36 35 34 \
+ | 1                             33 | 
+ | 2                             32 | 
+ | 3                             31 | 
+ | 4                             30 | 
+ | 5        XC9572XL-10-VQ44     29 | 
+ | 6                             28 | 
+ | 7                             27 | 
+ | 8                             26 | 
+ | 9                             25 | 
+ | 10                            24 | 
+ | 11                            23 | 
+ \ 12 13 14 15 16 17 18 19 20 21 22 /
+   --------------------------------  
+
+
+Pin Signal                         Pin Signal                        
+No. Name                           No. Name                          
+  1 KPR                              23 KPR                           
+  2 KPR                              24 TDO                           
+  3 KPR                              25 GND                           
+  4 GND                              26 VCC                           
+  5 clk_ctrl                         27 KPR                           
+  6 ctrl_out                         28 KPR                           
+  7 ctrl_in                          29 KPR                           
+  8 KPR                              30 KPR                           
+  9 TDI                              31 KPR                           
+ 10 TMS                              32 KPR                           
+ 11 TCK                              33 KPR                           
+ 12 ctrl_latch                       34 move_select<1>                
+ 13 KPR                              35 VCC                           
+ 14 KPR                              36 move_select<0>                
+ 15 VCC                              37 move_select<3>                
+ 16 KPR                              38 move_select<2>                
+ 17 GND                              39 KPR                           
+ 18 KPR                              40 KPR                           
+ 19 reset_n                          41 KPR                           
+ 20 dir                              42 KPR                           
+ 21 KPR                              43 clk_system                    
+ 22 KPR                              44 KPR                           
+
+
+Legend :  NC  = Not Connected, unbonded pin
+         PGND = Unused I/O configured as additional Ground pin
+         TIE  = Unused I/O floating -- must tie to VCC, GND or other signal
+         KPR  = Unused I/O with weak keeper (leave unconnected)
+         VCC  = Dedicated Power Pin
+         GND  = Dedicated Ground Pin
+         TDI  = Test Data In, JTAG pin
+         TDO  = Test Data Out, JTAG pin
+         TCK  = Test Clock, JTAG pin
+         TMS  = Test Mode Select, JTAG pin
+  PROHIBITED  = User reserved pin
+****************************  Compiler Options  ****************************
+
+Following is a list of all global compiler options used by the fitter run.
+
+Device(s) Specified                         : xc9572xl-10-VQ44
+Optimization Method                         : SPEED
+Multi-Level Logic Optimization              : ON
+Ignore Timing Specifications                : OFF
+Default Register Power Up Value             : LOW
+Keep User Location Constraints              : ON
+What-You-See-Is-What-You-Get                : OFF
+Exhaustive Fitting                          : OFF
+Keep Unused Inputs                          : OFF
+Slew Rate                                   : FAST
+Power Mode                                  : STD
+Ground on Unused IOs                        : OFF
+Set I/O Pin Termination                     : KEEPER
+Global Clock Optimization                   : ON
+Global Set/Reset Optimization               : ON
+Global Ouput Enable Optimization            : ON
+Input Limit                                 : 54
+Pterm Limit                                 : 25
+</pre>
+<form><span class="pgRef"><table width="90%" align="center"><tr>
+<td align="left"><input type="button" onclick="javascript:parent.leftnav.showTop()" onmouseover="window.status='goto top of page'; return true;" onmouseout="window.status=''" value="back to top"></td>
+<td align="right"><input type="button" onclick="window.print()" onmouseover="window.status='print page'; return true;" onmouseout="window.status=''" value="print page"></td>
+</tr></table></span></form>
+</body></html>

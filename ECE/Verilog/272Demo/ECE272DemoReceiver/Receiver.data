@@ -1,0 +1,60 @@
+MODELDATA
+MODELDATA_VERSION "v1998.8"
+DESIGN "Receiver";
+
+/* port drive, load, max capacitance and max transition in data file */
+PORTDATA
+Reset_In: MAXTRANS(0.0);
+Clk_In: MAXTRANS(0.0);
+Serial_In: MAXTRANS(0.0);
+Ldir: MAXTRANS(0.0);
+Len: MAXTRANS(0.0);
+Rdir: MAXTRANS(0.0);
+Ren: MAXTRANS(0.0);
+ENDPORTDATA
+
+/* timing arc data */
+TIMINGDATA
+
+ARCDATA
+Clk_In_Ldir_delay:
+CELL_RISE(scalar) {
+  VALUES("29.3");
+}
+CELL_FALL(scalar) {
+  VALUES("29.3");
+}
+ENDARCDATA
+
+ARCDATA
+Clk_In_Len_delay:
+CELL_RISE(scalar) {
+  VALUES("29.3");
+}
+CELL_FALL(scalar) {
+  VALUES("29.3");
+}
+ENDARCDATA
+
+ARCDATA
+Clk_In_Rdir_delay:
+CELL_RISE(scalar) {
+  VALUES("30.3");
+}
+CELL_FALL(scalar) {
+  VALUES("30.3");
+}
+ENDARCDATA
+
+ARCDATA
+Clk_In_Ren_delay:
+CELL_RISE(scalar) {
+  VALUES("29.3");
+}
+CELL_FALL(scalar) {
+  VALUES("29.3");
+}
+ENDARCDATA
+
+ENDTIMINGDATA
+ENDMODELDATA

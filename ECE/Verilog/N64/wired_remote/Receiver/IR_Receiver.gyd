@@ -1,0 +1,32 @@
+Pin Freeze File:  version P.15xf
+
+9572XL44VQ XC9572XL-10-VQ44
+Global_Reset S:PIN36
+Serial_In S:PIN32
+Clk S:PIN43
+Ldir S:PIN40
+Len S:PIN39
+Rdir S:PIN42
+Ren S:PIN41
+clock S:PIN18
+ff_latch S:PIN14
+go S:PIN16
+shift S:PIN13
+
+
+;The remaining section of the .gyd file is for documentation purposes only.
+;It shows where your internal equations were placed in the last successful fit.
+
+PARTITION FB1_2 Len_OBUF
+PARTITION FB1_5 Ldir_OBUF Ren_OBUF
+PARTITION FB1_8 Rdir_OBUF
+PARTITION FB1_14 shift_out<3> shift_out<2> shift_out<1> IRL/state_FSM_FFd4
+		 IRL/state_FSM_FFd3
+PARTITION FB2_14 go_OBUF/go_OBUF_D2__$INT IRL/state_FSM_FFd7 IRL/state_FSM_FFd6 IRL/state_FSM_FFd5
+		 IRL/state_FSM_FFd8
+PARTITION FB3_14 shift_OBUF ff_latch_OBUF clock_OBUF$BUF0 go_OBUF
+		
+
+PARTITION FB4_14 TBC/count<2> TBC/count<0> IRL/state_FSM_FFd2 IRL/state_FSM_FFd1
+		 TBC/count<1>
+

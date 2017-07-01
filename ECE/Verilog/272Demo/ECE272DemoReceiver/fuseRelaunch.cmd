@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "uni9000_ver" -lib "aim_ver" -lib "cpld_ver" -lib "xilinxcorelib_ver" -o "C:/Users/Robert/Documents/ECE272DemoReceiver/RecieverTestWtestpoints_isim_beh.exe" -prj "C:/Users/Robert/Documents/ECE272DemoReceiver/RecieverTestWtestpoints_beh.prj" "RecieverTestWtestpoints" "work.glbl" 

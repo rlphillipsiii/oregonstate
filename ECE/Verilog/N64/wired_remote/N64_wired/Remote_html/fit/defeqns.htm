@@ -1,0 +1,356 @@
+<html><head><link type='text/css' href='style.css' rel='stylesheet'></head><body class='pgBgnd'>
+<h3 align='center'>Equations</h3>
+<table width='90%' align='center' border='1' cellpadding='0' cellspacing='0'>
+<tr><td>
+</td></tr><tr><td>
+********** Mapped Logic **********
+</td></tr><tr><td>
+FTCPE_Clock_2: FTCPE port map (Clock_2,'1',Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FTCPE_Clock_4: FTCPE port map (Clock_4,'1',Clock_2,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FTCPE_Clock_8: FTCPE port map (Clock_8,'1',Clock_4,NOT Global_Reset,'0');
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+FTCPE_IOS/count0: FTCPE port map (IOS/count(0),'1',Clock_4,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FTCPE_IOS/count1: FTCPE port map (IOS/count(1),IOS/count(0),Clock_4,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FTCPE_IOS/count2: FTCPE port map (IOS/count(2),IOS/count_T(2),Clock_4,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IOS/count_T(2) <= (IOS/count(1) AND IOS/count(0));
+</td></tr><tr><td>
+FTCPE_IOS/count3: FTCPE port map (IOS/count(3),IOS/count_T(3),Clock_4,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IOS/count_T(3) <= (IOS/count(1) AND IOS/count(2) AND IOS/count(0));
+</td></tr><tr><td>
+FTCPE_IOS/count4: FTCPE port map (IOS/count(4),IOS/count_T(4),Clock_4,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IOS/count_T(4) <= (IOS/count(1) AND IOS/count(2) AND IOS/count(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IOS/count(0));
+</td></tr><tr><td>
+FTCPE_IOS/count5: FTCPE port map (IOS/count(5),IOS/count_T(5),Clock_4,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IOS/count_T(5) <= (IOS/count(1) AND IOS/count(2) AND IOS/count(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IOS/count(4) AND IOS/count(0));
+</td></tr><tr><td>
+FTCPE_IOS/count6: FTCPE port map (IOS/count(6),IOS/count_T(6),Clock_4,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IOS/count_T(6) <= (IOS/count(1) AND IOS/count(2) AND IOS/count(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IOS/count(4) AND IOS/count(5) AND IOS/count(0));
+</td></tr><tr><td>
+FTCPE_IOS/count7: FTCPE port map (IOS/count(7),IOS/count_T(7),Clock_4,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IOS/count_T(7) <= (IOS/count(1) AND IOS/count(2) AND IOS/count(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IOS/count(4) AND IOS/count(5) AND IOS/count(6) AND IOS/count(0));
+</td></tr><tr><td>
+FDCPE_IRT/state_FSM_FFd1: FDCPE port map (IRT/state_FSM_FFd1,IRT/state_FSM_FFd2,Internal_Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_IRT/state_FSM_FFd10: FDCPE port map (IRT/state_FSM_FFd10,IRT/state_FSM_FFd10_D,Internal_Clk,'0',NOT Global_Reset);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IRT/state_FSM_FFd10_D <= ((IRT/state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (IRT/state_FSM_FFd10 AND NOT transmit));
+</td></tr><tr><td>
+FDCPE_IRT/state_FSM_FFd2: FDCPE port map (IRT/state_FSM_FFd2,IRT/state_FSM_FFd3,Internal_Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_IRT/state_FSM_FFd3: FDCPE port map (IRT/state_FSM_FFd3,IRT/state_FSM_FFd4,Internal_Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_IRT/state_FSM_FFd4: FDCPE port map (IRT/state_FSM_FFd4,IRT/state_FSM_FFd5,Internal_Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_IRT/state_FSM_FFd5: FDCPE port map (IRT/state_FSM_FFd5,IRT/state_FSM_FFd6,Internal_Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_IRT/state_FSM_FFd6: FDCPE port map (IRT/state_FSM_FFd6,IRT/state_FSM_FFd7,Internal_Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_IRT/state_FSM_FFd7: FDCPE port map (IRT/state_FSM_FFd7,IRT/state_FSM_FFd8,Internal_Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_IRT/state_FSM_FFd8: FDCPE port map (IRT/state_FSM_FFd8,IRT/state_FSM_FFd9,Internal_Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_IRT/state_FSM_FFd9: FDCPE port map (IRT/state_FSM_FFd9,IRT/state_FSM_FFd9_D,Internal_Clk,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IRT/state_FSM_FFd9_D <= (IRT/state_FSM_FFd10 AND transmit);
+</td></tr><tr><td>
+FDCPE_IR_Xmit: FDCPE port map (IR_Xmit,IR_Xmit_D,Internal_Clk,'0',NOT Global_Reset);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IR_Xmit_D <= ((EXP6_.EXP)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (parallel_out(10) AND NOT parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(9) AND NOT parallel_out(11) AND NOT IRT/state_FSM_FFd10 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IRT/state_FSM_FFd4 AND NOT IRT/state_FSM_FFd7 AND NOT IRT/state_FSM_FFd9 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(0) AND NOT parallel_out(12) AND NOT parallel_out(13) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(14) AND NOT parallel_out(15) AND NOT parallel_out(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(2) AND NOT parallel_out(3) AND NOT parallel_out(4) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (parallel_out(10) AND NOT parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(11) AND NOT IRT/state_FSM_FFd10 AND IRT/state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRT/state_FSM_FFd4 AND NOT IRT/state_FSM_FFd7 AND NOT IRT/state_FSM_FFd9 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(0) AND NOT parallel_out(12) AND NOT parallel_out(13) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(14) AND NOT parallel_out(15) AND NOT parallel_out(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(2) AND NOT parallel_out(3) AND NOT parallel_out(4) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (parallel_out(10) AND NOT parallel_out(9) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(11) AND NOT IRT/state_FSM_FFd10 AND NOT IRT/state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IRT/state_FSM_FFd4 AND NOT IRT/state_FSM_FFd7 AND NOT IRT/state_FSM_FFd9 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(0) AND NOT parallel_out(12) AND NOT parallel_out(13) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(14) AND NOT parallel_out(15) AND NOT parallel_out(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(2) AND NOT parallel_out(3) AND NOT parallel_out(4) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT parallel_out(10) AND parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(9) AND NOT parallel_out(11) AND NOT IRT/state_FSM_FFd10 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRT/state_FSM_FFd1 AND IRT/state_FSM_FFd4 AND NOT IRT/state_FSM_FFd7 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRT/state_FSM_FFd9 AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT parallel_out(10) AND NOT parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	parallel_out(11) AND NOT IRT/state_FSM_FFd10 AND NOT IRT/state_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRT/state_FSM_FFd2 AND NOT IRT/state_FSM_FFd3 AND IRT/state_FSM_FFd4 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRT/state_FSM_FFd7 AND NOT IRT/state_FSM_FFd9 AND NOT parallel_out(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(12) AND NOT parallel_out(13) AND NOT parallel_out(14) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(15) AND NOT parallel_out(1) AND NOT parallel_out(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(3) AND NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (parallel_out(10) AND NOT parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(11) AND NOT IRT/state_FSM_FFd10 AND IRT/state_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRT/state_FSM_FFd4 AND NOT IRT/state_FSM_FFd7 AND NOT IRT/state_FSM_FFd9 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(0) AND NOT parallel_out(12) AND NOT parallel_out(13) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(14) AND NOT parallel_out(15) AND NOT parallel_out(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(2) AND NOT parallel_out(3) AND NOT parallel_out(4) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (parallel_out(10) AND NOT parallel_out(9) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(11) AND NOT IRT/state_FSM_FFd10 AND IRT/state_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRT/state_FSM_FFd2 AND NOT IRT/state_FSM_FFd7 AND NOT IRT/state_FSM_FFd9 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(0) AND NOT parallel_out(12) AND NOT parallel_out(13) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(14) AND NOT parallel_out(15) AND NOT parallel_out(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(2) AND NOT parallel_out(3) AND NOT parallel_out(4) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (parallel_out(10) AND NOT parallel_out(9) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(11) AND NOT IRT/state_FSM_FFd10 AND NOT IRT/state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IRT/state_FSM_FFd3 AND NOT IRT/state_FSM_FFd7 AND NOT IRT/state_FSM_FFd9 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(0) AND NOT parallel_out(12) AND NOT parallel_out(13) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(14) AND NOT parallel_out(15) AND NOT parallel_out(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(2) AND NOT parallel_out(3) AND NOT parallel_out(4) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT parallel_out(10) AND parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(9) AND NOT IRT/state_FSM_FFd10 AND NOT IRT/state_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IRT/state_FSM_FFd2 AND NOT IRT/state_FSM_FFd4 AND NOT IRT/state_FSM_FFd7 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRT/state_FSM_FFd9 AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT parallel_out(10) AND NOT parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	parallel_out(9) AND NOT parallel_out(11) AND NOT IRT/state_FSM_FFd10 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IRT/state_FSM_FFd2 AND NOT IRT/state_FSM_FFd3 AND NOT IRT/state_FSM_FFd7 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRT/state_FSM_FFd9 AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT parallel_out(10) AND NOT parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	parallel_out(9) AND NOT IRT/state_FSM_FFd10 AND NOT IRT/state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRT/state_FSM_FFd3 AND IRT/state_FSM_FFd4 AND NOT IRT/state_FSM_FFd7 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRT/state_FSM_FFd9 AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT parallel_out(10) AND NOT parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(9) AND parallel_out(11) AND NOT IRT/state_FSM_FFd10 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRT/state_FSM_FFd1 AND IRT/state_FSM_FFd2 AND NOT IRT/state_FSM_FFd3 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRT/state_FSM_FFd7 AND NOT IRT/state_FSM_FFd9 AND NOT parallel_out(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(12) AND NOT parallel_out(13) AND NOT parallel_out(14) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(15) AND NOT parallel_out(1) AND NOT parallel_out(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(3) AND NOT parallel_out(4) AND NOT parallel_out(5)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+Ldir <= NOT (((parallel_out(10) AND NOT parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(11) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (parallel_out(10) AND NOT parallel_out(9) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(11) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT parallel_out(10) AND parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(9) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))));
+</td></tr><tr><td>
+</td></tr><tr><td>
+Len <= NOT (((parallel_out(10) AND NOT parallel_out(9) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(11) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT parallel_out(10) AND NOT parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	parallel_out(9) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT parallel_out(10) AND NOT parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	parallel_out(11) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (parallel_out(8) AND NOT parallel_out(9) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(11) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))));
+</td></tr><tr><td>
+</td></tr><tr><td>
+Rdir <= NOT (((parallel_out(10) AND NOT parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(11) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (parallel_out(10) AND NOT parallel_out(9) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(11) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT parallel_out(10) AND NOT parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	parallel_out(9) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))));
+</td></tr><tr><td>
+</td></tr><tr><td>
+Ren <= NOT (((parallel_out(10) AND NOT parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(11) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT parallel_out(10) AND parallel_out(8) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(9) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT parallel_out(10) AND NOT parallel_out(9) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	parallel_out(11) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT parallel_out(8) AND parallel_out(9) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(11) AND NOT parallel_out(0) AND NOT parallel_out(12) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(13) AND NOT parallel_out(14) AND NOT parallel_out(15) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(1) AND NOT parallel_out(2) AND NOT parallel_out(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT parallel_out(4) AND NOT parallel_out(5))));
+</td></tr><tr><td>
+</td></tr><tr><td>
+Serial_IO_I <= ((NOT count_2(0) AND NOT count_2(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (count_4(0) AND count_4(1) AND count_4(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT count_4(3) AND count_2(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT count_4(0) AND NOT count_4(1) AND NOT count_4(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	count_4(3) AND count_2(1)));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Serial_IO <= Serial_IO_I when Serial_IO_OE = '1' else 'Z';
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Serial_IO_OE <= NOT select;
+</td></tr><tr><td>
+FTCPE_count_20: FTCPE port map (count_2(0),'1',Clock_2,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FTCPE_count_21: FTCPE port map (count_2(1),count_2(0),Clock_2,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FTCPE_count_40: FTCPE port map (count_4(0),count_4_T(0),Clock_8,NOT count_4(2)/count_4(2)_RSTF__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count_4_T(0) <= (NOT count_4(0) AND NOT count_4(1) AND NOT count_4(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	count_4(3));
+</td></tr><tr><td>
+FTCPE_count_41: FTCPE port map (count_4(1),count_4(0),Clock_8,NOT count_4(2)/count_4(2)_RSTF__$INT,'0');
+</td></tr><tr><td>
+</td></tr><tr><td>
+count_4(2)/count_4(2)_RSTF__$INT <= (Global_Reset AND NOT count_reset);
+</td></tr><tr><td>
+FTCPE_count_42: FTCPE port map (count_4(2),count_4_T(2),Clock_8,NOT count_4(2)/count_4(2)_RSTF__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count_4_T(2) <= (count_4(0) AND count_4(1));
+</td></tr><tr><td>
+FTCPE_count_43: FTCPE port map (count_4(3),count_4_T(3),Clock_8,NOT count_4(2)/count_4(2)_RSTF__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count_4_T(3) <= ((count_4(0) AND count_4(1) AND count_4(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT count_4(0) AND NOT count_4(1) AND NOT count_4(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	count_4(3)));
+</td></tr><tr><td>
+FDCPE_count_reset: FDCPE port map (count_reset,count_reset_D,Clock_4,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count_reset_D <= (IOS/count(1) AND IOS/count(2) AND IOS/count(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IOS/count(4) AND IOS/count(5) AND IOS/count(6) AND IOS/count(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IOS/count(7));
+</td></tr><tr><td>
+FDCPE_latch: FDCPE port map (latch,latch_D,Clock_4,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latch_D <= (IOS/count(1) AND NOT IOS/count(2) AND NOT IOS/count(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IOS/count(4) AND IOS/count(5) AND NOT IOS/count(6) AND NOT IOS/count(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IOS/count(7));
+</td></tr><tr><td>
+FDCPE_parallel_out0: FDCPE port map (parallel_out(0),shift_out(0),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_parallel_out1: FDCPE port map (parallel_out(1),shift_out(1),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_parallel_out2: FDCPE port map (parallel_out(2),shift_out(2),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_parallel_out3: FDCPE port map (parallel_out(3),shift_out(3),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_parallel_out4: FDCPE port map (parallel_out(4),shift_out(4),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_parallel_out5: FDCPE port map (parallel_out(5),shift_out(5),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_parallel_out8: FDCPE port map (parallel_out(8),shift_out(8),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_parallel_out9: FDCPE port map (parallel_out(9),shift_out(9),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_parallel_out10: FDCPE port map (parallel_out(10),shift_out(10),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_parallel_out11: FDCPE port map (parallel_out(11),shift_out(11),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_parallel_out12: FDCPE port map (parallel_out(12),shift_out(12),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_parallel_out13: FDCPE port map (parallel_out(13),shift_out(13),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_parallel_out14: FDCPE port map (parallel_out(14),shift_out(14),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_parallel_out15: FDCPE port map (parallel_out(15),shift_out(15),latch,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_select: FDCPE port map (select,select_D,Clock_4,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select_D <= ((NOT IOS/count(4) AND NOT IOS/count(5) AND NOT IOS/count(6) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IOS/count(7))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT IOS/count(1) AND NOT IOS/count(2) AND NOT IOS/count(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IOS/count(5) AND NOT IOS/count(6) AND NOT IOS/count(7)));
+</td></tr><tr><td>
+FDCPE_shift_out0: FDCPE port map (shift_out(0),Serial_IO.PIN,NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out1: FDCPE port map (shift_out(1),shift_out(0),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out2: FDCPE port map (shift_out(2),shift_out(1),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out3: FDCPE port map (shift_out(3),shift_out(2),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out4: FDCPE port map (shift_out(4),shift_out(3),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out5: FDCPE port map (shift_out(5),shift_out(4),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out6: FDCPE port map (shift_out(6),shift_out(5),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out7: FDCPE port map (shift_out(7),shift_out(6),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out8: FDCPE port map (shift_out(8),shift_out(7),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out9: FDCPE port map (shift_out(9),shift_out(8),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out10: FDCPE port map (shift_out(10),shift_out(9),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out11: FDCPE port map (shift_out(11),shift_out(10),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out12: FDCPE port map (shift_out(12),shift_out(11),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out13: FDCPE port map (shift_out(13),shift_out(12),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out14: FDCPE port map (shift_out(14),shift_out(13),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out15: FDCPE port map (shift_out(15),shift_out(14),NOT Clock_8,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_transmit: FDCPE port map (transmit,transmit_D,Clock_4,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;transmit_D <= ((IOS/count(7))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (IOS/count(1) AND IOS/count(2) AND IOS/count(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IOS/count(6))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (IOS/count(4) AND IOS/count(6))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (IOS/count(5) AND IOS/count(6)));
+</td></tr><tr><td>
+Register Legend:
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FDCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FTCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LDCP  (Q,D,G,CLR,PRE); 
+</td></tr><tr><td>
+</td></tr>
+</table>
+<form><span class="pgRef"><table width="90%" align="center"><tr>
+<td align="left"><input type="button" onclick="javascript:parent.leftnav.showTop()" onmouseover="window.status='goto top of page'; return true;" onmouseout="window.status=''" value="back to top"></td>
+<td align="right"><input type="button" onclick="window.print()" onmouseover="window.status='print page'; return true;" onmouseout="window.status=''" value="print page"></td>
+</tr></table></span></form>
+</body></html>

@@ -1,0 +1,1419 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="paths.js"></script><script src="eqns.js"></script><script>
+      var design = "Receiver";
+      var device = "XC9572XL";
+      signals = new Array("FBCcount0_SPECSIG","FBCcount1_SPECSIG","FBCcount2FBCcount<2>_RSTF__INT_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG","Internal_Clk","Ldir","Len","N64ReceiverIRLstate_FSM_FFd1_SPECSIG","N64ReceiverIRLstate_FSM_FFd2_SPECSIG","N64ReceiverIRLstate_FSM_FFd3_SPECSIG","N64ReceiverIRLstate_FSM_FFd4_SPECSIG","N64ReceiverIRLstate_FSM_FFd5_SPECSIG","N64ReceiverIRLstate_FSM_FFd6_SPECSIG","N64ReceiverIRLstate_FSM_FFd7_SPECSIG","N64ReceiverIRLstate_FSM_FFd8_SPECSIG","N64ReceiverTBCcount0_SPECSIG","N64ReceiverTBCcount1_SPECSIG","N64ReceiverTBCcount2N64ReceiverTBCcount<2>_RSTF__INT_SPECSIG","N64ReceiverTBCcount2_SPECSIG","N64Receiverlatch_SPECSIG","N64Receivershift_out0_SPECSIG","N64Receivershift_out1_SPECSIG","N64Receivershift_out2_SPECSIG","N64Receivershift_out3_SPECSIG","N64_Ldir","N64_Len","N64_Rdir","N64_Ren","Rdir","Ren","SRq0_SPECSIG","SRq10_SPECSIG","SRq11_SPECSIG","SRq1_SPECSIG","SRq2_SPECSIG","SRq3_SPECSIG","SRq4_SPECSIG","SRq5_SPECSIG","SRq6_SPECSIG","SRq7_SPECSIG","SRq8_SPECSIG","SRq9_SPECSIG","Shift_Decoder0_SPECSIG","Shift_Decoder10_SPECSIG","Shift_Decoder11_SPECSIG","Shift_Decoder1_SPECSIG","Shift_Decoder2_SPECSIG","Shift_Decoder3_SPECSIG","Shift_Decoder4_SPECSIG","Shift_Decoder5_SPECSIG","Shift_Decoder6_SPECSIG","Shift_Decoder7_SPECSIG","Shift_Decoder8_SPECSIG","Shift_Decoder9_SPECSIG","instance_namestate_FSM_FFd10_SPECSIG","instance_namestate_FSM_FFd11_SPECSIG","instance_namestate_FSM_FFd12_SPECSIG","instance_namestate_FSM_FFd13_SPECSIG","instance_namestate_FSM_FFd14_SPECSIG","instance_namestate_FSM_FFd15_SPECSIG","instance_namestate_FSM_FFd16_SPECSIG","instance_namestate_FSM_FFd1_SPECSIG","instance_namestate_FSM_FFd2_SPECSIG","instance_namestate_FSM_FFd3_SPECSIG","instance_namestate_FSM_FFd4_SPECSIG","instance_namestate_FSM_FFd5_SPECSIG","instance_namestate_FSM_FFd6_SPECSIG","instance_namestate_FSM_FFd7_SPECSIG","instance_namestate_FSM_FFd8_SPECSIG","instance_namestate_FSM_FFd9_SPECSIG");
+      sigNegs = new Array("ON","OFF","OFF","OFF","OFF","OFF","ON","ON","OFF","OFF","OFF","OFF","OFF","OFF","OFF","ON","ON","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","ON","ON","OFF","ON","ON","ON","ON","ON","ON","ON","ON","ON","ON","ON","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","ON","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF");
+      sigTypes = new Array("T","T","","T","T","T","","","D","D","D","D","D","D","D","D","T","D","","T","D","D","D","D","D","D","D","D","D","","","D","T","T","T","T","T","T","T","T","T","T","T","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D","D");
+
+      
+        specSig["b_SPECSIG"]=new Array("(b)");
+      
+        specSig["SRq6_SPECSIG"]=new Array("SR/q<6>");
+      
+        specSig["SRq2_SPECSIG"]=new Array("SR/q<2>");
+      
+        specSig["SRq10_SPECSIG"]=new Array("SR/q<10>");
+      
+        specSig["FBCcount2FBCcount<2>_RSTF__INT_SPECSIG"]=new Array("FBC/count<2>/FBC/count<2>_RSTF__$INT");
+      
+        specSig["N64ReceiverIRLstate_FSM_FFd7_SPECSIG"]=new Array("N64Receiver/IRL/state_FSM_FFd7");
+      
+        specSig["N64ReceiverIRLstate_FSM_FFd6_SPECSIG"]=new Array("N64Receiver/IRL/state_FSM_FFd6");
+      
+        specSig["N64ReceiverIRLstate_FSM_FFd4_SPECSIG"]=new Array("N64Receiver/IRL/state_FSM_FFd4");
+      
+        specSig["N64ReceiverIRLstate_FSM_FFd3_SPECSIG"]=new Array("N64Receiver/IRL/state_FSM_FFd3");
+      
+        specSig["N64ReceiverIRLstate_FSM_FFd1_SPECSIG"]=new Array("N64Receiver/IRL/state_FSM_FFd1");
+      
+        specSig["instance_namestate_FSM_FFd10_SPECSIG"]=new Array("instance_name/state_FSM_FFd10");
+      
+        specSig["N64ReceiverIRLstate_FSM_FFd8_SPECSIG"]=new Array("N64Receiver/IRL/state_FSM_FFd8");
+      
+        specSig["Shift_Decoder9_SPECSIG"]=new Array("Shift_Decoder<9>");
+      
+        specSig["Shift_Decoder6_SPECSIG"]=new Array("Shift_Decoder<6>");
+      
+        specSig["Shift_Decoder3_SPECSIG"]=new Array("Shift_Decoder<3>");
+      
+        specSig["Shift_Decoder2_SPECSIG"]=new Array("Shift_Decoder<2>");
+      
+        specSig["FBCcount0_SPECSIG"]=new Array("FBC/count<0>");
+      
+        specSig["N64Receivershift_out3_SPECSIG"]=new Array("N64Receiver/shift_out<3>");
+      
+        specSig["N64ReceiverTBCcount2_SPECSIG"]=new Array("N64Receiver/TBC/count<2>");
+      
+        specSig["instance_namestate_FSM_FFd8_SPECSIG"]=new Array("instance_name/state_FSM_FFd8");
+      
+        specSig["instance_namestate_FSM_FFd5_SPECSIG"]=new Array("instance_name/state_FSM_FFd5");
+      
+        specSig["instance_namestate_FSM_FFd2_SPECSIG"]=new Array("instance_name/state_FSM_FFd2");
+      
+        specSig["instance_namestate_FSM_FFd12_SPECSIG"]=new Array("instance_name/state_FSM_FFd12");
+      
+        specSig["N64ReceiverTBCcount1_SPECSIG"]=new Array("N64Receiver/TBC/count<1>");
+      
+        specSig["Shift_Decoder1_SPECSIG"]=new Array("Shift_Decoder<1>");
+      
+        specSig["Shift_Decoder10_SPECSIG"]=new Array("Shift_Decoder<10>");
+      
+        specSig["Shift_Decoder0_SPECSIG"]=new Array("Shift_Decoder<0>");
+      
+        specSig["SRq9_SPECSIG"]=new Array("SR/q<9>");
+      
+        specSig["SRq8_SPECSIG"]=new Array("SR/q<8>");
+      
+        specSig["SRq7_SPECSIG"]=new Array("SR/q<7>");
+      
+        specSig["SRq5_SPECSIG"]=new Array("SR/q<5>");
+      
+        specSig["SRq4_SPECSIG"]=new Array("SR/q<4>");
+      
+        specSig["SRq3_SPECSIG"]=new Array("SR/q<3>");
+      
+        specSig["SRq1_SPECSIG"]=new Array("SR/q<1>");
+      
+        specSig["SRq0_SPECSIG"]=new Array("SR/q<0>");
+      
+        specSig["FBCcount1_SPECSIG"]=new Array("FBC/count<1>");
+      
+        specSig["FBCcount2_SPECSIG"]=new Array("FBC/count<2>");
+      
+        specSig["FBCcount3_SPECSIG"]=new Array("FBC/count<3>");
+      
+        specSig["Shift_Decoder11_SPECSIG"]=new Array("Shift_Decoder<11>");
+      
+        specSig["Shift_Decoder4_SPECSIG"]=new Array("Shift_Decoder<4>");
+      
+        specSig["Shift_Decoder5_SPECSIG"]=new Array("Shift_Decoder<5>");
+      
+        specSig["Shift_Decoder7_SPECSIG"]=new Array("Shift_Decoder<7>");
+      
+        specSig["Shift_Decoder8_SPECSIG"]=new Array("Shift_Decoder<8>");
+      
+        specSig["instance_namestate_FSM_FFd14_SPECSIG"]=new Array("instance_name/state_FSM_FFd14");
+      
+        specSig["instance_namestate_FSM_FFd15_SPECSIG"]=new Array("instance_name/state_FSM_FFd15");
+      
+        specSig["instance_namestate_FSM_FFd16_SPECSIG"]=new Array("instance_name/state_FSM_FFd16");
+      
+        specSig["N64ReceiverTBCcount2N64ReceiverTBCcount<2>_RSTF__INT_SPECSIG"]=new Array("N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT");
+      
+        specSig["N64Receivershift_out1_SPECSIG"]=new Array("N64Receiver/shift_out<1>");
+      
+        specSig["N64Receivershift_out0_SPECSIG"]=new Array("N64Receiver/shift_out<0>");
+      
+        specSig["N64ReceiverIRLstate_FSM_FFd5_SPECSIG"]=new Array("N64Receiver/IRL/state_FSM_FFd5");
+      
+        specSig["N64ReceiverIRLstate_FSM_FFd2_SPECSIG"]=new Array("N64Receiver/IRL/state_FSM_FFd2");
+      
+        specSig["instance_namestate_FSM_FFd13_SPECSIG"]=new Array("instance_name/state_FSM_FFd13");
+      
+        specSig["instance_namestate_FSM_FFd1_SPECSIG"]=new Array("instance_name/state_FSM_FFd1");
+      
+        specSig["instance_namestate_FSM_FFd11_SPECSIG"]=new Array("instance_name/state_FSM_FFd11");
+      
+        specSig["SRq11_SPECSIG"]=new Array("SR/q<11>");
+      
+        specSig["N64Receiverlatch_SPECSIG"]=new Array("N64Receiver/latch");
+      
+        specSig["N64Receivershift_out2_SPECSIG"]=new Array("N64Receiver/shift_out<2>");
+      
+        specSig["N64ReceiverTBCcount0_SPECSIG"]=new Array("N64Receiver/TBC/count<0>");
+      
+        specSig["instance_namestate_FSM_FFd9_SPECSIG"]=new Array("instance_name/state_FSM_FFd9");
+      
+        specSig["instance_namestate_FSM_FFd7_SPECSIG"]=new Array("instance_name/state_FSM_FFd7");
+      
+        specSig["instance_namestate_FSM_FFd6_SPECSIG"]=new Array("instance_name/state_FSM_FFd6");
+      
+        specSig["instance_namestate_FSM_FFd4_SPECSIG"]=new Array("instance_name/state_FSM_FFd4");
+      
+        specSig["instance_namestate_FSM_FFd3_SPECSIG"]=new Array("instance_name/state_FSM_FFd3");
+      
+            pterms["FB1_1_1"]=new Array("SRq1_SPECSIG");
+          
+            pterms["FB1_1_2"]=new Array("/Reset_In");
+          
+            pterms["FB1_1_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_1_4"]=new Array("SRq0_SPECSIG","/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_1_5"]=new Array("/Serial_In","/instance_namestate_FSM_FFd14_SPECSIG","/instance_namestate_FSM_FFd15_SPECSIG","/instance_namestate_FSM_FFd16_SPECSIG","/FBCcount3_SPECSIG");
+          
+            pterms["FB1_2_1"]=new Array("Shift_Decoder6_SPECSIG","/Shift_Decoder5_SPECSIG","/Shift_Decoder7_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_2_2"]=new Array("/Shift_Decoder6_SPECSIG","/Shift_Decoder4_SPECSIG","Shift_Decoder5_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_2_3"]=new Array("/Shift_Decoder6_SPECSIG","/Shift_Decoder4_SPECSIG","Shift_Decoder7_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_2_4"]=new Array("Shift_Decoder4_SPECSIG","/Shift_Decoder5_SPECSIG","/Shift_Decoder7_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_3_1"]=new Array("SRq10_SPECSIG");
+          
+            pterms["FB1_3_2"]=new Array("/Reset_In");
+          
+            pterms["FB1_3_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_4_1"]=new Array("SRq0_SPECSIG");
+          
+            pterms["FB1_4_2"]=new Array("/Reset_In");
+          
+            pterms["FB1_4_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_5_1"]=new Array("Shift_Decoder6_SPECSIG","/Shift_Decoder4_SPECSIG","/Shift_Decoder7_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_5_2"]=new Array("/Shift_Decoder6_SPECSIG","Shift_Decoder4_SPECSIG","/Shift_Decoder5_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_5_3"]=new Array("Shift_Decoder4_SPECSIG","/Shift_Decoder5_SPECSIG","/Shift_Decoder7_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_6_1"]=new Array("Shift_Decoder6_SPECSIG","/Shift_Decoder4_SPECSIG","/Shift_Decoder7_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_6_2"]=new Array("/Shift_Decoder6_SPECSIG","Shift_Decoder4_SPECSIG","/Shift_Decoder5_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_6_3"]=new Array("/Shift_Decoder6_SPECSIG","/Shift_Decoder5_SPECSIG","Shift_Decoder7_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_6_4"]=new Array("/Shift_Decoder4_SPECSIG","Shift_Decoder5_SPECSIG","/Shift_Decoder7_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_7_1"]=new Array("SRq8_SPECSIG","SRq9_SPECSIG");
+          
+            pterms["FB1_7_2"]=new Array("/SRq8_SPECSIG","/SRq9_SPECSIG");
+          
+            pterms["FB1_7_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_7_4"]=new Array("/Reset_In");
+          
+            pterms["FB1_7_5"]=new Array("Internal_Clk");
+          
+            pterms["FB1_8_1"]=new Array("Shift_Decoder6_SPECSIG","/Shift_Decoder5_SPECSIG","/Shift_Decoder7_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_8_2"]=new Array("/Shift_Decoder6_SPECSIG","/Shift_Decoder4_SPECSIG","Shift_Decoder5_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_8_3"]=new Array("/Shift_Decoder4_SPECSIG","Shift_Decoder5_SPECSIG","/Shift_Decoder7_SPECSIG","/Shift_Decoder0_SPECSIG","/Shift_Decoder10_SPECSIG","/Shift_Decoder11_SPECSIG","/Shift_Decoder1_SPECSIG","/Shift_Decoder2_SPECSIG","/Shift_Decoder3_SPECSIG","/Shift_Decoder8_SPECSIG","/Shift_Decoder9_SPECSIG");
+          
+            pterms["FB1_9_1"]=new Array("SRq7_SPECSIG","SRq8_SPECSIG");
+          
+            pterms["FB1_9_2"]=new Array("/SRq7_SPECSIG","/SRq8_SPECSIG");
+          
+            pterms["FB1_9_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_9_4"]=new Array("/Reset_In");
+          
+            pterms["FB1_9_5"]=new Array("Internal_Clk");
+          
+            pterms["FB1_10_1"]=new Array("SRq6_SPECSIG","SRq7_SPECSIG");
+          
+            pterms["FB1_10_2"]=new Array("/SRq6_SPECSIG","/SRq7_SPECSIG");
+          
+            pterms["FB1_10_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_10_4"]=new Array("/Reset_In");
+          
+            pterms["FB1_10_5"]=new Array("Internal_Clk");
+          
+            pterms["FB1_11_1"]=new Array("SRq5_SPECSIG","SRq6_SPECSIG");
+          
+            pterms["FB1_11_2"]=new Array("/SRq5_SPECSIG","/SRq6_SPECSIG");
+          
+            pterms["FB1_11_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_11_4"]=new Array("/Reset_In");
+          
+            pterms["FB1_11_5"]=new Array("Internal_Clk");
+          
+            pterms["FB1_12_1"]=new Array("SRq4_SPECSIG","SRq5_SPECSIG");
+          
+            pterms["FB1_12_2"]=new Array("/SRq4_SPECSIG","/SRq5_SPECSIG");
+          
+            pterms["FB1_12_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_12_4"]=new Array("/Reset_In");
+          
+            pterms["FB1_12_5"]=new Array("Internal_Clk");
+          
+            pterms["FB1_13_1"]=new Array("SRq3_SPECSIG","SRq4_SPECSIG");
+          
+            pterms["FB1_13_2"]=new Array("/SRq3_SPECSIG","/SRq4_SPECSIG");
+          
+            pterms["FB1_13_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_13_4"]=new Array("/Reset_In");
+          
+            pterms["FB1_13_5"]=new Array("Internal_Clk");
+          
+            pterms["FB1_14_1"]=new Array("SRq2_SPECSIG","SRq3_SPECSIG");
+          
+            pterms["FB1_14_2"]=new Array("/SRq2_SPECSIG","/SRq3_SPECSIG");
+          
+            pterms["FB1_14_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_14_4"]=new Array("/Reset_In");
+          
+            pterms["FB1_14_5"]=new Array("Internal_Clk");
+          
+            pterms["FB1_15_1"]=new Array("SRq1_SPECSIG","SRq2_SPECSIG");
+          
+            pterms["FB1_15_2"]=new Array("/SRq1_SPECSIG","/SRq2_SPECSIG");
+          
+            pterms["FB1_15_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_15_4"]=new Array("/Reset_In");
+          
+            pterms["FB1_15_5"]=new Array("Internal_Clk");
+          
+            pterms["FB1_16_1"]=new Array("SRq0_SPECSIG","SRq1_SPECSIG");
+          
+            pterms["FB1_16_2"]=new Array("/SRq0_SPECSIG","/SRq1_SPECSIG");
+          
+            pterms["FB1_16_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_16_4"]=new Array("/Reset_In");
+          
+            pterms["FB1_16_5"]=new Array("Internal_Clk");
+          
+            pterms["FB1_17_1"]=new Array("SRq10_SPECSIG","SRq9_SPECSIG");
+          
+            pterms["FB1_17_2"]=new Array("/SRq10_SPECSIG","/SRq9_SPECSIG");
+          
+            pterms["FB1_17_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB1_17_4"]=new Array("/Reset_In");
+          
+            pterms["FB1_17_5"]=new Array("Internal_Clk");
+          
+            pterms["FB1_18_1"]=new Array("/Serial_In","FBCcount0_SPECSIG","/instance_namestate_FSM_FFd14_SPECSIG","/instance_namestate_FSM_FFd15_SPECSIG","/instance_namestate_FSM_FFd16_SPECSIG");
+          
+            pterms["FB1_18_2"]=new Array("/Serial_In","FBCcount1_SPECSIG","/instance_namestate_FSM_FFd14_SPECSIG","/instance_namestate_FSM_FFd15_SPECSIG","/instance_namestate_FSM_FFd16_SPECSIG");
+          
+            pterms["FB1_18_3"]=new Array("/Serial_In","/FBCcount2_SPECSIG","/instance_namestate_FSM_FFd14_SPECSIG","/instance_namestate_FSM_FFd15_SPECSIG","/instance_namestate_FSM_FFd16_SPECSIG");
+          
+            pterms["FB1_18_4"]=new Array("/Reset_In");
+          
+            pterms["FB1_18_5"]=new Array("Internal_Clk");
+          
+            pterms["FB2_1_1"]=new Array("/N64ReceiverIRLstate_FSM_FFd4_SPECSIG","/N64ReceiverIRLstate_FSM_FFd5_SPECSIG","/N64ReceiverIRLstate_FSM_FFd6_SPECSIG","/N64ReceiverIRLstate_FSM_FFd7_SPECSIG","/N64ReceiverIRLstate_FSM_FFd8_SPECSIG");
+          
+            pterms["FB2_2_1"]=new Array("/instance_namestate_FSM_FFd14_SPECSIG","/instance_namestate_FSM_FFd15_SPECSIG","/instance_namestate_FSM_FFd16_SPECSIG");
+          
+            pterms["FB2_3_1"]=new Array("N64Receivershift_out0_SPECSIG");
+          
+            pterms["FB2_3_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_4_1"]=new Array("/Serial_In");
+          
+            pterms["FB2_4_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_5_1"]=new Array("N64Receivershift_out0_SPECSIG","N64ReceiverIRLstate_FSM_FFd8_SPECSIG");
+          
+            pterms["FB2_5_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_6_1"]=new Array("/N64Receivershift_out0_SPECSIG","N64ReceiverIRLstate_FSM_FFd7_SPECSIG");
+          
+            pterms["FB2_6_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_7_1"]=new Array("N64Receivershift_out0_SPECSIG","N64ReceiverIRLstate_FSM_FFd6_SPECSIG");
+          
+            pterms["FB2_7_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_8_1"]=new Array("/N64Receivershift_out0_SPECSIG","N64ReceiverIRLstate_FSM_FFd5_SPECSIG");
+          
+            pterms["FB2_8_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_9_1"]=new Array("/N64Receivershift_out0_SPECSIG","N64ReceiverIRLstate_FSM_FFd4_SPECSIG");
+          
+            pterms["FB2_9_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_10_1"]=new Array("N64ReceiverIRLstate_FSM_FFd3_SPECSIG");
+          
+            pterms["FB2_10_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_11_1"]=new Array("N64ReceiverIRLstate_FSM_FFd2_SPECSIG");
+          
+            pterms["FB2_11_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_12_1"]=new Array("/Serial_In","instance_namestate_FSM_FFd16_SPECSIG");
+          
+            pterms["FB2_12_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_12_3"]=new Array("Internal_Clk");
+          
+            pterms["FB2_13_1"]=new Array("Serial_In","instance_namestate_FSM_FFd15_SPECSIG");
+          
+            pterms["FB2_13_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_13_3"]=new Array("Internal_Clk");
+          
+            pterms["FB2_14_1"]=new Array("/Serial_In","instance_namestate_FSM_FFd14_SPECSIG");
+          
+            pterms["FB2_14_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_14_3"]=new Array("Internal_Clk");
+          
+            pterms["FB2_15_1"]=new Array("instance_namestate_FSM_FFd11_SPECSIG");
+          
+            pterms["FB2_15_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_15_3"]=new Array("Internal_Clk");
+          
+            pterms["FB2_16_1"]=new Array("instance_namestate_FSM_FFd2_SPECSIG");
+          
+            pterms["FB2_16_2"]=new Array("/Reset_In");
+          
+            pterms["FB2_16_3"]=new Array("Internal_Clk");
+          
+            pterms["FB2_17_1"]=new Array("/N64Receivershift_out0_SPECSIG","/N64ReceiverIRLstate_FSM_FFd6_SPECSIG","/N64ReceiverIRLstate_FSM_FFd8_SPECSIG","/N64ReceiverIRLstate_FSM_FFd1_SPECSIG");
+          
+            pterms["FB2_17_2"]=new Array("N64Receivershift_out0_SPECSIG","/N64ReceiverIRLstate_FSM_FFd4_SPECSIG","/N64ReceiverIRLstate_FSM_FFd5_SPECSIG","/N64ReceiverIRLstate_FSM_FFd7_SPECSIG","/N64ReceiverIRLstate_FSM_FFd1_SPECSIG");
+          
+            pterms["FB2_17_3"]=new Array("/Reset_In");
+          
+            pterms["FB2_18_1"]=new Array("/Serial_In","/instance_namestate_FSM_FFd15_SPECSIG","/instance_namestate_FSM_FFd1_SPECSIG");
+          
+            pterms["FB2_18_2"]=new Array("Serial_In","/instance_namestate_FSM_FFd14_SPECSIG","/instance_namestate_FSM_FFd16_SPECSIG","/instance_namestate_FSM_FFd1_SPECSIG");
+          
+            pterms["FB2_18_3"]=new Array("/Reset_In");
+          
+            pterms["FB2_18_4"]=new Array("Internal_Clk");
+          
+            pterms["FB3_1_1"]=new Array("/Reset_In");
+          
+            pterms["FB3_2_1"]=new Array("SRq9_SPECSIG");
+          
+            pterms["FB3_2_2"]=new Array("/Reset_In");
+          
+            pterms["FB3_2_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB3_3_1"]=new Array("SRq8_SPECSIG");
+          
+            pterms["FB3_3_2"]=new Array("/Reset_In");
+          
+            pterms["FB3_3_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB3_4_1"]=new Array("SRq7_SPECSIG");
+          
+            pterms["FB3_4_2"]=new Array("/Reset_In");
+          
+            pterms["FB3_4_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB3_5_1"]=new Array("SRq6_SPECSIG");
+          
+            pterms["FB3_5_2"]=new Array("/Reset_In");
+          
+            pterms["FB3_5_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB3_6_1"]=new Array("SRq5_SPECSIG");
+          
+            pterms["FB3_6_2"]=new Array("/Reset_In");
+          
+            pterms["FB3_6_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB3_7_1"]=new Array("SRq4_SPECSIG");
+          
+            pterms["FB3_7_2"]=new Array("/Reset_In");
+          
+            pterms["FB3_7_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB3_8_1"]=new Array("SRq3_SPECSIG");
+          
+            pterms["FB3_8_2"]=new Array("/Reset_In");
+          
+            pterms["FB3_8_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB3_9_1"]=new Array("SRq2_SPECSIG");
+          
+            pterms["FB3_9_2"]=new Array("/Reset_In");
+          
+            pterms["FB3_9_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB3_10_1"]=new Array("SRq11_SPECSIG");
+          
+            pterms["FB3_10_2"]=new Array("/Reset_In");
+          
+            pterms["FB3_10_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB3_11_1"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB3_11_2"]=new Array("/FBCcount2FBCcount<2>_RSTF__INT_SPECSIG");
+          
+            pterms["FB3_11_3"]=new Array("Internal_Clk");
+          
+            pterms["FB3_12_1"]=new Array("FBCcount0_SPECSIG","FBCcount1_SPECSIG","FBCcount2_SPECSIG");
+          
+            pterms["FB3_12_2"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB3_12_3"]=new Array("/FBCcount2FBCcount<2>_RSTF__INT_SPECSIG");
+          
+            pterms["FB3_12_4"]=new Array("Internal_Clk");
+          
+            pterms["FB3_13_1"]=new Array("FBCcount0_SPECSIG","FBCcount1_SPECSIG");
+          
+            pterms["FB3_13_2"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB3_13_3"]=new Array("/FBCcount2FBCcount<2>_RSTF__INT_SPECSIG");
+          
+            pterms["FB3_13_4"]=new Array("Internal_Clk");
+          
+            pterms["FB3_14_1"]=new Array("N64Receivershift_out3_SPECSIG");
+          
+            pterms["FB3_14_2"]=new Array("/Reset_In");
+          
+            pterms["FB3_14_3"]=new Array("N64Receiverlatch_SPECSIG");
+          
+            pterms["FB3_15_1"]=new Array("N64Receivershift_out2_SPECSIG");
+          
+            pterms["FB3_15_2"]=new Array("/Reset_In");
+          
+            pterms["FB3_15_3"]=new Array("N64Receiverlatch_SPECSIG");
+          
+            pterms["FB3_16_1"]=new Array("N64Receivershift_out0_SPECSIG");
+          
+            pterms["FB3_16_2"]=new Array("/Reset_In");
+          
+            pterms["FB3_16_3"]=new Array("N64Receiverlatch_SPECSIG");
+          
+            pterms["FB3_17_1"]=new Array("N64Receivershift_out1_SPECSIG");
+          
+            pterms["FB3_17_2"]=new Array("/Reset_In");
+          
+            pterms["FB3_17_3"]=new Array("N64Receiverlatch_SPECSIG");
+          
+            pterms["FB3_18_1"]=new Array("SRq10_SPECSIG","SRq11_SPECSIG");
+          
+            pterms["FB3_18_2"]=new Array("/SRq10_SPECSIG","/SRq11_SPECSIG");
+          
+            pterms["FB3_18_3"]=new Array("/FBCcount0_SPECSIG","/FBCcount1_SPECSIG","FBCcount2_SPECSIG","FBCcount3_SPECSIG");
+          
+            pterms["FB3_18_4"]=new Array("/Reset_In");
+          
+            pterms["FB3_18_5"]=new Array("Internal_Clk");
+          
+            pterms["FB4_2_1"]=new Array("N64Receivershift_out2_SPECSIG");
+          
+            pterms["FB4_2_2"]=new Array("/Reset_In");
+          
+            pterms["FB4_3_1"]=new Array("N64Receivershift_out1_SPECSIG");
+          
+            pterms["FB4_3_2"]=new Array("/Reset_In");
+          
+            pterms["FB4_4_1"]=new Array("/N64ReceiverTBCcount0_SPECSIG","N64ReceiverTBCcount1_SPECSIG","/N64ReceiverTBCcount2_SPECSIG");
+          
+            pterms["FB4_4_2"]=new Array("/N64ReceiverTBCcount2N64ReceiverTBCcount<2>_RSTF__INT_SPECSIG");
+          
+            pterms["FB4_5_1"]=new Array("N64ReceiverTBCcount0_SPECSIG","N64ReceiverTBCcount1_SPECSIG");
+          
+            pterms["FB4_5_2"]=new Array("/N64ReceiverTBCcount2N64ReceiverTBCcount<2>_RSTF__INT_SPECSIG");
+          
+            pterms["FB4_6_1"]=new Array("/N64ReceiverTBCcount0_SPECSIG","N64ReceiverTBCcount1_SPECSIG","/N64ReceiverTBCcount2_SPECSIG");
+          
+            pterms["FB4_6_2"]=new Array("/N64ReceiverTBCcount2N64ReceiverTBCcount<2>_RSTF__INT_SPECSIG");
+          
+            pterms["FB4_7_1"]=new Array("instance_namestate_FSM_FFd10_SPECSIG");
+          
+            pterms["FB4_7_2"]=new Array("/Reset_In");
+          
+            pterms["FB4_7_3"]=new Array("Internal_Clk");
+          
+            pterms["FB4_8_1"]=new Array("instance_namestate_FSM_FFd9_SPECSIG");
+          
+            pterms["FB4_8_2"]=new Array("/Reset_In");
+          
+            pterms["FB4_8_3"]=new Array("Internal_Clk");
+          
+            pterms["FB4_9_1"]=new Array("instance_namestate_FSM_FFd8_SPECSIG");
+          
+            pterms["FB4_9_2"]=new Array("/Reset_In");
+          
+            pterms["FB4_9_3"]=new Array("Internal_Clk");
+          
+            pterms["FB4_10_1"]=new Array("instance_namestate_FSM_FFd7_SPECSIG");
+          
+            pterms["FB4_10_2"]=new Array("/Reset_In");
+          
+            pterms["FB4_10_3"]=new Array("Internal_Clk");
+          
+            pterms["FB4_11_1"]=new Array("instance_namestate_FSM_FFd6_SPECSIG");
+          
+            pterms["FB4_11_2"]=new Array("/Reset_In");
+          
+            pterms["FB4_11_3"]=new Array("Internal_Clk");
+          
+            pterms["FB4_12_1"]=new Array("instance_namestate_FSM_FFd5_SPECSIG");
+          
+            pterms["FB4_12_2"]=new Array("/Reset_In");
+          
+            pterms["FB4_12_3"]=new Array("Internal_Clk");
+          
+            pterms["FB4_13_1"]=new Array("instance_namestate_FSM_FFd4_SPECSIG");
+          
+            pterms["FB4_13_2"]=new Array("/Reset_In");
+          
+            pterms["FB4_13_3"]=new Array("Internal_Clk");
+          
+            pterms["FB4_14_1"]=new Array("instance_namestate_FSM_FFd3_SPECSIG");
+          
+            pterms["FB4_14_2"]=new Array("/Reset_In");
+          
+            pterms["FB4_14_3"]=new Array("Internal_Clk");
+          
+            pterms["FB4_15_1"]=new Array("instance_namestate_FSM_FFd13_SPECSIG");
+          
+            pterms["FB4_15_2"]=new Array("/Reset_In");
+          
+            pterms["FB4_15_3"]=new Array("Internal_Clk");
+          
+            pterms["FB4_16_1"]=new Array("instance_namestate_FSM_FFd12_SPECSIG");
+          
+            pterms["FB4_16_2"]=new Array("/Reset_In");
+          
+            pterms["FB4_16_3"]=new Array("Internal_Clk");
+          
+            pterms["FB4_17_1"]=new Array("N64ReceiverTBCcount0_SPECSIG","/N64ReceiverTBCcount1_SPECSIG");
+          
+            pterms["FB4_17_2"]=new Array("/N64ReceiverTBCcount0_SPECSIG","N64ReceiverTBCcount1_SPECSIG","N64ReceiverTBCcount2_SPECSIG");
+          
+            pterms["FB4_17_3"]=new Array("/N64ReceiverTBCcount2N64ReceiverTBCcount<2>_RSTF__INT_SPECSIG");
+          
+            pterms["FB4_18_1"]=new Array("FBCcount0_SPECSIG");
+          
+            pterms["FB4_18_2"]=new Array("/FBCcount2FBCcount<2>_RSTF__INT_SPECSIG");
+          
+            pterms["FB4_18_3"]=new Array("Internal_Clk");
+          
+          d2["Shift_Decoder1_SPECSIG"]=new Array("FB1_1_1");
+          
+            d2imp["Shift_Decoder1_SPECSIG"]=new Array("1");
+          
+              clk["Shift_Decoder1_SPECSIG"]=new Array("FB1_1_3");
+              
+                clkimp["Shift_Decoder1_SPECSIG"]=new Array("1");
+              
+              rst["Shift_Decoder1_SPECSIG"]=new Array("FB1_1_2");
+              
+                rstimp["Shift_Decoder1_SPECSIG"]=new Array("1");
+              prld["Shift_Decoder1_SPECSIG"]="GND";
+          d2["Len"]=new Array("FB1_2_1","FB1_2_2","FB1_2_3","FB1_2_4");
+          
+            d2imp["Len"]=new Array("1","1","1","1");
+          
+          d2["Shift_Decoder10_SPECSIG"]=new Array("FB1_3_1");
+          
+            d2imp["Shift_Decoder10_SPECSIG"]=new Array("1");
+          
+              clk["Shift_Decoder10_SPECSIG"]=new Array("FB1_3_3");
+              
+                clkimp["Shift_Decoder10_SPECSIG"]=new Array("1");
+              
+              rst["Shift_Decoder10_SPECSIG"]=new Array("FB1_3_2");
+              
+                rstimp["Shift_Decoder10_SPECSIG"]=new Array("1");
+              prld["Shift_Decoder10_SPECSIG"]="GND";
+          d2["Shift_Decoder0_SPECSIG"]=new Array("FB1_4_1");
+          
+            d2imp["Shift_Decoder0_SPECSIG"]=new Array("1");
+          
+              clk["Shift_Decoder0_SPECSIG"]=new Array("FB1_4_3");
+              
+                clkimp["Shift_Decoder0_SPECSIG"]=new Array("1");
+              
+              rst["Shift_Decoder0_SPECSIG"]=new Array("FB1_4_2");
+              
+                rstimp["Shift_Decoder0_SPECSIG"]=new Array("1");
+              prld["Shift_Decoder0_SPECSIG"]="GND";
+          d2["Ldir"]=new Array("FB1_5_1","FB1_5_2","FB1_5_3");
+          
+            d2imp["Ldir"]=new Array("1","1","1");
+          
+          d2["Ren"]=new Array("FB1_6_1","FB1_6_2","FB1_6_3","FB1_6_4");
+          
+            d2imp["Ren"]=new Array("1","1","1","1");
+          
+          d2["SRq9_SPECSIG"]=new Array("FB1_7_1","FB1_7_2","FB1_7_3");
+          
+            d2imp["SRq9_SPECSIG"]=new Array("1","1","1");
+          
+              clk["SRq9_SPECSIG"]=new Array("FB1_7_5");
+              
+                clkimp["SRq9_SPECSIG"]=new Array("1");
+              
+              rst["SRq9_SPECSIG"]=new Array("FB1_7_4");
+              
+                rstimp["SRq9_SPECSIG"]=new Array("1");
+              prld["SRq9_SPECSIG"]="GND";
+          d2["Rdir"]=new Array("FB1_8_1","FB1_8_2","FB1_8_3");
+          
+            d2imp["Rdir"]=new Array("1","1","1");
+          
+          d2["SRq8_SPECSIG"]=new Array("FB1_9_1","FB1_9_2","FB1_9_3");
+          
+            d2imp["SRq8_SPECSIG"]=new Array("1","1","1");
+          
+              clk["SRq8_SPECSIG"]=new Array("FB1_9_5");
+              
+                clkimp["SRq8_SPECSIG"]=new Array("1");
+              
+              rst["SRq8_SPECSIG"]=new Array("FB1_9_4");
+              
+                rstimp["SRq8_SPECSIG"]=new Array("1");
+              prld["SRq8_SPECSIG"]="GND";
+          d2["SRq7_SPECSIG"]=new Array("FB1_10_1","FB1_10_2","FB1_10_3");
+          
+            d2imp["SRq7_SPECSIG"]=new Array("1","1","1");
+          
+              clk["SRq7_SPECSIG"]=new Array("FB1_10_5");
+              
+                clkimp["SRq7_SPECSIG"]=new Array("1");
+              
+              rst["SRq7_SPECSIG"]=new Array("FB1_10_4");
+              
+                rstimp["SRq7_SPECSIG"]=new Array("1");
+              prld["SRq7_SPECSIG"]="GND";
+          d2["SRq6_SPECSIG"]=new Array("FB1_11_1","FB1_11_2","FB1_11_3");
+          
+            d2imp["SRq6_SPECSIG"]=new Array("1","1","1");
+          
+              clk["SRq6_SPECSIG"]=new Array("FB1_11_5");
+              
+                clkimp["SRq6_SPECSIG"]=new Array("1");
+              
+              rst["SRq6_SPECSIG"]=new Array("FB1_11_4");
+              
+                rstimp["SRq6_SPECSIG"]=new Array("1");
+              prld["SRq6_SPECSIG"]="GND";
+          d2["SRq5_SPECSIG"]=new Array("FB1_12_1","FB1_12_2","FB1_12_3");
+          
+            d2imp["SRq5_SPECSIG"]=new Array("1","1","1");
+          
+              clk["SRq5_SPECSIG"]=new Array("FB1_12_5");
+              
+                clkimp["SRq5_SPECSIG"]=new Array("1");
+              
+              rst["SRq5_SPECSIG"]=new Array("FB1_12_4");
+              
+                rstimp["SRq5_SPECSIG"]=new Array("1");
+              prld["SRq5_SPECSIG"]="GND";
+          d2["SRq4_SPECSIG"]=new Array("FB1_13_1","FB1_13_2","FB1_13_3");
+          
+            d2imp["SRq4_SPECSIG"]=new Array("1","1","1");
+          
+              clk["SRq4_SPECSIG"]=new Array("FB1_13_5");
+              
+                clkimp["SRq4_SPECSIG"]=new Array("1");
+              
+              rst["SRq4_SPECSIG"]=new Array("FB1_13_4");
+              
+                rstimp["SRq4_SPECSIG"]=new Array("1");
+              prld["SRq4_SPECSIG"]="GND";
+          d2["SRq3_SPECSIG"]=new Array("FB1_14_1","FB1_14_2","FB1_14_3");
+          
+            d2imp["SRq3_SPECSIG"]=new Array("1","1","1");
+          
+              clk["SRq3_SPECSIG"]=new Array("FB1_14_5");
+              
+                clkimp["SRq3_SPECSIG"]=new Array("1");
+              
+              rst["SRq3_SPECSIG"]=new Array("FB1_14_4");
+              
+                rstimp["SRq3_SPECSIG"]=new Array("1");
+              prld["SRq3_SPECSIG"]="GND";
+          d2["SRq2_SPECSIG"]=new Array("FB1_15_1","FB1_15_2","FB1_15_3");
+          
+            d2imp["SRq2_SPECSIG"]=new Array("1","1","1");
+          
+              clk["SRq2_SPECSIG"]=new Array("FB1_15_5");
+              
+                clkimp["SRq2_SPECSIG"]=new Array("1");
+              
+              rst["SRq2_SPECSIG"]=new Array("FB1_15_4");
+              
+                rstimp["SRq2_SPECSIG"]=new Array("1");
+              prld["SRq2_SPECSIG"]="GND";
+          d2["SRq1_SPECSIG"]=new Array("FB1_16_1","FB1_16_2","FB1_16_3");
+          
+            d2imp["SRq1_SPECSIG"]=new Array("1","1","1");
+          
+              clk["SRq1_SPECSIG"]=new Array("FB1_16_5");
+              
+                clkimp["SRq1_SPECSIG"]=new Array("1");
+              
+              rst["SRq1_SPECSIG"]=new Array("FB1_16_4");
+              
+                rstimp["SRq1_SPECSIG"]=new Array("1");
+              prld["SRq1_SPECSIG"]="GND";
+          d2["SRq10_SPECSIG"]=new Array("FB1_17_1","FB1_17_2","FB1_17_3");
+          
+            d2imp["SRq10_SPECSIG"]=new Array("1","1","1");
+          
+              clk["SRq10_SPECSIG"]=new Array("FB1_17_5");
+              
+                clkimp["SRq10_SPECSIG"]=new Array("1");
+              
+              rst["SRq10_SPECSIG"]=new Array("FB1_17_4");
+              
+                rstimp["SRq10_SPECSIG"]=new Array("1");
+              prld["SRq10_SPECSIG"]="GND";
+          d2["SRq0_SPECSIG"]=new Array("FB1_18_1","FB1_18_2","FB1_18_3","FB1_1_4","FB1_1_5");
+          
+            d2imp["SRq0_SPECSIG"]=new Array("1","1","1","1","1");
+          
+              clk["SRq0_SPECSIG"]=new Array("FB1_18_5");
+              
+                clkimp["SRq0_SPECSIG"]=new Array("1");
+              
+              rst["SRq0_SPECSIG"]=new Array("FB1_18_4");
+              
+                rstimp["SRq0_SPECSIG"]=new Array("1");
+              prld["SRq0_SPECSIG"]="GND";
+          d2["N64ReceiverTBCcount2N64ReceiverTBCcount<2>_RSTF__INT_SPECSIG"]=new Array("FB2_1_1");
+          
+            d2imp["N64ReceiverTBCcount2N64ReceiverTBCcount<2>_RSTF__INT_SPECSIG"]=new Array("1");
+          
+          d2["FBCcount2FBCcount<2>_RSTF__INT_SPECSIG"]=new Array("FB2_2_1");
+          
+            d2imp["FBCcount2FBCcount<2>_RSTF__INT_SPECSIG"]=new Array("1");
+          
+          d2["N64Receivershift_out1_SPECSIG"]=new Array("FB2_3_1");
+          
+            d2imp["N64Receivershift_out1_SPECSIG"]=new Array("1");
+          
+              gblclk["N64Receivershift_out1_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64Receivershift_out1_SPECSIG"]=new Array("FB2_3_2");
+              
+                rstimp["N64Receivershift_out1_SPECSIG"]=new Array("1");
+              prld["N64Receivershift_out1_SPECSIG"]="GND";
+          d2["N64Receivershift_out0_SPECSIG"]=new Array("FB2_4_1");
+          
+            d2imp["N64Receivershift_out0_SPECSIG"]=new Array("1");
+          
+              gblclk["N64Receivershift_out0_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64Receivershift_out0_SPECSIG"]=new Array("FB2_4_2");
+              
+                rstimp["N64Receivershift_out0_SPECSIG"]=new Array("1");
+              prld["N64Receivershift_out0_SPECSIG"]="GND";
+          d2["N64ReceiverIRLstate_FSM_FFd7_SPECSIG"]=new Array("FB2_5_1");
+          
+            d2imp["N64ReceiverIRLstate_FSM_FFd7_SPECSIG"]=new Array("1");
+          
+              gblclk["N64ReceiverIRLstate_FSM_FFd7_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64ReceiverIRLstate_FSM_FFd7_SPECSIG"]=new Array("FB2_5_2");
+              
+                rstimp["N64ReceiverIRLstate_FSM_FFd7_SPECSIG"]=new Array("1");
+              prld["N64ReceiverIRLstate_FSM_FFd7_SPECSIG"]="GND";
+          d2["N64ReceiverIRLstate_FSM_FFd6_SPECSIG"]=new Array("FB2_6_1");
+          
+            d2imp["N64ReceiverIRLstate_FSM_FFd6_SPECSIG"]=new Array("1");
+          
+              gblclk["N64ReceiverIRLstate_FSM_FFd6_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64ReceiverIRLstate_FSM_FFd6_SPECSIG"]=new Array("FB2_6_2");
+              
+                rstimp["N64ReceiverIRLstate_FSM_FFd6_SPECSIG"]=new Array("1");
+              prld["N64ReceiverIRLstate_FSM_FFd6_SPECSIG"]="GND";
+          d2["N64ReceiverIRLstate_FSM_FFd5_SPECSIG"]=new Array("FB2_7_1");
+          
+            d2imp["N64ReceiverIRLstate_FSM_FFd5_SPECSIG"]=new Array("1");
+          
+              gblclk["N64ReceiverIRLstate_FSM_FFd5_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64ReceiverIRLstate_FSM_FFd5_SPECSIG"]=new Array("FB2_7_2");
+              
+                rstimp["N64ReceiverIRLstate_FSM_FFd5_SPECSIG"]=new Array("1");
+              prld["N64ReceiverIRLstate_FSM_FFd5_SPECSIG"]="GND";
+          d2["N64ReceiverIRLstate_FSM_FFd4_SPECSIG"]=new Array("FB2_8_1");
+          
+            d2imp["N64ReceiverIRLstate_FSM_FFd4_SPECSIG"]=new Array("1");
+          
+              gblclk["N64ReceiverIRLstate_FSM_FFd4_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64ReceiverIRLstate_FSM_FFd4_SPECSIG"]=new Array("FB2_8_2");
+              
+                rstimp["N64ReceiverIRLstate_FSM_FFd4_SPECSIG"]=new Array("1");
+              prld["N64ReceiverIRLstate_FSM_FFd4_SPECSIG"]="GND";
+          d2["N64ReceiverIRLstate_FSM_FFd3_SPECSIG"]=new Array("FB2_9_1");
+          
+            d2imp["N64ReceiverIRLstate_FSM_FFd3_SPECSIG"]=new Array("1");
+          
+              gblclk["N64ReceiverIRLstate_FSM_FFd3_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64ReceiverIRLstate_FSM_FFd3_SPECSIG"]=new Array("FB2_9_2");
+              
+                rstimp["N64ReceiverIRLstate_FSM_FFd3_SPECSIG"]=new Array("1");
+              prld["N64ReceiverIRLstate_FSM_FFd3_SPECSIG"]="GND";
+          d2["N64ReceiverIRLstate_FSM_FFd2_SPECSIG"]=new Array("FB2_10_1");
+          
+            d2imp["N64ReceiverIRLstate_FSM_FFd2_SPECSIG"]=new Array("1");
+          
+              gblclk["N64ReceiverIRLstate_FSM_FFd2_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64ReceiverIRLstate_FSM_FFd2_SPECSIG"]=new Array("FB2_10_2");
+              
+                rstimp["N64ReceiverIRLstate_FSM_FFd2_SPECSIG"]=new Array("1");
+              prld["N64ReceiverIRLstate_FSM_FFd2_SPECSIG"]="GND";
+          d2["N64ReceiverIRLstate_FSM_FFd1_SPECSIG"]=new Array("FB2_11_1");
+          
+            d2imp["N64ReceiverIRLstate_FSM_FFd1_SPECSIG"]=new Array("1");
+          
+              gblclk["N64ReceiverIRLstate_FSM_FFd1_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64ReceiverIRLstate_FSM_FFd1_SPECSIG"]=new Array("FB2_11_2");
+              
+                rstimp["N64ReceiverIRLstate_FSM_FFd1_SPECSIG"]=new Array("1");
+              prld["N64ReceiverIRLstate_FSM_FFd1_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd15_SPECSIG"]=new Array("FB2_12_1");
+          
+            d2imp["instance_namestate_FSM_FFd15_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd15_SPECSIG"]=new Array("FB2_12_3");
+              
+                clkimp["instance_namestate_FSM_FFd15_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd15_SPECSIG"]=new Array("FB2_12_2");
+              
+                rstimp["instance_namestate_FSM_FFd15_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd15_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd14_SPECSIG"]=new Array("FB2_13_1");
+          
+            d2imp["instance_namestate_FSM_FFd14_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd14_SPECSIG"]=new Array("FB2_13_3");
+              
+                clkimp["instance_namestate_FSM_FFd14_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd14_SPECSIG"]=new Array("FB2_13_2");
+              
+                rstimp["instance_namestate_FSM_FFd14_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd14_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd13_SPECSIG"]=new Array("FB2_14_1");
+          
+            d2imp["instance_namestate_FSM_FFd13_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd13_SPECSIG"]=new Array("FB2_14_3");
+              
+                clkimp["instance_namestate_FSM_FFd13_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd13_SPECSIG"]=new Array("FB2_14_2");
+              
+                rstimp["instance_namestate_FSM_FFd13_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd13_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd10_SPECSIG"]=new Array("FB2_15_1");
+          
+            d2imp["instance_namestate_FSM_FFd10_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd10_SPECSIG"]=new Array("FB2_15_3");
+              
+                clkimp["instance_namestate_FSM_FFd10_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd10_SPECSIG"]=new Array("FB2_15_2");
+              
+                rstimp["instance_namestate_FSM_FFd10_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd10_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd1_SPECSIG"]=new Array("FB2_16_1");
+          
+            d2imp["instance_namestate_FSM_FFd1_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd1_SPECSIG"]=new Array("FB2_16_3");
+              
+                clkimp["instance_namestate_FSM_FFd1_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd1_SPECSIG"]=new Array("FB2_16_2");
+              
+                rstimp["instance_namestate_FSM_FFd1_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd1_SPECSIG"]="GND";
+          d2["N64ReceiverIRLstate_FSM_FFd8_SPECSIG"]=new Array("FB2_17_1","FB2_17_2");
+          
+            d2imp["N64ReceiverIRLstate_FSM_FFd8_SPECSIG"]=new Array("1","1");
+          
+              gblclk["N64ReceiverIRLstate_FSM_FFd8_SPECSIG"]=new Array("Clk_In");
+            
+              set["N64ReceiverIRLstate_FSM_FFd8_SPECSIG"]=new Array("FB2_17_3");
+              
+                setimp["N64ReceiverIRLstate_FSM_FFd8_SPECSIG"]=new Array("1");
+              prld["N64ReceiverIRLstate_FSM_FFd8_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd16_SPECSIG"]=new Array("FB2_18_1","FB2_18_2");
+          
+            d2imp["instance_namestate_FSM_FFd16_SPECSIG"]=new Array("1","1");
+          
+              clk["instance_namestate_FSM_FFd16_SPECSIG"]=new Array("FB2_18_4");
+              
+                clkimp["instance_namestate_FSM_FFd16_SPECSIG"]=new Array("1");
+              
+              set["instance_namestate_FSM_FFd16_SPECSIG"]=new Array("FB2_18_3");
+              
+                setimp["instance_namestate_FSM_FFd16_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd16_SPECSIG"]="GND";
+          d2["Internal_Clk"]=new Array("VCC");
+          
+            d2imp["Internal_Clk"]=new Array("1");
+          
+              gblclk["Internal_Clk"]=new Array("Clk_In");
+            
+              rst["Internal_Clk"]=new Array("FB3_1_1");
+              
+                rstimp["Internal_Clk"]=new Array("1");
+              prld["Internal_Clk"]="GND";
+          d2["Shift_Decoder9_SPECSIG"]=new Array("FB3_2_1");
+          
+            d2imp["Shift_Decoder9_SPECSIG"]=new Array("1");
+          
+              clk["Shift_Decoder9_SPECSIG"]=new Array("FB3_2_3");
+              
+                clkimp["Shift_Decoder9_SPECSIG"]=new Array("1");
+              
+              rst["Shift_Decoder9_SPECSIG"]=new Array("FB3_2_2");
+              
+                rstimp["Shift_Decoder9_SPECSIG"]=new Array("1");
+              prld["Shift_Decoder9_SPECSIG"]="GND";
+          d2["Shift_Decoder8_SPECSIG"]=new Array("FB3_3_1");
+          
+            d2imp["Shift_Decoder8_SPECSIG"]=new Array("1");
+          
+              clk["Shift_Decoder8_SPECSIG"]=new Array("FB3_3_3");
+              
+                clkimp["Shift_Decoder8_SPECSIG"]=new Array("1");
+              
+              rst["Shift_Decoder8_SPECSIG"]=new Array("FB3_3_2");
+              
+                rstimp["Shift_Decoder8_SPECSIG"]=new Array("1");
+              prld["Shift_Decoder8_SPECSIG"]="GND";
+          d2["Shift_Decoder7_SPECSIG"]=new Array("FB3_4_1");
+          
+            d2imp["Shift_Decoder7_SPECSIG"]=new Array("1");
+          
+              clk["Shift_Decoder7_SPECSIG"]=new Array("FB3_4_3");
+              
+                clkimp["Shift_Decoder7_SPECSIG"]=new Array("1");
+              
+              rst["Shift_Decoder7_SPECSIG"]=new Array("FB3_4_2");
+              
+                rstimp["Shift_Decoder7_SPECSIG"]=new Array("1");
+              prld["Shift_Decoder7_SPECSIG"]="GND";
+          d2["Shift_Decoder6_SPECSIG"]=new Array("FB3_5_1");
+          
+            d2imp["Shift_Decoder6_SPECSIG"]=new Array("1");
+          
+              clk["Shift_Decoder6_SPECSIG"]=new Array("FB3_5_3");
+              
+                clkimp["Shift_Decoder6_SPECSIG"]=new Array("1");
+              
+              rst["Shift_Decoder6_SPECSIG"]=new Array("FB3_5_2");
+              
+                rstimp["Shift_Decoder6_SPECSIG"]=new Array("1");
+              prld["Shift_Decoder6_SPECSIG"]="GND";
+          d2["Shift_Decoder5_SPECSIG"]=new Array("FB3_6_1");
+          
+            d2imp["Shift_Decoder5_SPECSIG"]=new Array("1");
+          
+              clk["Shift_Decoder5_SPECSIG"]=new Array("FB3_6_3");
+              
+                clkimp["Shift_Decoder5_SPECSIG"]=new Array("1");
+              
+              rst["Shift_Decoder5_SPECSIG"]=new Array("FB3_6_2");
+              
+                rstimp["Shift_Decoder5_SPECSIG"]=new Array("1");
+              prld["Shift_Decoder5_SPECSIG"]="GND";
+          d2["Shift_Decoder4_SPECSIG"]=new Array("FB3_7_1");
+          
+            d2imp["Shift_Decoder4_SPECSIG"]=new Array("1");
+          
+              clk["Shift_Decoder4_SPECSIG"]=new Array("FB3_7_3");
+              
+                clkimp["Shift_Decoder4_SPECSIG"]=new Array("1");
+              
+              rst["Shift_Decoder4_SPECSIG"]=new Array("FB3_7_2");
+              
+                rstimp["Shift_Decoder4_SPECSIG"]=new Array("1");
+              prld["Shift_Decoder4_SPECSIG"]="GND";
+          d2["Shift_Decoder3_SPECSIG"]=new Array("FB3_8_1");
+          
+            d2imp["Shift_Decoder3_SPECSIG"]=new Array("1");
+          
+              clk["Shift_Decoder3_SPECSIG"]=new Array("FB3_8_3");
+              
+                clkimp["Shift_Decoder3_SPECSIG"]=new Array("1");
+              
+              rst["Shift_Decoder3_SPECSIG"]=new Array("FB3_8_2");
+              
+                rstimp["Shift_Decoder3_SPECSIG"]=new Array("1");
+              prld["Shift_Decoder3_SPECSIG"]="GND";
+          d2["Shift_Decoder2_SPECSIG"]=new Array("FB3_9_1");
+          
+            d2imp["Shift_Decoder2_SPECSIG"]=new Array("1");
+          
+              clk["Shift_Decoder2_SPECSIG"]=new Array("FB3_9_3");
+              
+                clkimp["Shift_Decoder2_SPECSIG"]=new Array("1");
+              
+              rst["Shift_Decoder2_SPECSIG"]=new Array("FB3_9_2");
+              
+                rstimp["Shift_Decoder2_SPECSIG"]=new Array("1");
+              prld["Shift_Decoder2_SPECSIG"]="GND";
+          d2["Shift_Decoder11_SPECSIG"]=new Array("FB3_10_1");
+          
+            d2imp["Shift_Decoder11_SPECSIG"]=new Array("1");
+          
+              clk["Shift_Decoder11_SPECSIG"]=new Array("FB3_10_3");
+              
+                clkimp["Shift_Decoder11_SPECSIG"]=new Array("1");
+              
+              rst["Shift_Decoder11_SPECSIG"]=new Array("FB3_10_2");
+              
+                rstimp["Shift_Decoder11_SPECSIG"]=new Array("1");
+              prld["Shift_Decoder11_SPECSIG"]="GND";
+          d2["FBCcount0_SPECSIG"]=new Array("FB3_11_1");
+          
+            d2imp["FBCcount0_SPECSIG"]=new Array("1");
+          
+              clk["FBCcount0_SPECSIG"]=new Array("FB3_11_3");
+              
+                clkimp["FBCcount0_SPECSIG"]=new Array("1");
+              
+              rst["FBCcount0_SPECSIG"]=new Array("FB3_11_2");
+              
+                rstimp["FBCcount0_SPECSIG"]=new Array("1");
+              prld["FBCcount0_SPECSIG"]="GND";
+          d2["FBCcount3_SPECSIG"]=new Array("FB3_12_1","FB3_12_2");
+          
+            d2imp["FBCcount3_SPECSIG"]=new Array("1","1");
+          
+              clk["FBCcount3_SPECSIG"]=new Array("FB3_12_4");
+              
+                clkimp["FBCcount3_SPECSIG"]=new Array("1");
+              
+              rst["FBCcount3_SPECSIG"]=new Array("FB3_12_3");
+              
+                rstimp["FBCcount3_SPECSIG"]=new Array("1");
+              prld["FBCcount3_SPECSIG"]="GND";
+          d2["FBCcount2_SPECSIG"]=new Array("FB3_13_1","FB3_13_2");
+          
+            d2imp["FBCcount2_SPECSIG"]=new Array("1","1");
+          
+              clk["FBCcount2_SPECSIG"]=new Array("FB3_13_4");
+              
+                clkimp["FBCcount2_SPECSIG"]=new Array("1");
+              
+              rst["FBCcount2_SPECSIG"]=new Array("FB3_13_3");
+              
+                rstimp["FBCcount2_SPECSIG"]=new Array("1");
+              prld["FBCcount2_SPECSIG"]="GND";
+          d2["N64_Len"]=new Array("FB3_14_1");
+          
+            d2imp["N64_Len"]=new Array("1");
+          
+              clk["N64_Len"]=new Array("FB3_14_3");
+              
+                clkimp["N64_Len"]=new Array("1");
+              
+              set["N64_Len"]=new Array("FB3_14_2");
+              
+                setimp["N64_Len"]=new Array("1");
+              prld["N64_Len"]="GND";
+          d2["N64_Ldir"]=new Array("FB3_15_1");
+          
+            d2imp["N64_Ldir"]=new Array("1");
+          
+              clk["N64_Ldir"]=new Array("FB3_15_3");
+              
+                clkimp["N64_Ldir"]=new Array("1");
+              
+              set["N64_Ldir"]=new Array("FB3_15_2");
+              
+                setimp["N64_Ldir"]=new Array("1");
+              prld["N64_Ldir"]="GND";
+          d2["N64_Rdir"]=new Array("FB3_16_1");
+          
+            d2imp["N64_Rdir"]=new Array("1");
+          
+              clk["N64_Rdir"]=new Array("FB3_16_3");
+              
+                clkimp["N64_Rdir"]=new Array("1");
+              
+              set["N64_Rdir"]=new Array("FB3_16_2");
+              
+                setimp["N64_Rdir"]=new Array("1");
+              prld["N64_Rdir"]="GND";
+          d2["N64_Ren"]=new Array("FB3_17_1");
+          
+            d2imp["N64_Ren"]=new Array("1");
+          
+              clk["N64_Ren"]=new Array("FB3_17_3");
+              
+                clkimp["N64_Ren"]=new Array("1");
+              
+              set["N64_Ren"]=new Array("FB3_17_2");
+              
+                setimp["N64_Ren"]=new Array("1");
+              prld["N64_Ren"]="GND";
+          d2["SRq11_SPECSIG"]=new Array("FB3_18_1","FB3_18_2","FB3_18_3");
+          
+            d2imp["SRq11_SPECSIG"]=new Array("1","1","1");
+          
+              clk["SRq11_SPECSIG"]=new Array("FB3_18_5");
+              
+                clkimp["SRq11_SPECSIG"]=new Array("1");
+              
+              rst["SRq11_SPECSIG"]=new Array("FB3_18_4");
+              
+                rstimp["SRq11_SPECSIG"]=new Array("1");
+              prld["SRq11_SPECSIG"]="GND";
+          d2["N64Receivershift_out3_SPECSIG"]=new Array("FB4_2_1");
+          
+            d2imp["N64Receivershift_out3_SPECSIG"]=new Array("1");
+          
+              gblclk["N64Receivershift_out3_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64Receivershift_out3_SPECSIG"]=new Array("FB4_2_2");
+              
+                rstimp["N64Receivershift_out3_SPECSIG"]=new Array("1");
+              prld["N64Receivershift_out3_SPECSIG"]="GND";
+          d2["N64Receivershift_out2_SPECSIG"]=new Array("FB4_3_1");
+          
+            d2imp["N64Receivershift_out2_SPECSIG"]=new Array("1");
+          
+              gblclk["N64Receivershift_out2_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64Receivershift_out2_SPECSIG"]=new Array("FB4_3_2");
+              
+                rstimp["N64Receivershift_out2_SPECSIG"]=new Array("1");
+              prld["N64Receivershift_out2_SPECSIG"]="GND";
+          d2["N64Receiverlatch_SPECSIG"]=new Array("FB4_4_1");
+          
+            d2imp["N64Receiverlatch_SPECSIG"]=new Array("1");
+          
+              gblclk["N64Receiverlatch_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64Receiverlatch_SPECSIG"]=new Array("FB4_4_2");
+              
+                rstimp["N64Receiverlatch_SPECSIG"]=new Array("1");
+              prld["N64Receiverlatch_SPECSIG"]="GND";
+          d2["N64ReceiverTBCcount2_SPECSIG"]=new Array("FB4_5_1");
+          
+            d2imp["N64ReceiverTBCcount2_SPECSIG"]=new Array("1");
+          
+              gblclk["N64ReceiverTBCcount2_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64ReceiverTBCcount2_SPECSIG"]=new Array("FB4_5_2");
+              
+                rstimp["N64ReceiverTBCcount2_SPECSIG"]=new Array("1");
+              prld["N64ReceiverTBCcount2_SPECSIG"]="GND";
+          d2["N64ReceiverTBCcount0_SPECSIG"]=new Array("FB4_6_1");
+          
+            d2imp["N64ReceiverTBCcount0_SPECSIG"]=new Array("1");
+          
+              gblclk["N64ReceiverTBCcount0_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64ReceiverTBCcount0_SPECSIG"]=new Array("FB4_6_2");
+              
+                rstimp["N64ReceiverTBCcount0_SPECSIG"]=new Array("1");
+              prld["N64ReceiverTBCcount0_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd9_SPECSIG"]=new Array("FB4_7_1");
+          
+            d2imp["instance_namestate_FSM_FFd9_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd9_SPECSIG"]=new Array("FB4_7_3");
+              
+                clkimp["instance_namestate_FSM_FFd9_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd9_SPECSIG"]=new Array("FB4_7_2");
+              
+                rstimp["instance_namestate_FSM_FFd9_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd9_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd8_SPECSIG"]=new Array("FB4_8_1");
+          
+            d2imp["instance_namestate_FSM_FFd8_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd8_SPECSIG"]=new Array("FB4_8_3");
+              
+                clkimp["instance_namestate_FSM_FFd8_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd8_SPECSIG"]=new Array("FB4_8_2");
+              
+                rstimp["instance_namestate_FSM_FFd8_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd8_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd7_SPECSIG"]=new Array("FB4_9_1");
+          
+            d2imp["instance_namestate_FSM_FFd7_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd7_SPECSIG"]=new Array("FB4_9_3");
+              
+                clkimp["instance_namestate_FSM_FFd7_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd7_SPECSIG"]=new Array("FB4_9_2");
+              
+                rstimp["instance_namestate_FSM_FFd7_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd7_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd6_SPECSIG"]=new Array("FB4_10_1");
+          
+            d2imp["instance_namestate_FSM_FFd6_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd6_SPECSIG"]=new Array("FB4_10_3");
+              
+                clkimp["instance_namestate_FSM_FFd6_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd6_SPECSIG"]=new Array("FB4_10_2");
+              
+                rstimp["instance_namestate_FSM_FFd6_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd6_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd5_SPECSIG"]=new Array("FB4_11_1");
+          
+            d2imp["instance_namestate_FSM_FFd5_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd5_SPECSIG"]=new Array("FB4_11_3");
+              
+                clkimp["instance_namestate_FSM_FFd5_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd5_SPECSIG"]=new Array("FB4_11_2");
+              
+                rstimp["instance_namestate_FSM_FFd5_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd5_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd4_SPECSIG"]=new Array("FB4_12_1");
+          
+            d2imp["instance_namestate_FSM_FFd4_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd4_SPECSIG"]=new Array("FB4_12_3");
+              
+                clkimp["instance_namestate_FSM_FFd4_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd4_SPECSIG"]=new Array("FB4_12_2");
+              
+                rstimp["instance_namestate_FSM_FFd4_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd4_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd3_SPECSIG"]=new Array("FB4_13_1");
+          
+            d2imp["instance_namestate_FSM_FFd3_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd3_SPECSIG"]=new Array("FB4_13_3");
+              
+                clkimp["instance_namestate_FSM_FFd3_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd3_SPECSIG"]=new Array("FB4_13_2");
+              
+                rstimp["instance_namestate_FSM_FFd3_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd3_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd2_SPECSIG"]=new Array("FB4_14_1");
+          
+            d2imp["instance_namestate_FSM_FFd2_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd2_SPECSIG"]=new Array("FB4_14_3");
+              
+                clkimp["instance_namestate_FSM_FFd2_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd2_SPECSIG"]=new Array("FB4_14_2");
+              
+                rstimp["instance_namestate_FSM_FFd2_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd2_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd12_SPECSIG"]=new Array("FB4_15_1");
+          
+            d2imp["instance_namestate_FSM_FFd12_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd12_SPECSIG"]=new Array("FB4_15_3");
+              
+                clkimp["instance_namestate_FSM_FFd12_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd12_SPECSIG"]=new Array("FB4_15_2");
+              
+                rstimp["instance_namestate_FSM_FFd12_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd12_SPECSIG"]="GND";
+          d2["instance_namestate_FSM_FFd11_SPECSIG"]=new Array("FB4_16_1");
+          
+            d2imp["instance_namestate_FSM_FFd11_SPECSIG"]=new Array("1");
+          
+              clk["instance_namestate_FSM_FFd11_SPECSIG"]=new Array("FB4_16_3");
+              
+                clkimp["instance_namestate_FSM_FFd11_SPECSIG"]=new Array("1");
+              
+              rst["instance_namestate_FSM_FFd11_SPECSIG"]=new Array("FB4_16_2");
+              
+                rstimp["instance_namestate_FSM_FFd11_SPECSIG"]=new Array("1");
+              prld["instance_namestate_FSM_FFd11_SPECSIG"]="GND";
+          d2["N64ReceiverTBCcount1_SPECSIG"]=new Array("FB4_17_1","FB4_17_2");
+          
+            d2imp["N64ReceiverTBCcount1_SPECSIG"]=new Array("1","1");
+          
+              gblclk["N64ReceiverTBCcount1_SPECSIG"]=new Array("Clk_In");
+            
+              rst["N64ReceiverTBCcount1_SPECSIG"]=new Array("FB4_17_3");
+              
+                rstimp["N64ReceiverTBCcount1_SPECSIG"]=new Array("1");
+              prld["N64ReceiverTBCcount1_SPECSIG"]="GND";
+          d2["FBCcount1_SPECSIG"]=new Array("FB4_18_1");
+          
+            d2imp["FBCcount1_SPECSIG"]=new Array("1");
+          
+              clk["FBCcount1_SPECSIG"]=new Array("FB4_18_3");
+              
+                clkimp["FBCcount1_SPECSIG"]=new Array("1");
+              
+              rst["FBCcount1_SPECSIG"]=new Array("FB4_18_2");
+              
+                rstimp["FBCcount1_SPECSIG"]=new Array("1");
+              prld["FBCcount1_SPECSIG"]="GND";
+
+      uimSignals = new Array();
+
+      uimSigNegs = new Array();
+
+      uimPterms = new Array();
+      
+
+      
+        function getEqnList() {
+          var str = "<html><head><link type='text/css' href='style.css' rel='stylesheet'></head><body class='pgBgnd'>";
+          str += "<center><h3>Equations</h3></center>";
+          str += "<table width='90%' align='center' border='1' cellpadding='0' cellspacing='0'>";
+          for (s=0; s<uimSignals.length; s++) {
+            str += "<tr><td>";
+            str += retUimEqn(uimSignals[s]);
+            str += "</td></tr>";
+          }
+          for (s=0; s<signals.length; s++) {
+            str += "<tr><td>";
+            str += retEqn(signals[s]);
+            str += "</td></tr>";
+          }
+
+          var legend = retLegend();
+		      if (legend != "") {
+		        str += "<tr><td>" + legend + "</td></tr>";
+		      }
+
+          str += "</table>";
+          str += "<form><span class='pgRef'>";
+
+          if (!parent.leftnav.IsNS()) {
+            str += "<table width='90%' align='center'>";
+            str += "<tr><td align='left'><input type='button' value='back to top' ";
+            str += "onclick='javascript:parent.leftnav.showEqnAll()' ";
+            str += "onmouseover=\"window.status='goto top of page'; return true;\" ";
+            str += "onmouseout=\"window.status=''\">";
+            str += "</td>";
+            str += "<td align='right'>";
+            str += "<input type='button' value='print page' ";
+            str += "onclick='javascript:window.print()' ";
+            str += "onmouseover=\"window.status='print page'; return true;\" ";
+            str += "onmouseout=\"window.status=''\">";
+            str += "</td>";
+            str += "</tr></table>";
+          }
+          else {
+            str += "<table width='90%' align='center'>";
+            str += "<tr><td align='left'><a href='javascript:parent.leftnav.showEqnAll()'>back to top</a>";
+            str += "</td>";
+            str += "<td align='right'>";
+            str += "<a href='javascript:window.print()'>";
+            str += "print page</a>";
+            str += "</td>";
+            str += "</tr></table>";
+          }
+
+          str += "</span></form>";
+          str += "</body></html>";
+          return str;
+        }
+      
+    </script>
+</head></html>

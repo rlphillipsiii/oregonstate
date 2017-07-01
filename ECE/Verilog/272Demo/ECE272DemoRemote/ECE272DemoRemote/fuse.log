@@ -1,0 +1,23 @@
+Running: C:\Xilinx\11.1\ISE\bin\nt\unwrapped\fuse.exe -ise T:/tekbots/tekbots-guille/students/fryb/ECE272Demo/ECE272DemoRemote/ECE272DemoRemote/ECE272DemoRemote.ise -intstyle ise -incremental -lib uni9000_ver -lib aim_ver -lib cpld_ver -lib xilinxcorelib_ver -o T:/tekbots/tekbots-guille/students/fryb/ECE272Demo/ECE272DemoRemote/ECE272DemoRemote/RemoteTest_2_isim_beh.exe -prj T:/tekbots/tekbots-guille/students/fryb/ECE272Demo/ECE272DemoRemote/ECE272DemoRemote/RemoteTest_2_beh.prj RemoteTest_2 glbl 
+Number of CPUs detected in this system: 4
+Turning on mult-threading, number of parallel sub-compilation jobs: 8 
+Determining compilation order of HDL files
+Parsing Verilog file "T:/tekbots/tekbots-guille/students/fryb/ECE272Demo/ECE272DemoRemote/ECE272DemoRemote/Remote.v" into library work
+Parsing Verilog file "T:/tekbots/tekbots-guille/students/fryb/ECE272Demo/ECE272DemoRemote/ECE272DemoRemote/RemoteTest_2.v" into library work
+Parsing Verilog file "C:/Xilinx/11.1/ISE/verilog/src/glbl.v" into library work
+Starting static elaboration
+Completed static elaboration
+Fuse Memory Usage: 57036 KB
+Fuse CPU Usage: 203 ms
+Compiling module four_bit_counter
+Compiling module clock_state_decoder
+Compiling module latch_state_decoder
+Compiling module Remote
+Compiling module RemoteTest_2
+Compiling module glbl
+Time Resolution for simulation is 1ps.
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 6 Verilog Units
+Built simulation executable T:/tekbots/tekbots-guille/students/fryb/ECE272Demo/ECE272DemoRemote/ECE272DemoRemote/RemoteTest_2_isim_beh.exe
+Fuse Memory Usage: 63568 KB
+Fuse CPU Usage: 281 ms

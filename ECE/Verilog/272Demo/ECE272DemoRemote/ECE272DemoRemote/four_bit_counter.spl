@@ -1,0 +1,9 @@
+[Inputs]
+clk
+reset_n
+[Outputs]
+=count[3:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel four_bit_counter
+

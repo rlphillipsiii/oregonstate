@@ -1,0 +1,766 @@
+MDF Database:  version 1.0
+MDF_INFO | StreetFighter | XC9572XL-10-VQ44
+MACROCELL | 2 | 12 | move<0>
+ATTRIBUTES | 4358928 | 0
+OUTPUTMC | 10 | 2 | 12 | 2 | 9 | 2 | 3 | 2 | 10 | 2 | 16 | 2 | 7 | 2 | 4 | 2 | 8 | 2 | 11 | 2 | 15
+INPUTS | 10 | move<0>  | button_state_FSM_FFd2  | button_state_FSM_FFd1  | override_en  | move_select<1>  | move_select<0>  | move_select<3>  | move_select<2>  | reset_n  | override_reg<14>/override_reg<14>_SETF__$INT.EXP
+INPUTMC | 5 | 2 | 12 | 2 | 10 | 2 | 8 | 2 | 9 | 2 | 11
+INPUTP | 5 | 3 | 7 | 9 | 10 | 62
+IMPORTS | 1 | 2 | 11
+EQ | 17 | 
+   move<0>.T = move<0> & button_state_FSM_FFd2 & 
+	button_state_FSM_FFd1
+	# move<0> & !override_en & move_select<1> & 
+	move_select<0> & move_select<3> & !move_select<2>
+	# move<0> & !override_en & move_select<1> & 
+	!move_select<0> & move_select<3> & move_select<2>
+	# !move<0> & !override_en & !button_state_FSM_FFd2 & 
+	!move_select<1> & move_select<0> & move_select<3> & move_select<2>
+;Imported pterms FB3_12
+	# !move<0> & !override_en & !button_state_FSM_FFd2 & 
+	move_select<1> & move_select<0> & !move_select<3> & move_select<2>
+	# !move<0> & !override_en & !button_state_FSM_FFd1 & 
+	move_select<1> & move_select<0> & !move_select<3> & move_select<2>
+	# !move<0> & !override_en & !button_state_FSM_FFd1 & 
+	!move_select<1> & move_select<0> & move_select<3> & move_select<2>;
+   move<0>.CLK = clk_system;	// GCK
+   move<0>.AR = !reset_n;
+GLOBALS | 1 | 2 | clk_system
+
+MACROCELL | 2 | 17 | move<1>
+ATTRIBUTES | 4358928 | 0
+OUTPUTMC | 11 | 2 | 17 | 2 | 9 | 2 | 3 | 2 | 10 | 2 | 16 | 2 | 7 | 2 | 0 | 2 | 2 | 2 | 4 | 2 | 8 | 2 | 15
+INPUTS | 10 | move<1>  | button_state_FSM_FFd2  | button_state_FSM_FFd1  | override_en  | move_select<1>  | move_select<0>  | move_select<3>  | move_select<2>  | reset_n  | override_reg<10>/override_reg<10>_RSTF.EXP
+INPUTMC | 5 | 2 | 17 | 2 | 10 | 2 | 8 | 2 | 9 | 2 | 0
+INPUTP | 5 | 3 | 7 | 9 | 10 | 62
+IMPORTS | 1 | 2 | 0
+EQ | 17 | 
+   move<1>.T = move<1> & button_state_FSM_FFd2 & 
+	button_state_FSM_FFd1
+	# move<1> & !override_en & move_select<1> & 
+	!move_select<0> & move_select<3> & move_select<2>
+	# move<1> & !override_en & !move_select<1> & 
+	move_select<0> & move_select<3> & move_select<2>
+	# !move<1> & !override_en & !button_state_FSM_FFd2 & 
+	move_select<1> & move_select<0> & move_select<3> & !move_select<2>
+;Imported pterms FB3_1
+	# !move<1> & !override_en & !button_state_FSM_FFd2 & 
+	move_select<1> & move_select<0> & !move_select<3> & move_select<2>
+	# !move<1> & !override_en & !button_state_FSM_FFd1 & 
+	move_select<1> & move_select<0> & move_select<3> & !move_select<2>
+	# !move<1> & !override_en & !button_state_FSM_FFd1 & 
+	move_select<1> & move_select<0> & !move_select<3> & move_select<2>;
+   move<1>.CLK = clk_system;	// GCK
+   move<1>.AR = !reset_n;
+GLOBALS | 1 | 2 | clk_system
+
+MACROCELL | 2 | 14 | move<2>
+ATTRIBUTES | 8553344 | 0
+OUTPUTMC | 11 | 2 | 14 | 2 | 9 | 2 | 3 | 2 | 10 | 2 | 16 | 2 | 7 | 2 | 2 | 2 | 4 | 2 | 8 | 2 | 13 | 2 | 15
+INPUTS | 7 | move<2>  | move_select<1>  | move_select<0>  | move_select<3>  | move_select<2>  | EXP6_.EXP  | reset_n
+INPUTMC | 2 | 2 | 14 | 2 | 13
+INPUTP | 5 | 3 | 7 | 9 | 10 | 62
+IMPORTS | 1 | 2 | 13
+EQ | 13 | 
+   move<2>.D = move<2> & !move_select<1> & !move_select<0>
+	# move<2> & !move_select<0> & !move_select<3>
+	# move<2> & !move_select<0> & !move_select<2>
+	# move<2> & move_select<1> & move_select<0> & 
+	move_select<3> & move_select<2>
+;Imported pterms FB3_14
+	# move<2> & override_en
+	# button_state_FSM_FFd2 & button_state_FSM_FFd1
+	# move<2> & !move_select<1> & !move_select<3>
+	# move<2> & !move_select<1> & !move_select<2>
+	# move<2> & !move_select<3> & !move_select<2>;
+   move<2>.CLK = clk_system;	// GCK
+   move<2>.AP = !reset_n;
+GLOBALS | 1 | 2 | clk_system
+
+MACROCELL | 2 | 9 | override_en
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 16 | 2 | 12 | 2 | 17 | 2 | 13 | 2 | 9 | 0 | 16 | 0 | 3 | 0 | 15 | 0 | 17 | 0 | 14 | 0 | 13 | 0 | 12 | 2 | 0 | 2 | 5 | 2 | 8 | 2 | 11 | 2 | 10
+INPUTS | 11 | button_state_FSM_FFd4  | button_state_FSM_FFd2  | button_state_FSM_FFd3  | button_state_FSM_FFd1  | move<0>  | move<1>  | move<2>  | override_en  | reset_n  | dir  | button_state_FSM_FFd1.EXP
+INPUTMC | 9 | 2 | 3 | 2 | 10 | 2 | 16 | 2 | 8 | 2 | 12 | 2 | 17 | 2 | 14 | 2 | 9 | 2 | 8
+INPUTP | 2 | 62 | 63
+EXPORTS | 1 | 2 | 10
+IMPORTS | 1 | 2 | 8
+EQ | 13 | 
+   !override_en.D = !button_state_FSM_FFd4 & button_state_FSM_FFd2 & 
+	!button_state_FSM_FFd3 & button_state_FSM_FFd1
+	# !move<0> & !move<1> & move<2> & !override_en & 
+	!button_state_FSM_FFd2
+;Imported pterms FB3_9
+	# !move<0> & !move<1> & move<2> & !override_en & 
+	!button_state_FSM_FFd1;
+   override_en.CLK = clk_system;	// GCK
+   override_en.AR = !reset_n;
+    override_en.EXP  =  !move<0> & move<1> & !move<2> & dir & 
+	button_state_FSM_FFd4 & !button_state_FSM_FFd2
+	# !move<0> & move<1> & !move<2> & !dir & 
+	!button_state_FSM_FFd4 & !button_state_FSM_FFd2 & button_state_FSM_FFd3
+GLOBALS | 1 | 2 | clk_system
+
+MACROCELL | 0 | 11 | override_reg<10>
+ATTRIBUTES | 8520624 | 0
+OUTPUTMC | 1 | 0 | 2
+INPUTS | 4 | override_reg<9>  | clk_ctrl  | load_override  | override_reg<10>/override_reg<10>_RSTF
+INPUTMC | 3 | 1 | 17 | 0 | 0 | 2 | 0
+INPUTP | 1 | 29
+EQ | 5 | 
+   override_reg<10>.D = override_reg<9>;
+   override_reg<10>.CLK = clk_ctrl;
+   override_reg<10>.AP = !load_override & 
+	!override_reg<10>/override_reg<10>_RSTF;
+   override_reg<10>.AR = override_reg<10>/override_reg<10>_RSTF;
+
+MACROCELL | 2 | 7 | override_reg<14>
+ATTRIBUTES | 8520624 | 0
+OUTPUTMC | 2 | 1 | 14 | 2 | 8
+INPUTS | 11 | move<0>  | clk_ctrl  | override_reg<14>/override_reg<14>_SETF__$INT  | button_state_FSM_FFd4  | load_override  | button_state_FSM_FFd2  | button_state_FSM_FFd1  | move<1>  | move<2>  | dir  | override_reg<7>.EXP
+INPUTMC | 9 | 2 | 12 | 2 | 11 | 2 | 3 | 0 | 0 | 2 | 10 | 2 | 8 | 2 | 17 | 2 | 14 | 2 | 6
+INPUTP | 2 | 29 | 63
+EXPORTS | 1 | 2 | 8
+IMPORTS | 1 | 2 | 6
+EQ | 10 | 
+   override_reg<14>.D = ;Imported pterms FB3_7
+	  override_reg<13>;
+   override_reg<14>.CLK = clk_ctrl;
+   override_reg<14>.AP = !override_reg<14>/override_reg<14>_SETF__$INT;
+   override_reg<14>.AR = !button_state_FSM_FFd4 & !load_override & 
+	!button_state_FSM_FFd2 & button_state_FSM_FFd1;
+    override_reg<14>.EXP  =  !move<0> & move<1> & !move<2> & dir & 
+	button_state_FSM_FFd4 & !button_state_FSM_FFd1
+	# !move<0> & move<1> & !move<2> & !dir & 
+	!button_state_FSM_FFd4 & !button_state_FSM_FFd1
+
+MACROCELL | 2 | 6 | override_reg<7>
+ATTRIBUTES | 8520624 | 0
+OUTPUTMC | 2 | 0 | 10 | 2 | 7
+INPUTS | 8 | override_reg<6>  | clk_ctrl  | override_reg<7>/override_reg<7>_SETF__$INT  | button_state_FSM_FFd4  | load_override  | button_state_FSM_FFd2  | button_state_FSM_FFd1  | override_reg<13>
+INPUTMC | 7 | 1 | 8 | 1 | 6 | 2 | 3 | 0 | 0 | 2 | 10 | 2 | 8 | 1 | 15
+INPUTP | 1 | 29
+EXPORTS | 1 | 2 | 7
+EQ | 6 | 
+   override_reg<7>.D = override_reg<6>;
+   override_reg<7>.CLK = clk_ctrl;
+   override_reg<7>.AP = !override_reg<7>/override_reg<7>_SETF__$INT;
+   override_reg<7>.AR = button_state_FSM_FFd4 & !load_override & 
+	!button_state_FSM_FFd2 & button_state_FSM_FFd1;
+    override_reg<7>.EXP  =  override_reg<13>
+
+MACROCELL | 0 | 10 | override_reg<8>
+ATTRIBUTES | 8520624 | 0
+OUTPUTMC | 1 | 1 | 17
+INPUTS | 4 | override_reg<7>  | clk_ctrl  | load_override  | override_reg<8>/override_reg<8>_RSTF
+INPUTMC | 3 | 2 | 6 | 0 | 0 | 2 | 5
+INPUTP | 1 | 29
+EQ | 5 | 
+   override_reg<8>.D = override_reg<7>;
+   override_reg<8>.CLK = clk_ctrl;
+   override_reg<8>.AP = !load_override & 
+	!override_reg<8>/override_reg<8>_RSTF;
+   override_reg<8>.AR = override_reg<8>/override_reg<8>_RSTF;
+
+MACROCELL | 1 | 17 | override_reg<9>
+ATTRIBUTES | 8520624 | 0
+OUTPUTMC | 1 | 0 | 11
+INPUTS | 4 | override_reg<8>  | clk_ctrl  | load_override  | override_reg<9>/override_reg<9>_RSTF
+INPUTMC | 3 | 0 | 10 | 0 | 0 | 2 | 2
+INPUTP | 1 | 29
+EQ | 5 | 
+   override_reg<9>.D = override_reg<8>;
+   override_reg<9>.CLK = clk_ctrl;
+   override_reg<9>.AP = !load_override & 
+	!override_reg<9>/override_reg<9>_RSTF;
+   override_reg<9>.AR = override_reg<9>/override_reg<9>_RSTF;
+
+MACROCELL | 2 | 3 | button_state_FSM_FFd4
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 12 | 2 | 9 | 2 | 7 | 2 | 6 | 2 | 1 | 2 | 10 | 2 | 15 | 2 | 4 | 2 | 0 | 2 | 11 | 1 | 6 | 2 | 5 | 2 | 2
+INPUTS | 11 | move<0>  | move<1>  | move<2>  | dir  | button_state_FSM_FFd2  | button_state_FSM_FFd3  | button_state_FSM_FFd1  | override_reg<9>/override_reg<9>_RSTF.EXP  | clk_sm  | reset_n  | ctrl_out_OBUF.EXP
+INPUTMC | 9 | 2 | 12 | 2 | 17 | 2 | 14 | 2 | 10 | 2 | 16 | 2 | 8 | 2 | 2 | 0 | 5 | 2 | 4
+INPUTP | 2 | 63 | 62
+IMPORTS | 2 | 2 | 2 | 2 | 4
+EQ | 28 | 
+   button_state_FSM_FFd4.D = !move<0> & !move<2> & dir & !button_state_FSM_FFd3 & 
+	!button_state_FSM_FFd1
+	# move<0> & !move<1> & !move<2> & !dir & 
+	!button_state_FSM_FFd3 & !button_state_FSM_FFd1
+	# !move<0> & move<1> & !move<2> & !dir & 
+	button_state_FSM_FFd2 & button_state_FSM_FFd3
+;Imported pterms FB3_3
+	# !button_state_FSM_FFd4 & button_state_FSM_FFd2 & 
+	button_state_FSM_FFd3
+	# button_state_FSM_FFd2 & !button_state_FSM_FFd3 & 
+	!button_state_FSM_FFd1
+	# move<1> & !move<2> & dir & !button_state_FSM_FFd3 & 
+	!button_state_FSM_FFd1
+	# move<2> & dir & button_state_FSM_FFd4 & 
+	!button_state_FSM_FFd3 & !button_state_FSM_FFd1
+;Imported pterms FB3_5
+	# button_state_FSM_FFd4 & button_state_FSM_FFd2 & 
+	!button_state_FSM_FFd3
+	# move<2> & !button_state_FSM_FFd2 & 
+	button_state_FSM_FFd3 & !button_state_FSM_FFd1
+	# move<0> & !move<1> & !button_state_FSM_FFd2 & 
+	button_state_FSM_FFd3 & !button_state_FSM_FFd1
+	# !move<1> & !move<2> & !button_state_FSM_FFd4 & 
+	!button_state_FSM_FFd3 & !button_state_FSM_FFd1
+	# !move<0> & move<1> & !dir & !button_state_FSM_FFd4 & 
+	button_state_FSM_FFd3 & !button_state_FSM_FFd1;
+   button_state_FSM_FFd4.CLK = clk_sm;
+   button_state_FSM_FFd4.AR = !reset_n;
+
+MACROCELL | 0 | 0 | load_override
+ATTRIBUTES | 8553344 | 0
+OUTPUTMC | 22 | 0 | 11 | 2 | 7 | 2 | 6 | 0 | 10 | 1 | 17 | 0 | 2 | 1 | 16 | 1 | 15 | 1 | 14 | 1 | 13 | 1 | 12 | 1 | 11 | 1 | 10 | 1 | 9 | 1 | 8 | 1 | 7 | 2 | 0 | 2 | 11 | 1 | 6 | 2 | 5 | 2 | 2 | 2 | 1
+INPUTS | 3 | load_state_FSM_FFd2  | load_state_FSM_FFd1  | reset_n
+INPUTMC | 2 | 0 | 3 | 0 | 4
+INPUTP | 1 | 62
+EQ | 3 | 
+   !load_override.D = !load_state_FSM_FFd2 & load_state_FSM_FFd1;
+   load_override.CLK = clk_system;	// GCK
+   load_override.AP = !reset_n;
+GLOBALS | 1 | 2 | clk_system
+
+MACROCELL | 2 | 10 | button_state_FSM_FFd2
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 18 | 2 | 12 | 2 | 17 | 2 | 13 | 2 | 9 | 2 | 7 | 2 | 6 | 2 | 3 | 2 | 10 | 2 | 16 | 2 | 8 | 2 | 1 | 2 | 0 | 2 | 11 | 1 | 6 | 2 | 5 | 2 | 2 | 2 | 4 | 2 | 15
+INPUTS | 10 | button_state_FSM_FFd2  | button_state_FSM_FFd1  | button_state_FSM_FFd4  | button_state_FSM_FFd3  | move<0>  | move<1>  | move<2>  | override_en.EXP  | clk_sm  | reset_n
+INPUTMC | 9 | 2 | 10 | 2 | 8 | 2 | 3 | 2 | 16 | 2 | 12 | 2 | 17 | 2 | 14 | 2 | 9 | 0 | 5
+INPUTP | 1 | 62
+IMPORTS | 1 | 2 | 9
+EQ | 12 | 
+   button_state_FSM_FFd2.D = !button_state_FSM_FFd2 & button_state_FSM_FFd1
+	# button_state_FSM_FFd4 & !button_state_FSM_FFd2 & 
+	!button_state_FSM_FFd3
+	# move<0> & move<1> & !move<2> & 
+	!button_state_FSM_FFd2 & !button_state_FSM_FFd3
+;Imported pterms FB3_10
+	# !move<0> & move<1> & !move<2> & dir & 
+	button_state_FSM_FFd4 & !button_state_FSM_FFd2
+	# !move<0> & move<1> & !move<2> & !dir & 
+	!button_state_FSM_FFd4 & !button_state_FSM_FFd2 & button_state_FSM_FFd3;
+   button_state_FSM_FFd2.CLK = clk_sm;
+   button_state_FSM_FFd2.AR = !reset_n;
+
+MACROCELL | 2 | 16 | button_state_FSM_FFd3
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 11 | 2 | 9 | 2 | 3 | 2 | 10 | 2 | 16 | 2 | 8 | 2 | 0 | 2 | 5 | 2 | 1 | 2 | 2 | 2 | 4 | 2 | 15
+INPUTS | 10 | move<0>  | move<1>  | move<2>  | dir  | button_state_FSM_FFd2  | button_state_FSM_FFd1  | button_state_FSM_FFd3  | EXP7_.EXP  | clk_sm  | reset_n
+INPUTMC | 8 | 2 | 12 | 2 | 17 | 2 | 14 | 2 | 10 | 2 | 8 | 2 | 16 | 2 | 15 | 0 | 5
+INPUTP | 2 | 63 | 62
+IMPORTS | 1 | 2 | 15
+EQ | 19 | 
+   button_state_FSM_FFd3.D = move<0> & button_state_FSM_FFd2 & 
+	button_state_FSM_FFd3
+	# !move<1> & button_state_FSM_FFd2 & 
+	button_state_FSM_FFd3
+	# !move<0> & move<1> & !move<2> & !dir & 
+	!button_state_FSM_FFd2 & !button_state_FSM_FFd1
+;Imported pterms FB3_16
+	# move<2> & button_state_FSM_FFd2 & 
+	button_state_FSM_FFd3
+	# button_state_FSM_FFd4 & !button_state_FSM_FFd2 & 
+	!button_state_FSM_FFd1
+	# dir & button_state_FSM_FFd4 & 
+	button_state_FSM_FFd2 & button_state_FSM_FFd3
+	# !dir & !button_state_FSM_FFd4 & 
+	button_state_FSM_FFd2 & button_state_FSM_FFd3
+	# !move<0> & move<1> & !move<2> & 
+	!button_state_FSM_FFd2 & !button_state_FSM_FFd3 & !button_state_FSM_FFd1;
+   button_state_FSM_FFd3.CLK = clk_sm;
+   button_state_FSM_FFd3.AR = !reset_n;
+
+MACROCELL | 2 | 8 | button_state_FSM_FFd1
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 18 | 2 | 12 | 2 | 17 | 2 | 13 | 2 | 9 | 2 | 7 | 2 | 6 | 2 | 3 | 2 | 10 | 2 | 16 | 2 | 8 | 2 | 1 | 2 | 0 | 2 | 11 | 1 | 6 | 2 | 5 | 2 | 2 | 2 | 4 | 2 | 15
+INPUTS | 10 | button_state_FSM_FFd2  | button_state_FSM_FFd3  | button_state_FSM_FFd1  | move<0>  | move<1>  | move<2>  | override_en  | override_reg<14>.EXP  | clk_sm  | reset_n
+INPUTMC | 9 | 2 | 10 | 2 | 16 | 2 | 8 | 2 | 12 | 2 | 17 | 2 | 14 | 2 | 9 | 2 | 7 | 0 | 5
+INPUTP | 1 | 62
+EXPORTS | 1 | 2 | 9
+IMPORTS | 1 | 2 | 7
+EQ | 11 | 
+   !button_state_FSM_FFd1.D = button_state_FSM_FFd2
+	# !button_state_FSM_FFd3 & !button_state_FSM_FFd1
+;Imported pterms FB3_8
+	# !move<0> & move<1> & !move<2> & dir & 
+	button_state_FSM_FFd4 & !button_state_FSM_FFd1
+	# !move<0> & move<1> & !move<2> & !dir & 
+	!button_state_FSM_FFd4 & !button_state_FSM_FFd1;
+   button_state_FSM_FFd1.CLK = clk_sm;
+   button_state_FSM_FFd1.AR = !reset_n;
+    button_state_FSM_FFd1.EXP  =  !move<0> & !move<1> & move<2> & !override_en & 
+	!button_state_FSM_FFd1
+
+MACROCELL | 0 | 5 | clk_sm
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 5 | 2 | 3 | 2 | 10 | 2 | 16 | 2 | 8 | 2 | 1
+INPUTS | 8 | completion_sync  | latch_count<0>  | latch_count<1>  | latch_count<2>  | latch_count<3>  | latch_count<4>  | latch_count<5>  | reset_n
+INPUTMC | 7 | 2 | 1 | 0 | 16 | 0 | 15 | 0 | 17 | 0 | 14 | 0 | 13 | 0 | 12
+INPUTP | 1 | 62
+EQ | 5 | 
+   clk_sm.D = completion_sync
+	# !latch_count<0> & !latch_count<1> & latch_count<2> & 
+	!latch_count<3> & !latch_count<4> & !latch_count<5>;
+   clk_sm.CLK = clk_system;	// GCK
+   clk_sm.AR = !reset_n;
+GLOBALS | 1 | 2 | clk_system
+
+MACROCELL | 0 | 1 | clk_listen<0>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 5 | 0 | 3 | 0 | 9 | 0 | 8 | 0 | 7 | 0 | 6
+INPUTS | 2 | clk_ctrl  | ctrl_latch
+INPUTP | 2 | 29 | 46
+EQ | 3 | 
+   clk_listen<0>.T = Vcc;
+   clk_listen<0>.CLK = clk_ctrl;
+   clk_listen<0>.AR = ctrl_latch;
+
+MACROCELL | 0 | 16 | latch_count<0>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 7 | 0 | 5 | 0 | 16 | 0 | 15 | 0 | 17 | 0 | 14 | 0 | 13 | 0 | 12
+INPUTS | 9 | override_en  | latch_count<0>  | latch_count<1>  | latch_count<2>  | latch_count<3>  | latch_count<4>  | latch_count<5>  | ctrl_latch  | reset_n
+INPUTMC | 7 | 2 | 9 | 0 | 16 | 0 | 15 | 0 | 17 | 0 | 14 | 0 | 13 | 0 | 12
+INPUTP | 2 | 46 | 62
+EQ | 5 | 
+   !latch_count<0>.T = !override_en & !latch_count<0>
+	# !latch_count<0> & !latch_count<1> & latch_count<2> & 
+	!latch_count<3> & !latch_count<4> & !latch_count<5>;
+   latch_count<0>.CLK = ctrl_latch;
+   latch_count<0>.AR = !reset_n;
+
+MACROCELL | 0 | 3 | load_state_FSM_FFd2
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 3 | 0 | 0 | 0 | 3 | 0 | 4
+INPUTS | 9 | override_en  | load_state_FSM_FFd2  | clk_listen<0>  | clk_listen<1>  | clk_listen<2>  | clk_listen<3>  | load_state_FSM_FFd1  | clk_listen<4>  | reset_n
+INPUTMC | 8 | 2 | 9 | 0 | 3 | 0 | 1 | 0 | 9 | 0 | 8 | 0 | 7 | 0 | 4 | 0 | 6
+INPUTP | 1 | 62
+EQ | 6 | 
+   !load_state_FSM_FFd2.D = !override_en & !load_state_FSM_FFd2
+	# !clk_listen<0> & load_state_FSM_FFd2 & 
+	!clk_listen<1> & !clk_listen<2> & !clk_listen<3> & 
+	load_state_FSM_FFd1 & clk_listen<4>;
+   load_state_FSM_FFd2.CLK = clk_system;	// GCK
+   load_state_FSM_FFd2.AR = !reset_n;
+GLOBALS | 1 | 2 | clk_system
+
+MACROCELL | 0 | 9 | clk_listen<1>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 4 | 0 | 3 | 0 | 8 | 0 | 7 | 0 | 6
+INPUTS | 3 | clk_listen<0>  | clk_ctrl  | ctrl_latch
+INPUTMC | 1 | 0 | 1
+INPUTP | 2 | 29 | 46
+EQ | 3 | 
+   clk_listen<1>.T = clk_listen<0>;
+   clk_listen<1>.CLK = clk_ctrl;
+   clk_listen<1>.AR = ctrl_latch;
+
+MACROCELL | 0 | 8 | clk_listen<2>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 3 | 0 | 3 | 0 | 7 | 0 | 6
+INPUTS | 4 | clk_listen<0>  | clk_listen<1>  | clk_ctrl  | ctrl_latch
+INPUTMC | 2 | 0 | 1 | 0 | 9
+INPUTP | 2 | 29 | 46
+EQ | 3 | 
+   clk_listen<2>.T = clk_listen<0> & clk_listen<1>;
+   clk_listen<2>.CLK = clk_ctrl;
+   clk_listen<2>.AR = ctrl_latch;
+
+MACROCELL | 0 | 7 | clk_listen<3>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 2 | 0 | 3 | 0 | 6
+INPUTS | 5 | clk_listen<0>  | clk_listen<1>  | clk_listen<2>  | clk_ctrl  | ctrl_latch
+INPUTMC | 3 | 0 | 1 | 0 | 9 | 0 | 8
+INPUTP | 2 | 29 | 46
+EQ | 3 | 
+   clk_listen<3>.T = clk_listen<0> & clk_listen<1> & clk_listen<2>;
+   clk_listen<3>.CLK = clk_ctrl;
+   clk_listen<3>.AR = ctrl_latch;
+
+MACROCELL | 0 | 15 | latch_count<1>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 7 | 0 | 5 | 0 | 16 | 0 | 15 | 0 | 17 | 0 | 14 | 0 | 13 | 0 | 12
+INPUTS | 5 | override_en  | latch_count<0>  | latch_count<1>  | ctrl_latch  | reset_n
+INPUTMC | 3 | 2 | 9 | 0 | 16 | 0 | 15
+INPUTP | 2 | 46 | 62
+EQ | 4 | 
+   latch_count<1>.D = override_en & latch_count<0> & !latch_count<1>
+	# override_en & !latch_count<0> & latch_count<1>;
+   latch_count<1>.CLK = ctrl_latch;
+   latch_count<1>.AR = !reset_n;
+
+MACROCELL | 0 | 17 | latch_count<2>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 6 | 0 | 5 | 0 | 16 | 0 | 17 | 0 | 14 | 0 | 13 | 0 | 12
+INPUTS | 9 | override_en  | latch_count<2>  | latch_count<0>  | latch_count<1>  | latch_count<3>  | latch_count<4>  | latch_count<5>  | ctrl_latch  | reset_n
+INPUTMC | 7 | 2 | 9 | 0 | 17 | 0 | 16 | 0 | 15 | 0 | 14 | 0 | 13 | 0 | 12
+INPUTP | 2 | 46 | 62
+EQ | 6 | 
+   latch_count<2>.T = !override_en & latch_count<2>
+	# override_en & latch_count<0> & latch_count<1>
+	# !latch_count<0> & !latch_count<1> & latch_count<2> & 
+	!latch_count<3> & !latch_count<4> & !latch_count<5>;
+   latch_count<2>.CLK = ctrl_latch;
+   latch_count<2>.AR = !reset_n;
+
+MACROCELL | 0 | 14 | latch_count<3>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 6 | 0 | 5 | 0 | 16 | 0 | 17 | 0 | 14 | 0 | 13 | 0 | 12
+INPUTS | 7 | override_en  | latch_count<0>  | latch_count<1>  | latch_count<2>  | latch_count<3>  | ctrl_latch  | reset_n
+INPUTMC | 5 | 2 | 9 | 0 | 16 | 0 | 15 | 0 | 17 | 0 | 14
+INPUTP | 2 | 46 | 62
+EQ | 5 | 
+   latch_count<3>.T = !override_en & latch_count<3>
+	# override_en & latch_count<0> & latch_count<1> & 
+	latch_count<2>;
+   latch_count<3>.CLK = ctrl_latch;
+   latch_count<3>.AR = !reset_n;
+
+MACROCELL | 0 | 13 | latch_count<4>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 5 | 0 | 5 | 0 | 16 | 0 | 17 | 0 | 13 | 0 | 12
+INPUTS | 8 | override_en  | latch_count<0>  | latch_count<1>  | latch_count<2>  | latch_count<3>  | latch_count<4>  | ctrl_latch  | reset_n
+INPUTMC | 6 | 2 | 9 | 0 | 16 | 0 | 15 | 0 | 17 | 0 | 14 | 0 | 13
+INPUTP | 2 | 46 | 62
+EQ | 5 | 
+   latch_count<4>.T = !override_en & latch_count<4>
+	# override_en & latch_count<0> & latch_count<1> & 
+	latch_count<2> & latch_count<3>;
+   latch_count<4>.CLK = ctrl_latch;
+   latch_count<4>.AR = !reset_n;
+
+MACROCELL | 0 | 4 | load_state_FSM_FFd1
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 3 | 0 | 0 | 0 | 3 | 0 | 4
+INPUTS | 4 | ctrl_latch  | load_state_FSM_FFd2  | load_state_FSM_FFd1  | reset_n
+INPUTMC | 2 | 0 | 3 | 0 | 4
+INPUTP | 2 | 46 | 62
+EQ | 4 | 
+   load_state_FSM_FFd1.D = ctrl_latch & load_state_FSM_FFd2
+	# load_state_FSM_FFd2 & load_state_FSM_FFd1;
+   load_state_FSM_FFd1.CLK = clk_system;	// GCK
+   load_state_FSM_FFd1.AR = !reset_n;
+GLOBALS | 1 | 2 | clk_system
+
+MACROCELL | 0 | 6 | clk_listen<4>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 1 | 0 | 3
+INPUTS | 6 | clk_listen<0>  | clk_listen<1>  | clk_listen<2>  | clk_listen<3>  | clk_ctrl  | ctrl_latch
+INPUTMC | 4 | 0 | 1 | 0 | 9 | 0 | 8 | 0 | 7
+INPUTP | 2 | 29 | 46
+EQ | 4 | 
+   clk_listen<4>.T = clk_listen<0> & clk_listen<1> & clk_listen<2> & 
+	clk_listen<3>;
+   clk_listen<4>.CLK = clk_ctrl;
+   clk_listen<4>.AR = ctrl_latch;
+
+MACROCELL | 0 | 12 | latch_count<5>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 4 | 0 | 5 | 0 | 16 | 0 | 17 | 0 | 12
+INPUTS | 9 | override_en  | latch_count<0>  | latch_count<1>  | latch_count<2>  | latch_count<3>  | latch_count<4>  | latch_count<5>  | ctrl_latch  | reset_n
+INPUTMC | 7 | 2 | 9 | 0 | 16 | 0 | 15 | 0 | 17 | 0 | 14 | 0 | 13 | 0 | 12
+INPUTP | 2 | 46 | 62
+EQ | 5 | 
+   latch_count<5>.T = !override_en & latch_count<5>
+	# override_en & latch_count<0> & latch_count<1> & 
+	latch_count<2> & latch_count<3> & latch_count<4>;
+   latch_count<5>.CLK = ctrl_latch;
+   latch_count<5>.AR = !reset_n;
+
+MACROCELL | 0 | 2 | override_reg<11>
+ATTRIBUTES | 8520608 | 0
+OUTPUTMC | 1 | 1 | 16
+INPUTS | 3 | override_reg<10>  | clk_ctrl  | load_override
+INPUTMC | 2 | 0 | 11 | 0 | 0
+INPUTP | 1 | 29
+EQ | 3 | 
+   override_reg<11>.D = override_reg<10>;
+   override_reg<11>.CLK = clk_ctrl;
+   override_reg<11>.AP = !load_override;
+
+MACROCELL | 1 | 16 | override_reg<12>
+ATTRIBUTES | 8520608 | 0
+OUTPUTMC | 1 | 1 | 15
+INPUTS | 3 | override_reg<11>  | clk_ctrl  | load_override
+INPUTMC | 2 | 0 | 2 | 0 | 0
+INPUTP | 1 | 29
+EQ | 3 | 
+   override_reg<12>.D = override_reg<11>;
+   override_reg<12>.CLK = clk_ctrl;
+   override_reg<12>.AP = !load_override;
+
+MACROCELL | 1 | 15 | override_reg<13>
+ATTRIBUTES | 8520608 | 0
+OUTPUTMC | 1 | 2 | 6
+INPUTS | 3 | override_reg<12>  | clk_ctrl  | load_override
+INPUTMC | 2 | 1 | 16 | 0 | 0
+INPUTP | 1 | 29
+EQ | 3 | 
+   override_reg<13>.D = override_reg<12>;
+   override_reg<13>.CLK = clk_ctrl;
+   override_reg<13>.AP = !load_override;
+
+MACROCELL | 1 | 14 | override_reg<15>
+ATTRIBUTES | 8520608 | 0
+OUTPUTMC | 1 | 2 | 5
+INPUTS | 3 | override_reg<14>  | clk_ctrl  | load_override
+INPUTMC | 2 | 2 | 7 | 0 | 0
+INPUTP | 1 | 29
+EQ | 3 | 
+   override_reg<15>.D = override_reg<14>;
+   override_reg<15>.CLK = clk_ctrl;
+   override_reg<15>.AP = !load_override;
+
+MACROCELL | 1 | 13 | override_reg<1>
+ATTRIBUTES | 8520608 | 0
+OUTPUTMC | 1 | 1 | 12
+INPUTS | 3 | override_reg<0>  | clk_ctrl  | load_override
+INPUTMC | 2 | 1 | 7 | 0 | 0
+INPUTP | 1 | 29
+EQ | 3 | 
+   override_reg<1>.D = override_reg<0>;
+   override_reg<1>.CLK = clk_ctrl;
+   override_reg<1>.AP = !load_override;
+
+MACROCELL | 1 | 12 | override_reg<2>
+ATTRIBUTES | 8520608 | 0
+OUTPUTMC | 1 | 1 | 11
+INPUTS | 3 | override_reg<1>  | clk_ctrl  | load_override
+INPUTMC | 2 | 1 | 13 | 0 | 0
+INPUTP | 1 | 29
+EQ | 3 | 
+   override_reg<2>.D = override_reg<1>;
+   override_reg<2>.CLK = clk_ctrl;
+   override_reg<2>.AP = !load_override;
+
+MACROCELL | 1 | 11 | override_reg<3>
+ATTRIBUTES | 8520608 | 0
+OUTPUTMC | 1 | 1 | 10
+INPUTS | 3 | override_reg<2>  | clk_ctrl  | load_override
+INPUTMC | 2 | 1 | 12 | 0 | 0
+INPUTP | 1 | 29
+EQ | 3 | 
+   override_reg<3>.D = override_reg<2>;
+   override_reg<3>.CLK = clk_ctrl;
+   override_reg<3>.AP = !load_override;
+
+MACROCELL | 1 | 10 | override_reg<4>
+ATTRIBUTES | 8520608 | 0
+OUTPUTMC | 1 | 1 | 9
+INPUTS | 3 | override_reg<3>  | clk_ctrl  | load_override
+INPUTMC | 2 | 1 | 11 | 0 | 0
+INPUTP | 1 | 29
+EQ | 3 | 
+   override_reg<4>.D = override_reg<3>;
+   override_reg<4>.CLK = clk_ctrl;
+   override_reg<4>.AP = !load_override;
+
+MACROCELL | 1 | 9 | override_reg<5>
+ATTRIBUTES | 8520608 | 0
+OUTPUTMC | 1 | 1 | 8
+INPUTS | 3 | override_reg<4>  | clk_ctrl  | load_override
+INPUTMC | 2 | 1 | 10 | 0 | 0
+INPUTP | 1 | 29
+EQ | 3 | 
+   override_reg<5>.D = override_reg<4>;
+   override_reg<5>.CLK = clk_ctrl;
+   override_reg<5>.AP = !load_override;
+
+MACROCELL | 1 | 8 | override_reg<6>
+ATTRIBUTES | 8520608 | 0
+OUTPUTMC | 1 | 2 | 6
+INPUTS | 3 | override_reg<5>  | clk_ctrl  | load_override
+INPUTMC | 2 | 1 | 9 | 0 | 0
+INPUTP | 1 | 29
+EQ | 3 | 
+   override_reg<6>.D = override_reg<5>;
+   override_reg<6>.CLK = clk_ctrl;
+   override_reg<6>.AP = !load_override;
+
+MACROCELL | 2 | 1 | completion_sync
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 2 | 0 | 5 | 2 | 2
+INPUTS | 7 | button_state_FSM_FFd2  | button_state_FSM_FFd1  | clk_sm  | reset_n  | load_override  | button_state_FSM_FFd3  | button_state_FSM_FFd4
+INPUTMC | 6 | 2 | 10 | 2 | 8 | 0 | 5 | 0 | 0 | 2 | 16 | 2 | 3
+INPUTP | 1 | 62
+EXPORTS | 1 | 2 | 2
+EQ | 8 | 
+   completion_sync.D = button_state_FSM_FFd2 & button_state_FSM_FFd1 & 
+	!clk_sm;
+   completion_sync.CLK = clk_system;	// GCK
+   completion_sync.AR = !reset_n;
+    completion_sync.EXP  =  !load_override & !button_state_FSM_FFd2 & 
+	!button_state_FSM_FFd3 & button_state_FSM_FFd1
+	# !button_state_FSM_FFd4 & !load_override & 
+	!button_state_FSM_FFd2 & button_state_FSM_FFd3 & !button_state_FSM_FFd1
+GLOBALS | 1 | 2 | clk_system
+
+MACROCELL | 1 | 7 | override_reg<0>
+ATTRIBUTES | 8520608 | 0
+OUTPUTMC | 1 | 1 | 13
+INPUTS | 2 | clk_ctrl  | load_override
+INPUTMC | 1 | 0 | 0
+INPUTP | 1 | 29
+EQ | 3 | 
+   override_reg<0>.D = Vcc;
+   override_reg<0>.CLK = clk_ctrl;
+   override_reg<0>.AP = !load_override;
+
+MACROCELL | 2 | 4 | ctrl_out_OBUF
+ATTRIBUTES | 264962 | 0
+OUTPUTMC | 1 | 2 | 3
+INPUTS | 9 | button_state_FSM_FFd4  | button_state_FSM_FFd2  | button_state_FSM_FFd3  | move<2>  | button_state_FSM_FFd1  | move<0>  | move<1>  | dir  | override_reg<8>/override_reg<8>_RSTF.EXP
+INPUTMC | 8 | 2 | 3 | 2 | 10 | 2 | 16 | 2 | 14 | 2 | 8 | 2 | 12 | 2 | 17 | 2 | 5
+INPUTP | 1 | 63
+EXPORTS | 1 | 2 | 3
+IMPORTS | 1 | 2 | 5
+EQ | 13 | 
+   ctrl_out = ;Imported pterms FB3_6
+	  override_en & override_reg<15>
+	# !override_en & ctrl_in;
+    ctrl_out_OBUF.EXP  =  button_state_FSM_FFd4 & button_state_FSM_FFd2 & 
+	!button_state_FSM_FFd3
+	# move<2> & !button_state_FSM_FFd2 & 
+	button_state_FSM_FFd3 & !button_state_FSM_FFd1
+	# move<0> & !move<1> & !button_state_FSM_FFd2 & 
+	button_state_FSM_FFd3 & !button_state_FSM_FFd1
+	# !move<1> & !move<2> & !button_state_FSM_FFd4 & 
+	!button_state_FSM_FFd3 & !button_state_FSM_FFd1
+	# !move<0> & move<1> & !dir & !button_state_FSM_FFd4 & 
+	button_state_FSM_FFd3 & !button_state_FSM_FFd1
+
+MACROCELL | 2 | 0 | override_reg<10>/override_reg<10>_RSTF
+ATTRIBUTES | 133888 | 0
+OUTPUTMC | 2 | 0 | 11 | 2 | 17
+INPUTS | 11 | load_override  | button_state_FSM_FFd2  | button_state_FSM_FFd3  | button_state_FSM_FFd1  | button_state_FSM_FFd4  | move<1>  | override_en  | move_select<1>  | move_select<0>  | move_select<3>  | move_select<2>
+INPUTMC | 7 | 0 | 0 | 2 | 10 | 2 | 16 | 2 | 8 | 2 | 3 | 2 | 17 | 2 | 9
+INPUTP | 4 | 3 | 7 | 9 | 10
+EXPORTS | 1 | 2 | 17
+EQ | 10 | 
+   override_reg<10>/override_reg<10>_RSTF = !load_override & button_state_FSM_FFd2 & 
+	button_state_FSM_FFd3 & !button_state_FSM_FFd1
+	# button_state_FSM_FFd4 & !load_override & 
+	!button_state_FSM_FFd2 & !button_state_FSM_FFd3 & !button_state_FSM_FFd1;
+    override_reg<10>/override_reg<10>_RSTF.EXP  =  !move<1> & !override_en & !button_state_FSM_FFd2 & 
+	move_select<1> & move_select<0> & !move_select<3> & move_select<2>
+	# !move<1> & !override_en & !button_state_FSM_FFd1 & 
+	move_select<1> & move_select<0> & move_select<3> & !move_select<2>
+	# !move<1> & !override_en & !button_state_FSM_FFd1 & 
+	move_select<1> & move_select<0> & !move_select<3> & move_select<2>
+
+MACROCELL | 2 | 11 | override_reg<14>/override_reg<14>_SETF__$INT
+ATTRIBUTES | 133888 | 0
+OUTPUTMC | 2 | 2 | 7 | 2 | 12
+INPUTS | 10 | load_override  | button_state_FSM_FFd4  | button_state_FSM_FFd2  | button_state_FSM_FFd1  | move<0>  | override_en  | move_select<1>  | move_select<0>  | move_select<3>  | move_select<2>
+INPUTMC | 6 | 0 | 0 | 2 | 3 | 2 | 10 | 2 | 8 | 2 | 12 | 2 | 9
+INPUTP | 4 | 3 | 7 | 9 | 10
+EXPORTS | 1 | 2 | 12
+EQ | 9 | 
+   override_reg<14>/override_reg<14>_SETF__$INT = load_override
+	# !button_state_FSM_FFd4 & !button_state_FSM_FFd2 & 
+	button_state_FSM_FFd1;
+    override_reg<14>/override_reg<14>_SETF__$INT.EXP  =  !move<0> & !override_en & !button_state_FSM_FFd2 & 
+	move_select<1> & move_select<0> & !move_select<3> & move_select<2>
+	# !move<0> & !override_en & !button_state_FSM_FFd1 & 
+	move_select<1> & move_select<0> & !move_select<3> & move_select<2>
+	# !move<0> & !override_en & !button_state_FSM_FFd1 & 
+	!move_select<1> & move_select<0> & move_select<3> & move_select<2>
+
+MACROCELL | 1 | 6 | override_reg<7>/override_reg<7>_SETF__$INT
+ATTRIBUTES | 133888 | 0
+OUTPUTMC | 1 | 2 | 6
+INPUTS | 4 | load_override  | button_state_FSM_FFd4  | button_state_FSM_FFd2  | button_state_FSM_FFd1
+INPUTMC | 4 | 0 | 0 | 2 | 3 | 2 | 10 | 2 | 8
+EQ | 3 | 
+   override_reg<7>/override_reg<7>_SETF__$INT = load_override
+	# button_state_FSM_FFd4 & !button_state_FSM_FFd2 & 
+	button_state_FSM_FFd1;
+
+MACROCELL | 2 | 5 | override_reg<8>/override_reg<8>_RSTF
+ATTRIBUTES | 133888 | 0
+OUTPUTMC | 2 | 0 | 10 | 2 | 4
+INPUTS | 8 | button_state_FSM_FFd4  | load_override  | button_state_FSM_FFd2  | button_state_FSM_FFd3  | button_state_FSM_FFd1  | override_en  | override_reg<15>  | ctrl_in
+INPUTMC | 7 | 2 | 3 | 0 | 0 | 2 | 10 | 2 | 16 | 2 | 8 | 2 | 9 | 1 | 14
+INPUTP | 1 | 33
+EXPORTS | 1 | 2 | 4
+EQ | 8 | 
+   override_reg<8>/override_reg<8>_RSTF = button_state_FSM_FFd4 & !load_override & 
+	!button_state_FSM_FFd2 & button_state_FSM_FFd3
+	# !button_state_FSM_FFd4 & !load_override & 
+	button_state_FSM_FFd2 & !button_state_FSM_FFd1
+	# !load_override & !button_state_FSM_FFd2 & 
+	button_state_FSM_FFd3 & button_state_FSM_FFd1;
+    override_reg<8>/override_reg<8>_RSTF.EXP  =  override_en & override_reg<15>
+	# !override_en & ctrl_in
+
+MACROCELL | 2 | 2 | override_reg<9>/override_reg<9>_RSTF
+ATTRIBUTES | 133888 | 0
+OUTPUTMC | 2 | 1 | 17 | 2 | 3
+INPUTS | 9 | button_state_FSM_FFd4  | load_override  | button_state_FSM_FFd2  | button_state_FSM_FFd1  | button_state_FSM_FFd3  | move<1>  | move<2>  | dir  | completion_sync.EXP
+INPUTMC | 8 | 2 | 3 | 0 | 0 | 2 | 10 | 2 | 8 | 2 | 16 | 2 | 17 | 2 | 14 | 2 | 1
+INPUTP | 1 | 63
+EXPORTS | 1 | 2 | 3
+IMPORTS | 1 | 2 | 1
+EQ | 15 | 
+   override_reg<9>/override_reg<9>_RSTF = button_state_FSM_FFd4 & !load_override & 
+	button_state_FSM_FFd2 & !button_state_FSM_FFd1
+;Imported pterms FB3_2
+	# !load_override & !button_state_FSM_FFd2 & 
+	!button_state_FSM_FFd3 & button_state_FSM_FFd1
+	# !button_state_FSM_FFd4 & !load_override & 
+	!button_state_FSM_FFd2 & button_state_FSM_FFd3 & !button_state_FSM_FFd1;
+    override_reg<9>/override_reg<9>_RSTF.EXP  =  !button_state_FSM_FFd4 & button_state_FSM_FFd2 & 
+	button_state_FSM_FFd3
+	# button_state_FSM_FFd2 & !button_state_FSM_FFd3 & 
+	!button_state_FSM_FFd1
+	# move<1> & !move<2> & dir & !button_state_FSM_FFd3 & 
+	!button_state_FSM_FFd1
+	# move<2> & dir & button_state_FSM_FFd4 & 
+	!button_state_FSM_FFd3 & !button_state_FSM_FFd1
+
+MACROCELL | 2 | 13 | EXP6_
+ATTRIBUTES | 2048 | 0
+OUTPUTMC | 1 | 2 | 14
+INPUTS | 7 | move<2>  | override_en  | button_state_FSM_FFd2  | button_state_FSM_FFd1  | move_select<1>  | move_select<3>  | move_select<2>
+INPUTMC | 4 | 2 | 14 | 2 | 9 | 2 | 10 | 2 | 8
+INPUTP | 3 | 3 | 9 | 10
+EXPORTS | 1 | 2 | 14
+EQ | 5 | 
+       EXP6_.EXP  =  move<2> & override_en
+	# button_state_FSM_FFd2 & button_state_FSM_FFd1
+	# move<2> & !move_select<1> & !move_select<3>
+	# move<2> & !move_select<1> & !move_select<2>
+	# move<2> & !move_select<3> & !move_select<2>
+
+MACROCELL | 2 | 15 | EXP7_
+ATTRIBUTES | 2048 | 0
+OUTPUTMC | 1 | 2 | 16
+INPUTS | 8 | move<2>  | button_state_FSM_FFd2  | button_state_FSM_FFd3  | button_state_FSM_FFd4  | button_state_FSM_FFd1  | dir  | move<0>  | move<1>
+INPUTMC | 7 | 2 | 14 | 2 | 10 | 2 | 16 | 2 | 3 | 2 | 8 | 2 | 12 | 2 | 17
+INPUTP | 1 | 63
+EXPORTS | 1 | 2 | 16
+EQ | 10 | 
+       EXP7_.EXP  =  move<2> & button_state_FSM_FFd2 & 
+	button_state_FSM_FFd3
+	# button_state_FSM_FFd4 & !button_state_FSM_FFd2 & 
+	!button_state_FSM_FFd1
+	# dir & button_state_FSM_FFd4 & 
+	button_state_FSM_FFd2 & button_state_FSM_FFd3
+	# !dir & !button_state_FSM_FFd4 & 
+	button_state_FSM_FFd2 & button_state_FSM_FFd3
+	# !move<0> & move<1> & !move<2> & 
+	!button_state_FSM_FFd2 & !button_state_FSM_FFd3 & !button_state_FSM_FFd1
+
+PIN | clk_system | 4096 | 0 | N/A | 20 | 9 | 2 | 12 | 2 | 17 | 2 | 14 | 2 | 9 | 0 | 0 | 0 | 5 | 0 | 3 | 0 | 4 | 2 | 1
+PIN | reset_n | 64 | 0 | N/A | 62 | 19 | 2 | 12 | 2 | 17 | 2 | 14 | 2 | 9 | 2 | 3 | 0 | 0 | 2 | 10 | 2 | 16 | 2 | 8 | 0 | 5 | 0 | 16 | 0 | 3 | 0 | 15 | 0 | 17 | 0 | 14 | 0 | 13 | 0 | 4 | 0 | 12 | 2 | 1
+PIN | move_select<0> | 64 | 0 | N/A | 7 | 5 | 2 | 12 | 2 | 17 | 2 | 14 | 2 | 0 | 2 | 11
+PIN | move_select<1> | 64 | 0 | N/A | 3 | 6 | 2 | 12 | 2 | 17 | 2 | 14 | 2 | 0 | 2 | 11 | 2 | 13
+PIN | move_select<2> | 64 | 0 | N/A | 10 | 6 | 2 | 12 | 2 | 17 | 2 | 14 | 2 | 0 | 2 | 11 | 2 | 13
+PIN | move_select<3> | 64 | 0 | N/A | 9 | 6 | 2 | 12 | 2 | 17 | 2 | 14 | 2 | 0 | 2 | 11 | 2 | 13
+PIN | clk_ctrl | 64 | 0 | N/A | 29 | 21 | 0 | 11 | 2 | 7 | 2 | 6 | 0 | 10 | 1 | 17 | 0 | 1 | 0 | 9 | 0 | 8 | 0 | 7 | 0 | 6 | 0 | 2 | 1 | 16 | 1 | 15 | 1 | 14 | 1 | 13 | 1 | 12 | 1 | 11 | 1 | 10 | 1 | 9 | 1 | 8 | 1 | 7
+PIN | dir | 64 | 0 | N/A | 63 | 7 | 2 | 3 | 2 | 9 | 2 | 16 | 2 | 7 | 2 | 2 | 2 | 4 | 2 | 15
+PIN | ctrl_latch | 64 | 0 | N/A | 46 | 12 | 0 | 1 | 0 | 16 | 0 | 9 | 0 | 8 | 0 | 7 | 0 | 15 | 0 | 17 | 0 | 14 | 0 | 13 | 0 | 4 | 0 | 6 | 0 | 12
+PIN | ctrl_in | 64 | 0 | N/A | 33 | 1 | 2 | 5
+PIN | ctrl_out | 536871040 | 0 | N/A | 31

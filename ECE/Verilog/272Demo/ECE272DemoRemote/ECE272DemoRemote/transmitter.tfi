@@ -1,0 +1,11 @@
+
+
+
+// Instantiate the module
+transmitter instance_name (
+    .count(count), 
+    .data(data), 
+    .serial_data(serial_data)
+    );
+
+

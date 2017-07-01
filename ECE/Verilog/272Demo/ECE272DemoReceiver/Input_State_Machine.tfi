@@ -1,0 +1,13 @@
+
+
+
+// Instantiate the module
+Input_State_Machine instance_name (
+    .clk(clk), 
+    .reset(reset), 
+    .data_in(data_in), 
+    .state(state), 
+    .count_reset(count_reset)
+    );
+
+

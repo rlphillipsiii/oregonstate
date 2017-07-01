@@ -1,0 +1,22 @@
+Pin Freeze File:  version L.70
+
+9572XL44VQ XC9572XL-10-VQ44
+Clk_In S:PIN43
+Controller_In S:PIN7
+Reset_In S:PIN33
+Clk_Out S:PIN5
+Latch_Out S:PIN2
+Serial_Out S:PIN1
+
+
+;The remaining section of the .gyd file is for documentation purposes only.
+;It shows where your internal equations were placed in the last successful fit.
+
+PARTITION FB1_14 Serial_Out_OBUF Latch_Out_OBUF
+
+
+PARTITION FB3_2 Clk_Out_OBUF
+PARTITION FB3_14 count<0> count<4> count<3> count<2>
+		 count<1>
+
+

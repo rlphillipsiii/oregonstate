@@ -1,0 +1,5 @@
+# begin LFP file T:\tekbots\tekbots-guille\students\fryb\ECE272Demo\ECE272DemoRemote\ECE272DemoRemote\Remote.lfp
+designfile Remote.v
+parttype xc9572xl-vq44-10
+bus_delimiter 0;
+set_busdelim_onsave 1;

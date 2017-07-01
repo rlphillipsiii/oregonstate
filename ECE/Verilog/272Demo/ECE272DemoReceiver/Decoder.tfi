@@ -1,0 +1,10 @@
+
+
+
+// Instantiate the module
+Decoder instance_name (
+    .data_in(data_in), 
+    .data_out(data_out)
+    );
+
+

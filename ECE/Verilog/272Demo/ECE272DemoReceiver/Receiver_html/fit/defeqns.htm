@@ -1,0 +1,344 @@
+<html><head><link type='text/css' href='style.css' rel='stylesheet'></head><body class='pgBgnd'>
+<h3 align='center'>Equations</h3>
+<table width='90%' align='center' border='1' cellpadding='0' cellspacing='0'>
+<tr><td>
+</td></tr><tr><td>
+********** Mapped Logic **********
+</td></tr><tr><td>
+FTCPE_FBC/count0: FTCPE port map (FBC/count(0),FBC/count_T(0),Internal_Clk,NOT FBC/count(2)/FBC/count(2)_RSTF__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FBC/count_T(0) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3));
+</td></tr><tr><td>
+FTCPE_FBC/count1: FTCPE port map (FBC/count(1),FBC/count(0),Internal_Clk,NOT FBC/count(2)/FBC/count(2)_RSTF__$INT,'0');
+</td></tr><tr><td>
+</td></tr><tr><td>
+FBC/count(2)/FBC/count(2)_RSTF__$INT <= (NOT instance_name/state_FSM_FFd14 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT instance_name/state_FSM_FFd15 AND NOT instance_name/state_FSM_FFd16);
+</td></tr><tr><td>
+FTCPE_FBC/count2: FTCPE port map (FBC/count(2),FBC/count_T(2),Internal_Clk,NOT FBC/count(2)/FBC/count(2)_RSTF__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FBC/count_T(2) <= ((FBC/count(0) AND FBC/count(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3)));
+</td></tr><tr><td>
+FTCPE_FBC/count3: FTCPE port map (FBC/count(3),FBC/count_T(3),Internal_Clk,NOT FBC/count(2)/FBC/count(2)_RSTF__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FBC/count_T(3) <= ((FBC/count(0) AND FBC/count(1) AND FBC/count(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3)));
+</td></tr><tr><td>
+FTCPE_Internal_Clk: FTCPE port map (Internal_Clk,'1',Clk_In,NOT Reset_In,'0');
+</td></tr><tr><td>
+</td></tr><tr><td>
+Ldir <= NOT (((Shift_Decoder(6) AND NOT Shift_Decoder(4) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT Shift_Decoder(6) AND Shift_Decoder(4) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(5) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (Shift_Decoder(4) AND NOT Shift_Decoder(5) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))));
+</td></tr><tr><td>
+</td></tr><tr><td>
+Len <= NOT (((Shift_Decoder(6) AND NOT Shift_Decoder(5) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT Shift_Decoder(6) AND NOT Shift_Decoder(4) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Shift_Decoder(5) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT Shift_Decoder(6) AND NOT Shift_Decoder(4) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (Shift_Decoder(4) AND NOT Shift_Decoder(5) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))));
+</td></tr><tr><td>
+FDCPE_N64Receiver/IRL/state_FSM_FFd1: FDCPE port map (N64Receiver/IRL/state_FSM_FFd1,N64Receiver/IRL/state_FSM_FFd2,Clk_In,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_N64Receiver/IRL/state_FSM_FFd2: FDCPE port map (N64Receiver/IRL/state_FSM_FFd2,N64Receiver/IRL/state_FSM_FFd3,Clk_In,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_N64Receiver/IRL/state_FSM_FFd3: FDCPE port map (N64Receiver/IRL/state_FSM_FFd3,N64Receiver/IRL/state_FSM_FFd3_D,Clk_In,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N64Receiver/IRL/state_FSM_FFd3_D <= (NOT N64Receiver/shift_out(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	N64Receiver/IRL/state_FSM_FFd4);
+</td></tr><tr><td>
+FDCPE_N64Receiver/IRL/state_FSM_FFd4: FDCPE port map (N64Receiver/IRL/state_FSM_FFd4,N64Receiver/IRL/state_FSM_FFd4_D,Clk_In,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N64Receiver/IRL/state_FSM_FFd4_D <= (NOT N64Receiver/shift_out(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	N64Receiver/IRL/state_FSM_FFd5);
+</td></tr><tr><td>
+FDCPE_N64Receiver/IRL/state_FSM_FFd5: FDCPE port map (N64Receiver/IRL/state_FSM_FFd5,N64Receiver/IRL/state_FSM_FFd5_D,Clk_In,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N64Receiver/IRL/state_FSM_FFd5_D <= (N64Receiver/shift_out(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	N64Receiver/IRL/state_FSM_FFd6);
+</td></tr><tr><td>
+FDCPE_N64Receiver/IRL/state_FSM_FFd6: FDCPE port map (N64Receiver/IRL/state_FSM_FFd6,N64Receiver/IRL/state_FSM_FFd6_D,Clk_In,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N64Receiver/IRL/state_FSM_FFd6_D <= (NOT N64Receiver/shift_out(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	N64Receiver/IRL/state_FSM_FFd7);
+</td></tr><tr><td>
+FDCPE_N64Receiver/IRL/state_FSM_FFd7: FDCPE port map (N64Receiver/IRL/state_FSM_FFd7,N64Receiver/IRL/state_FSM_FFd7_D,Clk_In,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N64Receiver/IRL/state_FSM_FFd7_D <= (N64Receiver/shift_out(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	N64Receiver/IRL/state_FSM_FFd8);
+</td></tr><tr><td>
+FDCPE_N64Receiver/IRL/state_FSM_FFd8: FDCPE port map (N64Receiver/IRL/state_FSM_FFd8,N64Receiver/IRL/state_FSM_FFd8_D,Clk_In,'0',NOT Reset_In);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N64Receiver/IRL/state_FSM_FFd8_D <= ((NOT N64Receiver/shift_out(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT N64Receiver/IRL/state_FSM_FFd6 AND NOT N64Receiver/IRL/state_FSM_FFd8 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT N64Receiver/IRL/state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (N64Receiver/shift_out(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT N64Receiver/IRL/state_FSM_FFd4 AND NOT N64Receiver/IRL/state_FSM_FFd5 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT N64Receiver/IRL/state_FSM_FFd7 AND NOT N64Receiver/IRL/state_FSM_FFd1));
+</td></tr><tr><td>
+FTCPE_N64Receiver/TBC/count0: FTCPE port map (N64Receiver/TBC/count(0),N64Receiver/TBC/count_T(0),Clk_In,NOT N64Receiver/TBC/count(2)/N64Receiver/TBC/count(2)_RSTF__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N64Receiver/TBC/count_T(0) <= (NOT N64Receiver/TBC/count(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	N64Receiver/TBC/count(1) AND NOT N64Receiver/TBC/count(2));
+</td></tr><tr><td>
+FDCPE_N64Receiver/TBC/count1: FDCPE port map (N64Receiver/TBC/count(1),N64Receiver/TBC/count_D(1),Clk_In,NOT N64Receiver/TBC/count(2)/N64Receiver/TBC/count(2)_RSTF__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N64Receiver/TBC/count_D(1) <= ((N64Receiver/TBC/count(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT N64Receiver/TBC/count(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT N64Receiver/TBC/count(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	N64Receiver/TBC/count(1) AND N64Receiver/TBC/count(2)));
+</td></tr><tr><td>
+FTCPE_N64Receiver/TBC/count2: FTCPE port map (N64Receiver/TBC/count(2),N64Receiver/TBC/count_T(2),Clk_In,NOT N64Receiver/TBC/count(2)/N64Receiver/TBC/count(2)_RSTF__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N64Receiver/TBC/count_T(2) <= (N64Receiver/TBC/count(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	N64Receiver/TBC/count(1));
+</td></tr><tr><td>
+</td></tr><tr><td>
+N64Receiver/TBC/count(2)/N64Receiver/TBC/count(2)_RSTF__$INT <= (NOT N64Receiver/IRL/state_FSM_FFd4 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT N64Receiver/IRL/state_FSM_FFd5 AND NOT N64Receiver/IRL/state_FSM_FFd6 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT N64Receiver/IRL/state_FSM_FFd7 AND NOT N64Receiver/IRL/state_FSM_FFd8);
+</td></tr><tr><td>
+FDCPE_N64Receiver/latch: FDCPE port map (N64Receiver/latch,N64Receiver/latch_D,Clk_In,NOT N64Receiver/TBC/count(2)/N64Receiver/TBC/count(2)_RSTF__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N64Receiver/latch_D <= (NOT N64Receiver/TBC/count(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	N64Receiver/TBC/count(1) AND NOT N64Receiver/TBC/count(2));
+</td></tr><tr><td>
+FDCPE_N64Receiver/shift_out0: FDCPE port map (N64Receiver/shift_out(0),NOT Serial_In,Clk_In,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_N64Receiver/shift_out1: FDCPE port map (N64Receiver/shift_out(1),N64Receiver/shift_out(0),Clk_In,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_N64Receiver/shift_out2: FDCPE port map (N64Receiver/shift_out(2),N64Receiver/shift_out(1),Clk_In,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_N64Receiver/shift_out3: FDCPE port map (N64Receiver/shift_out(3),N64Receiver/shift_out(2),Clk_In,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_N64_Ldir: FDCPE port map (N64_Ldir,N64Receiver/shift_out(2),N64Receiver/latch,'0',NOT Reset_In);
+</td></tr><tr><td>
+FDCPE_N64_Len: FDCPE port map (N64_Len,N64Receiver/shift_out(3),N64Receiver/latch,'0',NOT Reset_In);
+</td></tr><tr><td>
+FDCPE_N64_Rdir: FDCPE port map (N64_Rdir,N64Receiver/shift_out(0),N64Receiver/latch,'0',NOT Reset_In);
+</td></tr><tr><td>
+FDCPE_N64_Ren: FDCPE port map (N64_Ren,N64Receiver/shift_out(1),N64Receiver/latch,'0',NOT Reset_In);
+</td></tr><tr><td>
+</td></tr><tr><td>
+Rdir <= NOT (((Shift_Decoder(6) AND NOT Shift_Decoder(5) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT Shift_Decoder(6) AND NOT Shift_Decoder(4) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Shift_Decoder(5) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT Shift_Decoder(4) AND Shift_Decoder(5) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))));
+</td></tr><tr><td>
+</td></tr><tr><td>
+Ren <= NOT (((Shift_Decoder(6) AND NOT Shift_Decoder(4) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT Shift_Decoder(6) AND Shift_Decoder(4) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(5) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT Shift_Decoder(6) AND NOT Shift_Decoder(5) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT Shift_Decoder(4) AND Shift_Decoder(5) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))));
+</td></tr><tr><td>
+FDCPE_SR/q0: FDCPE port map (SR/q(0),SR/q_D(0),Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SR/q_D(0) <= ((SR/q(0) AND NOT FBC/count(0) AND NOT FBC/count(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(2) AND FBC/count(3))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT Serial_In AND NOT instance_name/state_FSM_FFd14 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT instance_name/state_FSM_FFd15 AND NOT instance_name/state_FSM_FFd16 AND NOT FBC/count(3))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT Serial_In AND FBC/count(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT instance_name/state_FSM_FFd14 AND NOT instance_name/state_FSM_FFd15 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT instance_name/state_FSM_FFd16)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT Serial_In AND FBC/count(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT instance_name/state_FSM_FFd14 AND NOT instance_name/state_FSM_FFd15 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT instance_name/state_FSM_FFd16)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT Serial_In AND NOT FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT instance_name/state_FSM_FFd14 AND NOT instance_name/state_FSM_FFd15 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT instance_name/state_FSM_FFd16));
+</td></tr><tr><td>
+FTCPE_SR/q1: FTCPE port map (SR/q(1),SR/q_T(1),Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SR/q_T(1) <= ((SR/q(0) AND SR/q(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT SR/q(0) AND NOT SR/q(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3)));
+</td></tr><tr><td>
+FTCPE_SR/q2: FTCPE port map (SR/q(2),SR/q_T(2),Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SR/q_T(2) <= ((SR/q(1) AND SR/q(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT SR/q(1) AND NOT SR/q(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3)));
+</td></tr><tr><td>
+FTCPE_SR/q3: FTCPE port map (SR/q(3),SR/q_T(3),Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SR/q_T(3) <= ((SR/q(2) AND SR/q(3))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT SR/q(2) AND NOT SR/q(3))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3)));
+</td></tr><tr><td>
+FTCPE_SR/q4: FTCPE port map (SR/q(4),SR/q_T(4),Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SR/q_T(4) <= ((SR/q(3) AND SR/q(4))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT SR/q(3) AND NOT SR/q(4))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3)));
+</td></tr><tr><td>
+FTCPE_SR/q5: FTCPE port map (SR/q(5),SR/q_T(5),Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SR/q_T(5) <= ((SR/q(4) AND SR/q(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT SR/q(4) AND NOT SR/q(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3)));
+</td></tr><tr><td>
+FTCPE_SR/q6: FTCPE port map (SR/q(6),SR/q_T(6),Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SR/q_T(6) <= ((SR/q(5) AND SR/q(6))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT SR/q(5) AND NOT SR/q(6))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3)));
+</td></tr><tr><td>
+FTCPE_SR/q7: FTCPE port map (SR/q(7),SR/q_T(7),Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SR/q_T(7) <= ((SR/q(6) AND SR/q(7))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT SR/q(6) AND NOT SR/q(7))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3)));
+</td></tr><tr><td>
+FTCPE_SR/q8: FTCPE port map (SR/q(8),SR/q_T(8),Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SR/q_T(8) <= ((SR/q(7) AND SR/q(8))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT SR/q(7) AND NOT SR/q(8))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3)));
+</td></tr><tr><td>
+FTCPE_SR/q9: FTCPE port map (SR/q(9),SR/q_T(9),Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SR/q_T(9) <= ((SR/q(8) AND SR/q(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT SR/q(8) AND NOT SR/q(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3)));
+</td></tr><tr><td>
+FTCPE_SR/q10: FTCPE port map (SR/q(10),SR/q_T(10),Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SR/q_T(10) <= ((SR/q(10) AND SR/q(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT SR/q(10) AND NOT SR/q(9))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3)));
+</td></tr><tr><td>
+FTCPE_SR/q11: FTCPE port map (SR/q(11),SR/q_T(11),Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SR/q_T(11) <= ((SR/q(10) AND SR/q(11))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT SR/q(10) AND NOT SR/q(11))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3)));
+</td></tr><tr><td>
+FDCPE_Shift_Decoder0: FDCPE port map (Shift_Decoder(0),SR/q(0),Shift_Decoder_C(0),NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shift_Decoder_C(0) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3));
+</td></tr><tr><td>
+FDCPE_Shift_Decoder1: FDCPE port map (Shift_Decoder(1),SR/q(1),Shift_Decoder_C(1),NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shift_Decoder_C(1) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3));
+</td></tr><tr><td>
+FDCPE_Shift_Decoder2: FDCPE port map (Shift_Decoder(2),SR/q(2),Shift_Decoder_C(2),NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shift_Decoder_C(2) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3));
+</td></tr><tr><td>
+FDCPE_Shift_Decoder3: FDCPE port map (Shift_Decoder(3),SR/q(3),Shift_Decoder_C(3),NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shift_Decoder_C(3) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3));
+</td></tr><tr><td>
+FDCPE_Shift_Decoder4: FDCPE port map (Shift_Decoder(4),SR/q(4),Shift_Decoder_C(4),NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shift_Decoder_C(4) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3));
+</td></tr><tr><td>
+FDCPE_Shift_Decoder5: FDCPE port map (Shift_Decoder(5),SR/q(5),Shift_Decoder_C(5),NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shift_Decoder_C(5) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3));
+</td></tr><tr><td>
+FDCPE_Shift_Decoder6: FDCPE port map (Shift_Decoder(6),SR/q(6),Shift_Decoder_C(6),NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shift_Decoder_C(6) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3));
+</td></tr><tr><td>
+FDCPE_Shift_Decoder7: FDCPE port map (Shift_Decoder(7),SR/q(7),Shift_Decoder_C(7),NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shift_Decoder_C(7) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3));
+</td></tr><tr><td>
+FDCPE_Shift_Decoder8: FDCPE port map (Shift_Decoder(8),SR/q(8),Shift_Decoder_C(8),NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shift_Decoder_C(8) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3));
+</td></tr><tr><td>
+FDCPE_Shift_Decoder9: FDCPE port map (Shift_Decoder(9),SR/q(9),Shift_Decoder_C(9),NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shift_Decoder_C(9) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3));
+</td></tr><tr><td>
+FDCPE_Shift_Decoder10: FDCPE port map (Shift_Decoder(10),SR/q(10),Shift_Decoder_C(10),NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shift_Decoder_C(10) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3));
+</td></tr><tr><td>
+FDCPE_Shift_Decoder11: FDCPE port map (Shift_Decoder(11),SR/q(11),Shift_Decoder_C(11),NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shift_Decoder_C(11) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	FBC/count(3));
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd1: FDCPE port map (instance_name/state_FSM_FFd1,instance_name/state_FSM_FFd2,Internal_Clk,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd10: FDCPE port map (instance_name/state_FSM_FFd10,instance_name/state_FSM_FFd11,Internal_Clk,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd11: FDCPE port map (instance_name/state_FSM_FFd11,instance_name/state_FSM_FFd12,Internal_Clk,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd12: FDCPE port map (instance_name/state_FSM_FFd12,instance_name/state_FSM_FFd13,Internal_Clk,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd13: FDCPE port map (instance_name/state_FSM_FFd13,instance_name/state_FSM_FFd13_D,Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instance_name/state_FSM_FFd13_D <= (NOT Serial_In AND instance_name/state_FSM_FFd14);
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd14: FDCPE port map (instance_name/state_FSM_FFd14,instance_name/state_FSM_FFd14_D,Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instance_name/state_FSM_FFd14_D <= (Serial_In AND instance_name/state_FSM_FFd15);
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd15: FDCPE port map (instance_name/state_FSM_FFd15,instance_name/state_FSM_FFd15_D,Internal_Clk,NOT Reset_In,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instance_name/state_FSM_FFd15_D <= (NOT Serial_In AND instance_name/state_FSM_FFd16);
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd16: FDCPE port map (instance_name/state_FSM_FFd16,instance_name/state_FSM_FFd16_D,Internal_Clk,'0',NOT Reset_In);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instance_name/state_FSM_FFd16_D <= ((NOT Serial_In AND NOT instance_name/state_FSM_FFd15 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT instance_name/state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (Serial_In AND NOT instance_name/state_FSM_FFd14 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT instance_name/state_FSM_FFd16 AND NOT instance_name/state_FSM_FFd1));
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd2: FDCPE port map (instance_name/state_FSM_FFd2,instance_name/state_FSM_FFd3,Internal_Clk,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd3: FDCPE port map (instance_name/state_FSM_FFd3,instance_name/state_FSM_FFd4,Internal_Clk,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd4: FDCPE port map (instance_name/state_FSM_FFd4,instance_name/state_FSM_FFd5,Internal_Clk,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd5: FDCPE port map (instance_name/state_FSM_FFd5,instance_name/state_FSM_FFd6,Internal_Clk,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd6: FDCPE port map (instance_name/state_FSM_FFd6,instance_name/state_FSM_FFd7,Internal_Clk,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd7: FDCPE port map (instance_name/state_FSM_FFd7,instance_name/state_FSM_FFd8,Internal_Clk,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd8: FDCPE port map (instance_name/state_FSM_FFd8,instance_name/state_FSM_FFd9,Internal_Clk,NOT Reset_In,'0');
+</td></tr><tr><td>
+FDCPE_instance_name/state_FSM_FFd9: FDCPE port map (instance_name/state_FSM_FFd9,instance_name/state_FSM_FFd10,Internal_Clk,NOT Reset_In,'0');
+</td></tr><tr><td>
+Register Legend:
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FDCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FTCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LDCP  (Q,D,G,CLR,PRE); 
+</td></tr><tr><td>
+</td></tr>
+</table>
+<form><span class="pgRef"><table width="90%" align="center"><tr>
+<td align="left"><input type="button" onclick="javascript:parent.leftnav.showTop()" onmouseover="window.status='goto top of page'; return true;" onmouseout="window.status=''" value="back to top"></td>
+<td align="right"><input type="button" onclick="window.print()" onmouseover="window.status='print page'; return true;" onmouseout="window.status=''" value="print page"></td>
+</tr></table></span></form>
+</body></html>

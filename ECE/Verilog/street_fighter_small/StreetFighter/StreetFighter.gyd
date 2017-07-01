@@ -1,0 +1,35 @@
+Pin Freeze File:  version P.15xf
+
+9572XL44VQ XC9572XL-10-VQ44
+clk_ctrl S:PIN5
+clk_system S:PIN43
+ctrl_in S:PIN7
+ctrl_latch S:PIN12
+dir S:PIN20
+move_select<0> S:PIN36
+move_select<1> S:PIN34
+move_select<2> S:PIN38
+move_select<3> S:PIN37
+reset_n S:PIN19
+ctrl_out S:PIN6
+
+
+;The remaining section of the .gyd file is for documentation purposes only.
+;It shows where your internal equations were placed in the last successful fit.
+
+PARTITION FB1_1 load_override clk_listen<0> override_reg<11> load_state_FSM_FFd2
+		 load_state_FSM_FFd1 clk_sm clk_listen<4> clk_listen<3>
+		 clk_listen<2> clk_listen<1> override_reg<8> override_reg<10>
+		 latch_count<5> latch_count<4> latch_count<3> latch_count<1>
+		 latch_count<0> latch_count<2>
+PARTITION FB2_7 override_reg<7>/override_reg<7>_SETF__$INT override_reg<0> override_reg<6> override_reg<5>
+		 override_reg<4> override_reg<3> override_reg<2> override_reg<1>
+		 override_reg<15> override_reg<13> override_reg<12> override_reg<9>
+		
+PARTITION FB3_1 override_reg<10>/override_reg<10>_RSTF completion_sync override_reg<9>/override_reg<9>_RSTF button_state_FSM_FFd4
+		 ctrl_out_OBUF override_reg<8>/override_reg<8>_RSTF override_reg<7> override_reg<14>
+		 button_state_FSM_FFd1 override_en button_state_FSM_FFd2 override_reg<14>/override_reg<14>_SETF__$INT
+		 move<0> EXP6_ move<2> EXP7_
+		 button_state_FSM_FFd3 move<1>
+
+

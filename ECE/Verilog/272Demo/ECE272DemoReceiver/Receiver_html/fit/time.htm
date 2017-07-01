@@ -1,0 +1,363 @@
+<html><body>
+<pre>
+                           Performance Summary Report
+                           --------------------------
+
+Design:     Receiver
+Device:     XC9572XL-10-VQ44
+Speed File: Version 3.0
+Program:    Timing Report Generator:  version L.70
+Date:       Wed Jul 06 17:20:47 2011
+
+Performance Summary:
+
+Clock net 'Internal_Clk.Q' path delays:
+
+Clock to Setup (tCYC)                     :         10.0ns (1 macrocell levels)
+Clock to Q, net 'FBC/count<0>.Q' to TFF Setup(D) at 'FBC/count<0>.D'(Pterm Clock)
+Target FF drives output net 'FBC/count<0>'
+
+Setup to Clock at the Pad (tSU)           :          0.4ns (0 macrocell levels)
+Data signal 'Serial_In' to DFF D input Pin at 'ISM/state_FSM_FFd14.D'
+Clock pad 'Internal_Clk.Q'                                        (Pterm Clock)
+
+                          Minimum Clock Period: 14.0ns
+                     Maximum Internal Clock Speed: 71.4Mhz
+                         (Limited by Clock Pulse Width)
+
+Clock net 'FBC/count<4>.Q' path delays:
+
+                          Minimum Clock Period: 14.0ns
+                     Maximum Internal Clock Speed: 71.4Mhz
+                         (Limited by Clock Pulse Width)
+
+Clock net 'FBC/count<3>.Q' path delays:
+
+                          Minimum Clock Period: 14.0ns
+                     Maximum Internal Clock Speed: 71.4Mhz
+                         (Limited by Clock Pulse Width)
+
+Clock net 'FBC/count<2>.Q' path delays:
+
+                          Minimum Clock Period: 14.0ns
+                     Maximum Internal Clock Speed: 71.4Mhz
+                         (Limited by Clock Pulse Width)
+
+Clock net 'FBC/count<1>.Q' path delays:
+
+                          Minimum Clock Period: 14.0ns
+                     Maximum Internal Clock Speed: 71.4Mhz
+                         (Limited by Clock Pulse Width)
+
+Clock net 'FBC/count<0>.Q' path delays:
+
+                          Minimum Clock Period: 14.0ns
+                     Maximum Internal Clock Speed: 71.4Mhz
+                         (Limited by Clock Pulse Width)
+
+Clock net 'Clk_In' path delays:
+
+Clock Pad to Output Pad (tCO)             :         30.3ns (4 macrocell levels)
+Clock Pad 'Clk_In' to Output Pad 'Rdir'                                   (GCK)
+
+                          Minimum Clock Period: 9.0ns
+                     Maximum Internal Clock Speed: 111.1Mhz
+                         (Limited by Clock Pulse Width)
+
+--------------------------------------------------------------------------------
+                      Clock Pad to Output Pad (tCO) (nsec)
+
+\ From      C
+ \          l
+  \         k
+   \        _
+    \       I
+     \      n
+      \      
+  To   \------
+
+Ldir     29.3
+Len      29.3
+Rdir     30.3
+Ren      29.3
+
+--------------------------------------------------------------------------------
+                          Clock to Setup (tCYC) (nsec)
+                            (Clock: Internal_Clk.Q)
+
+\ From                    F     F     F     F     F     I     I     I     I
+ \                        B     B     B     B     B     S     S     S     S
+  \                       C     C     C     C     C     M     M     M     M
+   \                      /     /     /     /     /     /     /     /     /
+    \                     c     c     c     c     c     s     s     s     s
+     \                    o     o     o     o     o     t     t     t     t
+      \                   u     u     u     u     u     a     a     a     a
+       \                  n     n     n     n     n     t     t     t     t
+        \                 t     t     t     t     t     e     e     e     e
+         \                <     <     <     <     <     _     _     _     _
+          \               0     1     2     3     4     F     F     F     F
+           \              >     >     >     >     >     S     S     S     S
+            \             .     .     .     .     .     M     M     M     M
+             \            Q     Q     Q     Q     Q     _     _     _     _
+              \                                         F     F     F     F
+               \                                        F     F     F     F
+                \                                       d     d     d     d
+                 \                                      1     1     1     1
+                  \                                     .     0     1     2
+                   \                                    Q     .     .     .
+                    \                                         Q     Q     Q
+  To                 \------------------------------------------------------
+
+FBC/count<0>.D         10.0  10.0  10.0  10.0  10.0                        
+FBC/count<1>.D         10.0                                                
+FBC/count<2>.D         10.0  10.0  10.0  10.0  10.0                        
+FBC/count<3>.D         10.0  10.0  10.0  10.0  10.0                        
+FBC/count<4>.D         10.0  10.0  10.0  10.0                              
+ISM/state_FSM_FFd1.D                                                       
+ISM/state_FSM_FFd10.D                                            10.0      
+ISM/state_FSM_FFd11.D                                                  10.0
+ISM/state_FSM_FFd12.D                                                      
+ISM/state_FSM_FFd13.D                                                      
+ISM/state_FSM_FFd14.D                                                      
+ISM/state_FSM_FFd15.D                                                      
+ISM/state_FSM_FFd16.D                                10.0                  
+ISM/state_FSM_FFd2.D                                                       
+ISM/state_FSM_FFd3.D                                                       
+ISM/state_FSM_FFd4.D                                                       
+ISM/state_FSM_FFd5.D                                                       
+ISM/state_FSM_FFd6.D                                                       
+ISM/state_FSM_FFd7.D                                                       
+ISM/state_FSM_FFd8.D                                                       
+ISM/state_FSM_FFd9.D                                       10.0            
+SR/q<0>.D                                                                  
+SR/q<10>.D                                                                 
+SR/q<11>.D                                                                 
+SR/q<1>.D                                                                  
+SR/q<2>.D                                                                  
+SR/q<3>.D                                                                  
+SR/q<4>.D                                                                  
+SR/q<5>.D                                                                  
+SR/q<6>.D                                                                  
+SR/q<7>.D                                                                  
+SR/q<8>.D                                                                  
+SR/q<9>.D                                                                  
+
+--------------------------------------------------------------------------------
+                          Clock to Setup (tCYC) (nsec)
+                            (Clock: Internal_Clk.Q)
+
+\ From                    I     I     I     I     I     I     I     I     I
+ \                        S     S     S     S     S     S     S     S     S
+  \                       M     M     M     M     M     M     M     M     M
+   \                      /     /     /     /     /     /     /     /     /
+    \                     s     s     s     s     s     s     s     s     s
+     \                    t     t     t     t     t     t     t     t     t
+      \                   a     a     a     a     a     a     a     a     a
+       \                  t     t     t     t     t     t     t     t     t
+        \                 e     e     e     e     e     e     e     e     e
+         \                _     _     _     _     _     _     _     _     _
+          \               F     F     F     F     F     F     F     F     F
+           \              S     S     S     S     S     S     S     S     S
+            \             M     M     M     M     M     M     M     M     M
+             \            _     _     _     _     _     _     _     _     _
+              \           F     F     F     F     F     F     F     F     F
+               \          F     F     F     F     F     F     F     F     F
+                \         d     d     d     d     d     d     d     d     d
+                 \        1     1     1     1     2     3     4     5     6
+                  \       3     4     5     6     .     .     .     .     .
+                   \      .     .     .     .     Q     Q     Q     Q     Q
+                    \     Q     Q     Q     Q                              
+  To                 \------------------------------------------------------
+
+FBC/count<0>.D                                                             
+FBC/count<1>.D                                                             
+FBC/count<2>.D                                                             
+FBC/count<3>.D                                                             
+FBC/count<4>.D                                                             
+ISM/state_FSM_FFd1.D                           10.0                        
+ISM/state_FSM_FFd10.D                                                      
+ISM/state_FSM_FFd11.D                                                      
+ISM/state_FSM_FFd12.D  10.0                                                
+ISM/state_FSM_FFd13.D        10.0                                          
+ISM/state_FSM_FFd14.D              10.0                                    
+ISM/state_FSM_FFd15.D                    10.0                              
+ISM/state_FSM_FFd16.D        10.0  10.0  10.0                              
+ISM/state_FSM_FFd2.D                                 10.0                  
+ISM/state_FSM_FFd3.D                                       10.0            
+ISM/state_FSM_FFd4.D                                             10.0      
+ISM/state_FSM_FFd5.D                                                   10.0
+ISM/state_FSM_FFd6.D                                                       
+ISM/state_FSM_FFd7.D                                                       
+ISM/state_FSM_FFd8.D                                                       
+ISM/state_FSM_FFd9.D                                                       
+SR/q<0>.D                    10.0  10.0  10.0                              
+SR/q<10>.D                                                                 
+SR/q<11>.D                                                                 
+SR/q<1>.D                                                                  
+SR/q<2>.D                                                                  
+SR/q<3>.D                                                                  
+SR/q<4>.D                                                                  
+SR/q<5>.D                                                                  
+SR/q<6>.D                                                                  
+SR/q<7>.D                                                                  
+SR/q<8>.D                                                                  
+SR/q<9>.D                                                                  
+
+--------------------------------------------------------------------------------
+                          Clock to Setup (tCYC) (nsec)
+                            (Clock: Internal_Clk.Q)
+
+\ From                    I     I     I     S     S     S     S     S     S
+ \                        S     S     S     R     R     R     R     R     R
+  \                       M     M     M     /     /     /     /     /     /
+   \                      /     /     /     q     q     q     q     q     q
+    \                     s     s     s     <     <     <     <     <     <
+     \                    t     t     t     0     1     1     2     3     4
+      \                   a     a     a     >     0     >     >     >     >
+       \                  t     t     t     .     >     .     .     .     .
+        \                 e     e     e     Q     .     Q     Q     Q     Q
+         \                _     _     _           Q                        
+          \               F     F     F                                    
+           \              S     S     S                                    
+            \             M     M     M                                    
+             \            _     _     _                                    
+              \           F     F     F                                    
+               \          F     F     F                                    
+                \         d     d     d                                    
+                 \        7     8     9                                    
+                  \       .     .     .                                    
+                   \      Q     Q     Q                                    
+                    \                                                      
+  To                 \------------------------------------------------------
+
+FBC/count<0>.D                                                             
+FBC/count<1>.D                                                             
+FBC/count<2>.D                                                             
+FBC/count<3>.D                                                             
+FBC/count<4>.D                                                             
+ISM/state_FSM_FFd1.D                                                       
+ISM/state_FSM_FFd10.D                                                      
+ISM/state_FSM_FFd11.D                                                      
+ISM/state_FSM_FFd12.D                                                      
+ISM/state_FSM_FFd13.D                                                      
+ISM/state_FSM_FFd14.D                                                      
+ISM/state_FSM_FFd15.D                                                      
+ISM/state_FSM_FFd16.D                                                      
+ISM/state_FSM_FFd2.D                                                       
+ISM/state_FSM_FFd3.D                                                       
+ISM/state_FSM_FFd4.D                                                       
+ISM/state_FSM_FFd5.D                                                       
+ISM/state_FSM_FFd6.D   10.0                                                
+ISM/state_FSM_FFd7.D         10.0                                          
+ISM/state_FSM_FFd8.D               10.0                                    
+ISM/state_FSM_FFd9.D                                                       
+SR/q<0>.D                                                                  
+SR/q<10>.D                                                                 
+SR/q<11>.D                                     10.0                        
+SR/q<1>.D                                10.0                              
+SR/q<2>.D                                            10.0                  
+SR/q<3>.D                                                  10.0            
+SR/q<4>.D                                                        10.0      
+SR/q<5>.D                                                              10.0
+SR/q<6>.D                                                                  
+SR/q<7>.D                                                                  
+SR/q<8>.D                                                                  
+SR/q<9>.D                                                                  
+
+--------------------------------------------------------------------------------
+                          Clock to Setup (tCYC) (nsec)
+                            (Clock: Internal_Clk.Q)
+
+\ From                    S     S     S     S     S
+ \                        R     R     R     R     R
+  \                       /     /     /     /     /
+   \                      q     q     q     q     q
+    \                     <     <     <     <     <
+     \                    5     6     7     8     9
+      \                   >     >     >     >     >
+       \                  .     .     .     .     .
+        \                 Q     Q     Q     Q     Q
+         \                                         
+          \                                        
+           \                                       
+            \                                      
+             \                                     
+              \                                    
+               \                                   
+                \                                  
+                 \                                 
+                  \                                
+                   \                               
+                    \                              
+  To                 \------------------------------
+
+FBC/count<0>.D                                     
+FBC/count<1>.D                                     
+FBC/count<2>.D                                     
+FBC/count<3>.D                                     
+FBC/count<4>.D                                     
+ISM/state_FSM_FFd1.D                               
+ISM/state_FSM_FFd10.D                              
+ISM/state_FSM_FFd11.D                              
+ISM/state_FSM_FFd12.D                              
+ISM/state_FSM_FFd13.D                              
+ISM/state_FSM_FFd14.D                              
+ISM/state_FSM_FFd15.D                              
+ISM/state_FSM_FFd16.D                              
+ISM/state_FSM_FFd2.D                               
+ISM/state_FSM_FFd3.D                               
+ISM/state_FSM_FFd4.D                               
+ISM/state_FSM_FFd5.D                               
+ISM/state_FSM_FFd6.D                               
+ISM/state_FSM_FFd7.D                               
+ISM/state_FSM_FFd8.D                               
+ISM/state_FSM_FFd9.D                               
+SR/q<0>.D                                          
+SR/q<10>.D                                     10.0
+SR/q<11>.D                                         
+SR/q<1>.D                                          
+SR/q<2>.D                                          
+SR/q<3>.D                                          
+SR/q<4>.D                                          
+SR/q<5>.D                                          
+SR/q<6>.D              10.0                        
+SR/q<7>.D                    10.0                  
+SR/q<8>.D                          10.0            
+SR/q<9>.D                                10.0      
+
+Path Type Definition: 
+
+Pad to Pad (tPD) -                        Reports pad to pad paths that start 
+                                          at input pads and end at output pads. 
+                                          Paths are not traced through 
+                                          registers. 
+
+Clock Pad to Output Pad (tCO) -           Reports paths that start at input 
+                                          pads trace through clock inputs of 
+                                          registers and end at output pads. 
+                                          Paths are not traced through PRE/CLR 
+                                          inputs of registers. 
+
+Setup to Clock at Pad (tSU or tSUF) -     Reports external setup time of data 
+                                          to clock at pad. Data path starts at 
+                                          an input pad and ends at register 
+                                          (Fast Input Register for tSUF) D/T 
+                                          input. Clock path starts at input pad 
+                                          and ends at the register clock input. 
+                                          Paths are not traced through 
+                                          registers. Pin-to-pin setup 
+                                          requirement is not reported or 
+                                          guaranteed for product-term clocks 
+                                          derived from macrocell feedback 
+                                          signals. 
+
+Clock to Setup (tCYC) -                   Register to register cycle time. 
+                                          Include source register tCO and 
+                                          destination register tSU. Note that 
+                                          when the computed Maximum Clock Speed 
+                                          is limited by tCYC it is computed 
+                                          assuming that all registers are 
+                                          rising-edge sensitive. 
+
+</pre>
+</body></html>

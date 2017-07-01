@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE ibis [
+<!ELEMENT ibis (part, pin+)>
+<!ELEMENT part EMPTY>
+<!ELEMENT pin EMPTY>
+<!ATTLIST part
+  arch   CDATA #REQUIRED
+  device CDATA #REQUIRED
+  spg    CDATA #REQUIRED
+  pkg    CDATA #REQUIRED>
+<!ATTLIST pin
+  nm     CDATA #REQUIRED
+  no     CDATA #REQUIRED
+  iostd  (TTL|LVTTL|LVCMOS2|NA) "NA"
+  sr     (SLOW|FAST|slow|fast) "SLOW"
+  dir    (BIDIR|bidir|INPUT|input|OUTPUT|output) "BIDIR">
+]>
+<ibis><part arch="xc9500xl" device="XC9572XL" pkg="VQ44" spg="-10"/><pin dir="input" nm="clk_system" no="43"/><pin dir="input" nm="reset_n" no="19"/><pin dir="input" nm="move_select&lt;0&gt;" no="36"/><pin dir="input" nm="move_select&lt;1&gt;" no="34"/><pin dir="input" nm="move_select&lt;2&gt;" no="38"/><pin dir="input" nm="move_select&lt;3&gt;" no="37"/><pin dir="input" nm="clk_ctrl" no="5"/><pin dir="input" nm="dir" no="20"/><pin dir="input" nm="ctrl_latch" no="12"/><pin dir="input" nm="ctrl_in" no="7"/><pin dir="output" nm="ctrl_out" no="6" sr="fast"/></ibis>

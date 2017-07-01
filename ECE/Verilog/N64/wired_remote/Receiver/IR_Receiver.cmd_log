@@ -1,0 +1,175 @@
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+taengine -intstyle ise -f IR_Receiver -w --format html1 -l IR_Receiver_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 
+xst -intstyle ise -ifn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.xst" -ofn "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 "IR_Receiver.ngc" IR_Receiver.ngd  
+cpldfit -intstyle ise -p xc9572xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -nogtsopt -nogsropt -unused float -power std -terminate float IR_Receiver.ngd 
+XSLTProcess IR_Receiver_build.xml 
+tsim -intstyle ise IR_Receiver IR_Receiver.nga 
+hprep6 -s IEEE1149 -n IR_Receiver -i IR_Receiver 

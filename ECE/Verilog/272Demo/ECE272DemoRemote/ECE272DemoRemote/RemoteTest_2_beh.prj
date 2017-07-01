@@ -1,0 +1,3 @@
+verilog work "Remote.v"
+verilog work "RemoteTest_2.v"
+verilog work "C:/Xilinx/11.1/ISE/verilog/src/glbl.v"

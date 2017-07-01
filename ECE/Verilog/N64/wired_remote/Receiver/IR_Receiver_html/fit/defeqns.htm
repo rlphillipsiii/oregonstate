@@ -1,0 +1,84 @@
+<html><head><link type='text/css' href='style.css' rel='stylesheet'></head><body class='pgBgnd'>
+<h3 align='center'>Equations</h3>
+<table width='90%' align='center' border='1' cellpadding='0' cellspacing='0'>
+<tr><td>
+</td></tr><tr><td>
+********** Mapped Logic **********
+</td></tr><tr><td>
+FDCPE_IRL/state_FSM_FFd1: FDCPE port map (IRL/state_FSM_FFd1,IRL/state_FSM_FFd2,Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_IRL/state_FSM_FFd2: FDCPE port map (IRL/state_FSM_FFd2,IRL/state_FSM_FFd3,Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_IRL/state_FSM_FFd3: FDCPE port map (IRL/state_FSM_FFd3,IRL/state_FSM_FFd3_D,Clk,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IRL/state_FSM_FFd3_D <= (NOT shift AND IRL/state_FSM_FFd4);
+</td></tr><tr><td>
+FDCPE_IRL/state_FSM_FFd4: FDCPE port map (IRL/state_FSM_FFd4,IRL/state_FSM_FFd4_D,Clk,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IRL/state_FSM_FFd4_D <= (NOT shift AND IRL/state_FSM_FFd5);
+</td></tr><tr><td>
+FDCPE_IRL/state_FSM_FFd5: FDCPE port map (IRL/state_FSM_FFd5,IRL/state_FSM_FFd5_D,Clk,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IRL/state_FSM_FFd5_D <= (shift AND IRL/state_FSM_FFd6);
+</td></tr><tr><td>
+FDCPE_IRL/state_FSM_FFd6: FDCPE port map (IRL/state_FSM_FFd6,IRL/state_FSM_FFd6_D,Clk,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IRL/state_FSM_FFd6_D <= (NOT shift AND IRL/state_FSM_FFd7);
+</td></tr><tr><td>
+FDCPE_IRL/state_FSM_FFd7: FDCPE port map (IRL/state_FSM_FFd7,IRL/state_FSM_FFd7_D,Clk,NOT Global_Reset,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IRL/state_FSM_FFd7_D <= (shift AND IRL/state_FSM_FFd8);
+</td></tr><tr><td>
+FDCPE_IRL/state_FSM_FFd8: FDCPE port map (IRL/state_FSM_FFd8,IRL/state_FSM_FFd8_D,Clk,'0',NOT Global_Reset);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IRL/state_FSM_FFd8_D <= ((NOT shift AND NOT IRL/state_FSM_FFd6 AND NOT IRL/state_FSM_FFd8 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRL/state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (shift AND NOT IRL/state_FSM_FFd4 AND NOT IRL/state_FSM_FFd5 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRL/state_FSM_FFd7 AND NOT IRL/state_FSM_FFd1));
+</td></tr><tr><td>
+FDCPE_Ldir: FDCPE port map (Ldir,shift_out(2),ff_latch,'0',NOT Global_Reset);
+</td></tr><tr><td>
+FDCPE_Len: FDCPE port map (Len,shift_out(3),ff_latch,'0',NOT Global_Reset);
+</td></tr><tr><td>
+FDCPE_Rdir: FDCPE port map (Rdir,shift,ff_latch,'0',NOT Global_Reset);
+</td></tr><tr><td>
+FDCPE_Ren: FDCPE port map (Ren,shift_out(1),ff_latch,'0',NOT Global_Reset);
+</td></tr><tr><td>
+FTCPE_TBC/count0: FTCPE port map (TBC/count(0),TBC/count_T(0),Clk,NOT go_OBUF/go_OBUF_D2__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TBC/count_T(0) <= (NOT TBC/count(0) AND TBC/count(1) AND NOT TBC/count(2));
+</td></tr><tr><td>
+FDCPE_TBC/count1: FDCPE port map (TBC/count(1),TBC/count_D(1),Clk,NOT go_OBUF/go_OBUF_D2__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TBC/count_D(1) <= ((TBC/count(0) AND NOT TBC/count(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT TBC/count(0) AND TBC/count(1) AND TBC/count(2)));
+</td></tr><tr><td>
+FTCPE_TBC/count2: FTCPE port map (TBC/count(2),TBC/count_T(2),Clk,NOT go_OBUF/go_OBUF_D2__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TBC/count_T(2) <= (TBC/count(0) AND TBC/count(1));
+</td></tr><tr><td>
+</td></tr><tr><td>
+clock <= Clk;
+</td></tr><tr><td>
+FDCPE_ff_latch: FDCPE port map (ff_latch,ff_latch_D,Clk,NOT go_OBUF/go_OBUF_D2__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ff_latch_D <= (NOT TBC/count(0) AND TBC/count(1) AND NOT TBC/count(2));
+</td></tr><tr><td>
+</td></tr><tr><td>
+go <= NOT ((NOT IRL/state_FSM_FFd4 AND NOT IRL/state_FSM_FFd5 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRL/state_FSM_FFd6 AND NOT IRL/state_FSM_FFd7 AND NOT IRL/state_FSM_FFd8));
+</td></tr><tr><td>
+</td></tr><tr><td>
+go_OBUF/go_OBUF_D2__$INT <= (NOT IRL/state_FSM_FFd4 AND NOT IRL/state_FSM_FFd5 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IRL/state_FSM_FFd6 AND NOT IRL/state_FSM_FFd7 AND NOT IRL/state_FSM_FFd8);
+</td></tr><tr><td>
+FDCPE_shift: FDCPE port map (shift,NOT Serial_In,Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out1: FDCPE port map (shift_out(1),shift,Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out2: FDCPE port map (shift_out(2),shift_out(1),Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+FDCPE_shift_out3: FDCPE port map (shift_out(3),shift_out(2),Clk,NOT Global_Reset,'0');
+</td></tr><tr><td>
+Register Legend:
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FDCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FTCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LDCP  (Q,D,G,CLR,PRE); 
+</td></tr><tr><td>
+</td></tr>
+</table>
+<form><span class="pgRef"><table width="90%" align="center"><tr>
+<td align="left"><input type="button" onclick="javascript:parent.leftnav.showTop()" onmouseover="window.status='goto top of page'; return true;" onmouseout="window.status=''" value="back to top"></td>
+<td align="right"><input type="button" onclick="window.print()" onmouseover="window.status='print page'; return true;" onmouseout="window.status=''" value="print page"></td>
+</tr></table></span></form>
+</body></html>

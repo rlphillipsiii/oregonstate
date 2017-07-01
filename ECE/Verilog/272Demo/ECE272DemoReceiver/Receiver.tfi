@@ -1,0 +1,22 @@
+
+
+
+// Instantiate the module
+Receiver instance_name (
+    .Serial_In(Serial_In), 
+    .Reset_In(Reset_In), 
+    .Clk_In(Clk_In), 
+    .Len(Len), 
+    .Ldir(Ldir), 
+    .Ren(Ren), 
+    .Rdir(Rdir), 
+    .clktest(clktest), 
+    .count_reset_test(count_reset_test), 
+    .count_shift_test(count_shift_test), 
+    .db_shift_test(db_shift_test), 
+    .shift_decoder_test(shift_decoder_test), 
+    .state_test(state_test), 
+    .nextstate_test(nextstate_test)
+    );
+
+

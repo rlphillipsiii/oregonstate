@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "uni9000_ver" -lib "aim_ver" -lib "cpld_ver" -lib "xilinxcorelib_ver" -o "C:/Users/Robert/Dropbox/Porn/Last_Year/Misc/street_fighter_small/StreetFighter/StreetFighter_tf_isim_beh.exe" -prj "C:/Users/Robert/Dropbox/Porn/Last_Year/Misc/street_fighter_small/StreetFighter/StreetFighter_tf_beh.prj" "work.StreetFighter_tf" "work.glbl" 

@@ -1,0 +1,24 @@
+Running: fuse.exe -relaunch -intstyle "ise" -incremental -lib "uni9000_ver" -lib "aim_ver" -lib "cpld_ver" -lib "xilinxcorelib_ver" -o "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/SampleTest_isim_beh.exe" -prj "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/SampleTest_beh.prj" "work.SampleTest" "work.glbl" 
+ISim P.15xf (signature 0xc3576ebc)
+Number of CPUs detected in this system: 4
+Turning on mult-threading, number of parallel sub-compilation jobs: 8 
+Determining compilation order of HDL files
+Analyzing Verilog file "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/clock_divider.v" into library work
+Analyzing Verilog file "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.v" into library work
+Analyzing Verilog file "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/SampleTest.v" into library work
+Analyzing Verilog file "C:/Xilinx/14.1/ISE_DS/ISE//verilog/src/glbl.v" into library work
+Starting static elaboration
+Completed static elaboration
+Compiling module IOSelect
+Compiling module Inverter
+Compiling module ShiftRegister
+Compiling module FlipFlop
+Compiling module Decoder
+Compiling module SampleTest
+Compiling module glbl
+Time Resolution for simulation is 1ps.
+Waiting for 3 sub-compilation(s) to finish...
+Compiled 7 Verilog Units
+Built simulation executable C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/SampleTest_isim_beh.exe
+Fuse Memory Usage: 27816 KB
+Fuse CPU Usage: 514 ms

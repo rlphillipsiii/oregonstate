@@ -1,0 +1,922 @@
+MDF Database:  version 1.0
+MDF_INFO | Receiver | XC9572XL-10-VQ44
+MACROCELL | 0 | 17 | SR/q<0>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 3 | 0 | 0 | 0 | 15 | 0 | 3
+INPUTS | 10 | Serial_In  | FBC/count<0>  | instance_name/state_FSM_FFd14  | instance_name/state_FSM_FFd15  | instance_name/state_FSM_FFd16  | FBC/count<1>  | FBC/count<2>  | Shift_Decoder<1>.EXP  | Internal_Clk  | Reset_In
+INPUTMC | 8 | 2 | 10 | 1 | 12 | 1 | 11 | 1 | 17 | 3 | 17 | 2 | 12 | 0 | 0 | 2 | 0
+INPUTP | 2 | 24 | 7
+IMPORTS | 1 | 0 | 0
+EQ | 16 | 
+   SR/q<0>.D = !Serial_In & FBC/count<0> & 
+	!instance_name/state_FSM_FFd14 & !instance_name/state_FSM_FFd15 & 
+	!instance_name/state_FSM_FFd16
+	# !Serial_In & FBC/count<1> & 
+	!instance_name/state_FSM_FFd14 & !instance_name/state_FSM_FFd15 & 
+	!instance_name/state_FSM_FFd16
+	# !Serial_In & !FBC/count<2> & 
+	!instance_name/state_FSM_FFd14 & !instance_name/state_FSM_FFd15 & 
+	!instance_name/state_FSM_FFd16
+;Imported pterms FB1_1
+	# SR/q<0> & !FBC/count<0> & !FBC/count<1> & 
+	FBC/count<2> & FBC/count<3>
+	# !Serial_In & !instance_name/state_FSM_FFd14 & 
+	!instance_name/state_FSM_FFd15 & !instance_name/state_FSM_FFd16 & !FBC/count<3>;
+   SR/q<0>.CLK = Internal_Clk;
+   SR/q<0>.AR = !Reset_In;
+
+MACROCELL | 0 | 16 | SR/q<10>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 3 | 0 | 16 | 2 | 17 | 0 | 2
+INPUTS | 8 | SR/q<10>  | SR/q<9>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | Reset_In
+INPUTMC | 7 | 0 | 16 | 0 | 6 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0
+INPUTP | 1 | 7
+EQ | 6 | 
+   !SR/q<10>.T = SR/q<10> & SR/q<9>
+	# !SR/q<10> & !SR/q<9>
+	# !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   SR/q<10>.CLK = Internal_Clk;
+   SR/q<10>.AR = !Reset_In;
+
+MACROCELL | 0 | 15 | SR/q<1>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 3 | 0 | 15 | 0 | 14 | 0 | 0
+INPUTS | 8 | SR/q<0>  | SR/q<1>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | Reset_In
+INPUTMC | 7 | 0 | 17 | 0 | 15 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0
+INPUTP | 1 | 7
+EQ | 6 | 
+   !SR/q<1>.T = SR/q<0> & SR/q<1>
+	# !SR/q<0> & !SR/q<1>
+	# !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   SR/q<1>.CLK = Internal_Clk;
+   SR/q<1>.AR = !Reset_In;
+
+MACROCELL | 0 | 14 | SR/q<2>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 3 | 0 | 14 | 0 | 13 | 2 | 8
+INPUTS | 8 | SR/q<1>  | SR/q<2>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | Reset_In
+INPUTMC | 7 | 0 | 15 | 0 | 14 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0
+INPUTP | 1 | 7
+EQ | 6 | 
+   !SR/q<2>.T = SR/q<1> & SR/q<2>
+	# !SR/q<1> & !SR/q<2>
+	# !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   SR/q<2>.CLK = Internal_Clk;
+   SR/q<2>.AR = !Reset_In;
+
+MACROCELL | 0 | 13 | SR/q<3>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 3 | 0 | 13 | 0 | 12 | 2 | 7
+INPUTS | 8 | SR/q<2>  | SR/q<3>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | Reset_In
+INPUTMC | 7 | 0 | 14 | 0 | 13 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0
+INPUTP | 1 | 7
+EQ | 6 | 
+   !SR/q<3>.T = SR/q<2> & SR/q<3>
+	# !SR/q<2> & !SR/q<3>
+	# !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   SR/q<3>.CLK = Internal_Clk;
+   SR/q<3>.AR = !Reset_In;
+
+MACROCELL | 0 | 12 | SR/q<4>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 3 | 0 | 12 | 0 | 11 | 2 | 6
+INPUTS | 8 | SR/q<3>  | SR/q<4>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | Reset_In
+INPUTMC | 7 | 0 | 13 | 0 | 12 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0
+INPUTP | 1 | 7
+EQ | 6 | 
+   !SR/q<4>.T = SR/q<3> & SR/q<4>
+	# !SR/q<3> & !SR/q<4>
+	# !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   SR/q<4>.CLK = Internal_Clk;
+   SR/q<4>.AR = !Reset_In;
+
+MACROCELL | 0 | 11 | SR/q<5>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 3 | 0 | 11 | 0 | 10 | 2 | 5
+INPUTS | 8 | SR/q<4>  | SR/q<5>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | Reset_In
+INPUTMC | 7 | 0 | 12 | 0 | 11 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0
+INPUTP | 1 | 7
+EQ | 6 | 
+   !SR/q<5>.T = SR/q<4> & SR/q<5>
+	# !SR/q<4> & !SR/q<5>
+	# !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   SR/q<5>.CLK = Internal_Clk;
+   SR/q<5>.AR = !Reset_In;
+
+MACROCELL | 0 | 10 | SR/q<6>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 3 | 0 | 10 | 0 | 9 | 2 | 4
+INPUTS | 8 | SR/q<5>  | SR/q<6>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | Reset_In
+INPUTMC | 7 | 0 | 11 | 0 | 10 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0
+INPUTP | 1 | 7
+EQ | 6 | 
+   !SR/q<6>.T = SR/q<5> & SR/q<6>
+	# !SR/q<5> & !SR/q<6>
+	# !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   SR/q<6>.CLK = Internal_Clk;
+   SR/q<6>.AR = !Reset_In;
+
+MACROCELL | 0 | 9 | SR/q<7>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 3 | 0 | 9 | 0 | 8 | 2 | 3
+INPUTS | 8 | SR/q<6>  | SR/q<7>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | Reset_In
+INPUTMC | 7 | 0 | 10 | 0 | 9 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0
+INPUTP | 1 | 7
+EQ | 6 | 
+   !SR/q<7>.T = SR/q<6> & SR/q<7>
+	# !SR/q<6> & !SR/q<7>
+	# !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   SR/q<7>.CLK = Internal_Clk;
+   SR/q<7>.AR = !Reset_In;
+
+MACROCELL | 0 | 8 | SR/q<8>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 3 | 0 | 8 | 0 | 6 | 2 | 2
+INPUTS | 8 | SR/q<7>  | SR/q<8>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | Reset_In
+INPUTMC | 7 | 0 | 9 | 0 | 8 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0
+INPUTP | 1 | 7
+EQ | 6 | 
+   !SR/q<8>.T = SR/q<7> & SR/q<8>
+	# !SR/q<7> & !SR/q<8>
+	# !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   SR/q<8>.CLK = Internal_Clk;
+   SR/q<8>.AR = !Reset_In;
+
+MACROCELL | 0 | 6 | SR/q<9>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 3 | 0 | 16 | 0 | 6 | 2 | 1
+INPUTS | 8 | SR/q<8>  | SR/q<9>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | Reset_In
+INPUTMC | 7 | 0 | 8 | 0 | 6 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0
+INPUTP | 1 | 7
+EQ | 6 | 
+   !SR/q<9>.T = SR/q<8> & SR/q<9>
+	# !SR/q<8> & !SR/q<9>
+	# !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   SR/q<9>.CLK = Internal_Clk;
+   SR/q<9>.AR = !Reset_In;
+
+MACROCELL | 2 | 17 | SR/q<11>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 2 | 2 | 17 | 2 | 9
+INPUTS | 8 | SR/q<10>  | SR/q<11>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | Reset_In
+INPUTMC | 7 | 0 | 16 | 2 | 17 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0
+INPUTP | 1 | 7
+EQ | 6 | 
+   !SR/q<11>.T = SR/q<10> & SR/q<11>
+	# !SR/q<10> & !SR/q<11>
+	# !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   SR/q<11>.CLK = Internal_Clk;
+   SR/q<11>.AR = !Reset_In;
+
+MACROCELL | 0 | 1 | Len_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 12 | Shift_Decoder<6>  | Shift_Decoder<4>  | Shift_Decoder<5>  | Shift_Decoder<0>  | Shift_Decoder<10>  | Shift_Decoder<11>  | Shift_Decoder<1>  | Shift_Decoder<2>  | Shift_Decoder<3>  | Shift_Decoder<8>  | Shift_Decoder<9>  | Shift_Decoder<7>
+INPUTMC | 12 | 2 | 4 | 2 | 6 | 2 | 5 | 0 | 3 | 0 | 2 | 2 | 9 | 0 | 0 | 2 | 8 | 2 | 7 | 2 | 2 | 2 | 1 | 2 | 3
+EQ | 16 | 
+   !Len = Shift_Decoder<6> & !Shift_Decoder<5> & 
+	!Shift_Decoder<7> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>
+	# !Shift_Decoder<6> & !Shift_Decoder<4> & 
+	Shift_Decoder<5> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>
+	# !Shift_Decoder<6> & !Shift_Decoder<4> & 
+	Shift_Decoder<7> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>
+	# Shift_Decoder<4> & !Shift_Decoder<5> & 
+	!Shift_Decoder<7> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>;
+
+MACROCELL | 0 | 5 | Ren_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 12 | Shift_Decoder<6>  | Shift_Decoder<4>  | Shift_Decoder<5>  | Shift_Decoder<0>  | Shift_Decoder<10>  | Shift_Decoder<11>  | Shift_Decoder<1>  | Shift_Decoder<2>  | Shift_Decoder<3>  | Shift_Decoder<8>  | Shift_Decoder<9>  | Shift_Decoder<7>
+INPUTMC | 12 | 2 | 4 | 2 | 6 | 2 | 5 | 0 | 3 | 0 | 2 | 2 | 9 | 0 | 0 | 2 | 8 | 2 | 7 | 2 | 2 | 2 | 1 | 2 | 3
+EQ | 16 | 
+   !Ren = Shift_Decoder<6> & !Shift_Decoder<4> & 
+	!Shift_Decoder<7> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>
+	# !Shift_Decoder<6> & Shift_Decoder<4> & 
+	!Shift_Decoder<5> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>
+	# !Shift_Decoder<6> & !Shift_Decoder<5> & 
+	Shift_Decoder<7> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>
+	# !Shift_Decoder<4> & Shift_Decoder<5> & 
+	!Shift_Decoder<7> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>;
+
+MACROCELL | 2 | 0 | Internal_Clk
+ATTRIBUTES | 4358928 | 0
+OUTPUTMC | 32 | 0 | 17 | 0 | 16 | 0 | 15 | 0 | 14 | 0 | 13 | 0 | 12 | 0 | 11 | 0 | 10 | 0 | 9 | 0 | 8 | 0 | 6 | 2 | 17 | 2 | 10 | 3 | 17 | 2 | 12 | 1 | 12 | 1 | 11 | 1 | 17 | 2 | 11 | 1 | 15 | 1 | 14 | 3 | 15 | 3 | 14 | 1 | 13 | 3 | 13 | 3 | 12 | 3 | 11 | 3 | 10 | 3 | 9 | 3 | 8 | 3 | 7 | 3 | 6
+INPUTS | 1 | Reset_In
+INPUTP | 1 | 7
+EQ | 3 | 
+   Internal_Clk.T = Vcc;
+   Internal_Clk.CLK = Clk_In;	// GCK
+   Internal_Clk.AR = !Reset_In;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 2 | 4 | Shift_Decoder<6>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 4 | 0 | 1 | 0 | 5 | 0 | 4 | 0 | 7
+INPUTS | 6 | SR/q<6>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Reset_In
+INPUTMC | 5 | 0 | 10 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11
+INPUTP | 1 | 7
+EQ | 4 | 
+   Shift_Decoder<6>.D = SR/q<6>;
+   Shift_Decoder<6>.CLK = !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   Shift_Decoder<6>.AR = !Reset_In;
+
+MACROCELL | 2 | 6 | Shift_Decoder<4>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 4 | 0 | 1 | 0 | 5 | 0 | 4 | 0 | 7
+INPUTS | 6 | SR/q<4>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Reset_In
+INPUTMC | 5 | 0 | 12 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11
+INPUTP | 1 | 7
+EQ | 4 | 
+   Shift_Decoder<4>.D = SR/q<4>;
+   Shift_Decoder<4>.CLK = !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   Shift_Decoder<4>.AR = !Reset_In;
+
+MACROCELL | 2 | 5 | Shift_Decoder<5>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 4 | 0 | 1 | 0 | 5 | 0 | 4 | 0 | 7
+INPUTS | 6 | SR/q<5>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Reset_In
+INPUTMC | 5 | 0 | 11 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11
+INPUTP | 1 | 7
+EQ | 4 | 
+   Shift_Decoder<5>.D = SR/q<5>;
+   Shift_Decoder<5>.CLK = !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   Shift_Decoder<5>.AR = !Reset_In;
+
+MACROCELL | 1 | 3 | N64Receiver/shift_out<0>
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 8 | 1 | 7 | 1 | 6 | 1 | 5 | 1 | 4 | 1 | 16 | 1 | 2 | 1 | 8 | 2 | 15
+INPUTS | 2 | Serial_In  | Reset_In
+INPUTP | 2 | 24 | 7
+EQ | 3 | 
+   N64Receiver/shift_out<0>.D = !Serial_In;
+   N64Receiver/shift_out<0>.CLK = Clk_In;	// GCK
+   N64Receiver/shift_out<0>.AR = !Reset_In;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 2 | 3 | Shift_Decoder<7>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 4 | 0 | 1 | 0 | 5 | 0 | 4 | 0 | 7
+INPUTS | 6 | SR/q<7>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Reset_In
+INPUTMC | 5 | 0 | 9 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11
+INPUTP | 1 | 7
+EQ | 4 | 
+   Shift_Decoder<7>.D = SR/q<7>;
+   Shift_Decoder<7>.CLK = !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   Shift_Decoder<7>.AR = !Reset_In;
+
+MACROCELL | 2 | 10 | FBC/count<0>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 28 | 0 | 17 | 0 | 16 | 0 | 15 | 0 | 14 | 0 | 13 | 0 | 12 | 0 | 11 | 0 | 10 | 0 | 9 | 0 | 8 | 0 | 6 | 2 | 17 | 2 | 4 | 2 | 6 | 2 | 5 | 2 | 3 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 0 | 3 | 0 | 2 | 2 | 9 | 0 | 0 | 2 | 8 | 2 | 7 | 2 | 2 | 2 | 1
+INPUTS | 6 | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | FBC/count<2>/FBC/count<2>_RSTF__$INT
+INPUTMC | 6 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0 | 1 | 1
+EQ | 4 | 
+   !FBC/count<0>.T = !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   FBC/count<0>.CLK = Internal_Clk;
+   FBC/count<0>.AR = !FBC/count<2>/FBC/count<2>_RSTF__$INT;
+
+MACROCELL | 3 | 5 | N64Receiver/TBC/count<0>
+ATTRIBUTES | 4358928 | 0
+OUTPUTMC | 4 | 3 | 5 | 3 | 3 | 3 | 16 | 3 | 4
+INPUTS | 4 | N64Receiver/TBC/count<0>  | N64Receiver/TBC/count<1>  | N64Receiver/TBC/count<2>  | N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT
+INPUTMC | 4 | 3 | 5 | 3 | 16 | 3 | 4 | 1 | 0
+EQ | 5 | 
+   !N64Receiver/TBC/count<0>.T = !N64Receiver/TBC/count<0> & 
+	N64Receiver/TBC/count<1> & !N64Receiver/TBC/count<2>;
+   N64Receiver/TBC/count<0>.CLK = Clk_In;	// GCK
+   N64Receiver/TBC/count<0>.AR = 
+	!N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 3 | 3 | N64Receiver/latch
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 4 | 2 | 14 | 2 | 13 | 2 | 15 | 2 | 16
+INPUTS | 4 | N64Receiver/TBC/count<0>  | N64Receiver/TBC/count<1>  | N64Receiver/TBC/count<2>  | N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT
+INPUTMC | 4 | 3 | 5 | 3 | 16 | 3 | 4 | 1 | 0
+EQ | 5 | 
+   N64Receiver/latch.D = !N64Receiver/TBC/count<0> & 
+	N64Receiver/TBC/count<1> & !N64Receiver/TBC/count<2>;
+   N64Receiver/latch.CLK = Clk_In;	// GCK
+   N64Receiver/latch.AR = 
+	!N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 3 | 17 | FBC/count<1>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 27 | 0 | 17 | 0 | 16 | 0 | 15 | 0 | 14 | 0 | 13 | 0 | 12 | 0 | 11 | 0 | 10 | 0 | 9 | 0 | 8 | 0 | 6 | 2 | 17 | 2 | 4 | 2 | 6 | 2 | 5 | 2 | 3 | 2 | 10 | 2 | 12 | 2 | 11 | 0 | 3 | 0 | 2 | 2 | 9 | 0 | 0 | 2 | 8 | 2 | 7 | 2 | 2 | 2 | 1
+INPUTS | 3 | FBC/count<0>  | Internal_Clk  | FBC/count<2>/FBC/count<2>_RSTF__$INT
+INPUTMC | 3 | 2 | 10 | 2 | 0 | 1 | 1
+EQ | 3 | 
+   FBC/count<1>.T = FBC/count<0>;
+   FBC/count<1>.CLK = Internal_Clk;
+   FBC/count<1>.AR = !FBC/count<2>/FBC/count<2>_RSTF__$INT;
+
+MACROCELL | 2 | 12 | FBC/count<2>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 27 | 0 | 17 | 0 | 16 | 0 | 15 | 0 | 14 | 0 | 13 | 0 | 12 | 0 | 11 | 0 | 10 | 0 | 9 | 0 | 8 | 0 | 6 | 2 | 17 | 2 | 4 | 2 | 6 | 2 | 5 | 2 | 3 | 2 | 10 | 2 | 12 | 2 | 11 | 0 | 3 | 0 | 2 | 2 | 9 | 0 | 0 | 2 | 8 | 2 | 7 | 2 | 2 | 2 | 1
+INPUTS | 6 | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | FBC/count<2>/FBC/count<2>_RSTF__$INT
+INPUTMC | 6 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0 | 1 | 1
+EQ | 5 | 
+   FBC/count<2>.T = FBC/count<0> & FBC/count<1>
+	# !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   FBC/count<2>.CLK = Internal_Clk;
+   FBC/count<2>.AR = !FBC/count<2>/FBC/count<2>_RSTF__$INT;
+
+MACROCELL | 1 | 12 | instance_name/state_FSM_FFd14
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 5 | 0 | 17 | 1 | 17 | 1 | 13 | 1 | 1 | 0 | 0
+INPUTS | 4 | Serial_In  | instance_name/state_FSM_FFd15  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 1 | 11 | 2 | 0
+INPUTP | 2 | 24 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd14.D = Serial_In & instance_name/state_FSM_FFd15;
+   instance_name/state_FSM_FFd14.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd14.AR = !Reset_In;
+
+MACROCELL | 1 | 11 | instance_name/state_FSM_FFd15
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 5 | 0 | 17 | 1 | 12 | 1 | 17 | 1 | 1 | 0 | 0
+INPUTS | 4 | Serial_In  | instance_name/state_FSM_FFd16  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 1 | 17 | 2 | 0
+INPUTP | 2 | 24 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd15.D = !Serial_In & instance_name/state_FSM_FFd16;
+   instance_name/state_FSM_FFd15.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd15.AR = !Reset_In;
+
+MACROCELL | 1 | 17 | instance_name/state_FSM_FFd16
+ATTRIBUTES | 8520608 | 0
+OUTPUTMC | 5 | 0 | 17 | 1 | 11 | 1 | 17 | 1 | 1 | 0 | 0
+INPUTS | 7 | Serial_In  | instance_name/state_FSM_FFd15  | instance_name/state_FSM_FFd1  | instance_name/state_FSM_FFd14  | instance_name/state_FSM_FFd16  | Internal_Clk  | Reset_In
+INPUTMC | 5 | 1 | 11 | 1 | 15 | 1 | 12 | 1 | 17 | 2 | 0
+INPUTP | 2 | 24 | 7
+EQ | 6 | 
+   !instance_name/state_FSM_FFd16.D = !Serial_In & !instance_name/state_FSM_FFd15 & 
+	!instance_name/state_FSM_FFd1
+	# Serial_In & !instance_name/state_FSM_FFd14 & 
+	!instance_name/state_FSM_FFd16 & !instance_name/state_FSM_FFd1;
+   instance_name/state_FSM_FFd16.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd16.AP = !Reset_In;
+
+MACROCELL | 1 | 7 | N64Receiver/IRL/state_FSM_FFd4
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 3 | 1 | 16 | 1 | 8 | 1 | 0
+INPUTS | 3 | N64Receiver/shift_out<0>  | N64Receiver/IRL/state_FSM_FFd5  | Reset_In
+INPUTMC | 2 | 1 | 3 | 1 | 6
+INPUTP | 1 | 7
+EQ | 4 | 
+   N64Receiver/IRL/state_FSM_FFd4.D = !N64Receiver/shift_out<0> & 
+	N64Receiver/IRL/state_FSM_FFd5;
+   N64Receiver/IRL/state_FSM_FFd4.CLK = Clk_In;	// GCK
+   N64Receiver/IRL/state_FSM_FFd4.AR = !Reset_In;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 1 | 6 | N64Receiver/IRL/state_FSM_FFd5
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 3 | 1 | 7 | 1 | 16 | 1 | 0
+INPUTS | 3 | N64Receiver/shift_out<0>  | N64Receiver/IRL/state_FSM_FFd6  | Reset_In
+INPUTMC | 2 | 1 | 3 | 1 | 5
+INPUTP | 1 | 7
+EQ | 4 | 
+   N64Receiver/IRL/state_FSM_FFd5.D = N64Receiver/shift_out<0> & 
+	N64Receiver/IRL/state_FSM_FFd6;
+   N64Receiver/IRL/state_FSM_FFd5.CLK = Clk_In;	// GCK
+   N64Receiver/IRL/state_FSM_FFd5.AR = !Reset_In;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 1 | 5 | N64Receiver/IRL/state_FSM_FFd6
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 3 | 1 | 6 | 1 | 16 | 1 | 0
+INPUTS | 3 | N64Receiver/shift_out<0>  | N64Receiver/IRL/state_FSM_FFd7  | Reset_In
+INPUTMC | 2 | 1 | 3 | 1 | 4
+INPUTP | 1 | 7
+EQ | 4 | 
+   N64Receiver/IRL/state_FSM_FFd6.D = !N64Receiver/shift_out<0> & 
+	N64Receiver/IRL/state_FSM_FFd7;
+   N64Receiver/IRL/state_FSM_FFd6.CLK = Clk_In;	// GCK
+   N64Receiver/IRL/state_FSM_FFd6.AR = !Reset_In;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 1 | 4 | N64Receiver/IRL/state_FSM_FFd7
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 3 | 1 | 5 | 1 | 16 | 1 | 0
+INPUTS | 3 | N64Receiver/shift_out<0>  | N64Receiver/IRL/state_FSM_FFd8  | Reset_In
+INPUTMC | 2 | 1 | 3 | 1 | 16
+INPUTP | 1 | 7
+EQ | 4 | 
+   N64Receiver/IRL/state_FSM_FFd7.D = N64Receiver/shift_out<0> & 
+	N64Receiver/IRL/state_FSM_FFd8;
+   N64Receiver/IRL/state_FSM_FFd7.CLK = Clk_In;	// GCK
+   N64Receiver/IRL/state_FSM_FFd7.AR = !Reset_In;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 1 | 16 | N64Receiver/IRL/state_FSM_FFd8
+ATTRIBUTES | 8553344 | 0
+OUTPUTMC | 3 | 1 | 4 | 1 | 16 | 1 | 0
+INPUTS | 8 | N64Receiver/shift_out<0>  | N64Receiver/IRL/state_FSM_FFd6  | N64Receiver/IRL/state_FSM_FFd8  | N64Receiver/IRL/state_FSM_FFd1  | N64Receiver/IRL/state_FSM_FFd4  | N64Receiver/IRL/state_FSM_FFd5  | N64Receiver/IRL/state_FSM_FFd7  | Reset_In
+INPUTMC | 7 | 1 | 3 | 1 | 5 | 1 | 16 | 1 | 10 | 1 | 7 | 1 | 6 | 1 | 4
+INPUTP | 1 | 7
+EQ | 8 | 
+   !N64Receiver/IRL/state_FSM_FFd8.D = !N64Receiver/shift_out<0> & 
+	!N64Receiver/IRL/state_FSM_FFd6 & !N64Receiver/IRL/state_FSM_FFd8 & 
+	!N64Receiver/IRL/state_FSM_FFd1
+	# N64Receiver/shift_out<0> & 
+	!N64Receiver/IRL/state_FSM_FFd4 & !N64Receiver/IRL/state_FSM_FFd5 & 
+	!N64Receiver/IRL/state_FSM_FFd7 & !N64Receiver/IRL/state_FSM_FFd1;
+   N64Receiver/IRL/state_FSM_FFd8.CLK = Clk_In;	// GCK
+   N64Receiver/IRL/state_FSM_FFd8.AP = !Reset_In;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 3 | 16 | N64Receiver/TBC/count<1>
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 4 | 3 | 5 | 3 | 3 | 3 | 16 | 3 | 4
+INPUTS | 4 | N64Receiver/TBC/count<0>  | N64Receiver/TBC/count<1>  | N64Receiver/TBC/count<2>  | N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT
+INPUTMC | 4 | 3 | 5 | 3 | 16 | 3 | 4 | 1 | 0
+EQ | 7 | 
+   N64Receiver/TBC/count<1>.D = N64Receiver/TBC/count<0> & 
+	!N64Receiver/TBC/count<1>
+	# !N64Receiver/TBC/count<0> & 
+	N64Receiver/TBC/count<1> & N64Receiver/TBC/count<2>;
+   N64Receiver/TBC/count<1>.CLK = Clk_In;	// GCK
+   N64Receiver/TBC/count<1>.AR = 
+	!N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 2 | 11 | FBC/count<3>
+ATTRIBUTES | 4326192 | 0
+OUTPUTMC | 26 | 2 | 1 | 0 | 16 | 0 | 15 | 0 | 14 | 0 | 13 | 0 | 12 | 0 | 11 | 0 | 10 | 0 | 9 | 0 | 8 | 0 | 6 | 2 | 17 | 2 | 4 | 2 | 6 | 2 | 5 | 2 | 3 | 2 | 10 | 2 | 12 | 2 | 11 | 0 | 3 | 0 | 2 | 2 | 9 | 0 | 0 | 2 | 8 | 2 | 7 | 2 | 2
+INPUTS | 6 | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Internal_Clk  | FBC/count<2>/FBC/count<2>_RSTF__$INT
+INPUTMC | 6 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 2 | 0 | 1 | 1
+EQ | 5 | 
+   FBC/count<3>.T = FBC/count<0> & FBC/count<1> & FBC/count<2>
+	# !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   FBC/count<3>.CLK = Internal_Clk;
+   FBC/count<3>.AR = !FBC/count<2>/FBC/count<2>_RSTF__$INT;
+
+MACROCELL | 3 | 4 | N64Receiver/TBC/count<2>
+ATTRIBUTES | 4358928 | 0
+OUTPUTMC | 3 | 3 | 5 | 3 | 3 | 3 | 16
+INPUTS | 3 | N64Receiver/TBC/count<0>  | N64Receiver/TBC/count<1>  | N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT
+INPUTMC | 3 | 3 | 5 | 3 | 16 | 1 | 0
+EQ | 5 | 
+   N64Receiver/TBC/count<2>.T = N64Receiver/TBC/count<0> & 
+	N64Receiver/TBC/count<1>;
+   N64Receiver/TBC/count<2>.CLK = Clk_In;	// GCK
+   N64Receiver/TBC/count<2>.AR = 
+	!N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 1 | 2 | N64Receiver/shift_out<1>
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 2 | 3 | 2 | 2 | 16
+INPUTS | 2 | N64Receiver/shift_out<0>  | Reset_In
+INPUTMC | 1 | 1 | 3
+INPUTP | 1 | 7
+EQ | 3 | 
+   N64Receiver/shift_out<1>.D = N64Receiver/shift_out<0>;
+   N64Receiver/shift_out<1>.CLK = Clk_In;	// GCK
+   N64Receiver/shift_out<1>.AR = !Reset_In;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 3 | 2 | N64Receiver/shift_out<2>
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 2 | 3 | 1 | 2 | 14
+INPUTS | 2 | N64Receiver/shift_out<1>  | Reset_In
+INPUTMC | 1 | 1 | 2
+INPUTP | 1 | 7
+EQ | 3 | 
+   N64Receiver/shift_out<2>.D = N64Receiver/shift_out<1>;
+   N64Receiver/shift_out<2>.CLK = Clk_In;	// GCK
+   N64Receiver/shift_out<2>.AR = !Reset_In;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 0 | 3 | Shift_Decoder<0>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 4 | 0 | 1 | 0 | 5 | 0 | 4 | 0 | 7
+INPUTS | 6 | SR/q<0>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Reset_In
+INPUTMC | 5 | 0 | 17 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11
+INPUTP | 1 | 7
+EQ | 4 | 
+   Shift_Decoder<0>.D = SR/q<0>;
+   Shift_Decoder<0>.CLK = !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   Shift_Decoder<0>.AR = !Reset_In;
+
+MACROCELL | 0 | 2 | Shift_Decoder<10>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 4 | 0 | 1 | 0 | 5 | 0 | 4 | 0 | 7
+INPUTS | 6 | SR/q<10>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Reset_In
+INPUTMC | 5 | 0 | 16 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11
+INPUTP | 1 | 7
+EQ | 4 | 
+   Shift_Decoder<10>.D = SR/q<10>;
+   Shift_Decoder<10>.CLK = !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   Shift_Decoder<10>.AR = !Reset_In;
+
+MACROCELL | 2 | 9 | Shift_Decoder<11>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 4 | 0 | 1 | 0 | 5 | 0 | 4 | 0 | 7
+INPUTS | 6 | SR/q<11>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Reset_In
+INPUTMC | 5 | 2 | 17 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11
+INPUTP | 1 | 7
+EQ | 4 | 
+   Shift_Decoder<11>.D = SR/q<11>;
+   Shift_Decoder<11>.CLK = !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   Shift_Decoder<11>.AR = !Reset_In;
+
+MACROCELL | 0 | 0 | Shift_Decoder<1>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 5 | 0 | 1 | 0 | 5 | 0 | 4 | 0 | 7 | 0 | 17
+INPUTS | 11 | SR/q<1>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Reset_In  | SR/q<0>  | Serial_In  | instance_name/state_FSM_FFd14  | instance_name/state_FSM_FFd15  | instance_name/state_FSM_FFd16
+INPUTMC | 9 | 0 | 15 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11 | 0 | 17 | 1 | 12 | 1 | 11 | 1 | 17
+INPUTP | 2 | 7 | 24
+EXPORTS | 1 | 0 | 17
+EQ | 8 | 
+   Shift_Decoder<1>.D = SR/q<1>;
+   Shift_Decoder<1>.CLK = !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   Shift_Decoder<1>.AR = !Reset_In;
+    Shift_Decoder<1>.EXP  =  SR/q<0> & !FBC/count<0> & !FBC/count<1> & 
+	FBC/count<2> & FBC/count<3>
+	# !Serial_In & !instance_name/state_FSM_FFd14 & 
+	!instance_name/state_FSM_FFd15 & !instance_name/state_FSM_FFd16 & !FBC/count<3>
+
+MACROCELL | 2 | 8 | Shift_Decoder<2>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 4 | 0 | 1 | 0 | 5 | 0 | 4 | 0 | 7
+INPUTS | 6 | SR/q<2>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Reset_In
+INPUTMC | 5 | 0 | 14 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11
+INPUTP | 1 | 7
+EQ | 4 | 
+   Shift_Decoder<2>.D = SR/q<2>;
+   Shift_Decoder<2>.CLK = !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   Shift_Decoder<2>.AR = !Reset_In;
+
+MACROCELL | 2 | 7 | Shift_Decoder<3>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 4 | 0 | 1 | 0 | 5 | 0 | 4 | 0 | 7
+INPUTS | 6 | SR/q<3>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Reset_In
+INPUTMC | 5 | 0 | 13 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11
+INPUTP | 1 | 7
+EQ | 4 | 
+   Shift_Decoder<3>.D = SR/q<3>;
+   Shift_Decoder<3>.CLK = !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   Shift_Decoder<3>.AR = !Reset_In;
+
+MACROCELL | 2 | 2 | Shift_Decoder<8>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 4 | 0 | 1 | 0 | 5 | 0 | 4 | 0 | 7
+INPUTS | 6 | SR/q<8>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Reset_In
+INPUTMC | 5 | 0 | 8 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11
+INPUTP | 1 | 7
+EQ | 4 | 
+   Shift_Decoder<8>.D = SR/q<8>;
+   Shift_Decoder<8>.CLK = !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   Shift_Decoder<8>.AR = !Reset_In;
+
+MACROCELL | 2 | 1 | Shift_Decoder<9>
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 4 | 0 | 1 | 0 | 5 | 0 | 4 | 0 | 7
+INPUTS | 6 | SR/q<9>  | FBC/count<0>  | FBC/count<1>  | FBC/count<2>  | FBC/count<3>  | Reset_In
+INPUTMC | 5 | 0 | 6 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11
+INPUTP | 1 | 7
+EQ | 4 | 
+   Shift_Decoder<9>.D = SR/q<9>;
+   Shift_Decoder<9>.CLK = !FBC/count<0> & !FBC/count<1> & FBC/count<2> & 
+	FBC/count<3>;
+   Shift_Decoder<9>.AR = !Reset_In;
+
+MACROCELL | 1 | 15 | instance_name/state_FSM_FFd1
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 1 | 1 | 17
+INPUTS | 3 | instance_name/state_FSM_FFd2  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 3 | 13 | 2 | 0
+INPUTP | 1 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd1.D = instance_name/state_FSM_FFd2;
+   instance_name/state_FSM_FFd1.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd1.AR = !Reset_In;
+
+MACROCELL | 1 | 14 | instance_name/state_FSM_FFd10
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 1 | 3 | 6
+INPUTS | 3 | instance_name/state_FSM_FFd11  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 3 | 15 | 2 | 0
+INPUTP | 1 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd10.D = instance_name/state_FSM_FFd11;
+   instance_name/state_FSM_FFd10.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd10.AR = !Reset_In;
+
+MACROCELL | 3 | 15 | instance_name/state_FSM_FFd11
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 1 | 1 | 14
+INPUTS | 3 | instance_name/state_FSM_FFd12  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 3 | 14 | 2 | 0
+INPUTP | 1 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd11.D = instance_name/state_FSM_FFd12;
+   instance_name/state_FSM_FFd11.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd11.AR = !Reset_In;
+
+MACROCELL | 3 | 14 | instance_name/state_FSM_FFd12
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 1 | 3 | 15
+INPUTS | 3 | instance_name/state_FSM_FFd13  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 1 | 13 | 2 | 0
+INPUTP | 1 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd12.D = instance_name/state_FSM_FFd13;
+   instance_name/state_FSM_FFd12.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd12.AR = !Reset_In;
+
+MACROCELL | 1 | 13 | instance_name/state_FSM_FFd13
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 1 | 3 | 14
+INPUTS | 4 | Serial_In  | instance_name/state_FSM_FFd14  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 1 | 12 | 2 | 0
+INPUTP | 2 | 24 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd13.D = !Serial_In & instance_name/state_FSM_FFd14;
+   instance_name/state_FSM_FFd13.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd13.AR = !Reset_In;
+
+MACROCELL | 3 | 13 | instance_name/state_FSM_FFd2
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 1 | 1 | 15
+INPUTS | 3 | instance_name/state_FSM_FFd3  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 3 | 12 | 2 | 0
+INPUTP | 1 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd2.D = instance_name/state_FSM_FFd3;
+   instance_name/state_FSM_FFd2.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd2.AR = !Reset_In;
+
+MACROCELL | 3 | 12 | instance_name/state_FSM_FFd3
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 1 | 3 | 13
+INPUTS | 3 | instance_name/state_FSM_FFd4  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 3 | 11 | 2 | 0
+INPUTP | 1 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd3.D = instance_name/state_FSM_FFd4;
+   instance_name/state_FSM_FFd3.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd3.AR = !Reset_In;
+
+MACROCELL | 3 | 11 | instance_name/state_FSM_FFd4
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 1 | 3 | 12
+INPUTS | 3 | instance_name/state_FSM_FFd5  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 3 | 10 | 2 | 0
+INPUTP | 1 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd4.D = instance_name/state_FSM_FFd5;
+   instance_name/state_FSM_FFd4.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd4.AR = !Reset_In;
+
+MACROCELL | 3 | 10 | instance_name/state_FSM_FFd5
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 1 | 3 | 11
+INPUTS | 3 | instance_name/state_FSM_FFd6  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 3 | 9 | 2 | 0
+INPUTP | 1 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd5.D = instance_name/state_FSM_FFd6;
+   instance_name/state_FSM_FFd5.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd5.AR = !Reset_In;
+
+MACROCELL | 3 | 9 | instance_name/state_FSM_FFd6
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 1 | 3 | 10
+INPUTS | 3 | instance_name/state_FSM_FFd7  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 3 | 8 | 2 | 0
+INPUTP | 1 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd6.D = instance_name/state_FSM_FFd7;
+   instance_name/state_FSM_FFd6.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd6.AR = !Reset_In;
+
+MACROCELL | 3 | 8 | instance_name/state_FSM_FFd7
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 1 | 3 | 9
+INPUTS | 3 | instance_name/state_FSM_FFd8  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 3 | 7 | 2 | 0
+INPUTP | 1 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd7.D = instance_name/state_FSM_FFd8;
+   instance_name/state_FSM_FFd7.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd7.AR = !Reset_In;
+
+MACROCELL | 3 | 7 | instance_name/state_FSM_FFd8
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 1 | 3 | 8
+INPUTS | 3 | instance_name/state_FSM_FFd9  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 3 | 6 | 2 | 0
+INPUTP | 1 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd8.D = instance_name/state_FSM_FFd9;
+   instance_name/state_FSM_FFd8.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd8.AR = !Reset_In;
+
+MACROCELL | 3 | 6 | instance_name/state_FSM_FFd9
+ATTRIBUTES | 8520496 | 0
+OUTPUTMC | 1 | 3 | 7
+INPUTS | 3 | instance_name/state_FSM_FFd10  | Internal_Clk  | Reset_In
+INPUTMC | 2 | 1 | 14 | 2 | 0
+INPUTP | 1 | 7
+EQ | 3 | 
+   instance_name/state_FSM_FFd9.D = instance_name/state_FSM_FFd10;
+   instance_name/state_FSM_FFd9.CLK = Internal_Clk;
+   instance_name/state_FSM_FFd9.AR = !Reset_In;
+
+MACROCELL | 1 | 10 | N64Receiver/IRL/state_FSM_FFd1
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 1 | 1 | 16
+INPUTS | 2 | N64Receiver/IRL/state_FSM_FFd2  | Reset_In
+INPUTMC | 1 | 1 | 9
+INPUTP | 1 | 7
+EQ | 3 | 
+   N64Receiver/IRL/state_FSM_FFd1.D = N64Receiver/IRL/state_FSM_FFd2;
+   N64Receiver/IRL/state_FSM_FFd1.CLK = Clk_In;	// GCK
+   N64Receiver/IRL/state_FSM_FFd1.AR = !Reset_In;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 1 | 9 | N64Receiver/IRL/state_FSM_FFd2
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 1 | 1 | 10
+INPUTS | 2 | N64Receiver/IRL/state_FSM_FFd3  | Reset_In
+INPUTMC | 1 | 1 | 8
+INPUTP | 1 | 7
+EQ | 3 | 
+   N64Receiver/IRL/state_FSM_FFd2.D = N64Receiver/IRL/state_FSM_FFd3;
+   N64Receiver/IRL/state_FSM_FFd2.CLK = Clk_In;	// GCK
+   N64Receiver/IRL/state_FSM_FFd2.AR = !Reset_In;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 1 | 8 | N64Receiver/IRL/state_FSM_FFd3
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 1 | 1 | 9
+INPUTS | 3 | N64Receiver/shift_out<0>  | N64Receiver/IRL/state_FSM_FFd4  | Reset_In
+INPUTMC | 2 | 1 | 3 | 1 | 7
+INPUTP | 1 | 7
+EQ | 4 | 
+   N64Receiver/IRL/state_FSM_FFd3.D = !N64Receiver/shift_out<0> & 
+	N64Receiver/IRL/state_FSM_FFd4;
+   N64Receiver/IRL/state_FSM_FFd3.CLK = Clk_In;	// GCK
+   N64Receiver/IRL/state_FSM_FFd3.AR = !Reset_In;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 3 | 1 | N64Receiver/shift_out<3>
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 1 | 2 | 13
+INPUTS | 2 | N64Receiver/shift_out<2>  | Reset_In
+INPUTMC | 1 | 3 | 2
+INPUTP | 1 | 7
+EQ | 3 | 
+   N64Receiver/shift_out<3>.D = N64Receiver/shift_out<2>;
+   N64Receiver/shift_out<3>.CLK = Clk_In;	// GCK
+   N64Receiver/shift_out<3>.AR = !Reset_In;
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 2 | 14 | N64_Ldir_OBUF
+ATTRIBUTES | 8651682 | 0
+INPUTS | 3 | N64Receiver/shift_out<2>  | N64Receiver/latch  | Reset_In
+INPUTMC | 2 | 3 | 2 | 3 | 3
+INPUTP | 1 | 7
+EQ | 3 | 
+   N64_Ldir.D = N64Receiver/shift_out<2>;
+   N64_Ldir.CLK = N64Receiver/latch;
+   N64_Ldir.AP = !Reset_In;
+
+MACROCELL | 2 | 13 | N64_Len_OBUF
+ATTRIBUTES | 8651682 | 0
+INPUTS | 3 | N64Receiver/shift_out<3>  | N64Receiver/latch  | Reset_In
+INPUTMC | 2 | 3 | 1 | 3 | 3
+INPUTP | 1 | 7
+EQ | 3 | 
+   N64_Len.D = N64Receiver/shift_out<3>;
+   N64_Len.CLK = N64Receiver/latch;
+   N64_Len.AP = !Reset_In;
+
+MACROCELL | 2 | 15 | N64_Rdir_OBUF
+ATTRIBUTES | 8651682 | 0
+INPUTS | 3 | N64Receiver/shift_out<0>  | N64Receiver/latch  | Reset_In
+INPUTMC | 2 | 1 | 3 | 3 | 3
+INPUTP | 1 | 7
+EQ | 3 | 
+   N64_Rdir.D = N64Receiver/shift_out<0>;
+   N64_Rdir.CLK = N64Receiver/latch;
+   N64_Rdir.AP = !Reset_In;
+
+MACROCELL | 2 | 16 | N64_Ren_OBUF
+ATTRIBUTES | 8651682 | 0
+INPUTS | 3 | N64Receiver/shift_out<1>  | N64Receiver/latch  | Reset_In
+INPUTMC | 2 | 1 | 2 | 3 | 3
+INPUTP | 1 | 7
+EQ | 3 | 
+   N64_Ren.D = N64Receiver/shift_out<1>;
+   N64_Ren.CLK = N64Receiver/latch;
+   N64_Ren.AP = !Reset_In;
+
+MACROCELL | 0 | 4 | Ldir_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 12 | Shift_Decoder<4>  | Shift_Decoder<5>  | Shift_Decoder<7>  | Shift_Decoder<0>  | Shift_Decoder<10>  | Shift_Decoder<11>  | Shift_Decoder<1>  | Shift_Decoder<2>  | Shift_Decoder<3>  | Shift_Decoder<8>  | Shift_Decoder<9>  | Shift_Decoder<6>
+INPUTMC | 12 | 2 | 6 | 2 | 5 | 2 | 3 | 0 | 3 | 0 | 2 | 2 | 9 | 0 | 0 | 2 | 8 | 2 | 7 | 2 | 2 | 2 | 1 | 2 | 4
+EQ | 12 | 
+   !Ldir = Shift_Decoder<6> & !Shift_Decoder<4> & 
+	!Shift_Decoder<7> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>
+	# !Shift_Decoder<6> & Shift_Decoder<4> & 
+	!Shift_Decoder<5> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>
+	# Shift_Decoder<4> & !Shift_Decoder<5> & 
+	!Shift_Decoder<7> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>;
+
+MACROCELL | 0 | 7 | Rdir_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 12 | Shift_Decoder<4>  | Shift_Decoder<5>  | Shift_Decoder<7>  | Shift_Decoder<0>  | Shift_Decoder<10>  | Shift_Decoder<11>  | Shift_Decoder<1>  | Shift_Decoder<2>  | Shift_Decoder<3>  | Shift_Decoder<8>  | Shift_Decoder<9>  | Shift_Decoder<6>
+INPUTMC | 12 | 2 | 6 | 2 | 5 | 2 | 3 | 0 | 3 | 0 | 2 | 2 | 9 | 0 | 0 | 2 | 8 | 2 | 7 | 2 | 2 | 2 | 1 | 2 | 4
+EQ | 12 | 
+   !Rdir = Shift_Decoder<6> & !Shift_Decoder<5> & 
+	!Shift_Decoder<7> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>
+	# !Shift_Decoder<6> & !Shift_Decoder<4> & 
+	Shift_Decoder<5> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>
+	# !Shift_Decoder<4> & Shift_Decoder<5> & 
+	!Shift_Decoder<7> & !Shift_Decoder<0> & !Shift_Decoder<10> & 
+	!Shift_Decoder<11> & !Shift_Decoder<1> & !Shift_Decoder<2> & 
+	!Shift_Decoder<3> & !Shift_Decoder<8> & !Shift_Decoder<9>;
+
+MACROCELL | 1 | 1 | FBC/count<2>/FBC/count<2>_RSTF__$INT
+ATTRIBUTES | 133888 | 0
+OUTPUTMC | 4 | 2 | 10 | 3 | 17 | 2 | 12 | 2 | 11
+INPUTS | 3 | instance_name/state_FSM_FFd14  | instance_name/state_FSM_FFd15  | instance_name/state_FSM_FFd16
+INPUTMC | 3 | 1 | 12 | 1 | 11 | 1 | 17
+EQ | 2 | 
+   FBC/count<2>/FBC/count<2>_RSTF__$INT = !instance_name/state_FSM_FFd14 & 
+	!instance_name/state_FSM_FFd15 & !instance_name/state_FSM_FFd16;
+
+MACROCELL | 1 | 0 | N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT
+ATTRIBUTES | 133888 | 0
+OUTPUTMC | 4 | 3 | 5 | 3 | 3 | 3 | 16 | 3 | 4
+INPUTS | 5 | N64Receiver/IRL/state_FSM_FFd4  | N64Receiver/IRL/state_FSM_FFd5  | N64Receiver/IRL/state_FSM_FFd6  | N64Receiver/IRL/state_FSM_FFd7  | N64Receiver/IRL/state_FSM_FFd8
+INPUTMC | 5 | 1 | 7 | 1 | 6 | 1 | 5 | 1 | 4 | 1 | 16
+EQ | 3 | 
+   N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT = !N64Receiver/IRL/state_FSM_FFd4 & 
+	!N64Receiver/IRL/state_FSM_FFd5 & !N64Receiver/IRL/state_FSM_FFd6 & 
+	!N64Receiver/IRL/state_FSM_FFd7 & !N64Receiver/IRL/state_FSM_FFd8;
+
+PIN | Reset_In | 64 | 0 | N/A | 7 | 57 | 0 | 17 | 0 | 16 | 0 | 15 | 0 | 14 | 0 | 13 | 0 | 12 | 0 | 11 | 0 | 10 | 0 | 9 | 0 | 8 | 0 | 6 | 2 | 17 | 2 | 0 | 2 | 4 | 2 | 6 | 2 | 5 | 1 | 3 | 2 | 3 | 1 | 12 | 1 | 11 | 1 | 17 | 1 | 7 | 1 | 6 | 1 | 5 | 1 | 4 | 1 | 16 | 1 | 2 | 3 | 2 | 0 | 3 | 0 | 2 | 2 | 9 | 0 | 0 | 2 | 8 | 2 | 7 | 2 | 2 | 2 | 1 | 1 | 15 | 1 | 14 | 3 | 15 | 3 | 14 | 1 | 13 | 3 | 13 | 3 | 12 | 3 | 11 | 3 | 10 | 3 | 9 | 3 | 8 | 3 | 7 | 3 | 6 | 1 | 10 | 1 | 9 | 1 | 8 | 3 | 1 | 2 | 14 | 2 | 13 | 2 | 15 | 2 | 16
+PIN | Serial_In | 64 | 0 | N/A | 24 | 7 | 0 | 17 | 1 | 3 | 1 | 12 | 1 | 11 | 1 | 17 | 1 | 13 | 0 | 0
+PIN | Clk_In | 4096 | 0 | N/A | 20 | 17 | 2 | 0 | 1 | 3 | 3 | 5 | 3 | 3 | 1 | 7 | 1 | 6 | 1 | 5 | 1 | 4 | 1 | 16 | 3 | 16 | 3 | 4 | 1 | 2 | 3 | 2 | 1 | 10 | 1 | 9 | 1 | 8 | 3 | 1
+PIN | Len | 536871040 | 0 | N/A | 11
+PIN | Ren | 536871040 | 0 | N/A | 13
+PIN | N64_Ldir | 536871040 | 0 | N/A | 50
+PIN | N64_Len | 536871040 | 0 | N/A | 49
+PIN | N64_Rdir | 536871040 | 0 | N/A | 59
+PIN | N64_Ren | 536871040 | 0 | N/A | 52
+PIN | Ldir | 536871040 | 0 | N/A | 12
+PIN | Rdir | 536871040 | 0 | N/A | 15

@@ -1,0 +1,14 @@
+MO ClockDivider NULL Z:/clock_divider.v vlg2B/_clock_divider.bin 1343248014
+MO Inverter NULL "C:/Users/Robert/Documents/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.v" vlg1F/_inverter.bin 1343248014
+MO ThreeBitCounter NULL "C:/Users/Robert/Documents/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.v" vlg23/_three_bit_counter.bin 1343248014
+MO IRListener NULL "C:/Users/Robert/Documents/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.v" vlg69/_i_r_listener.bin 1343248014
+MO Receiver NULL Receiver.v vlg41/_receiver.bin 1343248014
+MO Shift_Register NULL Receiver.v vlg5E/_shift___register.bin 1343248016
+MO ShiftRegister NULL "C:/Users/Robert/Documents/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.v" vlg67/_shift_register.bin 1343248014
+MO ClockDividerStage NULL Z:/clock_divider.v vlg0F/_clock_divider_stage.bin 1343248014
+MO Data_Buffer NULL Receiver.v vlg3F/_data___buffer.bin 1343248014
+MO FlipFlop NULL "C:/Users/Robert/Documents/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.v" vlg1C/_flip_flop.bin 1343248014
+MO five_bit_counter NULL Receiver.v vlg5B/five__bit__counter.bin 1343248015
+MO Decoder_12_4 NULL Receiver.v vlg17/_decoder__12__4.bin 1343248016
+MO IR_Receiver NULL "C:/Users/Robert/Documents/Porn/Summer 2012/N64/wired_remote/Receiver/IR_Receiver.v" vlg1B/_i_r___receiver.bin 1343248014
+MO Input_State_Machine NULL Receiver.v vlg54/_input___state___machine.bin 1343248014

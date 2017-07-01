@@ -1,0 +1,4 @@
+verilog isim_temp "Z:/clock_divider.v"
+verilog isim_temp "Receiver.v"
+verilog isim_temp "RecieverTestWtestpoints.v"
+verilog isim_temp "C:/Xilinx/11.1/ISE/verilog/src/glbl.v"

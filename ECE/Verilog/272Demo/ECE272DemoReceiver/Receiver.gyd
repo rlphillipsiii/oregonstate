@@ -1,0 +1,40 @@
+Pin Freeze File:  version P.15xf
+
+9572XL44VQ XC9572XL-10-VQ44
+Clk_In S:PIN43
+Reset_In S:PIN36
+Serial_In S:PIN1
+Ldir S:PIN40
+Len S:PIN39
+N64_Ldir S:PIN14
+N64_Len S:PIN13
+N64_Rdir S:PIN18
+N64_Ren S:PIN16
+Rdir S:PIN42
+Ren S:PIN41
+
+
+;The remaining section of the .gyd file is for documentation purposes only.
+;It shows where your internal equations were placed in the last successful fit.
+
+PARTITION FB1_1 Shift_Decoder<1> Len_OBUF Shift_Decoder<10> Shift_Decoder<0>
+		 Ldir_OBUF Ren_OBUF SR/q<9> Rdir_OBUF
+		 SR/q<8> SR/q<7> SR/q<6> SR/q<5>
+		 SR/q<4> SR/q<3> SR/q<2> SR/q<1>
+		 SR/q<10> SR/q<0>
+PARTITION FB2_1 N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT FBC/count<2>/FBC/count<2>_RSTF__$INT N64Receiver/shift_out<1> N64Receiver/shift_out<0>
+		 N64Receiver/IRL/state_FSM_FFd7 N64Receiver/IRL/state_FSM_FFd6 N64Receiver/IRL/state_FSM_FFd5 N64Receiver/IRL/state_FSM_FFd4
+		 N64Receiver/IRL/state_FSM_FFd3 N64Receiver/IRL/state_FSM_FFd2 N64Receiver/IRL/state_FSM_FFd1 instance_name/state_FSM_FFd15
+		 instance_name/state_FSM_FFd14 instance_name/state_FSM_FFd13 instance_name/state_FSM_FFd10 instance_name/state_FSM_FFd1
+		 N64Receiver/IRL/state_FSM_FFd8 instance_name/state_FSM_FFd16
+PARTITION FB3_1 Internal_Clk Shift_Decoder<9> Shift_Decoder<8> Shift_Decoder<7>
+		 Shift_Decoder<6> Shift_Decoder<5> Shift_Decoder<4> Shift_Decoder<3>
+		 Shift_Decoder<2> Shift_Decoder<11> FBC/count<0> FBC/count<3>
+		 FBC/count<2> N64_Len_OBUF N64_Ldir_OBUF N64_Rdir_OBUF
+		 N64_Ren_OBUF SR/q<11>
+PARTITION FB4_2 N64Receiver/shift_out<3> N64Receiver/shift_out<2> N64Receiver/latch N64Receiver/TBC/count<2>
+		 N64Receiver/TBC/count<0> instance_name/state_FSM_FFd9 instance_name/state_FSM_FFd8 instance_name/state_FSM_FFd7
+		 instance_name/state_FSM_FFd6 instance_name/state_FSM_FFd5 instance_name/state_FSM_FFd4 instance_name/state_FSM_FFd3
+		 instance_name/state_FSM_FFd2 instance_name/state_FSM_FFd12 instance_name/state_FSM_FFd11 N64Receiver/TBC/count<1>
+		 FBC/count<1>
+

@@ -1,0 +1,11 @@
+
+
+
+// Instantiate the module
+Data_Buffer instance_name (
+    .data_in(data_in), 
+    .transfer(transfer), 
+    .data_out(data_out)
+    );
+
+

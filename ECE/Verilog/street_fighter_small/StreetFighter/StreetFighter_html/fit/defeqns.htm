@@ -1,0 +1,282 @@
+<html><head><link type='text/css' href='style.css' rel='stylesheet'></head><body class='pgBgnd'>
+<h3 align='center'>Equations</h3>
+<table width='90%' align='center' border='1' cellpadding='0' cellspacing='0'>
+<tr><td>
+</td></tr><tr><td>
+********** Mapped Logic **********
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+FDCPE_button_state_FSM_FFd1: FDCPE port map (button_state_FSM_FFd1,button_state_FSM_FFd1_D,clk_sm,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;button_state_FSM_FFd1_D <= ((button_state_FSM_FFd2)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(0) AND move(1) AND NOT move(2) AND dir AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd4 AND NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(0) AND move(1) AND NOT move(2) AND NOT dir AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd4 AND NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1));
+</td></tr><tr><td>
+FDCPE_button_state_FSM_FFd2: FDCPE port map (button_state_FSM_FFd2,button_state_FSM_FFd2_D,clk_sm,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;button_state_FSM_FFd2_D <= ((NOT move(0) AND move(1) AND NOT move(2) AND dir AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd4 AND NOT button_state_FSM_FFd2)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(0) AND move(1) AND NOT move(2) AND NOT dir AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd4 AND NOT button_state_FSM_FFd2 AND button_state_FSM_FFd3)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT button_state_FSM_FFd2 AND button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (button_state_FSM_FFd4 AND NOT button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd3)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(0) AND move(1) AND NOT move(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd2 AND NOT button_state_FSM_FFd3));
+</td></tr><tr><td>
+FDCPE_button_state_FSM_FFd3: FDCPE port map (button_state_FSM_FFd3,button_state_FSM_FFd3_D,clk_sm,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;button_state_FSM_FFd3_D <= ((move(2) AND button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd3)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (button_state_FSM_FFd4 AND NOT button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (dir AND button_state_FSM_FFd4 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd2 AND button_state_FSM_FFd3)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT dir AND NOT button_state_FSM_FFd4 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd2 AND button_state_FSM_FFd3)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(0) AND move(1) AND NOT move(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd2 AND NOT button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(0) AND button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd3)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(1) AND button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd3)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(0) AND move(1) AND NOT move(2) AND NOT dir AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd2 AND NOT button_state_FSM_FFd1));
+</td></tr><tr><td>
+FDCPE_button_state_FSM_FFd4: FDCPE port map (button_state_FSM_FFd4,button_state_FSM_FFd4_D,clk_sm,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;button_state_FSM_FFd4_D <= ((NOT button_state_FSM_FFd4 AND button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd3)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (button_state_FSM_FFd2 AND NOT button_state_FSM_FFd3 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(1) AND NOT move(2) AND dir AND NOT button_state_FSM_FFd3 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(2) AND dir AND button_state_FSM_FFd4 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (button_state_FSM_FFd4 AND button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd3)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(2) AND NOT button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(0) AND NOT move(1) AND NOT button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(1) AND NOT move(2) AND NOT button_state_FSM_FFd4 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(0) AND move(1) AND NOT dir AND NOT button_state_FSM_FFd4 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(0) AND NOT move(2) AND dir AND NOT button_state_FSM_FFd3 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(0) AND NOT move(1) AND NOT move(2) AND NOT dir AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(0) AND move(1) AND NOT move(2) AND NOT dir AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd2 AND button_state_FSM_FFd3));
+</td></tr><tr><td>
+FTCPE_clk_listen0: FTCPE port map (clk_listen(0),'1',clk_ctrl,ctrl_latch,'0');
+</td></tr><tr><td>
+FTCPE_clk_listen1: FTCPE port map (clk_listen(1),clk_listen(0),clk_ctrl,ctrl_latch,'0');
+</td></tr><tr><td>
+FTCPE_clk_listen2: FTCPE port map (clk_listen(2),clk_listen_T(2),clk_ctrl,ctrl_latch,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clk_listen_T(2) <= (clk_listen(0) AND clk_listen(1));
+</td></tr><tr><td>
+FTCPE_clk_listen3: FTCPE port map (clk_listen(3),clk_listen_T(3),clk_ctrl,ctrl_latch,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clk_listen_T(3) <= (clk_listen(0) AND clk_listen(1) AND clk_listen(2));
+</td></tr><tr><td>
+FTCPE_clk_listen4: FTCPE port map (clk_listen(4),clk_listen_T(4),clk_ctrl,ctrl_latch,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clk_listen_T(4) <= (clk_listen(0) AND clk_listen(1) AND clk_listen(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	clk_listen(3));
+</td></tr><tr><td>
+FDCPE_clk_sm: FDCPE port map (clk_sm,clk_sm_D,clk_system,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clk_sm_D <= ((completion_sync)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT latch_count(0) AND NOT latch_count(1) AND latch_count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT latch_count(3) AND NOT latch_count(4) AND NOT latch_count(5)));
+</td></tr><tr><td>
+FDCPE_completion_sync: FDCPE port map (completion_sync,completion_sync_D,clk_system,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;completion_sync_D <= (button_state_FSM_FFd2 AND button_state_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT clk_sm);
+</td></tr><tr><td>
+</td></tr><tr><td>
+ctrl_out <= ((override_en AND override_reg(15))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT override_en AND ctrl_in));
+</td></tr><tr><td>
+FTCPE_latch_count0: FTCPE port map (latch_count(0),latch_count_T(0),ctrl_latch,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latch_count_T(0) <= ((NOT override_en AND NOT latch_count(0))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT latch_count(0) AND NOT latch_count(1) AND latch_count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT latch_count(3) AND NOT latch_count(4) AND NOT latch_count(5)));
+</td></tr><tr><td>
+FDCPE_latch_count1: FDCPE port map (latch_count(1),latch_count_D(1),ctrl_latch,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latch_count_D(1) <= ((override_en AND latch_count(0) AND NOT latch_count(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (override_en AND NOT latch_count(0) AND latch_count(1)));
+</td></tr><tr><td>
+FTCPE_latch_count2: FTCPE port map (latch_count(2),latch_count_T(2),ctrl_latch,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latch_count_T(2) <= ((NOT override_en AND latch_count(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (override_en AND latch_count(0) AND latch_count(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT latch_count(0) AND NOT latch_count(1) AND latch_count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT latch_count(3) AND NOT latch_count(4) AND NOT latch_count(5)));
+</td></tr><tr><td>
+FTCPE_latch_count3: FTCPE port map (latch_count(3),latch_count_T(3),ctrl_latch,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latch_count_T(3) <= ((NOT override_en AND latch_count(3))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (override_en AND latch_count(0) AND latch_count(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	latch_count(2)));
+</td></tr><tr><td>
+FTCPE_latch_count4: FTCPE port map (latch_count(4),latch_count_T(4),ctrl_latch,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latch_count_T(4) <= ((NOT override_en AND latch_count(4))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (override_en AND latch_count(0) AND latch_count(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	latch_count(2) AND latch_count(3)));
+</td></tr><tr><td>
+FTCPE_latch_count5: FTCPE port map (latch_count(5),latch_count_T(5),ctrl_latch,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latch_count_T(5) <= ((NOT override_en AND latch_count(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (override_en AND latch_count(0) AND latch_count(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	latch_count(2) AND latch_count(3) AND latch_count(4)));
+</td></tr><tr><td>
+FDCPE_load_override: FDCPE port map (load_override,load_override_D,clk_system,'0',NOT reset_n);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;load_override_D <= (NOT load_state_FSM_FFd2 AND load_state_FSM_FFd1);
+</td></tr><tr><td>
+FDCPE_load_state_FSM_FFd1: FDCPE port map (load_state_FSM_FFd1,load_state_FSM_FFd1_D,clk_system,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;load_state_FSM_FFd1_D <= ((ctrl_latch AND load_state_FSM_FFd2)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (load_state_FSM_FFd2 AND load_state_FSM_FFd1));
+</td></tr><tr><td>
+FDCPE_load_state_FSM_FFd2: FDCPE port map (load_state_FSM_FFd2,load_state_FSM_FFd2_D,clk_system,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;load_state_FSM_FFd2_D <= ((NOT override_en AND NOT load_state_FSM_FFd2)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT clk_listen(0) AND load_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT clk_listen(1) AND NOT clk_listen(2) AND NOT clk_listen(3) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	load_state_FSM_FFd1 AND clk_listen(4)));
+</td></tr><tr><td>
+FTCPE_move0: FTCPE port map (move(0),move_T(0),clk_system,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move_T(0) <= ((NOT move(0) AND NOT override_en AND NOT button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	move_select(1) AND move_select(0) AND NOT move_select(3) AND move_select(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(0) AND NOT override_en AND NOT button_state_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	move_select(1) AND move_select(0) AND NOT move_select(3) AND move_select(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(0) AND NOT override_en AND NOT button_state_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT move_select(1) AND move_select(0) AND move_select(3) AND move_select(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(0) AND button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(0) AND NOT override_en AND move_select(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	move_select(0) AND move_select(3) AND NOT move_select(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(0) AND NOT override_en AND move_select(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT move_select(0) AND move_select(3) AND move_select(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(0) AND NOT override_en AND NOT button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT move_select(1) AND move_select(0) AND move_select(3) AND move_select(2)));
+</td></tr><tr><td>
+FTCPE_move1: FTCPE port map (move(1),move_T(1),clk_system,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move_T(1) <= ((NOT move(1) AND NOT override_en AND NOT button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	move_select(1) AND move_select(0) AND NOT move_select(3) AND move_select(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(1) AND NOT override_en AND NOT button_state_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	move_select(1) AND move_select(0) AND move_select(3) AND NOT move_select(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(1) AND NOT override_en AND NOT button_state_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	move_select(1) AND move_select(0) AND NOT move_select(3) AND move_select(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(1) AND button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(1) AND NOT override_en AND move_select(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT move_select(0) AND move_select(3) AND move_select(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(1) AND NOT override_en AND NOT move_select(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	move_select(0) AND move_select(3) AND move_select(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(1) AND NOT override_en AND NOT button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	move_select(1) AND move_select(0) AND move_select(3) AND NOT move_select(2)));
+</td></tr><tr><td>
+FDCPE_move2: FDCPE port map (move(2),move_D(2),clk_system,'0',NOT reset_n);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move_D(2) <= ((move(2) AND override_en)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (button_state_FSM_FFd2 AND button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(2) AND NOT move_select(1) AND NOT move_select(3))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(2) AND NOT move_select(1) AND NOT move_select(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(2) AND NOT move_select(3) AND NOT move_select(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(2) AND NOT move_select(1) AND NOT move_select(0))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(2) AND NOT move_select(0) AND NOT move_select(3))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(2) AND NOT move_select(0) AND NOT move_select(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (move(2) AND move_select(1) AND move_select(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	move_select(3) AND move_select(2)));
+</td></tr><tr><td>
+FDCPE_override_en: FDCPE port map (override_en,override_en_D,clk_system,NOT reset_n,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;override_en_D <= ((NOT move(0) AND NOT move(1) AND move(2) AND NOT override_en AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT button_state_FSM_FFd4 AND button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd3 AND button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT move(0) AND NOT move(1) AND move(2) AND NOT override_en AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd2));
+</td></tr><tr><td>
+FDCPE_override_reg0: FDCPE port map (override_reg(0),'1',clk_ctrl,'0',NOT load_override);
+</td></tr><tr><td>
+FDCPE_override_reg1: FDCPE port map (override_reg(1),override_reg(0),clk_ctrl,'0',NOT load_override);
+</td></tr><tr><td>
+FDCPE_override_reg2: FDCPE port map (override_reg(2),override_reg(1),clk_ctrl,'0',NOT load_override);
+</td></tr><tr><td>
+FDCPE_override_reg3: FDCPE port map (override_reg(3),override_reg(2),clk_ctrl,'0',NOT load_override);
+</td></tr><tr><td>
+FDCPE_override_reg4: FDCPE port map (override_reg(4),override_reg(3),clk_ctrl,'0',NOT load_override);
+</td></tr><tr><td>
+FDCPE_override_reg5: FDCPE port map (override_reg(5),override_reg(4),clk_ctrl,'0',NOT load_override);
+</td></tr><tr><td>
+FDCPE_override_reg6: FDCPE port map (override_reg(6),override_reg(5),clk_ctrl,'0',NOT load_override);
+</td></tr><tr><td>
+</td></tr><tr><td>
+override_reg(7)/override_reg(7)_SETF__$INT <= ((load_override)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (button_state_FSM_FFd4 AND NOT button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd1));
+</td></tr><tr><td>
+FDCPE_override_reg7: FDCPE port map (override_reg(7),override_reg(6),clk_ctrl,override_reg_CLR(7),NOT override_reg(7)/override_reg(7)_SETF__$INT);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;override_reg_CLR(7) <= (button_state_FSM_FFd4 AND NOT load_override AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd2 AND button_state_FSM_FFd1);
+</td></tr><tr><td>
+</td></tr><tr><td>
+override_reg(8)/override_reg(8)_RSTF <= ((button_state_FSM_FFd4 AND NOT load_override AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd2 AND button_state_FSM_FFd3)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT button_state_FSM_FFd4 AND NOT load_override AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd2 AND NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT load_override AND NOT button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd3 AND button_state_FSM_FFd1));
+</td></tr><tr><td>
+FDCPE_override_reg8: FDCPE port map (override_reg(8),override_reg(7),clk_ctrl,override_reg(8)/override_reg(8)_RSTF,override_reg_PRE(8));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;override_reg_PRE(8) <= (NOT load_override AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT override_reg(8)/override_reg(8)_RSTF);
+</td></tr><tr><td>
+</td></tr><tr><td>
+override_reg(9)/override_reg(9)_RSTF <= ((NOT load_override AND NOT button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd3 AND button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT button_state_FSM_FFd4 AND NOT load_override AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd2 AND button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (button_state_FSM_FFd4 AND NOT load_override AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd2 AND NOT button_state_FSM_FFd1));
+</td></tr><tr><td>
+FDCPE_override_reg9: FDCPE port map (override_reg(9),override_reg(8),clk_ctrl,override_reg(9)/override_reg(9)_RSTF,override_reg_PRE(9));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;override_reg_PRE(9) <= (NOT load_override AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT override_reg(9)/override_reg(9)_RSTF);
+</td></tr><tr><td>
+FDCPE_override_reg10: FDCPE port map (override_reg(10),override_reg(9),clk_ctrl,override_reg(10)/override_reg(10)_RSTF,override_reg_PRE(10));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;override_reg_PRE(10) <= (NOT load_override AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT override_reg(10)/override_reg(10)_RSTF);
+</td></tr><tr><td>
+</td></tr><tr><td>
+override_reg(10)/override_reg(10)_RSTF <= ((NOT load_override AND button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (button_state_FSM_FFd4 AND NOT load_override AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd2 AND NOT button_state_FSM_FFd3 AND NOT button_state_FSM_FFd1));
+</td></tr><tr><td>
+FDCPE_override_reg11: FDCPE port map (override_reg(11),override_reg(10),clk_ctrl,'0',NOT load_override);
+</td></tr><tr><td>
+FDCPE_override_reg12: FDCPE port map (override_reg(12),override_reg(11),clk_ctrl,'0',NOT load_override);
+</td></tr><tr><td>
+FDCPE_override_reg13: FDCPE port map (override_reg(13),override_reg(12),clk_ctrl,'0',NOT load_override);
+</td></tr><tr><td>
+</td></tr><tr><td>
+override_reg(14)/override_reg(14)_SETF__$INT <= ((load_override)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT button_state_FSM_FFd4 AND NOT button_state_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	button_state_FSM_FFd1));
+</td></tr><tr><td>
+FDCPE_override_reg14: FDCPE port map (override_reg(14),override_reg(13),clk_ctrl,override_reg_CLR(14),NOT override_reg(14)/override_reg(14)_SETF__$INT);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;override_reg_CLR(14) <= (NOT button_state_FSM_FFd4 AND NOT load_override AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT button_state_FSM_FFd2 AND button_state_FSM_FFd1);
+</td></tr><tr><td>
+FDCPE_override_reg15: FDCPE port map (override_reg(15),override_reg(14),clk_ctrl,'0',NOT load_override);
+</td></tr><tr><td>
+Register Legend:
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FDCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FTCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LDCP  (Q,D,G,CLR,PRE); 
+</td></tr><tr><td>
+</td></tr>
+</table>
+<form><span class="pgRef"><table width="90%" align="center"><tr>
+<td align="left"><input type="button" onclick="javascript:parent.leftnav.showTop()" onmouseover="window.status='goto top of page'; return true;" onmouseout="window.status=''" value="back to top"></td>
+<td align="right"><input type="button" onclick="window.print()" onmouseover="window.status='print page'; return true;" onmouseout="window.status=''" value="print page"></td>
+</tr></table></span></form>
+</body></html>

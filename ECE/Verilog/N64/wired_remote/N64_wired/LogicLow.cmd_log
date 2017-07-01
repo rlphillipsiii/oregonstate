@@ -1,0 +1,1 @@
+vhdtdtfi -lang verilog -prj N64_wired -o "C:/Users/Robert/Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/LogicLow.tfi" -lib work "C:/Users/Robert/Documents/Porn/Summer 2012/N64/wired_remote/N64_wired//Remote.v" -module LogicLow -template C:/Xilinx/14.1/ISE_DS/ISE//data/tfi.tft -deleteonerror 

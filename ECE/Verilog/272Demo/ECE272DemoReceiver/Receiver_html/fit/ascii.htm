@@ -1,0 +1,888 @@
+<html><body>
+<pre>
+ 
+cpldfit:  version P.15xf                            Xilinx Inc.
+                                  Fitter Report
+Design Name: Receiver                            Date:  7-25-2012,  1:30PM
+Device Used: XC9572XL-10-VQ44
+Fitting Status: Successful
+
+*************************  Mapped Resource Summary  **************************
+
+Macrocells     Product Terms    Function Block   Registers      Pins           
+Used/Tot       Used/Tot         Inps Used/Tot    Used/Tot       Used/Tot       
+71 /72  ( 99%) 224 /360  ( 62%) 93 /216 ( 43%)   65 /72  ( 90%) 11 /34  ( 32%)
+
+** Function Block Resources **
+
+Function    Mcells      FB Inps     Pterms      IO          
+Block       Used/Tot    Used/Tot    Used/Tot    Used/Tot    
+FB1          18/18*      33/54       80/90       6/ 9
+FB2          18/18*      18/54       42/90       1/ 9
+FB3          18/18*      22/54       56/90       4/ 9
+FB4          17/18       20/54       46/90       0/ 7
+             -----       -----       -----      -----    
+             71/72       93/216     224/360     11/34 
+
+* - Resource is exhausted
+
+** Global Control Resources **
+
+Signal 'Clk_In' mapped onto global clock net GCK1.
+Global output enable net(s) unused.
+Global set/reset net(s) unused.
+
+** Pin Resources **
+
+Signal Type    Required     Mapped  |  Pin Type            Used    Total 
+------------------------------------|------------------------------------
+Input         :    2           2    |  I/O              :     8      28
+Output        :    8           8    |  GCK/IO           :     2       3
+Bidirectional :    0           0    |  GTS/IO           :     1       2
+GCK           :    1           1    |  GSR/IO           :     0       1
+GTS           :    0           0    |
+GSR           :    0           0    |
+                 ----        ----
+        Total     11          11
+
+** Power Data **
+
+There are 71 macrocells in high performance mode (MCHP).
+There are 0 macrocells in low power mode (MCLP).
+End of Mapped Resource Summary
+**************************  Errors and Warnings  ***************************
+
+WARNING:Cpld - Unable to retrieve the path to the iSE Project Repository. Will
+   use the default filename of 'Receiver.ise'.
+INFO:Cpld - Inferring BUFG constraint for signal 'Clk_In' based upon the LOC
+   constraint 'P43'. It is recommended that you declare this BUFG explicitedly
+   in your design. Note that for certain device families the output of a BUFG
+   constraint can not drive a gated clock, and the BUFG constraint will be
+   ignored.
+INFO:Cpld - Inferring BUFG constraint for signal 'Serial_In' based upon the LOC
+   constraint 'P1'. It is recommended that you declare this BUFG explicitedly in
+   your design. Note that for certain device families the output of a BUFG
+   constraint can not drive a gated clock, and the BUFG constraint will be
+   ignored.
+WARNING:Cpld:1239 - The global clock designation (BUFG) on signal
+   'Serial_In_IBUF' is ignored. Most likely the signal is gated and therefore
+   cannot be used as a global control signal.
+*************************  Summary of Mapped Logic  ************************
+
+** 8 Outputs **
+
+Signal                                                        Total Total Loc     Pin  Pin     Pin     Pwr  Slew Reg Init
+Name                                                          Pts   Inps          No.  Type    Use     Mode Rate State
+Len                                                           4     12    FB1_2   39   I/O     O       STD  FAST 
+Ldir                                                          3     12    FB1_5   40   I/O     O       STD  FAST 
+Ren                                                           4     12    FB1_6   41   I/O     O       STD  FAST 
+Rdir                                                          3     12    FB1_8   42   I/O     O       STD  FAST 
+N64_Len                                                       3     3     FB3_14  13   I/O     O       STD  FAST RESET
+N64_Ldir                                                      3     3     FB3_15  14   I/O     O       STD  FAST RESET
+N64_Rdir                                                      3     3     FB3_16  18   I/O     O       STD  FAST RESET
+N64_Ren                                                       3     3     FB3_17  16   I/O     O       STD  FAST RESET
+
+** 63 Buried Nodes **
+
+Signal                                                        Total Total Loc     Pwr  Reg Init
+Name                                                          Pts   Inps          Mode State
+Shift_Decoder<1>                                              3     6     FB1_1   STD  RESET
+Shift_Decoder<10>                                             3     6     FB1_3   STD  RESET
+Shift_Decoder<0>                                              3     6     FB1_4   STD  RESET
+SR/q<9>                                                       5     8     FB1_7   STD  RESET
+SR/q<8>                                                       5     8     FB1_9   STD  RESET
+SR/q<7>                                                       5     8     FB1_10  STD  RESET
+SR/q<6>                                                       5     8     FB1_11  STD  RESET
+SR/q<5>                                                       5     8     FB1_12  STD  RESET
+SR/q<4>                                                       5     8     FB1_13  STD  RESET
+SR/q<3>                                                       5     8     FB1_14  STD  RESET
+SR/q<2>                                                       5     8     FB1_15  STD  RESET
+SR/q<1>                                                       5     8     FB1_16  STD  RESET
+SR/q<10>                                                      5     8     FB1_17  STD  RESET
+SR/q<0>                                                       7     11    FB1_18  STD  RESET
+N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT  1     5     FB2_1   STD  
+FBC/count<2>/FBC/count<2>_RSTF__$INT                          1     3     FB2_2   STD  
+N64Receiver/shift_out<1>                                      2     2     FB2_3   STD  RESET
+N64Receiver/shift_out<0>                                      2     2     FB2_4   STD  RESET
+N64Receiver/IRL/state_FSM_FFd7                                2     3     FB2_5   STD  RESET
+N64Receiver/IRL/state_FSM_FFd6                                2     3     FB2_6   STD  RESET
+N64Receiver/IRL/state_FSM_FFd5                                2     3     FB2_7   STD  RESET
+N64Receiver/IRL/state_FSM_FFd4                                2     3     FB2_8   STD  RESET
+N64Receiver/IRL/state_FSM_FFd3                                2     3     FB2_9   STD  RESET
+N64Receiver/IRL/state_FSM_FFd2                                2     2     FB2_10  STD  RESET
+N64Receiver/IRL/state_FSM_FFd1                                2     2     FB2_11  STD  RESET
+instance_name/state_FSM_FFd15                                 3     4     FB2_12  STD  RESET
+instance_name/state_FSM_FFd14                                 3     4     FB2_13  STD  RESET
+instance_name/state_FSM_FFd13                                 3     4     FB2_14  STD  RESET
+instance_name/state_FSM_FFd10                                 3     3     FB2_15  STD  RESET
+instance_name/state_FSM_FFd1                                  3     3     FB2_16  STD  RESET
+N64Receiver/IRL/state_FSM_FFd8                                3     8     FB2_17  STD  RESET
+instance_name/state_FSM_FFd16                                 4     7     FB2_18  STD  RESET
+Internal_Clk                                                  1     1     FB3_1   STD  RESET
+Shift_Decoder<9>                                              3     6     FB3_2   STD  RESET
+Shift_Decoder<8>                                              3     6     FB3_3   STD  RESET
+Shift_Decoder<7>                                              3     6     FB3_4   STD  RESET
+Shift_Decoder<6>                                              3     6     FB3_5   STD  RESET
+Shift_Decoder<5>                                              3     6     FB3_6   STD  RESET
+Shift_Decoder<4>                                              3     6     FB3_7   STD  RESET
+Shift_Decoder<3>                                              3     6     FB3_8   STD  RESET
+
+Signal                                                        Total Total Loc     Pwr  Reg Init
+Name                                                          Pts   Inps          Mode State
+Shift_Decoder<2>                                              3     6     FB3_9   STD  RESET
+Shift_Decoder<11>                                             3     6     FB3_10  STD  RESET
+FBC/count<0>                                                  3     6     FB3_11  STD  RESET
+FBC/count<3>                                                  4     6     FB3_12  STD  RESET
+FBC/count<2>                                                  4     6     FB3_13  STD  RESET
+SR/q<11>                                                      5     8     FB3_18  STD  RESET
+N64Receiver/shift_out<3>                                      2     2     FB4_2   STD  RESET
+N64Receiver/shift_out<2>                                      2     2     FB4_3   STD  RESET
+N64Receiver/latch                                             2     4     FB4_4   STD  RESET
+N64Receiver/TBC/count<2>                                      2     3     FB4_5   STD  RESET
+N64Receiver/TBC/count<0>                                      2     4     FB4_6   STD  RESET
+instance_name/state_FSM_FFd9                                  3     3     FB4_7   STD  RESET
+instance_name/state_FSM_FFd8                                  3     3     FB4_8   STD  RESET
+instance_name/state_FSM_FFd7                                  3     3     FB4_9   STD  RESET
+instance_name/state_FSM_FFd6                                  3     3     FB4_10  STD  RESET
+instance_name/state_FSM_FFd5                                  3     3     FB4_11  STD  RESET
+instance_name/state_FSM_FFd4                                  3     3     FB4_12  STD  RESET
+instance_name/state_FSM_FFd3                                  3     3     FB4_13  STD  RESET
+instance_name/state_FSM_FFd2                                  3     3     FB4_14  STD  RESET
+instance_name/state_FSM_FFd12                                 3     3     FB4_15  STD  RESET
+instance_name/state_FSM_FFd11                                 3     3     FB4_16  STD  RESET
+N64Receiver/TBC/count<1>                                      3     4     FB4_17  STD  RESET
+FBC/count<1>                                                  3     3     FB4_18  STD  RESET
+
+** 3 Inputs **
+
+Signal                                                        Loc     Pin  Pin     Pin     
+Name                                                                  No.  Type    Use     
+Clk_In                                                        FB1_9   43   GCK/I/O GCK
+Serial_In                                                     FB1_14  1    GCK/I/O I
+Reset_In                                                      FB2_14  36   GTS/I/O I
+
+Legend:
+Pin No. - ~ - User Assigned
+**************************  Function Block Details  ************************
+Legend:
+Total Pt     - Total product terms used by the macrocell signal
+Imp Pt       - Product terms imported from other macrocells
+Exp Pt       - Product terms exported to other macrocells
+               in direction shown
+Unused Pt    - Unused local product terms remaining in macrocell
+Loc          - Location where logic was mapped in device
+Pin Type/Use - I  - Input             GCK - Global Clock
+               O  - Output            GTS - Global Output Enable
+              (b) - Buried macrocell  GSR - Global Set/Reset
+X            - Signal used as input to the macrocell logic.
+Pin No.      - ~  - User Assigned
+*********************************** FB1  ***********************************
+Number of function block inputs used/remaining:               33/21
+Number of signals used by logic mapping into function block:  33
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+Shift_Decoder<1>      3       0   /\2   0     FB1_1         (b)     (b)
+Len                   4       0     0   1     FB1_2   39    I/O     O
+Shift_Decoder<10>     3       0     0   2     FB1_3         (b)     (b)
+Shift_Decoder<0>      3       0     0   2     FB1_4         (b)     (b)
+Ldir                  3       0     0   2     FB1_5   40    I/O     O
+Ren                   4       0     0   1     FB1_6   41    I/O     O
+SR/q<9>               5       0     0   0     FB1_7         (b)     (b)
+Rdir                  3       0     0   2     FB1_8   42    I/O     O
+SR/q<8>               5       0     0   0     FB1_9   43    GCK/I/O GCK
+SR/q<7>               5       0     0   0     FB1_10        (b)     (b)
+SR/q<6>               5       0     0   0     FB1_11  44    GCK/I/O (b)
+SR/q<5>               5       0     0   0     FB1_12        (b)     (b)
+SR/q<4>               5       0     0   0     FB1_13        (b)     (b)
+SR/q<3>               5       0     0   0     FB1_14  1     GCK/I/O I
+SR/q<2>               5       0     0   0     FB1_15  2     I/O     (b)
+SR/q<1>               5       0     0   0     FB1_16        (b)     (b)
+SR/q<10>              5       0     0   0     FB1_17  3     I/O     (b)
+SR/q<0>               7       2<-   0   0     FB1_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: FBC/count<0>      12: SR/q<4>            23: Shift_Decoder<2> 
+  2: FBC/count<1>      13: SR/q<5>            24: Shift_Decoder<3> 
+  3: FBC/count<2>      14: SR/q<6>            25: Shift_Decoder<4> 
+  4: FBC/count<3>      15: SR/q<7>            26: Shift_Decoder<5> 
+  5: Internal_Clk      16: SR/q<8>            27: Shift_Decoder<6> 
+  6: Reset_In          17: SR/q<9>            28: Shift_Decoder<7> 
+  7: SR/q<0>           18: Serial_In          29: Shift_Decoder<8> 
+  8: SR/q<10>          19: Shift_Decoder<0>   30: Shift_Decoder<9> 
+  9: SR/q<1>           20: Shift_Decoder<10>  31: instance_name/state_FSM_FFd14 
+ 10: SR/q<2>           21: Shift_Decoder<11>  32: instance_name/state_FSM_FFd15 
+ 11: SR/q<3>           22: Shift_Decoder<1>   33: instance_name/state_FSM_FFd16 
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+Shift_Decoder<1>     XXXX.X..X............................... 6
+Len                  ..................XXXXXXXXXXXX.......... 12
+Shift_Decoder<10>    XXXX.X.X................................ 6
+Shift_Decoder<0>     XXXX.XX................................. 6
+Ldir                 ..................XXXXXXXXXXXX.......... 12
+Ren                  ..................XXXXXXXXXXXX.......... 12
+SR/q<9>              XXXXXX.........XX....................... 8
+Rdir                 ..................XXXXXXXXXXXX.......... 12
+SR/q<8>              XXXXXX........XX........................ 8
+SR/q<7>              XXXXXX.......XX......................... 8
+SR/q<6>              XXXXXX......XX.......................... 8
+SR/q<5>              XXXXXX.....XX........................... 8
+SR/q<4>              XXXXXX....XX............................ 8
+SR/q<3>              XXXXXX...XX............................. 8
+SR/q<2>              XXXXXX..XX.............................. 8
+SR/q<1>              XXXXXXX.X............................... 8
+SR/q<10>             XXXXXX.X........X....................... 8
+SR/q<0>              XXXXXXX..........X............XXX....... 11
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB2  ***********************************
+Number of function block inputs used/remaining:               18/36
+Number of signals used by logic mapping into function block:  18
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT
+                      1       0     0   4     FB2_1         (b)     (b)
+FBC/count<2>/FBC/count<2>_RSTF__$INT
+                      1       0     0   4     FB2_2   29    I/O     (b)
+N64Receiver/shift_out<1>
+                      2       0     0   3     FB2_3         (b)     (b)
+N64Receiver/shift_out<0>
+                      2       0     0   3     FB2_4         (b)     (b)
+N64Receiver/IRL/state_FSM_FFd7
+                      2       0     0   3     FB2_5   30    I/O     (b)
+N64Receiver/IRL/state_FSM_FFd6
+                      2       0     0   3     FB2_6   31    I/O     (b)
+N64Receiver/IRL/state_FSM_FFd5
+                      2       0     0   3     FB2_7         (b)     (b)
+N64Receiver/IRL/state_FSM_FFd4
+                      2       0     0   3     FB2_8   32    I/O     (b)
+N64Receiver/IRL/state_FSM_FFd3
+                      2       0     0   3     FB2_9   33    GSR/I/O (b)
+N64Receiver/IRL/state_FSM_FFd2
+                      2       0     0   3     FB2_10        (b)     (b)
+N64Receiver/IRL/state_FSM_FFd1
+                      2       0     0   3     FB2_11  34    GTS/I/O (b)
+instance_name/state_FSM_FFd15
+                      3       0     0   2     FB2_12        (b)     (b)
+instance_name/state_FSM_FFd14
+                      3       0     0   2     FB2_13        (b)     (b)
+instance_name/state_FSM_FFd13
+                      3       0     0   2     FB2_14  36    GTS/I/O I
+instance_name/state_FSM_FFd10
+                      3       0     0   2     FB2_15  37    I/O     (b)
+instance_name/state_FSM_FFd1
+                      3       0     0   2     FB2_16        (b)     (b)
+N64Receiver/IRL/state_FSM_FFd8
+                      3       0     0   2     FB2_17  38    I/O     (b)
+instance_name/state_FSM_FFd16
+                      4       0     0   1     FB2_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: Internal_Clk                     7: N64Receiver/IRL/state_FSM_FFd6  13: instance_name/state_FSM_FFd1 
+  2: N64Receiver/IRL/state_FSM_FFd1   8: N64Receiver/IRL/state_FSM_FFd7  14: instance_name/state_FSM_FFd11 
+  3: N64Receiver/IRL/state_FSM_FFd2   9: N64Receiver/IRL/state_FSM_FFd8  15: instance_name/state_FSM_FFd14 
+  4: N64Receiver/IRL/state_FSM_FFd3  10: N64Receiver/shift_out<0>        16: instance_name/state_FSM_FFd15 
+  5: N64Receiver/IRL/state_FSM_FFd4  11: Reset_In                        17: instance_name/state_FSM_FFd16 
+  6: N64Receiver/IRL/state_FSM_FFd5  12: Serial_In                       18: instance_name/state_FSM_FFd2 
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT 
+                     ....XXXXX............................... 5
+FBC/count<2>/FBC/count<2>_RSTF__$INT 
+                     ..............XXX....................... 3
+N64Receiver/shift_out<1> 
+                     .........XX............................. 2
+N64Receiver/shift_out<0> 
+                     ..........XX............................ 2
+N64Receiver/IRL/state_FSM_FFd7 
+                     ........XXX............................. 3
+N64Receiver/IRL/state_FSM_FFd6 
+                     .......X.XX............................. 3
+N64Receiver/IRL/state_FSM_FFd5 
+                     ......X..XX............................. 3
+N64Receiver/IRL/state_FSM_FFd4 
+                     .....X...XX............................. 3
+N64Receiver/IRL/state_FSM_FFd3 
+                     ....X....XX............................. 3
+N64Receiver/IRL/state_FSM_FFd2 
+                     ...X......X............................. 2
+N64Receiver/IRL/state_FSM_FFd1 
+                     ..X.......X............................. 2
+instance_name/state_FSM_FFd15 
+                     X.........XX....X....................... 4
+instance_name/state_FSM_FFd14 
+                     X.........XX...X........................ 4
+instance_name/state_FSM_FFd13 
+                     X.........XX..X......................... 4
+instance_name/state_FSM_FFd10 
+                     X.........X..X.......................... 3
+instance_name/state_FSM_FFd1 
+                     X.........X......X...................... 3
+N64Receiver/IRL/state_FSM_FFd8 
+                     .X..XXXXXXX............................. 8
+instance_name/state_FSM_FFd16 
+                     X.........XXX.XXX....................... 7
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB3  ***********************************
+Number of function block inputs used/remaining:               22/32
+Number of signals used by logic mapping into function block:  22
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+Internal_Clk          1       0     0   4     FB3_1         (b)     (b)
+Shift_Decoder<9>      3       0     0   2     FB3_2   5     I/O     (b)
+Shift_Decoder<8>      3       0     0   2     FB3_3         (b)     (b)
+Shift_Decoder<7>      3       0     0   2     FB3_4         (b)     (b)
+Shift_Decoder<6>      3       0     0   2     FB3_5   6     I/O     (b)
+Shift_Decoder<5>      3       0     0   2     FB3_6         (b)     (b)
+Shift_Decoder<4>      3       0     0   2     FB3_7         (b)     (b)
+Shift_Decoder<3>      3       0     0   2     FB3_8   7     I/O     (b)
+Shift_Decoder<2>      3       0     0   2     FB3_9   8     I/O     (b)
+Shift_Decoder<11>     3       0     0   2     FB3_10        (b)     (b)
+FBC/count<0>          3       0     0   2     FB3_11  12    I/O     (b)
+FBC/count<3>          4       0     0   1     FB3_12        (b)     (b)
+FBC/count<2>          4       0     0   1     FB3_13        (b)     (b)
+N64_Len               3       0     0   2     FB3_14  13    I/O     O
+N64_Ldir              3       0     0   2     FB3_15  14    I/O     O
+N64_Rdir              3       0     0   2     FB3_16  18    I/O     O
+N64_Ren               3       0     0   2     FB3_17  16    I/O     O
+SR/q<11>              5       0     0   0     FB3_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: FBC/count<0>                           9: N64Receiver/shift_out<1>  16: SR/q<3> 
+  2: FBC/count<1>                          10: N64Receiver/shift_out<2>  17: SR/q<4> 
+  3: FBC/count<2>                          11: N64Receiver/shift_out<3>  18: SR/q<5> 
+  4: FBC/count<2>/FBC/count<2>_RSTF__$INT  12: Reset_In                  19: SR/q<6> 
+  5: FBC/count<3>                          13: SR/q<10>                  20: SR/q<7> 
+  6: Internal_Clk                          14: SR/q<11>                  21: SR/q<8> 
+  7: N64Receiver/latch                     15: SR/q<2>                   22: SR/q<9> 
+  8: N64Receiver/shift_out<0>             
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+Internal_Clk         ...........X............................ 1
+Shift_Decoder<9>     XXX.X......X.........X.................. 6
+Shift_Decoder<8>     XXX.X......X........X................... 6
+Shift_Decoder<7>     XXX.X......X.......X.................... 6
+Shift_Decoder<6>     XXX.X......X......X..................... 6
+Shift_Decoder<5>     XXX.X......X.....X...................... 6
+Shift_Decoder<4>     XXX.X......X....X....................... 6
+Shift_Decoder<3>     XXX.X......X...X........................ 6
+Shift_Decoder<2>     XXX.X......X..X......................... 6
+Shift_Decoder<11>    XXX.X......X.X.......................... 6
+FBC/count<0>         XXXXXX.................................. 6
+FBC/count<3>         XXXXXX.................................. 6
+FBC/count<2>         XXXXXX.................................. 6
+N64_Len              ......X...XX............................ 3
+N64_Ldir             ......X..X.X............................ 3
+N64_Rdir             ......XX...X............................ 3
+N64_Ren              ......X.X..X............................ 3
+SR/q<11>             XXX.XX.....XXX.......................... 8
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB4  ***********************************
+Number of function block inputs used/remaining:               20/34
+Number of signals used by logic mapping into function block:  20
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+(unused)              0       0     0   5     FB4_1         (b)     
+N64Receiver/shift_out<3>
+                      2       0     0   3     FB4_2   19    I/O     (b)
+N64Receiver/shift_out<2>
+                      2       0     0   3     FB4_3         (b)     (b)
+N64Receiver/latch     2       0     0   3     FB4_4         (b)     (b)
+N64Receiver/TBC/count<2>
+                      2       0     0   3     FB4_5   20    I/O     (b)
+N64Receiver/TBC/count<0>
+                      2       0     0   3     FB4_6         (b)     (b)
+instance_name/state_FSM_FFd9
+                      3       0     0   2     FB4_7         (b)     (b)
+instance_name/state_FSM_FFd8
+                      3       0     0   2     FB4_8   21    I/O     (b)
+instance_name/state_FSM_FFd7
+                      3       0     0   2     FB4_9         (b)     (b)
+instance_name/state_FSM_FFd6
+                      3       0     0   2     FB4_10        (b)     (b)
+instance_name/state_FSM_FFd5
+                      3       0     0   2     FB4_11  22    I/O     (b)
+instance_name/state_FSM_FFd4
+                      3       0     0   2     FB4_12        (b)     (b)
+instance_name/state_FSM_FFd3
+                      3       0     0   2     FB4_13        (b)     (b)
+instance_name/state_FSM_FFd2
+                      3       0     0   2     FB4_14  23    I/O     (b)
+instance_name/state_FSM_FFd12
+                      3       0     0   2     FB4_15  27    I/O     (b)
+instance_name/state_FSM_FFd11
+                      3       0     0   2     FB4_16        (b)     (b)
+N64Receiver/TBC/count<1>
+                      3       0     0   2     FB4_17  28    I/O     (b)
+FBC/count<1>          3       0     0   2     FB4_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: FBC/count<0>                                                   8: N64Receiver/shift_out<1>       15: instance_name/state_FSM_FFd4 
+  2: FBC/count<2>/FBC/count<2>_RSTF__$INT                           9: N64Receiver/shift_out<2>       16: instance_name/state_FSM_FFd5 
+  3: Internal_Clk                                                  10: Reset_In                       17: instance_name/state_FSM_FFd6 
+  4: N64Receiver/TBC/count<0>                                      11: instance_name/state_FSM_FFd10  18: instance_name/state_FSM_FFd7 
+  5: N64Receiver/TBC/count<1>                                      12: instance_name/state_FSM_FFd12  19: instance_name/state_FSM_FFd8 
+  6: N64Receiver/TBC/count<2>                                      13: instance_name/state_FSM_FFd13  20: instance_name/state_FSM_FFd9 
+  7: N64Receiver/TBC/count<2>/N64Receiver/TBC/count<2>_RSTF__$INT  14: instance_name/state_FSM_FFd3  
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+N64Receiver/shift_out<3> 
+                     ........XX.............................. 2
+N64Receiver/shift_out<2> 
+                     .......X.X.............................. 2
+N64Receiver/latch    ...XXXX................................. 4
+N64Receiver/TBC/count<2> 
+                     ...XX.X................................. 3
+N64Receiver/TBC/count<0> 
+                     ...XXXX................................. 4
+instance_name/state_FSM_FFd9 
+                     ..X......XX............................. 3
+instance_name/state_FSM_FFd8 
+                     ..X......X.........X.................... 3
+instance_name/state_FSM_FFd7 
+                     ..X......X........X..................... 3
+instance_name/state_FSM_FFd6 
+                     ..X......X.......X...................... 3
+instance_name/state_FSM_FFd5 
+                     ..X......X......X....................... 3
+instance_name/state_FSM_FFd4 
+                     ..X......X.....X........................ 3
+instance_name/state_FSM_FFd3 
+                     ..X......X....X......................... 3
+instance_name/state_FSM_FFd2 
+                     ..X......X...X.......................... 3
+instance_name/state_FSM_FFd12 
+                     ..X......X..X........................... 3
+instance_name/state_FSM_FFd11 
+                     ..X......X.X............................ 3
+N64Receiver/TBC/count<1> 
+                     ...XXXX................................. 4
+FBC/count<1>         XXX..................................... 3
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*******************************  Equations  ********************************
+
+********** Mapped Logic **********
+
+FTCPE_FBC/count0: FTCPE port map (FBC/count(0),FBC/count_T(0),Internal_Clk,NOT FBC/count(2)/FBC/count(2)_RSTF__$INT,'0');
+FBC/count_T(0) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3));
+
+FTCPE_FBC/count1: FTCPE port map (FBC/count(1),FBC/count(0),Internal_Clk,NOT FBC/count(2)/FBC/count(2)_RSTF__$INT,'0');
+
+
+FBC/count(2)/FBC/count(2)_RSTF__$INT <= (NOT instance_name/state_FSM_FFd14 AND 
+	NOT instance_name/state_FSM_FFd15 AND NOT instance_name/state_FSM_FFd16);
+
+FTCPE_FBC/count2: FTCPE port map (FBC/count(2),FBC/count_T(2),Internal_Clk,NOT FBC/count(2)/FBC/count(2)_RSTF__$INT,'0');
+FBC/count_T(2) <= ((FBC/count(0) AND FBC/count(1))
+	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3)));
+
+FTCPE_FBC/count3: FTCPE port map (FBC/count(3),FBC/count_T(3),Internal_Clk,NOT FBC/count(2)/FBC/count(2)_RSTF__$INT,'0');
+FBC/count_T(3) <= ((FBC/count(0) AND FBC/count(1) AND FBC/count(2))
+	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3)));
+
+FTCPE_Internal_Clk: FTCPE port map (Internal_Clk,'1',Clk_In,NOT Reset_In,'0');
+
+
+Ldir <= NOT (((Shift_Decoder(6) AND NOT Shift_Decoder(4) AND 
+	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+	OR (NOT Shift_Decoder(6) AND Shift_Decoder(4) AND 
+	NOT Shift_Decoder(5) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+	OR (Shift_Decoder(4) AND NOT Shift_Decoder(5) AND 
+	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))));
+
+
+Len <= NOT (((Shift_Decoder(6) AND NOT Shift_Decoder(5) AND 
+	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+	OR (NOT Shift_Decoder(6) AND NOT Shift_Decoder(4) AND 
+	Shift_Decoder(5) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+	OR (NOT Shift_Decoder(6) AND NOT Shift_Decoder(4) AND 
+	Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+	OR (Shift_Decoder(4) AND NOT Shift_Decoder(5) AND 
+	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))));
+
+FDCPE_N64Receiver/IRL/state_FSM_FFd1: FDCPE port map (N64Receiver/IRL/state_FSM_FFd1,N64Receiver/IRL/state_FSM_FFd2,Clk_In,NOT Reset_In,'0');
+
+FDCPE_N64Receiver/IRL/state_FSM_FFd2: FDCPE port map (N64Receiver/IRL/state_FSM_FFd2,N64Receiver/IRL/state_FSM_FFd3,Clk_In,NOT Reset_In,'0');
+
+FDCPE_N64Receiver/IRL/state_FSM_FFd3: FDCPE port map (N64Receiver/IRL/state_FSM_FFd3,N64Receiver/IRL/state_FSM_FFd3_D,Clk_In,NOT Reset_In,'0');
+N64Receiver/IRL/state_FSM_FFd3_D <= (NOT N64Receiver/shift_out(0) AND 
+	N64Receiver/IRL/state_FSM_FFd4);
+
+FDCPE_N64Receiver/IRL/state_FSM_FFd4: FDCPE port map (N64Receiver/IRL/state_FSM_FFd4,N64Receiver/IRL/state_FSM_FFd4_D,Clk_In,NOT Reset_In,'0');
+N64Receiver/IRL/state_FSM_FFd4_D <= (NOT N64Receiver/shift_out(0) AND 
+	N64Receiver/IRL/state_FSM_FFd5);
+
+FDCPE_N64Receiver/IRL/state_FSM_FFd5: FDCPE port map (N64Receiver/IRL/state_FSM_FFd5,N64Receiver/IRL/state_FSM_FFd5_D,Clk_In,NOT Reset_In,'0');
+N64Receiver/IRL/state_FSM_FFd5_D <= (N64Receiver/shift_out(0) AND 
+	N64Receiver/IRL/state_FSM_FFd6);
+
+FDCPE_N64Receiver/IRL/state_FSM_FFd6: FDCPE port map (N64Receiver/IRL/state_FSM_FFd6,N64Receiver/IRL/state_FSM_FFd6_D,Clk_In,NOT Reset_In,'0');
+N64Receiver/IRL/state_FSM_FFd6_D <= (NOT N64Receiver/shift_out(0) AND 
+	N64Receiver/IRL/state_FSM_FFd7);
+
+FDCPE_N64Receiver/IRL/state_FSM_FFd7: FDCPE port map (N64Receiver/IRL/state_FSM_FFd7,N64Receiver/IRL/state_FSM_FFd7_D,Clk_In,NOT Reset_In,'0');
+N64Receiver/IRL/state_FSM_FFd7_D <= (N64Receiver/shift_out(0) AND 
+	N64Receiver/IRL/state_FSM_FFd8);
+
+FDCPE_N64Receiver/IRL/state_FSM_FFd8: FDCPE port map (N64Receiver/IRL/state_FSM_FFd8,N64Receiver/IRL/state_FSM_FFd8_D,Clk_In,'0',NOT Reset_In);
+N64Receiver/IRL/state_FSM_FFd8_D <= ((NOT N64Receiver/shift_out(0) AND 
+	NOT N64Receiver/IRL/state_FSM_FFd6 AND NOT N64Receiver/IRL/state_FSM_FFd8 AND 
+	NOT N64Receiver/IRL/state_FSM_FFd1)
+	OR (N64Receiver/shift_out(0) AND 
+	NOT N64Receiver/IRL/state_FSM_FFd4 AND NOT N64Receiver/IRL/state_FSM_FFd5 AND 
+	NOT N64Receiver/IRL/state_FSM_FFd7 AND NOT N64Receiver/IRL/state_FSM_FFd1));
+
+FTCPE_N64Receiver/TBC/count0: FTCPE port map (N64Receiver/TBC/count(0),N64Receiver/TBC/count_T(0),Clk_In,NOT N64Receiver/TBC/count(2)/N64Receiver/TBC/count(2)_RSTF__$INT,'0');
+N64Receiver/TBC/count_T(0) <= (NOT N64Receiver/TBC/count(0) AND 
+	N64Receiver/TBC/count(1) AND NOT N64Receiver/TBC/count(2));
+
+FDCPE_N64Receiver/TBC/count1: FDCPE port map (N64Receiver/TBC/count(1),N64Receiver/TBC/count_D(1),Clk_In,NOT N64Receiver/TBC/count(2)/N64Receiver/TBC/count(2)_RSTF__$INT,'0');
+N64Receiver/TBC/count_D(1) <= ((N64Receiver/TBC/count(0) AND 
+	NOT N64Receiver/TBC/count(1))
+	OR (NOT N64Receiver/TBC/count(0) AND 
+	N64Receiver/TBC/count(1) AND N64Receiver/TBC/count(2)));
+
+FTCPE_N64Receiver/TBC/count2: FTCPE port map (N64Receiver/TBC/count(2),N64Receiver/TBC/count_T(2),Clk_In,NOT N64Receiver/TBC/count(2)/N64Receiver/TBC/count(2)_RSTF__$INT,'0');
+N64Receiver/TBC/count_T(2) <= (N64Receiver/TBC/count(0) AND 
+	N64Receiver/TBC/count(1));
+
+
+N64Receiver/TBC/count(2)/N64Receiver/TBC/count(2)_RSTF__$INT <= (NOT N64Receiver/IRL/state_FSM_FFd4 AND 
+	NOT N64Receiver/IRL/state_FSM_FFd5 AND NOT N64Receiver/IRL/state_FSM_FFd6 AND 
+	NOT N64Receiver/IRL/state_FSM_FFd7 AND NOT N64Receiver/IRL/state_FSM_FFd8);
+
+FDCPE_N64Receiver/latch: FDCPE port map (N64Receiver/latch,N64Receiver/latch_D,Clk_In,NOT N64Receiver/TBC/count(2)/N64Receiver/TBC/count(2)_RSTF__$INT,'0');
+N64Receiver/latch_D <= (NOT N64Receiver/TBC/count(0) AND 
+	N64Receiver/TBC/count(1) AND NOT N64Receiver/TBC/count(2));
+
+FDCPE_N64Receiver/shift_out0: FDCPE port map (N64Receiver/shift_out(0),NOT Serial_In,Clk_In,NOT Reset_In,'0');
+
+FDCPE_N64Receiver/shift_out1: FDCPE port map (N64Receiver/shift_out(1),N64Receiver/shift_out(0),Clk_In,NOT Reset_In,'0');
+
+FDCPE_N64Receiver/shift_out2: FDCPE port map (N64Receiver/shift_out(2),N64Receiver/shift_out(1),Clk_In,NOT Reset_In,'0');
+
+FDCPE_N64Receiver/shift_out3: FDCPE port map (N64Receiver/shift_out(3),N64Receiver/shift_out(2),Clk_In,NOT Reset_In,'0');
+
+FDCPE_N64_Ldir: FDCPE port map (N64_Ldir,N64Receiver/shift_out(2),N64Receiver/latch,'0',NOT Reset_In);
+
+FDCPE_N64_Len: FDCPE port map (N64_Len,N64Receiver/shift_out(3),N64Receiver/latch,'0',NOT Reset_In);
+
+FDCPE_N64_Rdir: FDCPE port map (N64_Rdir,N64Receiver/shift_out(0),N64Receiver/latch,'0',NOT Reset_In);
+
+FDCPE_N64_Ren: FDCPE port map (N64_Ren,N64Receiver/shift_out(1),N64Receiver/latch,'0',NOT Reset_In);
+
+
+Rdir <= NOT (((Shift_Decoder(6) AND NOT Shift_Decoder(5) AND 
+	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+	OR (NOT Shift_Decoder(6) AND NOT Shift_Decoder(4) AND 
+	Shift_Decoder(5) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+	OR (NOT Shift_Decoder(4) AND Shift_Decoder(5) AND 
+	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))));
+
+
+Ren <= NOT (((Shift_Decoder(6) AND NOT Shift_Decoder(4) AND 
+	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+	OR (NOT Shift_Decoder(6) AND Shift_Decoder(4) AND 
+	NOT Shift_Decoder(5) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+	OR (NOT Shift_Decoder(6) AND NOT Shift_Decoder(5) AND 
+	Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))
+	OR (NOT Shift_Decoder(4) AND Shift_Decoder(5) AND 
+	NOT Shift_Decoder(7) AND NOT Shift_Decoder(0) AND NOT Shift_Decoder(10) AND 
+	NOT Shift_Decoder(11) AND NOT Shift_Decoder(1) AND NOT Shift_Decoder(2) AND 
+	NOT Shift_Decoder(3) AND NOT Shift_Decoder(8) AND NOT Shift_Decoder(9))));
+
+FDCPE_SR/q0: FDCPE port map (SR/q(0),SR/q_D(0),Internal_Clk,NOT Reset_In,'0');
+SR/q_D(0) <= ((SR/q(0) AND NOT FBC/count(0) AND NOT FBC/count(1) AND 
+	FBC/count(2) AND FBC/count(3))
+	OR (NOT Serial_In AND NOT instance_name/state_FSM_FFd14 AND 
+	NOT instance_name/state_FSM_FFd15 AND NOT instance_name/state_FSM_FFd16 AND NOT FBC/count(3))
+	OR (NOT Serial_In AND FBC/count(0) AND 
+	NOT instance_name/state_FSM_FFd14 AND NOT instance_name/state_FSM_FFd15 AND 
+	NOT instance_name/state_FSM_FFd16)
+	OR (NOT Serial_In AND FBC/count(1) AND 
+	NOT instance_name/state_FSM_FFd14 AND NOT instance_name/state_FSM_FFd15 AND 
+	NOT instance_name/state_FSM_FFd16)
+	OR (NOT Serial_In AND NOT FBC/count(2) AND 
+	NOT instance_name/state_FSM_FFd14 AND NOT instance_name/state_FSM_FFd15 AND 
+	NOT instance_name/state_FSM_FFd16));
+
+FTCPE_SR/q1: FTCPE port map (SR/q(1),SR/q_T(1),Internal_Clk,NOT Reset_In,'0');
+SR/q_T(1) <= ((SR/q(0) AND SR/q(1))
+	OR (NOT SR/q(0) AND NOT SR/q(1))
+	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3)));
+
+FTCPE_SR/q2: FTCPE port map (SR/q(2),SR/q_T(2),Internal_Clk,NOT Reset_In,'0');
+SR/q_T(2) <= ((SR/q(1) AND SR/q(2))
+	OR (NOT SR/q(1) AND NOT SR/q(2))
+	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3)));
+
+FTCPE_SR/q3: FTCPE port map (SR/q(3),SR/q_T(3),Internal_Clk,NOT Reset_In,'0');
+SR/q_T(3) <= ((SR/q(2) AND SR/q(3))
+	OR (NOT SR/q(2) AND NOT SR/q(3))
+	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3)));
+
+FTCPE_SR/q4: FTCPE port map (SR/q(4),SR/q_T(4),Internal_Clk,NOT Reset_In,'0');
+SR/q_T(4) <= ((SR/q(3) AND SR/q(4))
+	OR (NOT SR/q(3) AND NOT SR/q(4))
+	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3)));
+
+FTCPE_SR/q5: FTCPE port map (SR/q(5),SR/q_T(5),Internal_Clk,NOT Reset_In,'0');
+SR/q_T(5) <= ((SR/q(4) AND SR/q(5))
+	OR (NOT SR/q(4) AND NOT SR/q(5))
+	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3)));
+
+FTCPE_SR/q6: FTCPE port map (SR/q(6),SR/q_T(6),Internal_Clk,NOT Reset_In,'0');
+SR/q_T(6) <= ((SR/q(5) AND SR/q(6))
+	OR (NOT SR/q(5) AND NOT SR/q(6))
+	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3)));
+
+FTCPE_SR/q7: FTCPE port map (SR/q(7),SR/q_T(7),Internal_Clk,NOT Reset_In,'0');
+SR/q_T(7) <= ((SR/q(6) AND SR/q(7))
+	OR (NOT SR/q(6) AND NOT SR/q(7))
+	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3)));
+
+FTCPE_SR/q8: FTCPE port map (SR/q(8),SR/q_T(8),Internal_Clk,NOT Reset_In,'0');
+SR/q_T(8) <= ((SR/q(7) AND SR/q(8))
+	OR (NOT SR/q(7) AND NOT SR/q(8))
+	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3)));
+
+FTCPE_SR/q9: FTCPE port map (SR/q(9),SR/q_T(9),Internal_Clk,NOT Reset_In,'0');
+SR/q_T(9) <= ((SR/q(8) AND SR/q(9))
+	OR (NOT SR/q(8) AND NOT SR/q(9))
+	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3)));
+
+FTCPE_SR/q10: FTCPE port map (SR/q(10),SR/q_T(10),Internal_Clk,NOT Reset_In,'0');
+SR/q_T(10) <= ((SR/q(10) AND SR/q(9))
+	OR (NOT SR/q(10) AND NOT SR/q(9))
+	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3)));
+
+FTCPE_SR/q11: FTCPE port map (SR/q(11),SR/q_T(11),Internal_Clk,NOT Reset_In,'0');
+SR/q_T(11) <= ((SR/q(10) AND SR/q(11))
+	OR (NOT SR/q(10) AND NOT SR/q(11))
+	OR (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3)));
+
+FDCPE_Shift_Decoder0: FDCPE port map (Shift_Decoder(0),SR/q(0),Shift_Decoder_C(0),NOT Reset_In,'0');
+Shift_Decoder_C(0) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3));
+
+FDCPE_Shift_Decoder1: FDCPE port map (Shift_Decoder(1),SR/q(1),Shift_Decoder_C(1),NOT Reset_In,'0');
+Shift_Decoder_C(1) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3));
+
+FDCPE_Shift_Decoder2: FDCPE port map (Shift_Decoder(2),SR/q(2),Shift_Decoder_C(2),NOT Reset_In,'0');
+Shift_Decoder_C(2) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3));
+
+FDCPE_Shift_Decoder3: FDCPE port map (Shift_Decoder(3),SR/q(3),Shift_Decoder_C(3),NOT Reset_In,'0');
+Shift_Decoder_C(3) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3));
+
+FDCPE_Shift_Decoder4: FDCPE port map (Shift_Decoder(4),SR/q(4),Shift_Decoder_C(4),NOT Reset_In,'0');
+Shift_Decoder_C(4) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3));
+
+FDCPE_Shift_Decoder5: FDCPE port map (Shift_Decoder(5),SR/q(5),Shift_Decoder_C(5),NOT Reset_In,'0');
+Shift_Decoder_C(5) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3));
+
+FDCPE_Shift_Decoder6: FDCPE port map (Shift_Decoder(6),SR/q(6),Shift_Decoder_C(6),NOT Reset_In,'0');
+Shift_Decoder_C(6) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3));
+
+FDCPE_Shift_Decoder7: FDCPE port map (Shift_Decoder(7),SR/q(7),Shift_Decoder_C(7),NOT Reset_In,'0');
+Shift_Decoder_C(7) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3));
+
+FDCPE_Shift_Decoder8: FDCPE port map (Shift_Decoder(8),SR/q(8),Shift_Decoder_C(8),NOT Reset_In,'0');
+Shift_Decoder_C(8) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3));
+
+FDCPE_Shift_Decoder9: FDCPE port map (Shift_Decoder(9),SR/q(9),Shift_Decoder_C(9),NOT Reset_In,'0');
+Shift_Decoder_C(9) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3));
+
+FDCPE_Shift_Decoder10: FDCPE port map (Shift_Decoder(10),SR/q(10),Shift_Decoder_C(10),NOT Reset_In,'0');
+Shift_Decoder_C(10) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3));
+
+FDCPE_Shift_Decoder11: FDCPE port map (Shift_Decoder(11),SR/q(11),Shift_Decoder_C(11),NOT Reset_In,'0');
+Shift_Decoder_C(11) <= (NOT FBC/count(0) AND NOT FBC/count(1) AND FBC/count(2) AND 
+	FBC/count(3));
+
+FDCPE_instance_name/state_FSM_FFd1: FDCPE port map (instance_name/state_FSM_FFd1,instance_name/state_FSM_FFd2,Internal_Clk,NOT Reset_In,'0');
+
+FDCPE_instance_name/state_FSM_FFd10: FDCPE port map (instance_name/state_FSM_FFd10,instance_name/state_FSM_FFd11,Internal_Clk,NOT Reset_In,'0');
+
+FDCPE_instance_name/state_FSM_FFd11: FDCPE port map (instance_name/state_FSM_FFd11,instance_name/state_FSM_FFd12,Internal_Clk,NOT Reset_In,'0');
+
+FDCPE_instance_name/state_FSM_FFd12: FDCPE port map (instance_name/state_FSM_FFd12,instance_name/state_FSM_FFd13,Internal_Clk,NOT Reset_In,'0');
+
+FDCPE_instance_name/state_FSM_FFd13: FDCPE port map (instance_name/state_FSM_FFd13,instance_name/state_FSM_FFd13_D,Internal_Clk,NOT Reset_In,'0');
+instance_name/state_FSM_FFd13_D <= (NOT Serial_In AND instance_name/state_FSM_FFd14);
+
+FDCPE_instance_name/state_FSM_FFd14: FDCPE port map (instance_name/state_FSM_FFd14,instance_name/state_FSM_FFd14_D,Internal_Clk,NOT Reset_In,'0');
+instance_name/state_FSM_FFd14_D <= (Serial_In AND instance_name/state_FSM_FFd15);
+
+FDCPE_instance_name/state_FSM_FFd15: FDCPE port map (instance_name/state_FSM_FFd15,instance_name/state_FSM_FFd15_D,Internal_Clk,NOT Reset_In,'0');
+instance_name/state_FSM_FFd15_D <= (NOT Serial_In AND instance_name/state_FSM_FFd16);
+
+FDCPE_instance_name/state_FSM_FFd16: FDCPE port map (instance_name/state_FSM_FFd16,instance_name/state_FSM_FFd16_D,Internal_Clk,'0',NOT Reset_In);
+instance_name/state_FSM_FFd16_D <= ((NOT Serial_In AND NOT instance_name/state_FSM_FFd15 AND 
+	NOT instance_name/state_FSM_FFd1)
+	OR (Serial_In AND NOT instance_name/state_FSM_FFd14 AND 
+	NOT instance_name/state_FSM_FFd16 AND NOT instance_name/state_FSM_FFd1));
+
+FDCPE_instance_name/state_FSM_FFd2: FDCPE port map (instance_name/state_FSM_FFd2,instance_name/state_FSM_FFd3,Internal_Clk,NOT Reset_In,'0');
+
+FDCPE_instance_name/state_FSM_FFd3: FDCPE port map (instance_name/state_FSM_FFd3,instance_name/state_FSM_FFd4,Internal_Clk,NOT Reset_In,'0');
+
+FDCPE_instance_name/state_FSM_FFd4: FDCPE port map (instance_name/state_FSM_FFd4,instance_name/state_FSM_FFd5,Internal_Clk,NOT Reset_In,'0');
+
+FDCPE_instance_name/state_FSM_FFd5: FDCPE port map (instance_name/state_FSM_FFd5,instance_name/state_FSM_FFd6,Internal_Clk,NOT Reset_In,'0');
+
+FDCPE_instance_name/state_FSM_FFd6: FDCPE port map (instance_name/state_FSM_FFd6,instance_name/state_FSM_FFd7,Internal_Clk,NOT Reset_In,'0');
+
+FDCPE_instance_name/state_FSM_FFd7: FDCPE port map (instance_name/state_FSM_FFd7,instance_name/state_FSM_FFd8,Internal_Clk,NOT Reset_In,'0');
+
+FDCPE_instance_name/state_FSM_FFd8: FDCPE port map (instance_name/state_FSM_FFd8,instance_name/state_FSM_FFd9,Internal_Clk,NOT Reset_In,'0');
+
+FDCPE_instance_name/state_FSM_FFd9: FDCPE port map (instance_name/state_FSM_FFd9,instance_name/state_FSM_FFd10,Internal_Clk,NOT Reset_In,'0');
+
+Register Legend:
+ FDCPE (Q,D,C,CLR,PRE,CE); 
+ FTCPE (Q,D,C,CLR,PRE,CE); 
+ LDCP  (Q,D,G,CLR,PRE); 
+
+******************************  Device Pin Out *****************************
+
+Device : XC9572XL-10-VQ44
+
+
+   --------------------------------  
+  /44 43 42 41 40 39 38 37 36 35 34 \
+ | 1                             33 | 
+ | 2                             32 | 
+ | 3                             31 | 
+ | 4                             30 | 
+ | 5        XC9572XL-10-VQ44     29 | 
+ | 6                             28 | 
+ | 7                             27 | 
+ | 8                             26 | 
+ | 9                             25 | 
+ | 10                            24 | 
+ | 11                            23 | 
+ \ 12 13 14 15 16 17 18 19 20 21 22 /
+   --------------------------------  
+
+
+Pin Signal                         Pin Signal                        
+No. Name                           No. Name                          
+  1 Serial_In                        23 TIE                           
+  2 TIE                              24 TDO                           
+  3 TIE                              25 GND                           
+  4 GND                              26 VCC                           
+  5 TIE                              27 TIE                           
+  6 TIE                              28 TIE                           
+  7 TIE                              29 TIE                           
+  8 TIE                              30 TIE                           
+  9 TDI                              31 TIE                           
+ 10 TMS                              32 TIE                           
+ 11 TCK                              33 TIE                           
+ 12 TIE                              34 TIE                           
+ 13 N64_Len                          35 VCC                           
+ 14 N64_Ldir                         36 Reset_In                      
+ 15 VCC                              37 TIE                           
+ 16 N64_Ren                          38 TIE                           
+ 17 GND                              39 Len                           
+ 18 N64_Rdir                         40 Ldir                          
+ 19 TIE                              41 Ren                           
+ 20 TIE                              42 Rdir                          
+ 21 TIE                              43 Clk_In                        
+ 22 TIE                              44 TIE                           
+
+
+Legend :  NC  = Not Connected, unbonded pin
+         PGND = Unused I/O configured as additional Ground pin
+         TIE  = Unused I/O floating -- must tie to VCC, GND or other signal
+         KPR  = Unused I/O with weak keeper (leave unconnected)
+         VCC  = Dedicated Power Pin
+         GND  = Dedicated Ground Pin
+         TDI  = Test Data In, JTAG pin
+         TDO  = Test Data Out, JTAG pin
+         TCK  = Test Clock, JTAG pin
+         TMS  = Test Mode Select, JTAG pin
+  PROHIBITED  = User reserved pin
+****************************  Compiler Options  ****************************
+
+Following is a list of all global compiler options used by the fitter run.
+
+Device(s) Specified                         : xc9572xl-10-VQ44
+Optimization Method                         : SPEED
+Multi-Level Logic Optimization              : ON
+Ignore Timing Specifications                : OFF
+Default Register Power Up Value             : LOW
+Keep User Location Constraints              : ON
+What-You-See-Is-What-You-Get                : OFF
+Exhaustive Fitting                          : OFF
+Keep Unused Inputs                          : OFF
+Slew Rate                                   : FAST
+Power Mode                                  : STD
+Ground on Unused IOs                        : OFF
+Set I/O Pin Termination                     : FLOAT
+Global Clock Optimization                   : ON
+Global Set/Reset Optimization               : OFF
+Global Ouput Enable Optimization            : OFF
+Input Limit                                 : 54
+Pterm Limit                                 : 25
+</pre>
+<form><span class="pgRef"><table width="90%" align="center"><tr>
+<td align="left"><input type="button" onclick="javascript:parent.leftnav.showTop()" onmouseover="window.status='goto top of page'; return true;" onmouseout="window.status=''" value="back to top"></td>
+<td align="right"><input type="button" onclick="window.print()" onmouseover="window.status='print page'; return true;" onmouseout="window.status=''" value="print page"></td>
+</tr></table></span></form>
+</body></html>

@@ -1,0 +1,11 @@
+
+
+
+// Instantiate the module
+four_bit_counter instance_name (
+    .clk(clk), 
+    .reset_n(reset_n), 
+    .count(count)
+    );
+
+

@@ -1,0 +1,813 @@
+iMPACT Version: 14.1
+
+iMPACT log file Started on Wed Jul 25 07:24:55 2012
+
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/N64_IR.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 7:25:23 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+PROGRESS_START - Starting Operation.
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      0 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/N64_IR.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 7:29:43 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...PROGRESS_START - Starting Operation.
+done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      0 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/N64_IR.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 7:31:53 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...PROGRESS_START - Starting Operation.
+done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      1 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/N64_IR.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 7:41:34 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...PROGRESS_START - Starting Operation.
+done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      0 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/N64_IR.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 7:45:23 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+PROGRESS_START - Starting Operation.
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      0 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/N64_IR.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 7:48:03 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_START - Starting Operation.
+PROGRESS_END - End Operation.
+Elapsed time =      0 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/N64_IR.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 7:50:06 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+PROGRESS_START - Starting Operation.
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      1 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/N64_IR.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 8:01:30 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+PROGRESS_START - Starting Operation.
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      0 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/N64_IR.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 8:05:39 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+PROGRESS_START - Starting Operation.
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      0 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/N64_IR.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 8:16:15 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+PROGRESS_START - Starting Operation.
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      0 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer 2012/N64/wired_remote/N64_wired/n64.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 8:29:51 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...PROGRESS_START - Starting Operation.
+done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      1 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer 2012/N64/wired_remote/N64_wired/n64.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/N64_wired/Remote.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/N64_wired/Remote.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 8:36:58 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...PROGRESS_START - Starting Operation.
+done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      1 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/N64_IR.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 8:46:11 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...PROGRESS_START - Starting Operation.
+done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      1 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/N64_IR.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 8:56:23 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...PROGRESS_START - Starting Operation.
+done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      1 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer 2012/N64/wired_remote/N64_wired/n64.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/N64_wired/Remote.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/N64_wired/Remote.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 9:06:20 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...PROGRESS_START - Starting Operation.
+done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      0 sec.
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : saveProjectFile -file"C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf"
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : deleteDevice -position 1
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setMode -ss
+// *** BATCH CMD : setMode -sm
+// *** BATCH CMD : setMode -hw140
+// *** BATCH CMD : setMode -spi
+// *** BATCH CMD : setMode -acecf
+// *** BATCH CMD : setMode -acempm
+// *** BATCH CMD : setMode -pff
+Welcome to iMPACT
+iMPACT Version: 14.1
+Project:'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf' already exists.
+Original project has been renamed to'C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project_1.ipf'.
+Project:C:\Users\Robert\Documents\ECE272Demo\ECE272DemoReceiver\ECE272DemoReceiver\\auto_project.ipf created.
+// *** BATCH CMD : setMode -bs
+// *** BATCH CMD : setCable -port svf -file"C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/N64_IR.svf"
+// *** BATCH CMD : addDevice -p 1 -file "C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed"
+'1': Loading file 'C:/Users/Robert/Documents/Porn/Summer2012/N64/wired_remote/Receiver/IR_Receiver.jed' ...
+done.
+INFO:iMPACT:1777 - 
+   Reading C:/Xilinx/14.1/ISE_DS/ISE/xc9500xl/data/xc9572xl.bsd...
+INFO:iMPACT:501 - '1': Added Device xc9572xl successfully.
+----------------------------------------------------------------------
+INFO:iMPACT - Current time: 7/25/2012 9:16:13 AM
+WARNING:iMPACT - Warning: SVF Programming of 9500 series CPLDs is not supported   by every third-party boundary-scan tool provider. Please check for support   before using this SVF file to program a 9500 series device.
+// *** BATCH CMD : Program -p 1 -e -v 
+
+'1': Erasing device...
+'1': Erasure completed successfully.
+'1': Programming device...
+done.
+'1': Putting device in ISP mode...done.
+'1': Putting device in ISP mode...done.
+'1': Verifying device...PROGRESS_START - Starting Operation.
+done.
+'1': Verification completed successfully.
+'1': Putting device in ISP mode...done.
+'1': Programming completed successfully.
+PROGRESS_END - End Operation.
+Elapsed time =      0 sec.

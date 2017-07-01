@@ -1,0 +1,10 @@
+
+
+
+// Instantiate the module
+latch_state_decoder instance_name (
+    .counter(counter), 
+    .latch(latch)
+    );
+
+

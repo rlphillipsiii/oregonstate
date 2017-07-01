@@ -1,0 +1,93 @@
+MDF Database:  version 1.0
+MDF_INFO | Remote | XC9572XL-10-VQ44
+MACROCELL | 0 | 14 | Latch_Out_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 5 | count<0>  | count<1>  | count<3>  | count<2>  | count<4>
+INPUTMC | 5 | 2 | 13 | 2 | 17 | 2 | 15 | 2 | 16 | 2 | 14
+EQ | 2 | 
+   Latch_Out = !count<0> & !count<1> & !count<3> & !count<2> & 
+	!count<4>;
+
+MACROCELL | 2 | 13 | count<0>
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 7 | 0 | 14 | 2 | 13 | 2 | 17 | 2 | 15 | 2 | 16 | 2 | 14 | 2 | 1
+INPUTS | 2 | Reset_In  | count<0>
+INPUTMC | 1 | 2 | 13
+INPUTP | 1 | 92
+EQ | 2 | 
+   count<0>.D = Reset_In & !count<0>;
+   count<0>.CLK = Clk_In;	// GCK
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 2 | 17 | count<1>
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 7 | 0 | 14 | 2 | 17 | 2 | 15 | 2 | 16 | 2 | 14 | 0 | 13 | 2 | 1
+INPUTS | 3 | Reset_In  | count<0>  | count<1>
+INPUTMC | 2 | 2 | 13 | 2 | 17
+INPUTP | 1 | 92
+EQ | 3 | 
+   count<1>.D = Reset_In & count<0> & !count<1>
+	# Reset_In & !count<0> & count<1>;
+   count<1>.CLK = Clk_In;	// GCK
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 2 | 15 | count<3>
+ATTRIBUTES | 4358912 | 0
+OUTPUTMC | 5 | 0 | 14 | 2 | 15 | 2 | 14 | 0 | 13 | 2 | 1
+INPUTS | 5 | Reset_In  | count<0>  | count<1>  | count<2>  | count<3>
+INPUTMC | 4 | 2 | 13 | 2 | 17 | 2 | 16 | 2 | 15
+INPUTP | 1 | 92
+EQ | 3 | 
+   count<3>.T = !Reset_In & count<3>
+	# Reset_In & count<0> & count<1> & count<2>;
+   count<3>.CLK = Clk_In;	// GCK
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 2 | 16 | count<2>
+ATTRIBUTES | 4358912 | 0
+OUTPUTMC | 5 | 0 | 14 | 2 | 15 | 2 | 16 | 2 | 14 | 2 | 1
+INPUTS | 4 | Reset_In  | count<0>  | count<1>  | count<2>
+INPUTMC | 3 | 2 | 13 | 2 | 17 | 2 | 16
+INPUTP | 1 | 92
+EQ | 3 | 
+   count<2>.T = !Reset_In & count<2>
+	# Reset_In & count<0> & count<1>;
+   count<2>.CLK = Clk_In;	// GCK
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 2 | 14 | count<4>
+ATTRIBUTES | 4358912 | 0
+OUTPUTMC | 4 | 0 | 14 | 2 | 14 | 0 | 13 | 2 | 1
+INPUTS | 6 | Reset_In  | count<0>  | count<1>  | count<3>  | count<2>  | count<4>
+INPUTMC | 5 | 2 | 13 | 2 | 17 | 2 | 15 | 2 | 16 | 2 | 14
+INPUTP | 1 | 92
+EQ | 4 | 
+   count<4>.T = !Reset_In & count<4>
+	# Reset_In & count<0> & count<1> & count<3> & 
+	count<2>;
+   count<4>.CLK = Clk_In;	// GCK
+GLOBALS | 1 | 2 | Clk_In
+
+MACROCELL | 0 | 13 | Serial_Out_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 4 | Controller_In  | count<1>  | count<3>  | count<4>
+INPUTMC | 3 | 2 | 17 | 2 | 15 | 2 | 14
+INPUTP | 1 | 33
+EQ | 2 | 
+   Serial_Out = !Controller_In
+	# count<1> & count<3> & count<4>;
+
+MACROCELL | 2 | 1 | Clk_Out_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 5 | count<0>  | count<1>  | count<3>  | count<2>  | count<4>
+INPUTMC | 5 | 2 | 13 | 2 | 17 | 2 | 15 | 2 | 16 | 2 | 14
+EQ | 2 | 
+   !Clk_Out = count<0>
+	# !count<1> & !count<3> & !count<2> & !count<4>;
+
+PIN | Clk_In | 4096 | 0 | N/A | 20 | 5 | 2 | 13 | 2 | 17 | 2 | 15 | 2 | 16 | 2 | 14
+PIN | Reset_In | 64 | 0 | N/A | 92 | 5 | 2 | 13 | 2 | 17 | 2 | 15 | 2 | 16 | 2 | 14
+PIN | Controller_In | 64 | 0 | N/A | 33 | 1 | 0 | 13
+PIN | Latch_Out | 536871040 | 0 | N/A | 26
+PIN | Serial_Out | 536871040 | 0 | N/A | 24
+PIN | Clk_Out | 536871040 | 0 | N/A | 29

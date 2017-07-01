@@ -1,0 +1,37 @@
+Release 14.1 ngdbuild P.15xf (nt64)
+Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
+
+Command Line: C:\Xilinx\14.1\ISE_DS\ISE\bin\nt64\unwrapped\ngdbuild.exe
+-intstyle ise -dd _ngo -uc IR_Receiver.ucf -p xc9572xl-VQ44-10 IR_Receiver.ngc
+IR_Receiver.ngd
+
+Reading NGO file "C:/Users/Robert/Dropbox/Porn/Summer
+2012/N64/wired_remote/Receiver/IR_Receiver.ngc" ...
+Gathering constraint information from source properties...
+Done.
+
+Annotating constraints to design from ucf file "IR_Receiver.ucf" ...
+Resolving constraint associations...
+Checking Constraint Associations...
+Done...
+
+Checking expanded design ...
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 148444 kilobytes
+
+Writing NGD file "IR_Receiver.ngd" ...
+Total REAL time to NGDBUILD completion:  3 sec
+Total CPU time to NGDBUILD completion:   3 sec
+
+Writing NGDBUILD log file "IR_Receiver.bld"...

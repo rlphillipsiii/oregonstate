@@ -1,0 +1,38 @@
+Pin Freeze File:  version P.15xf
+
+9572XL44VQ XC9572XL-10-VQ44
+Clk S:PIN23
+Global_Reset S:PIN36
+Internal_Clk S:PIN43
+IR_Xmit S:PIN1
+Ldir S:PIN40
+Len S:PIN39
+Rdir S:PIN42
+Ren S:PIN41
+Serial_IO S:PIN19
+
+
+;The remaining section of the .gyd file is for documentation purposes only.
+;It shows where your internal equations were placed in the last successful fit.
+
+PARTITION FB1_1 IRT/state_FSM_FFd9 Len_OBUF IRT/state_FSM_FFd8 IRT/state_FSM_FFd7
+		 Ldir_OBUF Ren_OBUF IRT/state_FSM_FFd6 Rdir_OBUF
+		 IRT/state_FSM_FFd5 IRT/state_FSM_FFd4 IRT/state_FSM_FFd3 EXP6_
+		 EXP7_ IR_Xmit_OBUF IRT/state_FSM_FFd2 IRT/state_FSM_FFd1
+		 IRT/state_FSM_FFd10 IOS/count<1>
+PARTITION FB2_1 IOS/count<0> Clock_8 parallel_out<4> parallel_out<3>
+		 parallel_out<2> parallel_out<1> parallel_out<15> parallel_out<14>
+		 latch count_reset IOS/count<7> IOS/count<6>
+		 IOS/count<5> IOS/count<4> IOS/count<3> IOS/count<2>
+		 select transmit
+PARTITION FB3_3 count_4<2>/count_4<2>_RSTF__$INT count_2<0> Clock_4 Clock_2
+		 shift_out<9> shift_out<8> shift_out<7> shift_out<6>
+		 shift_out<5> shift_out<4> shift_out<3> shift_out<2>
+		 shift_out<15> shift_out<14> parallel_out<8> parallel_out<5>
+		
+PARTITION FB4_1 shift_out<1> signal shift_out<13> shift_out<12>
+		 shift_out<11> shift_out<10> shift_out<0> parallel_out<9>
+		 parallel_out<13> parallel_out<12> parallel_out<11> parallel_out<10>
+		 parallel_out<0> count_4<2> count_4<1> count_4<0>
+		 count_2<1> count_4<3>
+

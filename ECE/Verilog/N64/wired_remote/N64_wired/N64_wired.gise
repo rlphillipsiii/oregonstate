@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<generated_project xmlns="http://www.xilinx.com/XMLSchema" xmlns:xil_pn="http://www.xilinx.com/XMLSchema">
+
+  <!--                                                          -->
+
+  <!--             For tool use only. Do not edit.              -->
+
+  <!--                                                          -->
+
+  <!-- ProjectNavigator created generated project file.         -->
+
+  <!-- For use in tracking generated file and other information -->
+
+  <!-- allowing preservation of process status.                 -->
+
+  <!--                                                          -->
+
+  <!-- Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved. -->
+
+  <version xmlns="http://www.xilinx.com/XMLSchema">11.1</version>
+
+  <sourceproject xmlns="http://www.xilinx.com/XMLSchema" xil_pn:fileType="FILE_XISE" xil_pn:name="N64_wired.xise"/>
+
+  <files xmlns="http://www.xilinx.com/XMLSchema">
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGDBUILD_LOG" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.bld"/>
+    <file xil_pn:fileType="FILE_CMD_LOG" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.cmd_log"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_GYD" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.gyd"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_JEDEC" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.jed"/>
+    <file xil_pn:fileType="FILE_LFP" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.lfp"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_LSO" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.lso"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_MFD" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.mfd"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGA" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.nga"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGC" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.ngc"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGD" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.ngd"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGR" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.ngr"/>
+    <file xil_pn:fileType="FILE_PAD_MISC" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.pad"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_PNX" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.pnx"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.prj"/>
+    <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.rpt"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_STX" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.stx"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_REPORT" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.syr"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_VM6" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.vm6"/>
+    <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.xml"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.xst"/>
+    <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote_build.xml"/>
+    <file xil_pn:fileType="FILE_HTML" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote_envsettings.html"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote_html"/>
+    <file xil_pn:fileType="FILE_XRPT" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote_ngdbuild.xrpt"/>
+    <file xil_pn:fileType="FILE_PAD_EXCEL_REPORT" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote_pad.csv"/>
+    <file xil_pn:fileType="FILE_HTML" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote_summary.html"/>
+    <file xil_pn:fileType="FILE_XRPT" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote_xst.xrpt"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/SampleTest_beh.prj"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/SampleTest_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/SampleTest_isim_beh.wdb"/>
+    <file xil_pn:fileType="FILE_CMD" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/_impact.cmd"/>
+    <file xil_pn:fileType="FILE_LOG" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/_impact.log"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/_ngo"/>
+    <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/_xmsgs/ngdbuild.xmsgs"/>
+    <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/_xmsgs/xst.xmsgs"/>
+    <file xil_pn:fileType="FILE_LOG" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/fuse.log"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/isim"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_CMD" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/isim.cmd"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_LOG" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/isim.log"/>
+    <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/webtalk_pn.xml"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_INI" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/xilinxsim.ini"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/xlnx_auto_0_xdb"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/xst"/>
+  </files>
+
+  <transforms xmlns="http://www.xilinx.com/XMLSchema">
+    <transform xil_pn:end_ts="1342853912" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1342853912">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1342914682" xil_pn:in_ck="2591314866039281222" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1342914682">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputChanged"/>
+      <status xil_pn:value="OutputChanged"/>
+      <outfile xil_pn:name="Remote.v"/>
+      <outfile xil_pn:name="SampleTest.v"/>
+      <outfile xil_pn:name="clock_divider.v"/>
+      <outfile xil_pn:name="poll_test.v"/>
+    </transform>
+    <transform xil_pn:end_ts="1342853912" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="4794908202733300105" xil_pn:start_ts="1342853912">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1342914682" xil_pn:in_ck="2591314866039281222" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1342914682">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputChanged"/>
+      <status xil_pn:value="OutputChanged"/>
+      <outfile xil_pn:name="Remote.v"/>
+      <outfile xil_pn:name="SampleTest.v"/>
+      <outfile xil_pn:name="clock_divider.v"/>
+      <outfile xil_pn:name="poll_test.v"/>
+    </transform>
+    <transform xil_pn:end_ts="1342914686" xil_pn:in_ck="2591314866039281222" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="4187938372604014447" xil_pn:start_ts="1342914682">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputChanged"/>
+      <status xil_pn:value="OutputChanged"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/SampleTest_beh.prj"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/SampleTest_isim_beh.exe"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/fuse.log"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/isim"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/isim.log"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/xilinxsim.ini"/>
+    </transform>
+    <transform xil_pn:end_ts="1342914686" xil_pn:in_ck="7483289982594986136" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-1173825923571436942" xil_pn:start_ts="1342914686">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="OutputChanged"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/SampleTest_isim_beh.wdb"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/isim.cmd"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/isim.log"/>
+    </transform>
+    <transform xil_pn:end_ts="1343157687" xil_pn:name="TRAN_schematicsToHdl" xil_pn:prop_ck="-2536400518998486285" xil_pn:start_ts="1343157687">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1343234719" xil_pn:in_ck="-869812932439668538" xil_pn:name="TRANEXT_xstsynthesize_xc9500xl" xil_pn:prop_ck="8452150843876825424" xil_pn:start_ts="1343234711">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="WarningsGenerated"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.lso"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.ngc"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.ngr"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.prj"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.stx"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.syr"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.xst"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote_xst.xrpt"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/_xmsgs/xst.xmsgs"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/webtalk_pn.xml"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/xst"/>
+    </transform>
+    <transform xil_pn:end_ts="1343230158" xil_pn:in_ck="-6162820838392779617" xil_pn:name="TRAN_compileBCD2" xil_pn:prop_ck="5069202360706591822" xil_pn:start_ts="1343230158">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1343234725" xil_pn:in_ck="6597122361069016568" xil_pn:name="TRAN_ngdbuild" xil_pn:prop_ck="-736101761533034375" xil_pn:start_ts="1343234719">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="WarningsGenerated"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.bld"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.ngd"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote_ngdbuild.xrpt"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/_ngo"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/_xmsgs/ngdbuild.xmsgs"/>
+    </transform>
+    <transform xil_pn:end_ts="1343234739" xil_pn:in_ck="-6162820838392787110" xil_pn:name="TRANEXT_vm6File_xc9500xl" xil_pn:prop_ck="-7534448090480747138" xil_pn:start_ts="1343234725">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="WarningsGenerated"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.gyd"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.mfd"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.nga"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.pad"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.pnx"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.rpt"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.vm6"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.xml"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote_build.xml"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote_html"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote_pad.csv"/>
+    </transform>
+    <transform xil_pn:end_ts="1343234742" xil_pn:in_ck="-6162820838392778246" xil_pn:name="TRANEXT_crtProg_xc9500" xil_pn:prop_ck="-6294026017969277533" xil_pn:start_ts="1343234739">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/Remote.jed"/>
+    </transform>
+    <transform xil_pn:end_ts="1343234782" xil_pn:in_ck="-6162820838392791532" xil_pn:name="TRAN_configureTargetDevice_CPLD" xil_pn:prop_ck="-154879694275837835" xil_pn:start_ts="1343234742">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="OutputChanged"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/_impact.cmd"/>
+      <outfile xil_pn:name="../../../../../../Dropbox/Porn/Summer 2012/N64/wired_remote/N64_wired/_impact.log"/>
+    </transform>
+    <transform xil_pn:end_ts="1342712356" xil_pn:in_ck="-6162820838392778246" xil_pn:name="TRAN_timRpt" xil_pn:prop_ck="111903974446" xil_pn:start_ts="1342712346">
+      <status xil_pn:value="AbortedRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="InputChanged"/>
+    </transform>
+  </transforms>
+
+</generated_project>

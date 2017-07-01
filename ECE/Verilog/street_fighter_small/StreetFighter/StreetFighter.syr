@@ -1,0 +1,344 @@
+Release 14.1 - xst P.15xf (nt64)
+Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.18 secs
+ 
+--> Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.18 secs
+ 
+--> Reading design: StreetFighter.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "StreetFighter.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "StreetFighter"
+Output Format                      : NGC
+Target Device                      : XC9500XL CPLDs
+
+---- Source Options
+Top Module Name                    : StreetFighter
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+Mux Extraction                     : Yes
+Resource Sharing                   : YES
+
+---- Target Options
+Add IO Buffers                     : YES
+MACRO Preserve                     : YES
+XOR Preserve                       : YES
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : Yes
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Verilog 2001                       : YES
+
+---- Other Options
+Clock Enable                       : YES
+wysiwyg                            : NO
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling verilog file "StreetFighter.v" in library work
+Module <StreetFighter> compiled
+No errors in compilation
+Analysis of file <"StreetFighter.prj"> succeeded.
+ 
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for module <StreetFighter> in library <work> with parameters.
+	a_left = "1000"
+	a_right = "0111"
+	bdfp = "010"
+	but_a = "1111111101111111"
+	but_down = "1111101111111111"
+	but_left = "1111110111111111"
+	but_right = "1111111011111111"
+	but_y = "1011111111111111"
+	complete = "1010"
+	dbk = "001"
+	dfp = "000"
+	down = "0000"
+	down_left = "0010"
+	down_right = "0001"
+	fdfp = "011"
+	idle = "1001"
+	left = "0100"
+	left_dir = "1"
+	left_s = "1100"
+	load_reg = "11"
+	none = "100"
+	right = "0011"
+	right_dir = "0"
+	right_s = "1011"
+	wait_clk = "10"
+	wait_latch = "01"
+	wait_override = "00"
+	y_left = "0110"
+	y_right = "0101"
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing top module <StreetFighter>.
+	a_left = 4'b1000
+	a_right = 4'b0111
+	bdfp = 3'b010
+	but_a = 16'b1111111101111111
+	but_down = 16'b1111101111111111
+	but_left = 16'b1111110111111111
+	but_right = 16'b1111111011111111
+	but_y = 16'b1011111111111111
+	complete = 4'b1010
+	dbk = 3'b001
+	dfp = 3'b000
+	down = 4'b0000
+	down_left = 4'b0010
+	down_right = 4'b0001
+	fdfp = 3'b011
+	idle = 4'b1001
+	left = 4'b0100
+	left_dir = 1'b1
+	left_s = 4'b1100
+	load_reg = 2'b11
+	none = 3'b100
+	right = 4'b0011
+	right_dir = 1'b0
+	right_s = 4'b1011
+	wait_clk = 2'b10
+	wait_latch = 2'b01
+	wait_override = 2'b00
+	y_left = 4'b0110
+	y_right = 4'b0101
+Module <StreetFighter> is correct for synthesis.
+ 
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <StreetFighter>.
+    Related source file is "StreetFighter.v".
+    Found finite state machine <FSM_0> for signal <button_state>.
+    -----------------------------------------------------------------------
+    | States             | 13                                             |
+    | Transitions        | 34                                             |
+    | Inputs             | 6                                              |
+    | Outputs            | 7                                              |
+    | Clock              | clk_sm                    (rising_edge)        |
+    | Reset              | reset_n                   (negative)           |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | 1001                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | automatic                                      |
+    -----------------------------------------------------------------------
+    Found finite state machine <FSM_1> for signal <load_state>.
+    -----------------------------------------------------------------------
+    | States             | 4                                              |
+    | Transitions        | 8                                              |
+    | Inputs             | 3                                              |
+    | Outputs            | 1                                              |
+    | Clock              | clk_system                (rising_edge)        |
+    | Reset              | reset_n                   (negative)           |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | 00                                             |
+    | Encoding           | automatic                                      |
+    | Implementation     | automatic                                      |
+    -----------------------------------------------------------------------
+    Found 5-bit up counter for signal <clk_listen>.
+    Found 1-bit register for signal <clk_sm>.
+    Found 1-bit register for signal <completion_sync>.
+    Found 6-bit register for signal <latch_count>.
+    Found 6-bit adder for signal <latch_count$addsub0000> created at line 129.
+    Found 1-bit register for signal <load_override>.
+    Found 3-bit register for signal <move>.
+    Found 1-bit register for signal <override_en>.
+    Found 16-bit register for signal <override_reg>.
+    Summary:
+	inferred   2 Finite State Machine(s).
+	inferred   1 Counter(s).
+	inferred  20 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+Unit <StreetFighter> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors                                   : 1
+ 6-bit adder                                           : 1
+# Counters                                             : 1
+ 5-bit up counter                                      : 1
+# Registers                                            : 22
+ 1-bit register                                        : 20
+ 3-bit register                                        : 1
+ 6-bit register                                        : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Analyzing FSM <FSM_1> for best encoding.
+Optimizing FSM <load_state/FSM> on signal <load_state[1:2]> with johnson encoding.
+-------------------
+ State | Encoding
+-------------------
+ 00    | 00
+ 01    | 01
+ 10    | 11
+ 11    | 10
+-------------------
+Analyzing FSM <FSM_0> for best encoding.
+Optimizing FSM <button_state/FSM> on signal <button_state[1:4]> with sequential encoding.
+-------------------
+ State | Encoding
+-------------------
+ 1001  | 0000
+ 0000  | 0001
+ 0100  | 0010
+ 0011  | 0011
+ 1011  | 0100
+ 1100  | 0101
+ 0001  | 0110
+ 0010  | 0111
+ 0110  | 1000
+ 1000  | 1001
+ 0101  | 1010
+ 0111  | 1011
+ 1010  | 1100
+-------------------
+WARNING:Xst:1426 - The value init of the FF/Latch 0 hinder the constant cleaning in the block override_reg_0.
+   You should achieve better results by setting this init to 1.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# FSMs                                                 : 2
+# Adders/Subtractors                                   : 1
+ 6-bit adder                                           : 1
+# Counters                                             : 1
+ 5-bit up counter                                      : 1
+# Registers                                            : 20
+ Flip-Flops                                            : 20
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1426 - The value init of the FF/Latch override_reg_0 hinder the constant cleaning in the block StreetFighter.
+   You should achieve better results by setting this init to 1.
+
+Optimizing unit <StreetFighter> ...
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : StreetFighter.ngr
+Top Level Output File Name         : StreetFighter
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : Yes
+Target Technology                  : XC9500XL CPLDs
+Macro Preserve                     : YES
+XOR Preserve                       : YES
+Clock Enable                       : YES
+wysiwyg                            : NO
+
+Design Statistics
+# IOs                              : 11
+
+Cell Usage :
+# BELS                             : 269
+#      AND2                        : 81
+#      AND3                        : 16
+#      AND4                        : 3
+#      AND5                        : 1
+#      AND6                        : 1
+#      GND                         : 1
+#      INV                         : 113
+#      OR2                         : 36
+#      OR3                         : 2
+#      OR4                         : 1
+#      VCC                         : 1
+#      XOR2                        : 13
+# FlipFlops/Latches                : 40
+#      FDC                         : 19
+#      FDCE                        : 3
+#      FDCP                        : 16
+#      FDP                         : 1
+#      FDPE                        : 1
+# IO Buffers                       : 11
+#      IBUF                        : 10
+#      OBUF                        : 1
+=========================================================================
+
+
+Total REAL time to Xst completion: 6.00 secs
+Total CPU time to Xst completion: 6.02 secs
+ 
+--> 
+
+Total memory usage is 252908 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    2 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

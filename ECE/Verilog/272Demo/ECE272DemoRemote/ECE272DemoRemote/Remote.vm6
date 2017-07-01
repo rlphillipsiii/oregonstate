@@ -1,0 +1,385 @@
+NDS Database:  version L.70
+
+NDS_INFO | xc9500xl | 9572XL44VQ | XC9572XL-10-VQ44
+
+DEVICE | 9572XL | 9572XL44VQ | 
+
+NETWORK | Remote | 0 | 0 | 16391
+
+MACROCELL_INSTANCE | OptxMapped | Latch_Out_OBUF | Remote_COPY_0_COPY_0 | 2155872256 | 5 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 489 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<3>.Q | count<3> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 490 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<2>.Q | count<2> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 491 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<4>.Q | count<4> | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 0 | 0 | MC_Q
+NODE | Latch_Out_OBUF | 484 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | Latch_Out_OBUF.Q | Latch_Out_OBUF | 0 | 0 | MC_Q
+
+SIGNAL_INSTANCE | Latch_Out_OBUF.SI | Latch_Out_OBUF | 0 | 5 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 489 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<3>.Q | count<3> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 490 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<2>.Q | count<2> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 491 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<4>.Q | count<4> | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | Latch_Out_OBUF.D1 | 502 | ? | 0 | 4096 | Latch_Out_OBUF | NULL | NULL | Latch_Out_OBUF.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 0 | IV_ZERO
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | Latch_Out_OBUF.D2 | 503 | ? | 0 | 4096 | Latch_Out_OBUF | NULL | NULL | Latch_Out_OBUF.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 5 | IV_FALSE | count<0> | IV_FALSE | count<1> | IV_FALSE | count<3> | IV_FALSE | count<2> | IV_FALSE | count<4>
+
+SRFF_INSTANCE | Latch_Out_OBUF.REG | Latch_Out_OBUF | 0 | 1 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | Latch_Out_OBUF.D | 501 | ? | 0 | 0 | Latch_Out_OBUF | NULL | NULL | Latch_Out_OBUF.XOR | 0 | 7 | ALU_F
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | Latch_Out_OBUF.Q | 504 | ? | 0 | 0 | Latch_Out_OBUF | NULL | NULL | Latch_Out_OBUF.REG | 0 | 8 | SRFF_Q
+
+INPUT_INSTANCE | 0 | 0 | NULL | Clk_In_IBUF | Remote_COPY_0_COPY_0 | 16 | 1 | 1
+INPUT_NODE_TYPE | 0 | 5 | II_IN
+NODE | Clk_In | 498 | PI | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | NULL | 0 | 100 | NOTYPE
+OUTPUT_NODE_TYPE | 3 | 5 | II_FCLK
+NODE | Clk_In_IBUF/FCLK | 485 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Clk_In_IBUF | 3 | 5 | II_FCLK
+
+INPUT_INSTANCE | 0 | 0 | NULL | Reset_In_IBUF | Remote_COPY_0_COPY_0 | 16 | 1 | 1
+INPUT_NODE_TYPE | 0 | 5 | II_IN
+NODE | Reset_In | 499 | PI | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | NULL | 0 | 100 | NOTYPE
+OUTPUT_NODE_TYPE | 0 | 5 | II_IMUX
+NODE | Reset_In_IBUF | 486 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Reset_In_IBUF | 0 | 5 | II_IMUX
+
+MACROCELL_INSTANCE | PrldLow+OptxMapped | count<0> | Remote_COPY_0_COPY_0 | 2155873280 | 3 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Reset_In_IBUF | 486 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Reset_In_IBUF | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Clk_In_IBUF/FCLK | 485 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Clk_In_IBUF | 3 | 5 | II_FCLK
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | count<0>.SI | count<0> | 0 | 2 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Reset_In_IBUF | 486 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Reset_In_IBUF | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | count<0>.D1 | 506 | ? | 0 | 4096 | count<0> | NULL | NULL | count<0>.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 0 | IV_ZERO
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | count<0>.D2 | 507 | ? | 0 | 4096 | count<0> | NULL | NULL | count<0>.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 2 | IV_TRUE | Reset_In_IBUF | IV_FALSE | count<0>
+
+SRFF_INSTANCE | count<0>.REG | count<0> | 0 | 2 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | count<0>.D | 505 | ? | 0 | 0 | count<0> | NULL | NULL | count<0>.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | Clk_In_IBUF/FCLK | 485 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Clk_In_IBUF | 3 | 5 | II_FCLK
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | count<0>.Q | 508 | ? | 0 | 0 | count<0> | NULL | NULL | count<0>.REG | 0 | 8 | SRFF_Q
+
+MACROCELL_INSTANCE | PrldLow+OptxMapped | count<1> | Remote_COPY_0_COPY_0 | 2155873280 | 4 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Reset_In_IBUF | 486 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Reset_In_IBUF | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Clk_In_IBUF/FCLK | 485 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Clk_In_IBUF | 3 | 5 | II_FCLK
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | count<1>.SI | count<1> | 0 | 3 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Reset_In_IBUF | 486 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Reset_In_IBUF | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | count<1>.D1 | 510 | ? | 0 | 4096 | count<1> | NULL | NULL | count<1>.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 0 | IV_ZERO
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | count<1>.D2 | 511 | ? | 0 | 4096 | count<1> | NULL | NULL | count<1>.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 3 | IV_TRUE | Reset_In_IBUF | IV_TRUE | count<0> | IV_FALSE | count<1>
+SPPTERM | 3 | IV_TRUE | Reset_In_IBUF | IV_FALSE | count<0> | IV_TRUE | count<1>
+
+SRFF_INSTANCE | count<1>.REG | count<1> | 0 | 2 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | count<1>.D | 509 | ? | 0 | 0 | count<1> | NULL | NULL | count<1>.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | Clk_In_IBUF/FCLK | 485 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Clk_In_IBUF | 3 | 5 | II_FCLK
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | count<1>.Q | 512 | ? | 0 | 0 | count<1> | NULL | NULL | count<1>.REG | 0 | 8 | SRFF_Q
+
+MACROCELL_INSTANCE | PrldLow+Tff+OptxMapped | count<3> | Remote_COPY_0_COPY_0 | 2155877376 | 6 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Reset_In_IBUF | 486 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Reset_In_IBUF | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 490 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<2>.Q | count<2> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 489 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<3>.Q | count<3> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Clk_In_IBUF/FCLK | 485 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Clk_In_IBUF | 3 | 5 | II_FCLK
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | count<3> | 489 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<3>.Q | count<3> | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | count<3>.SI | count<3> | 0 | 5 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Reset_In_IBUF | 486 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Reset_In_IBUF | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 490 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<2>.Q | count<2> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 489 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<3>.Q | count<3> | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | count<3>.D1 | 514 | ? | 0 | 4096 | count<3> | NULL | NULL | count<3>.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 0 | IV_ZERO
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | count<3>.D2 | 515 | ? | 0 | 4096 | count<3> | NULL | NULL | count<3>.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 2 | IV_FALSE | Reset_In_IBUF | IV_TRUE | count<3>
+SPPTERM | 4 | IV_TRUE | Reset_In_IBUF | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2>
+
+SRFF_INSTANCE | count<3>.REG | count<3> | 0 | 2 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | count<3>.D | 513 | ? | 0 | 0 | count<3> | NULL | NULL | count<3>.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | Clk_In_IBUF/FCLK | 485 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Clk_In_IBUF | 3 | 5 | II_FCLK
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | count<3>.Q | 516 | ? | 0 | 0 | count<3> | NULL | NULL | count<3>.REG | 0 | 8 | SRFF_Q
+
+MACROCELL_INSTANCE | PrldLow+Tff+OptxMapped | count<2> | Remote_COPY_0_COPY_0 | 2155877376 | 5 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Reset_In_IBUF | 486 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Reset_In_IBUF | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 490 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<2>.Q | count<2> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Clk_In_IBUF/FCLK | 485 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Clk_In_IBUF | 3 | 5 | II_FCLK
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | count<2> | 490 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<2>.Q | count<2> | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | count<2>.SI | count<2> | 0 | 4 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Reset_In_IBUF | 486 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Reset_In_IBUF | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 490 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<2>.Q | count<2> | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | count<2>.D1 | 518 | ? | 0 | 4096 | count<2> | NULL | NULL | count<2>.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 0 | IV_ZERO
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | count<2>.D2 | 519 | ? | 0 | 4096 | count<2> | NULL | NULL | count<2>.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 2 | IV_FALSE | Reset_In_IBUF | IV_TRUE | count<2>
+SPPTERM | 3 | IV_TRUE | Reset_In_IBUF | IV_TRUE | count<0> | IV_TRUE | count<1>
+
+SRFF_INSTANCE | count<2>.REG | count<2> | 0 | 2 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | count<2>.D | 517 | ? | 0 | 0 | count<2> | NULL | NULL | count<2>.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | Clk_In_IBUF/FCLK | 485 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Clk_In_IBUF | 3 | 5 | II_FCLK
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | count<2>.Q | 520 | ? | 0 | 0 | count<2> | NULL | NULL | count<2>.REG | 0 | 8 | SRFF_Q
+
+MACROCELL_INSTANCE | PrldLow+Tff+OptxMapped | count<4> | Remote_COPY_0_COPY_0 | 2155877376 | 7 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Reset_In_IBUF | 486 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Reset_In_IBUF | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 489 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<3>.Q | count<3> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 490 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<2>.Q | count<2> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 491 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<4>.Q | count<4> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Clk_In_IBUF/FCLK | 485 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Clk_In_IBUF | 3 | 5 | II_FCLK
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | count<4> | 491 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<4>.Q | count<4> | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | count<4>.SI | count<4> | 0 | 6 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Reset_In_IBUF | 486 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Reset_In_IBUF | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 489 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<3>.Q | count<3> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 490 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<2>.Q | count<2> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 491 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<4>.Q | count<4> | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | count<4>.D1 | 522 | ? | 0 | 4096 | count<4> | NULL | NULL | count<4>.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 0 | IV_ZERO
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | count<4>.D2 | 523 | ? | 0 | 4096 | count<4> | NULL | NULL | count<4>.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 2 | IV_FALSE | Reset_In_IBUF | IV_TRUE | count<4>
+SPPTERM | 5 | IV_TRUE | Reset_In_IBUF | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<3> | IV_TRUE | count<2>
+
+SRFF_INSTANCE | count<4>.REG | count<4> | 0 | 2 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | count<4>.D | 521 | ? | 0 | 0 | count<4> | NULL | NULL | count<4>.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | Clk_In_IBUF/FCLK | 485 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Clk_In_IBUF | 3 | 5 | II_FCLK
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | count<4>.Q | 524 | ? | 0 | 0 | count<4> | NULL | NULL | count<4>.REG | 0 | 8 | SRFF_Q
+
+INPUT_INSTANCE | 0 | 0 | NULL | Controller_In_IBUF | Remote_COPY_0_COPY_0 | 16 | 1 | 1
+INPUT_NODE_TYPE | 0 | 5 | II_IN
+NODE | Controller_In | 500 | PI | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | NULL | 0 | 100 | NOTYPE
+OUTPUT_NODE_TYPE | 0 | 5 | II_IMUX
+NODE | Controller_In_IBUF | 492 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Controller_In_IBUF | 0 | 5 | II_IMUX
+
+MACROCELL_INSTANCE | OptxMapped | Serial_Out_OBUF | Remote_COPY_0_COPY_0 | 2155872256 | 4 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Controller_In_IBUF | 492 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Controller_In_IBUF | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 489 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<3>.Q | count<3> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 491 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<4>.Q | count<4> | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 0 | 0 | MC_Q
+NODE | Serial_Out_OBUF | 493 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | Serial_Out_OBUF.Q | Serial_Out_OBUF | 0 | 0 | MC_Q
+
+SIGNAL_INSTANCE | Serial_Out_OBUF.SI | Serial_Out_OBUF | 0 | 4 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | Controller_In_IBUF | 492 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Controller_In_IBUF | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 489 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<3>.Q | count<3> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 491 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<4>.Q | count<4> | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | Serial_Out_OBUF.D1 | 526 | ? | 0 | 4096 | Serial_Out_OBUF | NULL | NULL | Serial_Out_OBUF.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 0 | IV_ZERO
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | Serial_Out_OBUF.D2 | 527 | ? | 0 | 4096 | Serial_Out_OBUF | NULL | NULL | Serial_Out_OBUF.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 1 | IV_FALSE | Controller_In_IBUF
+SPPTERM | 3 | IV_TRUE | count<1> | IV_TRUE | count<3> | IV_TRUE | count<4>
+
+SRFF_INSTANCE | Serial_Out_OBUF.REG | Serial_Out_OBUF | 0 | 1 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | Serial_Out_OBUF.D | 525 | ? | 0 | 0 | Serial_Out_OBUF | NULL | NULL | Serial_Out_OBUF.XOR | 0 | 7 | ALU_F
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | Serial_Out_OBUF.Q | 528 | ? | 0 | 0 | Serial_Out_OBUF | NULL | NULL | Serial_Out_OBUF.REG | 0 | 8 | SRFF_Q
+
+MACROCELL_INSTANCE | Inv+OptxMapped | Clk_Out_OBUF | Remote_COPY_0_COPY_0 | 2155872512 | 5 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 489 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<3>.Q | count<3> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 490 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<2>.Q | count<2> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 491 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<4>.Q | count<4> | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 0 | 0 | MC_Q
+NODE | Clk_Out_OBUF | 494 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | Clk_Out_OBUF.Q | Clk_Out_OBUF | 0 | 0 | MC_Q
+
+SIGNAL_INSTANCE | Clk_Out_OBUF.SI | Clk_Out_OBUF | 0 | 5 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 487 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<0>.Q | count<0> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 488 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<1>.Q | count<1> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 489 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<3>.Q | count<3> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 490 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<2>.Q | count<2> | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 491 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | count<4>.Q | count<4> | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | Clk_Out_OBUF.D1 | 530 | ? | 0 | 4096 | Clk_Out_OBUF | NULL | NULL | Clk_Out_OBUF.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 0 | IV_ZERO
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | Clk_Out_OBUF.D2 | 531 | ? | 0 | 4096 | Clk_Out_OBUF | NULL | NULL | Clk_Out_OBUF.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 1 | IV_TRUE | count<0>
+SPPTERM | 4 | IV_FALSE | count<1> | IV_FALSE | count<3> | IV_FALSE | count<2> | IV_FALSE | count<4>
+
+SRFF_INSTANCE | Clk_Out_OBUF.REG | Clk_Out_OBUF | 0 | 1 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | Clk_Out_OBUF.D | 529 | ? | 0 | 0 | Clk_Out_OBUF | NULL | NULL | Clk_Out_OBUF.XOR | 0 | 7 | ALU_F
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | Clk_Out_OBUF.Q | 532 | ? | 0 | 0 | Clk_Out_OBUF | NULL | NULL | Clk_Out_OBUF.REG | 0 | 8 | SRFF_Q
+
+OUTPUT_INSTANCE | 0 | Latch_Out | Remote_COPY_0_COPY_0 | 7 | 1 | 1
+INPUT_NODE_TYPE | 0 | 6 | OI_IN
+NODE | Latch_Out_OBUF | 484 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | Latch_Out_OBUF.Q | Latch_Out_OBUF | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 0 | 6 | OI_OUT
+NODE | Latch_Out | 495 | PO | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Latch_Out | 0 | 6 | OI_OUT
+
+OUTPUT_INSTANCE | 0 | Serial_Out | Remote_COPY_0_COPY_0 | 7 | 1 | 1
+INPUT_NODE_TYPE | 0 | 6 | OI_IN
+NODE | Serial_Out_OBUF | 493 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | Serial_Out_OBUF.Q | Serial_Out_OBUF | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 0 | 6 | OI_OUT
+NODE | Serial_Out | 496 | PO | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Serial_Out | 0 | 6 | OI_OUT
+
+OUTPUT_INSTANCE | 0 | Clk_Out | Remote_COPY_0_COPY_0 | 7 | 1 | 1
+INPUT_NODE_TYPE | 0 | 6 | OI_IN
+NODE | Clk_Out_OBUF | 494 | ? | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | Clk_Out_OBUF.Q | Clk_Out_OBUF | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 0 | 6 | OI_OUT
+NODE | Clk_Out | 497 | PO | 0 | 0 | Remote_COPY_0_COPY_0 | NULL | NULL | Clk_Out | 0 | 6 | OI_OUT
+
+FB_INSTANCE | FOOBAR1_ | Remote_COPY_0_COPY_0 | 0 | 0 | 0
+FBPIN | 9 | NULL | 0 | Clk_In_IBUF | 0 | NULL | 0 | 43 | 57344
+FBPIN | 14 | Serial_Out_OBUF | 1 | NULL | 0 | Serial_Out | 1 | 1 | 57344
+FBPIN | 15 | Latch_Out_OBUF | 1 | NULL | 0 | Latch_Out | 1 | 2 | 49152
+
+FB_INSTANCE | FOOBAR2_ | Remote_COPY_0_COPY_0 | 0 | 0 | 0
+FBPIN | 9 | NULL | 0 | Reset_In_IBUF | 1 | NULL | 0 | 33 | 51200
+
+FB_INSTANCE | FOOBAR3_ | Remote_COPY_0_COPY_0 | 0 | 0 | 0
+FBPIN | 2 | Clk_Out_OBUF | 1 | NULL | 0 | Clk_Out | 1 | 5 | 49152
+FBPIN | 8 | NULL | 0 | Controller_In_IBUF | 1 | NULL | 0 | 7 | 49152
+FBPIN | 14 | count<0> | 1 | NULL | 0 | NULL | 0 | 13 | 49152
+FBPIN | 15 | count<4> | 1 | NULL | 0 | NULL | 0 | 14 | 49152
+FBPIN | 16 | count<3> | 1 | NULL | 0 | NULL | 0 | 18 | 49152
+FBPIN | 17 | count<2> | 1 | NULL | 0 | NULL | 0 | 16 | 49152
+FBPIN | 18 | count<1> | 1 | NULL | 0 | NULL | 0
+
+FB_INSTANCE | FOOBAR4_ | Remote_COPY_0_COPY_0 | 0 | 0 | 0
+
+FB_INSTANCE | INPUTPINS_FOOBAR5_ | Remote_COPY_0_COPY_0 | 0 | 0 | 0
+
+
+FB_ORDER_OF_INPUTS | FOOBAR1_ | 15 | count<3> | NULL | 20 | count<4> | NULL | 26 | Controller_In | 7 | 44 | count<2> | NULL | 48 | count<0> | NULL
+FB_ORDER_OF_INPUTS | FOOBAR1_ | 52 | count<1> | NULL
+
+FB_IMUX_INDEX | FOOBAR1_ | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | 51 | -1 | -1 | -1 | -1 | 50 | -1 | -1 | -1 | -1 | -1 | 142 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | 52 | -1 | -1 | -1 | 49 | -1 | -1 | -1 | 53 | -1
+
+
+FB_ORDER_OF_INPUTS | FOOBAR3_ | 15 | count<3> | NULL | 20 | count<4> | NULL | 40 | Reset_In | 33 | 44 | count<2> | NULL | 48 | count<0> | NULL
+FB_ORDER_OF_INPUTS | FOOBAR3_ | 52 | count<1> | NULL
+
+FB_IMUX_INDEX | FOOBAR3_ | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | 51 | -1 | -1 | -1 | -1 | 50 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | 86 | -1 | -1 | -1 | 52 | -1 | -1 | -1 | 49 | -1 | -1 | -1 | 53 | -1
+
+
+GLOBAL_FCLK | Clk_In | 0 | 0
